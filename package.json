@@ -1,0 +1,24 @@
+{
+  "name": "media-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:ui": "pnpm --filter ./src/ui dev",
+    "dev:api": "tsx src/api/src/main.ts",
+    "dev:electron": "electron src/electron/main.ts",
+    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:api\" \"pnpm dev:electron\"",
+    "dev:app": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "concurrently": "^9.1.2",
+    "electron": "^36.4.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

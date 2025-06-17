@@ -1,0 +1,7 @@
+packages:
+  - src/*
+
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - '@tailwindcss/oxide'
+  - prisma
