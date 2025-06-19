@@ -12,7 +12,8 @@ export default function SidebarButton(props : SidebarButtonProps) {
             to={props.link}
             className={( { isActive }  : {isActive : boolean}) => 
                 classNames (
-                    "flex justify-center p-2 space-x-2 m-1 items-center rounded-4xl w-full",
+                    "flex justify-center p-2 space-x-2 m-1 items-center rounded-4xl w-full text-black \
+                    dark:text-gray-300 text-lg md:text-base sm:text-sm font-semibold",
                     {
                         // Active
                         "bg-purple-500" : isActive,
@@ -24,13 +25,9 @@ export default function SidebarButton(props : SidebarButtonProps) {
                 )
             }
         >
-            <div 
-                className="text-black dark:text-gray-300"
-            >
-                {props.icon}
-            </div>
+            {props.icon}
             <span
-                className={ "text-black dark:text-gray-300 font-bold text-lg" }
+                className={"font-normal"}
             >
                 {props.label}
             </span>

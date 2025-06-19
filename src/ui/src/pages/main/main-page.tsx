@@ -1,17 +1,36 @@
 import { useState } from "react";
+import classNames from "classnames";
+
 import Sidebar from "components/sidebar/sidebar";
+import ThemeContext from "context/theme-context";
+import Theme from "utils/enum/theme";
 
 export default function MainPage() {
     const [isSidebarToggled, setSidebarToggled] = useState(false);
+    const [theme, setTheme] = useState<Theme>(Theme.Light);
+
     return (
-        <div
-            className={"flex bg-white dark:bg-gray-800 h-screen w-screen p-0"}
+        <ThemeContext
+            value={{
+                theme,
+                setTheme
+            }}
         >
-            <Sidebar />
             <div
-                className={"flex flex-grow items-center justify-center w-6/7 p-4"}
+                className={classNames(
+                    "flex bg-white dark:bg-gray-800 h-screen w-screen p-0",
+                    {
+                        "dark" : theme === Theme.Dark,
+                        "light" : theme === Theme.Light
+                    }
+                )}
             >
+                <Sidebar />
+                <div
+                    className={"flex flex-grow items-center justify-center w-6/7 p-4"}
+                >
+                </div>
             </div>
-        </div>
+        </ThemeContext>
     );
 }

@@ -11,7 +11,10 @@ export default defineConfig({
         alias: {
             'pages': '/src/pages',
             'components': '/src/components',
-            'hooks': '/src/hooks'
+            'hooks': '/src/hooks',
+            
+            'context': '/src/context',
+            'utils': '/src/utils',
         }
     }
 })

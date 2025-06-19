@@ -13,7 +13,6 @@ import SettingsPage from 'pages/settings/settings-page';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
-// Todo other routes
 const rootContainer : ReactNode = (
     <HashRouter>
         <Route path="/" element={<MainPage />}>

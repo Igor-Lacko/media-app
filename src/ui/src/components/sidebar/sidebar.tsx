@@ -17,17 +17,17 @@ export default function Sidebar() {
             className={"flex flex-col items-center bg-white dark:bg-gray-800 w-1/7 h-full border-r-2 border-gray-300 dark:border-gray-700"}
         >
             <div
-                className={"flex w-full flex-col items-center justify-evenly border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-1/5"}
+                className={"flex w-full flex-col items-center space-y-2 pt-5 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-1/5"}
             >
                 <FaVideo
-                    className={"text-purple-500 text-7xl font-bold"}
+                    className={"text-purple-500 lg:text-7xl md:text-md sm:text-sm font-bold"}
                 />
                 <span
-                    className={"text-purple-500 text-5xl font-bold font-[lobster]"}
+                    className={"text-purple-500 lg:text-5xl md:text-md sm:text-sm font-bold font-[lobster]"}
                 >Media Player</span>
             </div>
             <div 
-                className={"flex flex-col items-center p-2 w-full h-3/5"}
+                className={"flex flex-col items-center p-2 w-full h-4/5"}
             >
                 <SidebarButton
                     label={"Home"}
