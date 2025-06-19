@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { ReactNode } from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import 'typeface-lobster';
 
 import './index.css';
@@ -15,15 +15,16 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 
 const rootContainer : ReactNode = (
     <HashRouter>
-        <Route path="/" element={<MainPage />}>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/movies" element={<MoviePage />} />
-            <Route path="/tv-shows" element={<TvShowPage />} />
-            <Route path="/lectures" element={<LecturePage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route index element={<HomePage />} />
-        </Route>
+        <Routes>
+            <Route path="/" element={<MainPage />}>
+                <Route path="home" element={<HomePage />} />
+                <Route path="movies" element={<MoviePage />} />
+                <Route path="tv-shows" element={<TvShowPage />} />
+                <Route path="lectures" element={<LecturePage />} />
+                <Route path="settings" element={<SettingsPage />} />
+            </Route>
+        </Routes>
     </HashRouter>
 )
 
-root.render(<HashRouter> <MainPage/></HashRouter>);
+root.render(rootContainer);

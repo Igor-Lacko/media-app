@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
+import { Outlet } from "react-router-dom";
 
 import Sidebar from "components/sidebar/sidebar";
 import ThemeContext from "context/theme-context";
@@ -29,6 +30,7 @@ export default function MainPage() {
                 <div
                     className={"flex flex-grow items-center justify-center w-6/7 p-4"}
                 >
+                    <Outlet />
                 </div>
             </div>
         </ThemeContext>
