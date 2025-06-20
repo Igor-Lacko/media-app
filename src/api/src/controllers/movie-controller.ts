@@ -35,6 +35,7 @@ export async function GetMovies(
         return movies.map(
             (movie): Movie => ({
                 ...movie,
+                identifier: movie.id,
                 genres: movie.genres.map((genre): Genre => genre.genre),
             })
         );

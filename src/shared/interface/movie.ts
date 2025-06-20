@@ -2,6 +2,7 @@ import CardDisplayable from "./card-displayable";
 import { Genre } from "@api/src/generated/prisma/enums";
 
 export interface Movie extends CardDisplayable {
+    identifier?: number; // To not map to id, which is reserved for the database
 	title: string;
     rating?: number;
     thumbnailUrl?: string;
@@ -11,3 +12,5 @@ export interface Movie extends CardDisplayable {
     videoUrl?: string;
     length?: number;
 }
+
+export default Movie;
