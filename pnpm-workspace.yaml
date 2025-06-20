@@ -1,5 +1,7 @@
 packages:
-  - src/*
+  - src/api
+  - src/ui
+  - src/shared
 
 onlyBuiltDependencies:
   - '@prisma/engines'

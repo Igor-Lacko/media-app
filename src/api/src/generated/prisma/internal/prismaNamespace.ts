@@ -981,7 +981,8 @@ export const MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
   rating: 'rating',
-  genre: 'genre',
+  genres: 'genres',
+  shortDescription: 'shortDescription',
   description: 'description',
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl'
@@ -994,7 +995,8 @@ export const ShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
   rating: 'rating',
-  genre: 'genre',
+  genres: 'genres',
+  shortDescription: 'shortDescription',
   description: 'description',
   episodes: 'episodes'
 } as const
@@ -1128,16 +1130,16 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
- * Reference to a field of type 'Genre'
+ * Reference to a field of type 'Genre[]'
  */
-export type EnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre'>
+export type ListEnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre[]'>
     
 
 
 /**
- * Reference to a field of type 'Genre[]'
+ * Reference to a field of type 'Genre'
  */
-export type ListEnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre[]'>
+export type EnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre'>
     
 
 

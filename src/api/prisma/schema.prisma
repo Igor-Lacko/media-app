@@ -9,20 +9,22 @@ datasource db {
 }
 
 model Movie {
-    id          Int     @id @default(autoincrement())
-    title       String
-    rating      Float
-    genre       Genre
-    description String?
-	videoUrl    String?
-	thumbnailUrl String?
+    id           Int     @id @default(autoincrement())
+    title        String
+    rating       Float
+    genres       Genre[]
+    shortDescription String?
+    description  String?
+    videoUrl     String?
+    thumbnailUrl String?
 }
 
 model Show {
     id          Int      @id @default(autoincrement())
     title       String
     rating      Float
-    genre       Genre
+    genres      Genre[]
+    shortDescription String?
     description String?
     episodes    Int
     seasons     Season[]
@@ -34,8 +36,8 @@ model Season {
     seasonNumber Int
     episodes     Episode[]
     show         Show      @relation(fields: [showId], references: [id])
-	rating       Float
-	description  String?
+    rating       Float
+    description  String?
 }
 
 model Episode {
@@ -46,24 +48,24 @@ model Episode {
     rating        Float
     description   String?
     season        Season  @relation(fields: [seasonId], references: [id])
-	videoUrl      String?
-	thumbnailUrl  String?
+    videoUrl      String?
+    thumbnailUrl  String?
 }
 
 model Subject {
-	id          Int     @id @default(autoincrement())
-	title       String
-	lectures    Lecture[]
-	thumbnailUrl String?
+    id           Int       @id @default(autoincrement())
+    title        String
+    lectures     Lecture[]
+    thumbnailUrl String?
 }
 
 model Lecture {
-	id          Int     @id @default(autoincrement())
-	title       String
-	notes	  	String[]
-	videoUrl    String?
-	subjectId   Int
-	subject     Subject @relation(fields: [subjectId], references: [id])
+    id        Int      @id @default(autoincrement())
+    title     String
+    notes     String[]
+    videoUrl  String?
+    subjectId Int
+    subject   Subject  @relation(fields: [subjectId], references: [id])
 }
 
 enum Genre {
@@ -75,6 +77,6 @@ enum Genre {
 }
 
 model Settings {
-	id          Int     @id @default(autoincrement())
-	darkMode   Boolean @default(false)
+    id       Int     @id @default(autoincrement())
+    darkMode Boolean @default(false)
 }
