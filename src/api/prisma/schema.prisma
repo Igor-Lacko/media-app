@@ -17,6 +17,7 @@ model Movie {
     description  String?
     videoUrl     String?
     thumbnailUrl String?
+    length       Int
 }
 
 model Show {
@@ -50,6 +51,7 @@ model Episode {
     season        Season  @relation(fields: [seasonId], references: [id])
     videoUrl      String?
     thumbnailUrl  String?
+    length        Int
 }
 
 model Subject {
@@ -66,9 +68,11 @@ model Lecture {
     videoUrl  String?
     subjectId Int
     subject   Subject  @relation(fields: [subjectId], references: [id])
+    length    Int
 }
 
 enum Genre {
+    ALL // Because sorting
     ACTION
     COMEDY
     DRAMA

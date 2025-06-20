@@ -8,6 +8,7 @@
 * 🟢 You can import this file directly.
 */
 export const Genre = {
+  ALL: 'ALL',
   ACTION: 'ACTION',
   COMEDY: 'COMEDY',
   DRAMA: 'DRAMA',

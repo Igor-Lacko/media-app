@@ -1,12 +1,19 @@
 import prisma from "db/db";
+import SortKey from "@shared/enum/sort-key";
+import { Genre } from "generated/prisma/enums";
 
-export async function GetAllMovies() {
+export async function GetMovies(key : SortKey = SortKey.NAME, filter : Genre = Genre.ALL) {
     try {
         const movies = await prisma.movie.findMany(
             {
-                // Default alphabetically
                 orderBy: {
-                    title: "asc"
+                    [key]: 'desc'
+                },
+
+                where: {
+                    genres: {
+                        hasSome: [filter] // Every movie has ALL for convenience
+                    }
                 }
             }
         )
@@ -19,3 +26,4 @@ export async function GetAllMovies() {
         return [];
     }
 }
+
