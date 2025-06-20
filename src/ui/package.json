@@ -25,6 +25,7 @@
     "@fontsource/lobster": "^5.2.6",
     "@tailwindcss/vite": "^4.1.10",
     "autoprefixer": "^10.4.21",
+    "axios": "^1.10.0",
     "classnames": "^2.5.1",
     "lobster": "^0.1.0",
     "postcss": "^8.5.6",

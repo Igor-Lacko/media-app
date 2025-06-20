@@ -9,8 +9,7 @@ export default async function seedMovies() {
             genres: [Genre.DRAMA, Genre.HORROR], // Use enum values
             shortDescription: "A thief who steals corporate secrets through dream-sharing technology.",
             description: "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...",
-            videoUrl: "https://example.com/inception.mp4",
-            thumbnailUrl: "https://example.com/inception.jpg",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
             length: 148,
         },
         {
@@ -19,8 +18,7 @@ export default async function seedMovies() {
             genres: [Genre.ALL, Genre.ACTION], // Use enum values
             shortDescription: "A computer hacker learns about the true nature of his reality.",
             description: "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive...",
-            videoUrl: "https://example.com/matrix.mp4",
-            thumbnailUrl: "https://example.com/matrix.jpg",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
             length: 136,
         },
         {
@@ -29,8 +27,7 @@ export default async function seedMovies() {
             genres: [Genre.COMEDY, Genre.DRAMA, Genre.ALL], // Use enum values
             shortDescription: "A team of explorers travel through a wormhole in space.",
             description: "With humanity's survival at stake, a group of astronauts venture into the unknown...",
-            videoUrl: "https://example.com/interstellar.mp4",
-            thumbnailUrl: "https://example.com/interstellar.jpg",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/interstellar.png",
             length: 169,
         },
     ];
