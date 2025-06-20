@@ -4,12 +4,12 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import 'typeface-lobster';
 
 import './index.css';
-import MainPage from 'pages/main/main-page';
-import HomePage from 'pages/home/home-page';
-import MoviePage from 'pages/movies/movie-page';
-import TvShowPage from 'pages/tv-shows/tv-show-page';
-import LecturePage from 'pages/lectures/lecture-page';
-import SettingsPage from 'pages/settings/settings-page';
+import MainPage from 'pages/main-page';
+import HomePage from 'pages/home-page';
+import MoviePage from 'pages/movie-page';
+import TvShowPage from 'pages/tv-show-page';
+import LecturePage from 'pages/lecture-page';
+import SettingsPage from 'pages/settings-page';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 

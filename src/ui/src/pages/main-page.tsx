@@ -5,7 +5,6 @@ import { FaBars } from "react-icons/fa";
 
 import ThemeContext from "context/theme-context";
 import Theme from "utils/enum/theme";
-
 import Sidebar from "components/sidebar";
 
 
