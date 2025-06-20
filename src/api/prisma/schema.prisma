@@ -1,15 +1,80 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+    provider = "prisma-client-ts"
+    output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Movie {
+    id          Int     @id @default(autoincrement())
+    title       String
+    rating      Float
+    genre       Genre
+    description String?
+	videoUrl    String?
+	thumbnailUrl String?
+}
+
+model Show {
+    id          Int      @id @default(autoincrement())
+    title       String
+    rating      Float
+    genre       Genre
+    description String?
+    episodes    Int
+    seasons     Season[]
+}
+
+model Season {
+    id           Int       @id @default(autoincrement())
+    showId       Int
+    seasonNumber Int
+    episodes     Episode[]
+    show         Show      @relation(fields: [showId], references: [id])
+	rating       Float
+	description  String?
+}
+
+model Episode {
+    id            Int     @id @default(autoincrement())
+    seasonId      Int
+    episodeNumber Int
+    title         String
+    rating        Float
+    description   String?
+    season        Season  @relation(fields: [seasonId], references: [id])
+	videoUrl      String?
+	thumbnailUrl  String?
+}
+
+model Subject {
+	id          Int     @id @default(autoincrement())
+	title       String
+	lectures    Lecture[]
+	thumbnailUrl String?
+}
+
+model Lecture {
+	id          Int     @id @default(autoincrement())
+	title       String
+	notes	  	String[]
+	videoUrl    String?
+	subjectId   Int
+	subject     Subject @relation(fields: [subjectId], references: [id])
+}
+
+enum Genre {
+    ACTION
+    COMEDY
+    DRAMA
+    HORROR
+    SCIFI
+}
+
+model Settings {
+	id          Int     @id @default(autoincrement())
+	darkMode   Boolean @default(false)
 }
