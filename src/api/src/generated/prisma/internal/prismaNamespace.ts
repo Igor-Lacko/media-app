@@ -396,10 +396,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Movie: 'Movie',
   Show: 'Show',
+  EntertainmentGenre: 'EntertainmentGenre',
   Season: 'Season',
   Episode: 'Episode',
   Subject: 'Subject',
   Lecture: 'Lecture',
+  Note: 'Note',
   Settings: 'Settings'
 } as const
 
@@ -416,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "movie" | "show" | "season" | "episode" | "subject" | "lecture" | "settings"
+    modelProps: "movie" | "show" | "entertainmentGenre" | "season" | "episode" | "subject" | "lecture" | "note" | "settings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -565,6 +567,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ShowCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ShowCountAggregateOutputType> | number
+        }
+      }
+    }
+    EntertainmentGenre: {
+      payload: Prisma.$EntertainmentGenrePayload<ExtArgs>
+      fields: Prisma.EntertainmentGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EntertainmentGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EntertainmentGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.EntertainmentGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EntertainmentGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        findMany: {
+          args: Prisma.EntertainmentGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>[]
+        }
+        create: {
+          args: Prisma.EntertainmentGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        createMany: {
+          args: Prisma.EntertainmentGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EntertainmentGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.EntertainmentGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        update: {
+          args: Prisma.EntertainmentGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.EntertainmentGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EntertainmentGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EntertainmentGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.EntertainmentGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EntertainmentGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.EntertainmentGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEntertainmentGenre>
+        }
+        groupBy: {
+          args: Prisma.EntertainmentGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EntertainmentGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EntertainmentGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EntertainmentGenreCountAggregateOutputType> | number
         }
       }
     }
@@ -864,6 +940,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Note: {
+      payload: Prisma.$NotePayload<ExtArgs>
+      fields: Prisma.NoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        findFirst: {
+          args: Prisma.NoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        findMany: {
+          args: Prisma.NoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>[]
+        }
+        create: {
+          args: Prisma.NoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        createMany: {
+          args: Prisma.NoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>[]
+        }
+        delete: {
+          args: Prisma.NoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        update: {
+          args: Prisma.NoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        deleteMany: {
+          args: Prisma.NoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>[]
+        }
+        upsert: {
+          args: Prisma.NoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        aggregate: {
+          args: Prisma.NoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNote>
+        }
+        groupBy: {
+          args: Prisma.NoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NoteCountAggregateOutputType> | number
+        }
+      }
+    }
     Settings: {
       payload: Prisma.$SettingsPayload<ExtArgs>
       fields: Prisma.SettingsFieldRefs
@@ -968,9 +1118,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
@@ -981,11 +1128,11 @@ export const MovieScalarFieldEnum = {
   id: 'id',
   title: 'title',
   rating: 'rating',
-  genres: 'genres',
   shortDescription: 'shortDescription',
   description: 'description',
   videoUrl: 'videoUrl',
-  thumbnailUrl: 'thumbnailUrl'
+  thumbnailUrl: 'thumbnailUrl',
+  length: 'length'
 } as const
 
 export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -995,13 +1142,22 @@ export const ShowScalarFieldEnum = {
   id: 'id',
   title: 'title',
   rating: 'rating',
-  genres: 'genres',
   shortDescription: 'shortDescription',
   description: 'description',
   episodes: 'episodes'
 } as const
 
 export type ShowScalarFieldEnum = (typeof ShowScalarFieldEnum)[keyof typeof ShowScalarFieldEnum]
+
+
+export const EntertainmentGenreScalarFieldEnum = {
+  id: 'id',
+  genre: 'genre',
+  movieId: 'movieId',
+  showId: 'showId'
+} as const
+
+export type EntertainmentGenreScalarFieldEnum = (typeof EntertainmentGenreScalarFieldEnum)[keyof typeof EntertainmentGenreScalarFieldEnum]
 
 
 export const SeasonScalarFieldEnum = {
@@ -1023,7 +1179,8 @@ export const EpisodeScalarFieldEnum = {
   rating: 'rating',
   description: 'description',
   videoUrl: 'videoUrl',
-  thumbnailUrl: 'thumbnailUrl'
+  thumbnailUrl: 'thumbnailUrl',
+  length: 'length'
 } as const
 
 export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
@@ -1041,12 +1198,21 @@ export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeo
 export const LectureScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  notes: 'notes',
   videoUrl: 'videoUrl',
-  subjectId: 'subjectId'
+  subjectId: 'subjectId',
+  length: 'length'
 } as const
 
 export type LectureScalarFieldEnum = (typeof LectureScalarFieldEnum)[keyof typeof LectureScalarFieldEnum]
+
+
+export const NoteScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  lectureId: 'lectureId'
+} as const
+
+export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
 
 
 export const SettingsScalarFieldEnum = {
@@ -1063,14 +1229,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-} as const
-
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {
@@ -1095,13 +1253,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 
 
 /**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -1109,30 +1260,9 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
 
 
 /**
- * Reference to a field of type 'String[]'
- */
-export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'Genre[]'
- */
-export type ListEnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre[]'>
     
 
 
@@ -1226,10 +1356,12 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   movie?: Prisma.MovieOmit
   show?: Prisma.ShowOmit
+  entertainmentGenre?: Prisma.EntertainmentGenreOmit
   season?: Prisma.SeasonOmit
   episode?: Prisma.EpisodeOmit
   subject?: Prisma.SubjectOmit
   lecture?: Prisma.LectureOmit
+  note?: Prisma.NoteOmit
   settings?: Prisma.SettingsOmit
 }
 

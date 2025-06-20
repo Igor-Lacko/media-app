@@ -59,7 +59,6 @@ export type ShowCountAggregateOutputType = {
   id: number
   title: number
   rating: number
-  genres: number
   shortDescription: number
   description: number
   episodes: number
@@ -101,7 +100,6 @@ export type ShowCountAggregateInputType = {
   id?: true
   title?: true
   rating?: true
-  genres?: true
   shortDescription?: true
   description?: true
   episodes?: true
@@ -197,8 +195,7 @@ export type ShowGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ShowGroupByOutputType = {
   id: number
   title: string
-  rating: number
-  genres: $Enums.Genre[]
+  rating: number | null
   shortDescription: string | null
   description: string | null
   episodes: number
@@ -230,22 +227,22 @@ export type ShowWhereInput = {
   NOT?: Prisma.ShowWhereInput | Prisma.ShowWhereInput[]
   id?: Prisma.IntFilter<"Show"> | number
   title?: Prisma.StringFilter<"Show"> | string
-  rating?: Prisma.FloatFilter<"Show"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Show">
+  rating?: Prisma.FloatNullableFilter<"Show"> | number | null
   shortDescription?: Prisma.StringNullableFilter<"Show"> | string | null
   description?: Prisma.StringNullableFilter<"Show"> | string | null
   episodes?: Prisma.IntFilter<"Show"> | number
+  genres?: Prisma.EntertainmentGenreListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
 }
 
 export type ShowOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
+  rating?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  genres?: Prisma.EntertainmentGenreOrderByRelationAggregateInput
   seasons?: Prisma.SeasonOrderByRelationAggregateInput
 }
 
@@ -255,19 +252,18 @@ export type ShowWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ShowWhereInput[]
   NOT?: Prisma.ShowWhereInput | Prisma.ShowWhereInput[]
   title?: Prisma.StringFilter<"Show"> | string
-  rating?: Prisma.FloatFilter<"Show"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Show">
+  rating?: Prisma.FloatNullableFilter<"Show"> | number | null
   shortDescription?: Prisma.StringNullableFilter<"Show"> | string | null
   description?: Prisma.StringNullableFilter<"Show"> | string | null
   episodes?: Prisma.IntFilter<"Show"> | number
+  genres?: Prisma.EntertainmentGenreListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
 }, "id">
 
 export type ShowOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
+  rating?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   episodes?: Prisma.SortOrder
@@ -284,8 +280,7 @@ export type ShowScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ShowScalarWhereWithAggregatesInput | Prisma.ShowScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Show"> | number
   title?: Prisma.StringWithAggregatesFilter<"Show"> | string
-  rating?: Prisma.FloatWithAggregatesFilter<"Show"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Show">
+  rating?: Prisma.FloatNullableWithAggregatesFilter<"Show"> | number | null
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Show"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Show"> | string | null
   episodes?: Prisma.IntWithAggregatesFilter<"Show"> | number
@@ -293,51 +288,50 @@ export type ShowScalarWhereWithAggregatesInput = {
 
 export type ShowCreateInput = {
   title: string
-  rating: number
-  genres?: Prisma.ShowCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutShowInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutShowInput
 }
 
 export type ShowUncheckedCreateInput = {
   id?: number
   title: string
-  rating: number
-  genres?: Prisma.ShowCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutShowInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutShowInput
 }
 
 export type ShowUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  genres?: Prisma.EntertainmentGenreUpdateManyWithoutShowNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutShowNestedInput
 }
 
 export type ShowUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutShowNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutShowNestedInput
 }
 
 export type ShowCreateManyInput = {
   id?: number
   title: string
-  rating: number
-  genres?: Prisma.ShowCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   episodes: number
@@ -345,8 +339,7 @@ export type ShowCreateManyInput = {
 
 export type ShowUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -355,8 +348,7 @@ export type ShowUpdateManyMutationInput = {
 export type ShowUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -366,7 +358,6 @@ export type ShowCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
   episodes?: Prisma.SortOrder
@@ -402,18 +393,30 @@ export type ShowSumOrderByAggregateInput = {
   episodes?: Prisma.SortOrder
 }
 
+export type ShowNullableScalarRelationFilter = {
+  is?: Prisma.ShowWhereInput | null
+  isNot?: Prisma.ShowWhereInput | null
+}
+
 export type ShowScalarRelationFilter = {
   is?: Prisma.ShowWhereInput
   isNot?: Prisma.ShowWhereInput
 }
 
-export type ShowCreategenresInput = {
-  set: $Enums.Genre[]
+export type ShowCreateNestedOneWithoutGenresInput = {
+  create?: Prisma.XOR<Prisma.ShowCreateWithoutGenresInput, Prisma.ShowUncheckedCreateWithoutGenresInput>
+  connectOrCreate?: Prisma.ShowCreateOrConnectWithoutGenresInput
+  connect?: Prisma.ShowWhereUniqueInput
 }
 
-export type ShowUpdategenresInput = {
-  set?: $Enums.Genre[]
-  push?: $Enums.Genre | $Enums.Genre[]
+export type ShowUpdateOneWithoutGenresNestedInput = {
+  create?: Prisma.XOR<Prisma.ShowCreateWithoutGenresInput, Prisma.ShowUncheckedCreateWithoutGenresInput>
+  connectOrCreate?: Prisma.ShowCreateOrConnectWithoutGenresInput
+  upsert?: Prisma.ShowUpsertWithoutGenresInput
+  disconnect?: Prisma.ShowWhereInput | boolean
+  delete?: Prisma.ShowWhereInput | boolean
+  connect?: Prisma.ShowWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShowUpdateToOneWithWhereWithoutGenresInput, Prisma.ShowUpdateWithoutGenresInput>, Prisma.ShowUncheckedUpdateWithoutGenresInput>
 }
 
 export type ShowCreateNestedOneWithoutSeasonsInput = {
@@ -430,23 +433,77 @@ export type ShowUpdateOneRequiredWithoutSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShowUpdateToOneWithWhereWithoutSeasonsInput, Prisma.ShowUpdateWithoutSeasonsInput>, Prisma.ShowUncheckedUpdateWithoutSeasonsInput>
 }
 
-export type ShowCreateWithoutSeasonsInput = {
+export type ShowCreateWithoutGenresInput = {
   title: string
-  rating: number
-  genres?: Prisma.ShowCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  seasons?: Prisma.SeasonCreateNestedManyWithoutShowInput
+}
+
+export type ShowUncheckedCreateWithoutGenresInput = {
+  id?: number
+  title: string
+  rating?: number | null
+  shortDescription?: string | null
+  description?: string | null
+  episodes: number
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutShowInput
+}
+
+export type ShowCreateOrConnectWithoutGenresInput = {
+  where: Prisma.ShowWhereUniqueInput
+  create: Prisma.XOR<Prisma.ShowCreateWithoutGenresInput, Prisma.ShowUncheckedCreateWithoutGenresInput>
+}
+
+export type ShowUpsertWithoutGenresInput = {
+  update: Prisma.XOR<Prisma.ShowUpdateWithoutGenresInput, Prisma.ShowUncheckedUpdateWithoutGenresInput>
+  create: Prisma.XOR<Prisma.ShowCreateWithoutGenresInput, Prisma.ShowUncheckedCreateWithoutGenresInput>
+  where?: Prisma.ShowWhereInput
+}
+
+export type ShowUpdateToOneWithWhereWithoutGenresInput = {
+  where?: Prisma.ShowWhereInput
+  data: Prisma.XOR<Prisma.ShowUpdateWithoutGenresInput, Prisma.ShowUncheckedUpdateWithoutGenresInput>
+}
+
+export type ShowUpdateWithoutGenresInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  seasons?: Prisma.SeasonUpdateManyWithoutShowNestedInput
+}
+
+export type ShowUncheckedUpdateWithoutGenresInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutShowNestedInput
+}
+
+export type ShowCreateWithoutSeasonsInput = {
+  title: string
+  rating?: number | null
+  shortDescription?: string | null
+  description?: string | null
+  episodes: number
+  genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutShowInput
 }
 
 export type ShowUncheckedCreateWithoutSeasonsInput = {
   id?: number
   title: string
-  rating: number
-  genres?: Prisma.ShowCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutShowInput
 }
 
 export type ShowCreateOrConnectWithoutSeasonsInput = {
@@ -467,21 +524,21 @@ export type ShowUpdateToOneWithWhereWithoutSeasonsInput = {
 
 export type ShowUpdateWithoutSeasonsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  genres?: Prisma.EntertainmentGenreUpdateManyWithoutShowNestedInput
 }
 
 export type ShowUncheckedUpdateWithoutSeasonsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.ShowUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutShowNestedInput
 }
 
 
@@ -490,10 +547,12 @@ export type ShowUncheckedUpdateWithoutSeasonsInput = {
  */
 
 export type ShowCountOutputType = {
+  genres: number
   seasons: number
 }
 
 export type ShowCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  genres?: boolean | ShowCountOutputTypeCountGenresArgs
   seasons?: boolean | ShowCountOutputTypeCountSeasonsArgs
 }
 
@@ -510,6 +569,13 @@ export type ShowCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * ShowCountOutputType without action
  */
+export type ShowCountOutputTypeCountGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EntertainmentGenreWhereInput
+}
+
+/**
+ * ShowCountOutputType without action
+ */
 export type ShowCountOutputTypeCountSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SeasonWhereInput
 }
@@ -519,10 +585,10 @@ export type ShowSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
+  genres?: boolean | Prisma.Show$genresArgs<ExtArgs>
   seasons?: boolean | Prisma.Show$seasonsArgs<ExtArgs>
   _count?: boolean | Prisma.ShowCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["show"]>
@@ -531,7 +597,6 @@ export type ShowSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
@@ -541,7 +606,6 @@ export type ShowSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
@@ -551,14 +615,14 @@ export type ShowSelectScalar = {
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
 }
 
-export type ShowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "genres" | "shortDescription" | "description" | "episodes", ExtArgs["result"]["show"]>
+export type ShowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "episodes", ExtArgs["result"]["show"]>
 export type ShowInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  genres?: boolean | Prisma.Show$genresArgs<ExtArgs>
   seasons?: boolean | Prisma.Show$seasonsArgs<ExtArgs>
   _count?: boolean | Prisma.ShowCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -568,13 +632,13 @@ export type ShowIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $ShowPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Show"
   objects: {
+    genres: Prisma.$EntertainmentGenrePayload<ExtArgs>[]
     seasons: Prisma.$SeasonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
-    rating: number
-    genres: $Enums.Genre[]
+    rating: number | null
     shortDescription: string | null
     description: string | null
     episodes: number
@@ -972,6 +1036,7 @@ readonly fields: ShowFieldRefs;
  */
 export interface Prisma__ShowClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  genres<T extends Prisma.Show$genresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Show$genresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EntertainmentGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   seasons<T extends Prisma.Show$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Show$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1005,7 +1070,6 @@ export interface ShowFieldRefs {
   readonly id: Prisma.FieldRef<"Show", 'Int'>
   readonly title: Prisma.FieldRef<"Show", 'String'>
   readonly rating: Prisma.FieldRef<"Show", 'Float'>
-  readonly genres: Prisma.FieldRef<"Show", 'Genre[]'>
   readonly shortDescription: Prisma.FieldRef<"Show", 'String'>
   readonly description: Prisma.FieldRef<"Show", 'String'>
   readonly episodes: Prisma.FieldRef<"Show", 'Int'>
@@ -1238,7 +1302,6 @@ export type ShowCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Shows.
    */
   data: Prisma.ShowCreateManyInput | Prisma.ShowCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1257,7 +1320,6 @@ export type ShowCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Shows.
    */
   data: Prisma.ShowCreateManyInput | Prisma.ShowCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1394,6 +1456,30 @@ export type ShowDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Shows to delete.
    */
   limit?: number
+}
+
+/**
+ * Show.genres
+ */
+export type Show$genresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EntertainmentGenre
+   */
+  select?: Prisma.EntertainmentGenreSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EntertainmentGenre
+   */
+  omit?: Prisma.EntertainmentGenreOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EntertainmentGenreInclude<ExtArgs> | null
+  where?: Prisma.EntertainmentGenreWhereInput
+  orderBy?: Prisma.EntertainmentGenreOrderByWithRelationInput | Prisma.EntertainmentGenreOrderByWithRelationInput[]
+  cursor?: Prisma.EntertainmentGenreWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EntertainmentGenreScalarFieldEnum | Prisma.EntertainmentGenreScalarFieldEnum[]
 }
 
 /**

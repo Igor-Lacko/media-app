@@ -52,6 +52,11 @@ export type Movie = Prisma.MovieModel
  */
 export type Show = Prisma.ShowModel
 /**
+ * Model EntertainmentGenre
+ * 
+ */
+export type EntertainmentGenre = Prisma.EntertainmentGenreModel
+/**
  * Model Season
  * 
  */
@@ -71,6 +76,11 @@ export type Subject = Prisma.SubjectModel
  * 
  */
 export type Lecture = Prisma.LectureModel
+/**
+ * Model Note
+ * 
+ */
+export type Note = Prisma.NoteModel
 /**
  * Model Settings
  * 

@@ -28,11 +28,13 @@ export type AggregateLecture = {
 export type LectureAvgAggregateOutputType = {
   id: number | null
   subjectId: number | null
+  length: number | null
 }
 
 export type LectureSumAggregateOutputType = {
   id: number | null
   subjectId: number | null
+  length: number | null
 }
 
 export type LectureMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type LectureMinAggregateOutputType = {
   title: string | null
   videoUrl: string | null
   subjectId: number | null
+  length: number | null
 }
 
 export type LectureMaxAggregateOutputType = {
@@ -47,14 +50,15 @@ export type LectureMaxAggregateOutputType = {
   title: string | null
   videoUrl: string | null
   subjectId: number | null
+  length: number | null
 }
 
 export type LectureCountAggregateOutputType = {
   id: number
   title: number
-  notes: number
   videoUrl: number
   subjectId: number
+  length: number
   _all: number
 }
 
@@ -62,11 +66,13 @@ export type LectureCountAggregateOutputType = {
 export type LectureAvgAggregateInputType = {
   id?: true
   subjectId?: true
+  length?: true
 }
 
 export type LectureSumAggregateInputType = {
   id?: true
   subjectId?: true
+  length?: true
 }
 
 export type LectureMinAggregateInputType = {
@@ -74,6 +80,7 @@ export type LectureMinAggregateInputType = {
   title?: true
   videoUrl?: true
   subjectId?: true
+  length?: true
 }
 
 export type LectureMaxAggregateInputType = {
@@ -81,14 +88,15 @@ export type LectureMaxAggregateInputType = {
   title?: true
   videoUrl?: true
   subjectId?: true
+  length?: true
 }
 
 export type LectureCountAggregateInputType = {
   id?: true
   title?: true
-  notes?: true
   videoUrl?: true
   subjectId?: true
+  length?: true
   _all?: true
 }
 
@@ -181,9 +189,9 @@ export type LectureGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type LectureGroupByOutputType = {
   id: number
   title: string
-  notes: string[]
   videoUrl: string | null
   subjectId: number
+  length: number | null
   _count: LectureCountAggregateOutputType | null
   _avg: LectureAvgAggregateOutputType | null
   _sum: LectureSumAggregateOutputType | null
@@ -212,18 +220,20 @@ export type LectureWhereInput = {
   NOT?: Prisma.LectureWhereInput | Prisma.LectureWhereInput[]
   id?: Prisma.IntFilter<"Lecture"> | number
   title?: Prisma.StringFilter<"Lecture"> | string
-  notes?: Prisma.StringNullableListFilter<"Lecture">
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
+  length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
 }
 
 export type LectureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.NoteOrderByRelationAggregateInput
   subject?: Prisma.SubjectOrderByWithRelationInput
 }
 
@@ -233,18 +243,19 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LectureWhereInput[]
   NOT?: Prisma.LectureWhereInput | Prisma.LectureWhereInput[]
   title?: Prisma.StringFilter<"Lecture"> | string
-  notes?: Prisma.StringNullableListFilter<"Lecture">
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
+  length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
 }, "id">
 
 export type LectureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LectureCountOrderByAggregateInput
   _avg?: Prisma.LectureAvgOrderByAggregateInput
   _max?: Prisma.LectureMaxOrderByAggregateInput
@@ -258,61 +269,65 @@ export type LectureScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LectureScalarWhereWithAggregatesInput | Prisma.LectureScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
   title?: Prisma.StringWithAggregatesFilter<"Lecture"> | string
-  notes?: Prisma.StringNullableListFilter<"Lecture">
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
+  length?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
 }
 
 export type LectureCreateInput = {
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
+  length?: number | null
+  notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
   subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
 }
 
 export type LectureUncheckedCreateInput = {
   id?: number
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
   subjectId: number
+  length?: number | null
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
   subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
 }
 
 export type LectureUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureCreateManyInput = {
   id?: number
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
   subjectId: number
+  length?: number | null
 }
 
 export type LectureUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type LectureUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type LectureListRelationFilter = {
@@ -325,25 +340,18 @@ export type LectureOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type LectureCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type LectureAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type LectureMaxOrderByAggregateInput = {
@@ -351,6 +359,7 @@ export type LectureMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type LectureMinOrderByAggregateInput = {
@@ -358,11 +367,18 @@ export type LectureMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type LectureSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
+  length?: Prisma.SortOrder
+}
+
+export type LectureScalarRelationFilter = {
+  is?: Prisma.LectureWhereInput
+  isNot?: Prisma.LectureWhereInput
 }
 
 export type LectureCreateNestedManyWithoutSubjectInput = {
@@ -407,26 +423,33 @@ export type LectureUncheckedUpdateManyWithoutSubjectNestedInput = {
   deleteMany?: Prisma.LectureScalarWhereInput | Prisma.LectureScalarWhereInput[]
 }
 
-export type LectureCreatenotesInput = {
-  set: string[]
+export type LectureCreateNestedOneWithoutNotesInput = {
+  create?: Prisma.XOR<Prisma.LectureCreateWithoutNotesInput, Prisma.LectureUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutNotesInput
+  connect?: Prisma.LectureWhereUniqueInput
 }
 
-export type LectureUpdatenotesInput = {
-  set?: string[]
-  push?: string | string[]
+export type LectureUpdateOneRequiredWithoutNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.LectureCreateWithoutNotesInput, Prisma.LectureUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutNotesInput
+  upsert?: Prisma.LectureUpsertWithoutNotesInput
+  connect?: Prisma.LectureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LectureUpdateToOneWithWhereWithoutNotesInput, Prisma.LectureUpdateWithoutNotesInput>, Prisma.LectureUncheckedUpdateWithoutNotesInput>
 }
 
 export type LectureCreateWithoutSubjectInput = {
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
+  length?: number | null
+  notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateWithoutSubjectInput = {
   id?: number
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
+  length?: number | null
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureCreateOrConnectWithoutSubjectInput = {
@@ -436,7 +459,6 @@ export type LectureCreateOrConnectWithoutSubjectInput = {
 
 export type LectureCreateManySubjectInputEnvelope = {
   data: Prisma.LectureCreateManySubjectInput | Prisma.LectureCreateManySubjectInput[]
-  skipDuplicates?: boolean
 }
 
 export type LectureUpsertWithWhereUniqueWithoutSubjectInput = {
@@ -461,78 +483,159 @@ export type LectureScalarWhereInput = {
   NOT?: Prisma.LectureScalarWhereInput | Prisma.LectureScalarWhereInput[]
   id?: Prisma.IntFilter<"Lecture"> | number
   title?: Prisma.StringFilter<"Lecture"> | string
-  notes?: Prisma.StringNullableListFilter<"Lecture">
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
+  length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+}
+
+export type LectureCreateWithoutNotesInput = {
+  title: string
+  videoUrl?: string | null
+  length?: number | null
+  subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
+}
+
+export type LectureUncheckedCreateWithoutNotesInput = {
+  id?: number
+  title: string
+  videoUrl?: string | null
+  subjectId: number
+  length?: number | null
+}
+
+export type LectureCreateOrConnectWithoutNotesInput = {
+  where: Prisma.LectureWhereUniqueInput
+  create: Prisma.XOR<Prisma.LectureCreateWithoutNotesInput, Prisma.LectureUncheckedCreateWithoutNotesInput>
+}
+
+export type LectureUpsertWithoutNotesInput = {
+  update: Prisma.XOR<Prisma.LectureUpdateWithoutNotesInput, Prisma.LectureUncheckedUpdateWithoutNotesInput>
+  create: Prisma.XOR<Prisma.LectureCreateWithoutNotesInput, Prisma.LectureUncheckedCreateWithoutNotesInput>
+  where?: Prisma.LectureWhereInput
+}
+
+export type LectureUpdateToOneWithWhereWithoutNotesInput = {
+  where?: Prisma.LectureWhereInput
+  data: Prisma.XOR<Prisma.LectureUpdateWithoutNotesInput, Prisma.LectureUncheckedUpdateWithoutNotesInput>
+}
+
+export type LectureUpdateWithoutNotesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
+}
+
+export type LectureUncheckedUpdateWithoutNotesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type LectureCreateManySubjectInput = {
   id?: number
   title: string
-  notes?: Prisma.LectureCreatenotesInput | string[]
   videoUrl?: string | null
+  length?: number | null
 }
 
 export type LectureUpdateWithoutSubjectInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateWithoutSubjectInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateManyWithoutSubjectInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.LectureUpdatenotesInput | string[]
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
+
+/**
+ * Count Type LectureCountOutputType
+ */
+
+export type LectureCountOutputType = {
+  notes: number
+}
+
+export type LectureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  notes?: boolean | LectureCountOutputTypeCountNotesArgs
+}
+
+/**
+ * LectureCountOutputType without action
+ */
+export type LectureCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LectureCountOutputType
+   */
+  select?: Prisma.LectureCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LectureCountOutputType without action
+ */
+export type LectureCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
 
 
 export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
-  notes?: boolean
   videoUrl?: boolean
   subjectId?: boolean
+  length?: boolean
+  notes?: boolean | Prisma.Lecture$notesArgs<ExtArgs>
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
 
 export type LectureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
-  notes?: boolean
   videoUrl?: boolean
   subjectId?: boolean
+  length?: boolean
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
 
 export type LectureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
-  notes?: boolean
   videoUrl?: boolean
   subjectId?: boolean
+  length?: boolean
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
 
 export type LectureSelectScalar = {
   id?: boolean
   title?: boolean
-  notes?: boolean
   videoUrl?: boolean
   subjectId?: boolean
+  length?: boolean
 }
 
-export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "notes" | "videoUrl" | "subjectId", ExtArgs["result"]["lecture"]>
+export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "videoUrl" | "subjectId" | "length", ExtArgs["result"]["lecture"]>
 export type LectureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  notes?: boolean | Prisma.Lecture$notesArgs<ExtArgs>
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LectureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
@@ -544,14 +647,15 @@ export type LectureIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Lecture"
   objects: {
+    notes: Prisma.$NotePayload<ExtArgs>[]
     subject: Prisma.$SubjectPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
-    notes: string[]
     videoUrl: string | null
     subjectId: number
+    length: number | null
   }, ExtArgs["result"]["lecture"]>
   composites: {}
 }
@@ -946,6 +1050,7 @@ readonly fields: LectureFieldRefs;
  */
 export interface Prisma__LectureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  notes<T extends Prisma.Lecture$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lecture$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subject<T extends Prisma.SubjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubjectDefaultArgs<ExtArgs>>): Prisma.Prisma__SubjectClient<runtime.Types.Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -978,9 +1083,9 @@ export interface Prisma__LectureClient<T, Null = never, ExtArgs extends runtime.
 export interface LectureFieldRefs {
   readonly id: Prisma.FieldRef<"Lecture", 'Int'>
   readonly title: Prisma.FieldRef<"Lecture", 'String'>
-  readonly notes: Prisma.FieldRef<"Lecture", 'String[]'>
   readonly videoUrl: Prisma.FieldRef<"Lecture", 'String'>
   readonly subjectId: Prisma.FieldRef<"Lecture", 'Int'>
+  readonly length: Prisma.FieldRef<"Lecture", 'Int'>
 }
     
 
@@ -1210,7 +1315,6 @@ export type LectureCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Lectures.
    */
   data: Prisma.LectureCreateManyInput | Prisma.LectureCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1229,7 +1333,6 @@ export type LectureCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Lectures.
    */
   data: Prisma.LectureCreateManyInput | Prisma.LectureCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
@@ -1374,6 +1477,30 @@ export type LectureDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Lectures to delete.
    */
   limit?: number
+}
+
+/**
+ * Lecture.notes
+ */
+export type Lecture$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
 }
 
 /**

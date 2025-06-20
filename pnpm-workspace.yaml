@@ -4,6 +4,9 @@ packages:
   - src/shared
 
 onlyBuiltDependencies:
+  - '@prisma/client'
   - '@prisma/engines'
   - '@tailwindcss/oxide'
+  - electron
+  - esbuild
   - prisma

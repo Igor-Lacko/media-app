@@ -4,31 +4,40 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider = "sqlite"
+    url      = "file:./dev.db"
 }
 
 model Movie {
     id           Int     @id @default(autoincrement())
     title        String
-    rating       Float
-    genres       Genre[]
+    rating       Float?
+    genres       EntertainmentGenre[]
     shortDescription String?
     description  String?
     videoUrl     String?
     thumbnailUrl String?
-    length       Int
+    length       Int?
 }
 
 model Show {
     id          Int      @id @default(autoincrement())
     title       String
-    rating      Float
-    genres      Genre[]
+    rating      Float?
+    genres      EntertainmentGenre[]
     shortDescription String?
     description String?
     episodes    Int
     seasons     Season[]
+}
+
+model EntertainmentGenre {
+    id        Int     @id @default(autoincrement())
+    genre    Genre
+    movieId  Int?
+    showId   Int?
+    movie    Movie?  @relation(fields: [movieId], references: [id])
+    show     Show?   @relation(fields: [showId], references: [id])
 }
 
 model Season {
@@ -37,7 +46,7 @@ model Season {
     seasonNumber Int
     episodes     Episode[]
     show         Show      @relation(fields: [showId], references: [id])
-    rating       Float
+    rating       Float?
     description  String?
 }
 
@@ -46,12 +55,12 @@ model Episode {
     seasonId      Int
     episodeNumber Int
     title         String
-    rating        Float
+    rating        Float?
     description   String?
     season        Season  @relation(fields: [seasonId], references: [id])
     videoUrl      String?
     thumbnailUrl  String?
-    length        Int
+    length        Int?
 }
 
 model Subject {
@@ -64,11 +73,18 @@ model Subject {
 model Lecture {
     id        Int      @id @default(autoincrement())
     title     String
-    notes     String[]
+    notes     Note[]
     videoUrl  String?
     subjectId Int
     subject   Subject  @relation(fields: [subjectId], references: [id])
-    length    Int
+    length    Int?
+}
+
+model Note {
+    id      Int     @id @default(autoincrement())
+    content String
+    lectureId Int
+    lecture Lecture @relation(fields: [lectureId], references: [id])
 }
 
 enum Genre {

@@ -9,9 +9,11 @@
  */
 export type * from './models/Movie.js'
 export type * from './models/Show.js'
+export type * from './models/EntertainmentGenre.js'
 export type * from './models/Season.js'
 export type * from './models/Episode.js'
 export type * from './models/Subject.js'
 export type * from './models/Lecture.js'
+export type * from './models/Note.js'
 export type * from './models/Settings.js'
 export type * from './commonInputTypes.js'

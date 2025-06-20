@@ -28,11 +28,13 @@ export type AggregateMovie = {
 export type MovieAvgAggregateOutputType = {
   id: number | null
   rating: number | null
+  length: number | null
 }
 
 export type MovieSumAggregateOutputType = {
   id: number | null
   rating: number | null
+  length: number | null
 }
 
 export type MovieMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type MovieMinAggregateOutputType = {
   description: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
+  length: number | null
 }
 
 export type MovieMaxAggregateOutputType = {
@@ -53,17 +56,18 @@ export type MovieMaxAggregateOutputType = {
   description: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
+  length: number | null
 }
 
 export type MovieCountAggregateOutputType = {
   id: number
   title: number
   rating: number
-  genres: number
   shortDescription: number
   description: number
   videoUrl: number
   thumbnailUrl: number
+  length: number
   _all: number
 }
 
@@ -71,11 +75,13 @@ export type MovieCountAggregateOutputType = {
 export type MovieAvgAggregateInputType = {
   id?: true
   rating?: true
+  length?: true
 }
 
 export type MovieSumAggregateInputType = {
   id?: true
   rating?: true
+  length?: true
 }
 
 export type MovieMinAggregateInputType = {
@@ -86,6 +92,7 @@ export type MovieMinAggregateInputType = {
   description?: true
   videoUrl?: true
   thumbnailUrl?: true
+  length?: true
 }
 
 export type MovieMaxAggregateInputType = {
@@ -96,17 +103,18 @@ export type MovieMaxAggregateInputType = {
   description?: true
   videoUrl?: true
   thumbnailUrl?: true
+  length?: true
 }
 
 export type MovieCountAggregateInputType = {
   id?: true
   title?: true
   rating?: true
-  genres?: true
   shortDescription?: true
   description?: true
   videoUrl?: true
   thumbnailUrl?: true
+  length?: true
   _all?: true
 }
 
@@ -199,12 +207,12 @@ export type MovieGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MovieGroupByOutputType = {
   id: number
   title: string
-  rating: number
-  genres: $Enums.Genre[]
+  rating: number | null
   shortDescription: string | null
   description: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
+  length: number | null
   _count: MovieCountAggregateOutputType | null
   _avg: MovieAvgAggregateOutputType | null
   _sum: MovieSumAggregateOutputType | null
@@ -233,23 +241,25 @@ export type MovieWhereInput = {
   NOT?: Prisma.MovieWhereInput | Prisma.MovieWhereInput[]
   id?: Prisma.IntFilter<"Movie"> | number
   title?: Prisma.StringFilter<"Movie"> | string
-  rating?: Prisma.FloatFilter<"Movie"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Movie">
+  rating?: Prisma.FloatNullableFilter<"Movie"> | number | null
   shortDescription?: Prisma.StringNullableFilter<"Movie"> | string | null
   description?: Prisma.StringNullableFilter<"Movie"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
+  length?: Prisma.IntNullableFilter<"Movie"> | number | null
+  genres?: Prisma.EntertainmentGenreListRelationFilter
 }
 
 export type MovieOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
+  rating?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  length?: Prisma.SortOrderInput | Prisma.SortOrder
+  genres?: Prisma.EntertainmentGenreOrderByRelationAggregateInput
 }
 
 export type MovieWhereUniqueInput = Prisma.AtLeast<{
@@ -258,23 +268,24 @@ export type MovieWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MovieWhereInput[]
   NOT?: Prisma.MovieWhereInput | Prisma.MovieWhereInput[]
   title?: Prisma.StringFilter<"Movie"> | string
-  rating?: Prisma.FloatFilter<"Movie"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Movie">
+  rating?: Prisma.FloatNullableFilter<"Movie"> | number | null
   shortDescription?: Prisma.StringNullableFilter<"Movie"> | string | null
   description?: Prisma.StringNullableFilter<"Movie"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
+  length?: Prisma.IntNullableFilter<"Movie"> | number | null
+  genres?: Prisma.EntertainmentGenreListRelationFilter
 }, "id">
 
 export type MovieOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
+  rating?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  length?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MovieCountOrderByAggregateInput
   _avg?: Prisma.MovieAvgOrderByAggregateInput
   _max?: Prisma.MovieMaxOrderByAggregateInput
@@ -288,110 +299,107 @@ export type MovieScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MovieScalarWhereWithAggregatesInput | Prisma.MovieScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Movie"> | number
   title?: Prisma.StringWithAggregatesFilter<"Movie"> | string
-  rating?: Prisma.FloatWithAggregatesFilter<"Movie"> | number
-  genres?: Prisma.EnumGenreNullableListFilter<"Movie">
+  rating?: Prisma.FloatNullableWithAggregatesFilter<"Movie"> | number | null
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
+  length?: Prisma.IntNullableWithAggregatesFilter<"Movie"> | number | null
 }
 
 export type MovieCreateInput = {
   title: string
-  rating: number
-  genres?: Prisma.MovieCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
+  length?: number | null
+  genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutMovieInput
 }
 
 export type MovieUncheckedCreateInput = {
   id?: number
   title: string
-  rating: number
-  genres?: Prisma.MovieCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
+  length?: number | null
+  genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutMovieInput
 }
 
 export type MovieUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.MovieUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  genres?: Prisma.EntertainmentGenreUpdateManyWithoutMovieNestedInput
 }
 
 export type MovieUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.MovieUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutMovieNestedInput
 }
 
 export type MovieCreateManyInput = {
   id?: number
   title: string
-  rating: number
-  genres?: Prisma.MovieCreategenresInput | $Enums.Genre[]
+  rating?: number | null
   shortDescription?: string | null
   description?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
+  length?: number | null
 }
 
 export type MovieUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.MovieUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MovieUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  rating?: Prisma.FloatFieldUpdateOperationsInput | number
-  genres?: Prisma.MovieUpdategenresInput | $Enums.Genre[]
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type EnumGenreNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.Genre[] | Prisma.ListEnumGenreFieldRefInput<$PrismaModel> | null
-  has?: $Enums.Genre | Prisma.EnumGenreFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.Genre[] | Prisma.ListEnumGenreFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.Genre[] | Prisma.ListEnumGenreFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MovieCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  genres?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type MovieAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type MovieMaxOrderByAggregateInput = {
@@ -402,6 +410,7 @@ export type MovieMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type MovieMinOrderByAggregateInput = {
@@ -412,36 +421,42 @@ export type MovieMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
 export type MovieSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   rating?: Prisma.SortOrder
+  length?: Prisma.SortOrder
 }
 
-export type MovieCreategenresInput = {
-  set: $Enums.Genre[]
+export type MovieNullableScalarRelationFilter = {
+  is?: Prisma.MovieWhereInput | null
+  isNot?: Prisma.MovieWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
 }
 
-export type MovieUpdategenresInput = {
-  set?: $Enums.Genre[]
-  push?: $Enums.Genre | $Enums.Genre[]
-}
-
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -452,66 +467,179 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type MovieCreateNestedOneWithoutGenresInput = {
+  create?: Prisma.XOR<Prisma.MovieCreateWithoutGenresInput, Prisma.MovieUncheckedCreateWithoutGenresInput>
+  connectOrCreate?: Prisma.MovieCreateOrConnectWithoutGenresInput
+  connect?: Prisma.MovieWhereUniqueInput
+}
+
+export type MovieUpdateOneWithoutGenresNestedInput = {
+  create?: Prisma.XOR<Prisma.MovieCreateWithoutGenresInput, Prisma.MovieUncheckedCreateWithoutGenresInput>
+  connectOrCreate?: Prisma.MovieCreateOrConnectWithoutGenresInput
+  upsert?: Prisma.MovieUpsertWithoutGenresInput
+  disconnect?: Prisma.MovieWhereInput | boolean
+  delete?: Prisma.MovieWhereInput | boolean
+  connect?: Prisma.MovieWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MovieUpdateToOneWithWhereWithoutGenresInput, Prisma.MovieUpdateWithoutGenresInput>, Prisma.MovieUncheckedUpdateWithoutGenresInput>
+}
+
+export type MovieCreateWithoutGenresInput = {
+  title: string
+  rating?: number | null
+  shortDescription?: string | null
+  description?: string | null
+  videoUrl?: string | null
+  thumbnailUrl?: string | null
+  length?: number | null
+}
+
+export type MovieUncheckedCreateWithoutGenresInput = {
+  id?: number
+  title: string
+  rating?: number | null
+  shortDescription?: string | null
+  description?: string | null
+  videoUrl?: string | null
+  thumbnailUrl?: string | null
+  length?: number | null
+}
+
+export type MovieCreateOrConnectWithoutGenresInput = {
+  where: Prisma.MovieWhereUniqueInput
+  create: Prisma.XOR<Prisma.MovieCreateWithoutGenresInput, Prisma.MovieUncheckedCreateWithoutGenresInput>
+}
+
+export type MovieUpsertWithoutGenresInput = {
+  update: Prisma.XOR<Prisma.MovieUpdateWithoutGenresInput, Prisma.MovieUncheckedUpdateWithoutGenresInput>
+  create: Prisma.XOR<Prisma.MovieCreateWithoutGenresInput, Prisma.MovieUncheckedCreateWithoutGenresInput>
+  where?: Prisma.MovieWhereInput
+}
+
+export type MovieUpdateToOneWithWhereWithoutGenresInput = {
+  where?: Prisma.MovieWhereInput
+  data: Prisma.XOR<Prisma.MovieUpdateWithoutGenresInput, Prisma.MovieUncheckedUpdateWithoutGenresInput>
+}
+
+export type MovieUpdateWithoutGenresInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type MovieUncheckedUpdateWithoutGenresInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+
+/**
+ * Count Type MovieCountOutputType
+ */
+
+export type MovieCountOutputType = {
+  genres: number
+}
+
+export type MovieCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  genres?: boolean | MovieCountOutputTypeCountGenresArgs
+}
+
+/**
+ * MovieCountOutputType without action
+ */
+export type MovieCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MovieCountOutputType
+   */
+  select?: Prisma.MovieCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MovieCountOutputType without action
+ */
+export type MovieCountOutputTypeCountGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EntertainmentGenreWhereInput
+}
 
 
 export type MovieSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
+  length?: boolean
+  genres?: boolean | Prisma.Movie$genresArgs<ExtArgs>
+  _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["movie"]>
 
 export type MovieSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
+  length?: boolean
 }, ExtArgs["result"]["movie"]>
 
 export type MovieSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
+  length?: boolean
 }, ExtArgs["result"]["movie"]>
 
 export type MovieSelectScalar = {
   id?: boolean
   title?: boolean
   rating?: boolean
-  genres?: boolean
   shortDescription?: boolean
   description?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
+  length?: boolean
 }
 
-export type MovieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "genres" | "shortDescription" | "description" | "videoUrl" | "thumbnailUrl", ExtArgs["result"]["movie"]>
+export type MovieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "videoUrl" | "thumbnailUrl" | "length", ExtArgs["result"]["movie"]>
+export type MovieInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  genres?: boolean | Prisma.Movie$genresArgs<ExtArgs>
+  _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type MovieIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type MovieIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $MoviePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Movie"
-  objects: {}
+  objects: {
+    genres: Prisma.$EntertainmentGenrePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
-    rating: number
-    genres: $Enums.Genre[]
+    rating: number | null
     shortDescription: string | null
     description: string | null
     videoUrl: string | null
     thumbnailUrl: string | null
+    length: number | null
   }, ExtArgs["result"]["movie"]>
   composites: {}
 }
@@ -906,6 +1034,7 @@ readonly fields: MovieFieldRefs;
  */
 export interface Prisma__MovieClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  genres<T extends Prisma.Movie$genresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Movie$genresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EntertainmentGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -938,11 +1067,11 @@ export interface MovieFieldRefs {
   readonly id: Prisma.FieldRef<"Movie", 'Int'>
   readonly title: Prisma.FieldRef<"Movie", 'String'>
   readonly rating: Prisma.FieldRef<"Movie", 'Float'>
-  readonly genres: Prisma.FieldRef<"Movie", 'Genre[]'>
   readonly shortDescription: Prisma.FieldRef<"Movie", 'String'>
   readonly description: Prisma.FieldRef<"Movie", 'String'>
   readonly videoUrl: Prisma.FieldRef<"Movie", 'String'>
   readonly thumbnailUrl: Prisma.FieldRef<"Movie", 'String'>
+  readonly length: Prisma.FieldRef<"Movie", 'Int'>
 }
     
 
@@ -959,6 +1088,10 @@ export type MovieFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Movie
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
   /**
    * Filter, which Movie to fetch.
    */
@@ -978,6 +1111,10 @@ export type MovieFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * Filter, which Movie to fetch.
    */
   where: Prisma.MovieWhereUniqueInput
@@ -995,6 +1132,10 @@ export type MovieFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Movie
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
   /**
    * Filter, which Movie to fetch.
    */
@@ -1044,6 +1185,10 @@ export type MovieFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * Filter, which Movie to fetch.
    */
   where?: Prisma.MovieWhereInput
@@ -1092,6 +1237,10 @@ export type MovieFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * Filter, which Movies to fetch.
    */
   where?: Prisma.MovieWhereInput
@@ -1135,6 +1284,10 @@ export type MovieCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * The data needed to create a Movie.
    */
   data: Prisma.XOR<Prisma.MovieCreateInput, Prisma.MovieUncheckedCreateInput>
@@ -1148,7 +1301,6 @@ export type MovieCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Movies.
    */
   data: Prisma.MovieCreateManyInput | Prisma.MovieCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1167,7 +1319,6 @@ export type MovieCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many Movies.
    */
   data: Prisma.MovieCreateManyInput | Prisma.MovieCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1182,6 +1333,10 @@ export type MovieUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Movie
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
   /**
    * The data needed to update a Movie.
    */
@@ -1249,6 +1404,10 @@ export type MovieUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * The filter to search for the Movie to update in case it exists.
    */
   where: Prisma.MovieWhereUniqueInput
@@ -1275,6 +1434,10 @@ export type MovieDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  /**
    * Filter which Movie to delete.
    */
   where: Prisma.MovieWhereUniqueInput
@@ -1295,6 +1458,30 @@ export type MovieDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * Movie.genres
+ */
+export type Movie$genresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EntertainmentGenre
+   */
+  select?: Prisma.EntertainmentGenreSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EntertainmentGenre
+   */
+  omit?: Prisma.EntertainmentGenreOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EntertainmentGenreInclude<ExtArgs> | null
+  where?: Prisma.EntertainmentGenreWhereInput
+  orderBy?: Prisma.EntertainmentGenreOrderByWithRelationInput | Prisma.EntertainmentGenreOrderByWithRelationInput[]
+  cursor?: Prisma.EntertainmentGenreWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EntertainmentGenreScalarFieldEnum | Prisma.EntertainmentGenreScalarFieldEnum[]
+}
+
+/**
  * Movie without action
  */
 export type MovieDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1306,4 +1493,8 @@ export type MovieDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Movie
    */
   omit?: Prisma.MovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
 }

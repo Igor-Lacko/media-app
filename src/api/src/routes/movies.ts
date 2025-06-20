@@ -12,3 +12,17 @@ router.get("/", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch movies" });
     }
 });
+
+// Setter for inserting a movie
+router.post("/", async (req, res) => {
+    const movie = req.body;
+
+    try {
+        const newMovie = await GetMovies(movie);
+        res.status(201).json(newMovie);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to insert movie" });
+    }
+});
+
+export default router;
