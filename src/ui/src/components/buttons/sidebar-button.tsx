@@ -13,7 +13,7 @@ export default function SidebarButton(props : SidebarButtonProps) {
             className={( { isActive }  : {isActive : boolean}) => 
                 classNames (
                     "flex justify-center p-2 space-x-2 m-1 items-center rounded-4xl w-full text-black \
-                    dark:text-gray-300 text-lg md:text-base sm:text-sm font-semibold",
+                    dark:text-gray-300 text-lg md:text-base sm:text-sm font-semibold transition-all duration-300 ease-in-out",
                     {
                         // Active
                         "bg-purple-500" : isActive,

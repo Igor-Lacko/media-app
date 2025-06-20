@@ -17,7 +17,7 @@ const rootContainer : ReactNode = (
     <HashRouter>
         <Routes>
             <Route path="/" element={<MainPage />}>
-                <Route path="home" element={<HomePage />} />
+                <Route index element={<HomePage />} />
                 <Route path="movies" element={<MoviePage />} />
                 <Route path="tv-shows" element={<TvShowPage />} />
                 <Route path="lectures" element={<LecturePage />} />

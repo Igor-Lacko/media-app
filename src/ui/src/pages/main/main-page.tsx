@@ -6,7 +6,7 @@ import { FaBars } from "react-icons/fa";
 import ThemeContext from "context/theme-context";
 import Theme from "utils/enum/theme";
 
-import Sidebar from "components/sidebar/sidebar";
+import Sidebar from "components/sidebar";
 
 
 export default function MainPage() {
@@ -22,7 +22,7 @@ export default function MainPage() {
         >
             <div
                 className={classNames(
-                    "flex bg-white dark:bg-gray-800 h-screen w-screen",
+                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-auto overflow-x-hidden",
                     {
                         "dark" : theme === Theme.Dark,
                         "light" : theme === Theme.Light,
@@ -34,27 +34,32 @@ export default function MainPage() {
                     onToggle={() => setSidebarVisible(!sidebarVisible)}
                 />}
                 <div
-                    className={classNames(
-                        "flex flex-grow items-center justify-center p-4 transition-all duration-500 ease-in-out",
-                        {
-                            "blur-sm" : sidebarVisible
-                        }
-                    )}
+                    className={"flex flex-col w-6/7 flex-grow h-full m-0 items-start justify-start space-y-2"}
                 >
-                    <Outlet />
-                </div>
-                <div
-                    className="flex w-1/25 h-full items-start pr-2 pt-4"
-                >
-                    <FaBars
+                    <div
+                        className="flex w-full h-1/25 items-center justify-end pt-4 pr-4"
+                    >
+                        <FaBars
+                            className={classNames(
+                                "text-black dark:text-gray-200 h-full w-1/25 transition-all duration-500 ease-in-out p-0",
+                                {
+                                    "blur-sm" : sidebarVisible,
+                                    "cursor-pointer" : !sidebarVisible
+                                }
+                            )}
+                            onClick={() => setSidebarVisible(true)}
+                        />
+                    </div>
+                    <div
                         className={classNames(
-                            "text-black dark:text-gray-200 cursor-pointer h-1/20 transition-all duration-500 ease-in-out",
+                            "flex grow h-24/25 min-w-screen mt-10 items-start justify-center transition-all duration-500 ease-in-out",
                             {
-                                "blur-sm" : sidebarVisible,
+                                "blur-sm" : sidebarVisible
                             }
                         )}
-                        onClick={() => setSidebarVisible(true)}
-                    />
+                    >
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </ThemeContext>
