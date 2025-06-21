@@ -74,6 +74,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumWatchStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WatchStatus | Prisma.EnumWatchStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WatchStatus[]
+  notIn?: $Enums.WatchStatus[]
+  not?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel> | $Enums.WatchStatus
+}
+
 export type SortOrderInput = {
   sort: Prisma.SortOrder
   nulls?: Prisma.NullsOrder
@@ -159,6 +166,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumWatchStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WatchStatus | Prisma.EnumWatchStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WatchStatus[]
+  notIn?: $Enums.WatchStatus[]
+  not?: Prisma.NestedEnumWatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.WatchStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel>
 }
 
 export type EnumGenreFilter<$PrismaModel = never> = {
@@ -252,6 +269,13 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type NestedEnumWatchStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WatchStatus | Prisma.EnumWatchStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WatchStatus[]
+  notIn?: $Enums.WatchStatus[]
+  not?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel> | $Enums.WatchStatus
+}
+
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -343,6 +367,16 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumWatchStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WatchStatus | Prisma.EnumWatchStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WatchStatus[]
+  notIn?: $Enums.WatchStatus[]
+  not?: Prisma.NestedEnumWatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.WatchStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWatchStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumGenreFilter<$PrismaModel = never> = {

@@ -1,4 +1,5 @@
 import { Genre } from "generated/prisma/enums";
+import { WatchStatus } from "generated/prisma/enums";
 import { InsertMovie } from "controllers/movie-controller";
 
 export default async function seedMovies() {
@@ -11,6 +12,8 @@ export default async function seedMovies() {
             description: "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
             length: 148,
+            watchStatus: WatchStatus.WATCHED,
+            continueAt: 0, // Optional field, can be omitted if not needed
         },
         {
             title: "The Matrix",
@@ -20,6 +23,8 @@ export default async function seedMovies() {
             description: "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
             length: 136,
+            watchStatus: WatchStatus.WATCHING,
+            continueAt: 0, // Optional field, can be omitted if not needed
         },
         {
             title: "Interstellar",
@@ -27,8 +32,10 @@ export default async function seedMovies() {
             genres: [Genre.COMEDY, Genre.DRAMA, Genre.ALL], // Use enum values
             shortDescription: "A team of explorers travel through a wormhole in space.",
             description: "With humanity's survival at stake, a group of astronauts venture into the unknown...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/interstellar.png",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/interstellar.jpg",
             length: 169,
+            watchStatus: WatchStatus.UNWATCHED,
+            continueAt: 0, // Optional field, can be omitted if not needed
         },
     ];
 

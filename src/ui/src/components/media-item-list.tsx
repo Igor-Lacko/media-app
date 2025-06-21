@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
-import ListProps from "utils/interface/list-props";
+import ListProps from "utils/interface/props/list-props";
 import GenreAdapter from "utils/adapters/genre-adapter";
+import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import Genre from "@shared/enum/genre";
 import { FaStar } from "react-icons/fa";
+import classNames from "classnames";
+import WatchStatus from "@shared/enum/watch-status";
 
 /**
  * List of media items with links to their pages.
@@ -10,20 +13,27 @@ import { FaStar } from "react-icons/fa";
  */
 export default function MediaItemList(props: ListProps) {
     return (
-        <div className="flex flex-col items-center w-full h-full overflow-y-auto">
-            {props.items.map((item) => (
+        <div className={"flex flex-col items-center w-full h-full overflow-y-auto"}>
+            {props.items.map((item, index) => (
                 <NavLink
                     key={item.identifier}
                     to={`/${props.path}/${item.identifier}`}
-                    className="flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                    className={classNames(
+                        "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200",
+                        {
+                            "bg-gray-200 dark:bg-gray-900": index % 2 === 0,
+                            "bg-white dark:bg-gray-800": index % 2 !== 0,
+                            "border-b-2 border-gray-300 dark:border-gray-700": index < props.items.length - 1
+                        }
+                    )}
                 >
                     <img
-                        src={item.thumbnailUrl}
+                        src={`local://${item.thumbnailUrl}`}
                         alt={item.title}
-                        className={"w-1/10 h-full"}
+                        className={"w-1/10 sm:w-1/10 h-full"}
                     />
                     <div
-                        className={"flex flex-col h-full items-start justify-start w-4/10"}
+                        className={"flex ml-3 flex-col h-full items-start justify-start w-4/10"}
                     >
                         <h3 className={"text-lg font-semibold"}>{item.title}</h3>
                         {item.shortDescription && (
@@ -50,6 +60,18 @@ export default function MediaItemList(props: ListProps) {
                             {item.rating ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
                         </span>
                     </div>
+                    <span
+                        className={classNames(
+                            "flex items-center justify-center w-2/10 h-full text-md",
+                            {
+                                "text-green-500": item.watchStatus === WatchStatus.WATCHED,
+                                "text-blue-500": item.watchStatus === WatchStatus.WATCHING,
+                                "text-gray-500": item.watchStatus === WatchStatus.UNWATCHED
+                            }
+                        )}
+                    >
+                        {watchStatusAdapter(item.watchStatus)}
+                    </span>
                 </NavLink>
             ))}
         </div>

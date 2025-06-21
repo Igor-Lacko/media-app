@@ -1132,7 +1132,9 @@ export const MovieScalarFieldEnum = {
   description: 'description',
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl',
-  length: 'length'
+  length: 'length',
+  watchStatus: 'watchStatus',
+  continueAt: 'continueAt'
 } as const
 
 export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -1144,7 +1146,8 @@ export const ShowScalarFieldEnum = {
   rating: 'rating',
   shortDescription: 'shortDescription',
   description: 'description',
-  episodes: 'episodes'
+  episodes: 'episodes',
+  watchStatus: 'watchStatus'
 } as const
 
 export type ShowScalarFieldEnum = (typeof ShowScalarFieldEnum)[keyof typeof ShowScalarFieldEnum]
@@ -1180,7 +1183,8 @@ export const EpisodeScalarFieldEnum = {
   description: 'description',
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl',
-  length: 'length'
+  length: 'length',
+  continueAt: 'continueAt'
 } as const
 
 export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
@@ -1200,7 +1204,8 @@ export const LectureScalarFieldEnum = {
   title: 'title',
   videoUrl: 'videoUrl',
   subjectId: 'subjectId',
-  length: 'length'
+  length: 'length',
+  continueAt: 'continueAt'
 } as const
 
 export type LectureScalarFieldEnum = (typeof LectureScalarFieldEnum)[keyof typeof LectureScalarFieldEnum]
@@ -1263,6 +1268,13 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'WatchStatus'
+ */
+export type EnumWatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WatchStatus'>
     
 
 

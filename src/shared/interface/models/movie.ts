@@ -1,5 +1,4 @@
 import CardDisplayable from "./card-displayable";
-import DetailFillable from "./detail-fillable";
 import Genre from "shared/enum/genre";
 import WatchStatus from "shared/enum/watch-status";
 
@@ -13,8 +12,7 @@ export interface Movie extends CardDisplayable {
     description?: string;
     videoUrl?: string;
     length?: number;
-    watchStatus: WatchStatus;
-    continueAt: number;
+
 }
 
 export default Movie;

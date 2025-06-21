@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, protocol, net } from 'electron';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -18,7 +18,13 @@ function createWindow() {
     mainWindow.loadURL(startUrl);
 }
 
-app.on('ready', () => {
+app.whenReady().then(() => {
+    // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)
+    protocol.handle('local', async (request, callback) => {
+        const filePath = request.url.replace(`local://`, 'file://');
+        return net.fetch(filePath);
+    });
+
     createWindow();
 
     app.on('activate', () => {

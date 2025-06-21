@@ -1,7 +1,6 @@
 import Genre from "shared/enum/genre";
-import WatchStatus from "shared/enum/watch-status";
 /**
- * Common interface for movies/shows/lectures that can be displayed in a card.
+ * Common interface for movies/shows/subjects that can be displayed in a card.
  */
 export interface CardDisplayable {
     identifier?: number;
@@ -11,7 +10,6 @@ export interface CardDisplayable {
     genres: Genre[];
     shortDescription?: string;
     nofSubMedia?: number;
-    watchStatus?: WatchStatus;
 }
 
 export default CardDisplayable;

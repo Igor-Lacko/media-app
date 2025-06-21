@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DropdownProps from "utils/interface/dropdown-props";
+import DropdownProps from "utils/interface/props/dropdown-props";
 import classNames from "classnames";
 
 export default function DropdownMenu(props : DropdownProps) {

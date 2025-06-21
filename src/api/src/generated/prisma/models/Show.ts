@@ -44,6 +44,7 @@ export type ShowMinAggregateOutputType = {
   shortDescription: string | null
   description: string | null
   episodes: number | null
+  watchStatus: $Enums.WatchStatus | null
 }
 
 export type ShowMaxAggregateOutputType = {
@@ -53,6 +54,7 @@ export type ShowMaxAggregateOutputType = {
   shortDescription: string | null
   description: string | null
   episodes: number | null
+  watchStatus: $Enums.WatchStatus | null
 }
 
 export type ShowCountAggregateOutputType = {
@@ -62,6 +64,7 @@ export type ShowCountAggregateOutputType = {
   shortDescription: number
   description: number
   episodes: number
+  watchStatus: number
   _all: number
 }
 
@@ -85,6 +88,7 @@ export type ShowMinAggregateInputType = {
   shortDescription?: true
   description?: true
   episodes?: true
+  watchStatus?: true
 }
 
 export type ShowMaxAggregateInputType = {
@@ -94,6 +98,7 @@ export type ShowMaxAggregateInputType = {
   shortDescription?: true
   description?: true
   episodes?: true
+  watchStatus?: true
 }
 
 export type ShowCountAggregateInputType = {
@@ -103,6 +108,7 @@ export type ShowCountAggregateInputType = {
   shortDescription?: true
   description?: true
   episodes?: true
+  watchStatus?: true
   _all?: true
 }
 
@@ -199,6 +205,7 @@ export type ShowGroupByOutputType = {
   shortDescription: string | null
   description: string | null
   episodes: number
+  watchStatus: $Enums.WatchStatus
   _count: ShowCountAggregateOutputType | null
   _avg: ShowAvgAggregateOutputType | null
   _sum: ShowSumAggregateOutputType | null
@@ -231,6 +238,7 @@ export type ShowWhereInput = {
   shortDescription?: Prisma.StringNullableFilter<"Show"> | string | null
   description?: Prisma.StringNullableFilter<"Show"> | string | null
   episodes?: Prisma.IntFilter<"Show"> | number
+  watchStatus?: Prisma.EnumWatchStatusFilter<"Show"> | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
 }
@@ -242,6 +250,7 @@ export type ShowOrderByWithRelationInput = {
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  watchStatus?: Prisma.SortOrder
   genres?: Prisma.EntertainmentGenreOrderByRelationAggregateInput
   seasons?: Prisma.SeasonOrderByRelationAggregateInput
 }
@@ -256,6 +265,7 @@ export type ShowWhereUniqueInput = Prisma.AtLeast<{
   shortDescription?: Prisma.StringNullableFilter<"Show"> | string | null
   description?: Prisma.StringNullableFilter<"Show"> | string | null
   episodes?: Prisma.IntFilter<"Show"> | number
+  watchStatus?: Prisma.EnumWatchStatusFilter<"Show"> | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
 }, "id">
@@ -267,6 +277,7 @@ export type ShowOrderByWithAggregationInput = {
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  watchStatus?: Prisma.SortOrder
   _count?: Prisma.ShowCountOrderByAggregateInput
   _avg?: Prisma.ShowAvgOrderByAggregateInput
   _max?: Prisma.ShowMaxOrderByAggregateInput
@@ -284,6 +295,7 @@ export type ShowScalarWhereWithAggregatesInput = {
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Show"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Show"> | string | null
   episodes?: Prisma.IntWithAggregatesFilter<"Show"> | number
+  watchStatus?: Prisma.EnumWatchStatusWithAggregatesFilter<"Show"> | $Enums.WatchStatus
 }
 
 export type ShowCreateInput = {
@@ -292,6 +304,7 @@ export type ShowCreateInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutShowInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutShowInput
 }
@@ -303,6 +316,7 @@ export type ShowUncheckedCreateInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutShowInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutShowInput
 }
@@ -313,6 +327,7 @@ export type ShowUpdateInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUpdateManyWithoutShowNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutShowNestedInput
 }
@@ -324,6 +339,7 @@ export type ShowUncheckedUpdateInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutShowNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutShowNestedInput
 }
@@ -335,6 +351,7 @@ export type ShowCreateManyInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
 }
 
 export type ShowUpdateManyMutationInput = {
@@ -343,6 +360,7 @@ export type ShowUpdateManyMutationInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
 }
 
 export type ShowUncheckedUpdateManyInput = {
@@ -352,6 +370,7 @@ export type ShowUncheckedUpdateManyInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
 }
 
 export type ShowCountOrderByAggregateInput = {
@@ -361,6 +380,7 @@ export type ShowCountOrderByAggregateInput = {
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  watchStatus?: Prisma.SortOrder
 }
 
 export type ShowAvgOrderByAggregateInput = {
@@ -376,6 +396,7 @@ export type ShowMaxOrderByAggregateInput = {
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  watchStatus?: Prisma.SortOrder
 }
 
 export type ShowMinOrderByAggregateInput = {
@@ -385,6 +406,7 @@ export type ShowMinOrderByAggregateInput = {
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
   episodes?: Prisma.SortOrder
+  watchStatus?: Prisma.SortOrder
 }
 
 export type ShowSumOrderByAggregateInput = {
@@ -439,6 +461,7 @@ export type ShowCreateWithoutGenresInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   seasons?: Prisma.SeasonCreateNestedManyWithoutShowInput
 }
 
@@ -449,6 +472,7 @@ export type ShowUncheckedCreateWithoutGenresInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutShowInput
 }
 
@@ -474,6 +498,7 @@ export type ShowUpdateWithoutGenresInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   seasons?: Prisma.SeasonUpdateManyWithoutShowNestedInput
 }
 
@@ -484,6 +509,7 @@ export type ShowUncheckedUpdateWithoutGenresInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutShowNestedInput
 }
 
@@ -493,6 +519,7 @@ export type ShowCreateWithoutSeasonsInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutShowInput
 }
 
@@ -503,6 +530,7 @@ export type ShowUncheckedCreateWithoutSeasonsInput = {
   shortDescription?: string | null
   description?: string | null
   episodes: number
+  watchStatus?: $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutShowInput
 }
 
@@ -528,6 +556,7 @@ export type ShowUpdateWithoutSeasonsInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUpdateManyWithoutShowNestedInput
 }
 
@@ -538,6 +567,7 @@ export type ShowUncheckedUpdateWithoutSeasonsInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.IntFieldUpdateOperationsInput | number
+  watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutShowNestedInput
 }
 
@@ -588,6 +618,7 @@ export type ShowSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
+  watchStatus?: boolean
   genres?: boolean | Prisma.Show$genresArgs<ExtArgs>
   seasons?: boolean | Prisma.Show$seasonsArgs<ExtArgs>
   _count?: boolean | Prisma.ShowCountOutputTypeDefaultArgs<ExtArgs>
@@ -600,6 +631,7 @@ export type ShowSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
+  watchStatus?: boolean
 }, ExtArgs["result"]["show"]>
 
 export type ShowSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -609,6 +641,7 @@ export type ShowSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
+  watchStatus?: boolean
 }, ExtArgs["result"]["show"]>
 
 export type ShowSelectScalar = {
@@ -618,9 +651,10 @@ export type ShowSelectScalar = {
   shortDescription?: boolean
   description?: boolean
   episodes?: boolean
+  watchStatus?: boolean
 }
 
-export type ShowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "episodes", ExtArgs["result"]["show"]>
+export type ShowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "episodes" | "watchStatus", ExtArgs["result"]["show"]>
 export type ShowInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genres?: boolean | Prisma.Show$genresArgs<ExtArgs>
   seasons?: boolean | Prisma.Show$seasonsArgs<ExtArgs>
@@ -642,6 +676,7 @@ export type $ShowPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     shortDescription: string | null
     description: string | null
     episodes: number
+    watchStatus: $Enums.WatchStatus
   }, ExtArgs["result"]["show"]>
   composites: {}
 }
@@ -1073,6 +1108,7 @@ export interface ShowFieldRefs {
   readonly shortDescription: Prisma.FieldRef<"Show", 'String'>
   readonly description: Prisma.FieldRef<"Show", 'String'>
   readonly episodes: Prisma.FieldRef<"Show", 'Int'>
+  readonly watchStatus: Prisma.FieldRef<"Show", 'WatchStatus'>
 }
     
 

@@ -1,4 +1,3 @@
-import { Interface } from "readline";
 import SortKey from "@shared/enum/sort-key"
 import Genre from "@shared/enum/genre";
 

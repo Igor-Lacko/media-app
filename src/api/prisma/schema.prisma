@@ -18,6 +18,8 @@ model Movie {
     videoUrl     String?
     thumbnailUrl String?
     length       Int?
+    watchStatus WatchStatus @default(UNWATCHED)
+    continueAt  Int @default(0)
 }
 
 model Show {
@@ -29,6 +31,7 @@ model Show {
     description String?
     episodes    Int
     seasons     Season[]
+    watchStatus  WatchStatus @default(UNWATCHED)
 }
 
 model EntertainmentGenre {
@@ -61,6 +64,7 @@ model Episode {
     videoUrl      String?
     thumbnailUrl  String?
     length        Int?
+    continueAt  Int @default(0)
 }
 
 model Subject {
@@ -78,6 +82,7 @@ model Lecture {
     subjectId Int
     subject   Subject  @relation(fields: [subjectId], references: [id])
     length    Int?
+    continueAt  Int @default(0)
 }
 
 model Note {
@@ -94,6 +99,12 @@ enum Genre {
     DRAMA
     HORROR
     SCIFI
+}
+
+enum WatchStatus {
+    WATCHED
+    UNWATCHED
+    WATCHING
 }
 
 model Settings {

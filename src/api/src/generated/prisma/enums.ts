@@ -17,3 +17,12 @@ export const Genre = {
 } as const
 
 export type Genre = (typeof Genre)[keyof typeof Genre]
+
+
+export const WatchStatus = {
+  WATCHED: 'WATCHED',
+  UNWATCHED: 'UNWATCHED',
+  WATCHING: 'WATCHING'
+} as const
+
+export type WatchStatus = (typeof WatchStatus)[keyof typeof WatchStatus]

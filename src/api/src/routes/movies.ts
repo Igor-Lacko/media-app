@@ -9,7 +9,7 @@ const router = Router();
 router.get("/", async (req, res) => {
     // Sort/filter/search
     const { sortBy, filter } = req.query;
-    console.log("Fetching all movies...");
+    console.log("Fetching movies...");
     try {
         const movies = await GetMovies(sortBy as SortKey, filter as Genre);
         res.json(movies);

@@ -89,3 +89,6 @@ export type Settings = Prisma.SettingsModel
 
 export type Genre = $Enums.Genre
 export const Genre = $Enums.Genre
+
+export type WatchStatus = $Enums.WatchStatus
+export const WatchStatus = $Enums.WatchStatus
