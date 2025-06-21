@@ -8,10 +8,10 @@ export interface CardDisplayable {
     title: string;
     rating?: number;
     thumbnailUrl?: string;
-    genres: Genre[];
     shortDescription?: string;
-    nofSubMedia?: number;
+    submediaString?: string; // 7 seasons or 5 lectures
     watchStatus?: WatchStatus;
+    genres: Genre[];
 }
 
 export default CardDisplayable;

@@ -1184,7 +1184,8 @@ export const EpisodeScalarFieldEnum = {
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl',
   length: 'length',
-  continueAt: 'continueAt'
+  continueAt: 'continueAt',
+  watchStatus: 'watchStatus'
 } as const
 
 export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]

@@ -5,7 +5,8 @@ export interface DetailFillable {
     thumbnailUrl?: string;
     videoUrl?: string;
     length?: number;
-    continueAt: number;
+    description?: string;
+    continueAt?: number;
 }
 
 export default DetailFillable;

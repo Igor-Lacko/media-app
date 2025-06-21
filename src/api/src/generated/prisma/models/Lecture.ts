@@ -202,7 +202,7 @@ export type LectureGroupByOutputType = {
   videoUrl: string | null
   subjectId: number
   length: number | null
-  continueAt: number | null
+  continueAt: number
   _count: LectureCountAggregateOutputType | null
   _avg: LectureAvgAggregateOutputType | null
   _sum: LectureSumAggregateOutputType | null
@@ -234,7 +234,7 @@ export type LectureWhereInput = {
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
-  continueAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  continueAt?: Prisma.IntFilter<"Lecture"> | number
   notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
 }
@@ -245,7 +245,7 @@ export type LectureOrderByWithRelationInput = {
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   subjectId?: Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
-  continueAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  continueAt?: Prisma.SortOrder
   notes?: Prisma.NoteOrderByRelationAggregateInput
   subject?: Prisma.SubjectOrderByWithRelationInput
 }
@@ -259,7 +259,7 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
-  continueAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  continueAt?: Prisma.IntFilter<"Lecture"> | number
   notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
 }, "id">
@@ -270,7 +270,7 @@ export type LectureOrderByWithAggregationInput = {
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   subjectId?: Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
-  continueAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  continueAt?: Prisma.SortOrder
   _count?: Prisma.LectureCountOrderByAggregateInput
   _avg?: Prisma.LectureAvgOrderByAggregateInput
   _max?: Prisma.LectureMaxOrderByAggregateInput
@@ -287,14 +287,14 @@ export type LectureScalarWhereWithAggregatesInput = {
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
   length?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
-  continueAt?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
+  continueAt?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
 }
 
 export type LectureCreateInput = {
   title: string
   videoUrl?: string | null
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
   notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
   subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
 }
@@ -305,7 +305,7 @@ export type LectureUncheckedCreateInput = {
   videoUrl?: string | null
   subjectId: number
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
   notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
 
@@ -313,7 +313,7 @@ export type LectureUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
   subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
 }
@@ -324,7 +324,7 @@ export type LectureUncheckedUpdateInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
 
@@ -334,14 +334,14 @@ export type LectureCreateManyInput = {
   videoUrl?: string | null
   subjectId: number
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
 }
 
 export type LectureUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type LectureUncheckedUpdateManyInput = {
@@ -350,7 +350,7 @@ export type LectureUncheckedUpdateManyInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type LectureListRelationFilter = {
@@ -469,7 +469,7 @@ export type LectureCreateWithoutSubjectInput = {
   title: string
   videoUrl?: string | null
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
   notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
 }
 
@@ -478,7 +478,7 @@ export type LectureUncheckedCreateWithoutSubjectInput = {
   title: string
   videoUrl?: string | null
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
   notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
 
@@ -516,14 +516,14 @@ export type LectureScalarWhereInput = {
   videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
-  continueAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  continueAt?: Prisma.IntFilter<"Lecture"> | number
 }
 
 export type LectureCreateWithoutNotesInput = {
   title: string
   videoUrl?: string | null
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
   subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
 }
 
@@ -533,7 +533,7 @@ export type LectureUncheckedCreateWithoutNotesInput = {
   videoUrl?: string | null
   subjectId: number
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
 }
 
 export type LectureCreateOrConnectWithoutNotesInput = {
@@ -556,7 +556,7 @@ export type LectureUpdateWithoutNotesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
 }
 
@@ -566,7 +566,7 @@ export type LectureUncheckedUpdateWithoutNotesInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type LectureCreateManySubjectInput = {
@@ -574,14 +574,14 @@ export type LectureCreateManySubjectInput = {
   title: string
   videoUrl?: string | null
   length?: number | null
-  continueAt?: number | null
+  continueAt?: number
 }
 
 export type LectureUpdateWithoutSubjectInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
 }
 
@@ -590,7 +590,7 @@ export type LectureUncheckedUpdateWithoutSubjectInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
 
@@ -599,7 +599,7 @@ export type LectureUncheckedUpdateManyWithoutSubjectInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  continueAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -699,7 +699,7 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     videoUrl: string | null
     subjectId: number
     length: number | null
-    continueAt: number | null
+    continueAt: number
   }, ExtArgs["result"]["lecture"]>
   composites: {}
 }

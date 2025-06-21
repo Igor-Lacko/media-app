@@ -65,6 +65,7 @@ model Episode {
     thumbnailUrl  String?
     length        Int?
     continueAt  Int @default(0)
+    watchStatus WatchStatus @default(UNWATCHED)
 }
 
 model Subject {

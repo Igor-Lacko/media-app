@@ -41,6 +41,11 @@ export default function MediaItemList(props: ListProps) {
                                 {item.shortDescription}
                             </p>
                         )}
+                        {item.submediaString && (
+                            <span className="text-sm text-gray-500 dark:text-gray-300">
+                                {item.submediaString}
+                            </span>
+                        )}
                     </div>
                     <div
                         className={"flex h-full w-2/10 items-center justify-center"}
