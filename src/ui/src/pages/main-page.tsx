@@ -1,30 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classNames from "classnames";
 import { Outlet } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 
-import ThemeContext from "context/theme-context";
-import Theme from "utils/enum/theme";
+import SettingsContext from "context/settings-context";
 import Sidebar from "components/sidebar";
-
+import Settings from "@shared/interface/models/settings";
+import { LoadSettings } from "data/provider";
 
 export default function MainPage() {
-    const [theme, setTheme] = useState<Theme>(Theme.Light);
+    const [settings, setSettings] = useState<Settings>({darkMode: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
 
+    useEffect(() => {
+        const fetchSettings = async () => {
+            const loadedSettings = await LoadSettings();
+            setSettings(loadedSettings);
+        };
+        fetchSettings();
+    }, []);
+
     return (
-        <ThemeContext
+        <SettingsContext
             value={{
-                theme,
-                setTheme
+                settings,
+                setSettings,
             }}
         >
             <div
                 className={classNames(
                     "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-auto overflow-x-hidden",
                     {
-                        "dark" : theme === Theme.Dark,
-                        "light" : theme === Theme.Light,
+                        "dark" : settings.darkMode,
+                        "light" : !settings.darkMode,
                     }
                 )}
             >
@@ -61,6 +69,6 @@ export default function MainPage() {
                     </div>
                 </div>
             </div>
-        </ThemeContext>
+        </SettingsContext>
     );
 }

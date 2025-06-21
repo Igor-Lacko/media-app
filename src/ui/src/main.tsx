@@ -6,6 +6,7 @@ import 'typeface-lobster';
 
 import './index.css';
 import 'data/axios-config';
+import Settings from "@shared/interface/models/settings";
 import MainPage from 'pages/main-page';
 import HomePage from 'pages/home-page';
 import MoviePage from 'pages/movie-page';
@@ -17,6 +18,7 @@ import SettingsPage from 'pages/settings-page';
 const queryClient = new QueryClient();
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
+
 
 const rootContainer : ReactNode = (
     <QueryClientProvider client={queryClient}>
