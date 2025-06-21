@@ -40,7 +40,7 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
             )}
         >
             <div
-                className={"flex w-full flex-col items-center space-y-2 pt-5 sm:pt-10 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
+                className={"flex w-full flex-col items-start space-y-2 pt-5 sm:pt-10 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
             >
                 <div
                     className={"flex items-center justify-end w-full"}
@@ -86,8 +86,8 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
                 className={"flex items-center justify-center w-full h-1/20 border-t-2 border-gray-300 dark:border-gray-700"}
             >
                 <button
-                    className={"flex w-full h-full items-start justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500\
-                                text-black dark:text-gray-200 p-2 transition-all duration-300 ease-in-out sm:p-0.5 sm:text-sm"}
+                    className={"flex w-full h-full items-center-safe justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500\
+                                text-black dark:text-gray-200 mb-2 transition-all duration-300 ease-in-out sm:p-0.5 sm:text-sm"}
                     onClick={() => { handleToggle(); }}
                 >
                     Hide Sidebar

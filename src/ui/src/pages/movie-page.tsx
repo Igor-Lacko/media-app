@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
 import ControlBar from "components/control-bar";
-import movie from "@shared/interface/movie";
+import movie from "@shared/interface/models/movie";
 import useFilter from "hooks/use-filter";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
 import FetchData from "data/provider";
 import MediaItemList from "components/media-item-list";
-import path from "path";
+import ControlBarProps from "utils/interface/props/control-bar-props";
+import ListProps from "utils/interface/props/list-props";
 
 /**
  * App movie page.
@@ -19,27 +20,23 @@ export default function MoviePage() {
 
     // Fetch movies
     const data = useQuery({
-        queryKey: ["movies", sort, filter],
-        queryFn: async () => await FetchData<movie>("/api/movies", { sortBy : sort , filter : filter })
+        queryKey: ["movies", sort, filter, search],
+        queryFn: async () => await FetchData<movie>("/api/movies", { sortBy : sort , filter : filter, search: search }),
     })
 
-    const controlBarProps = {
+    const controlBarProps : ControlBarProps = {
         title: "Your movies",
-        genre: true,
-        rating: true,
-        numberOfEpisodes: false,
-        numberOfSeasons: false,
-        length: true,
-        enableFavorites: true,
+        filter: true,
+        sortOptions: [SortKey.LENGTH, SortKey.NAME, SortKey.RATING],
         onSortChange: (sortKey: SortKey) => {setSort(sortKey)},
         onFilterChange: (filterKey: Genre) => {setFilter(filterKey)},
         onSearchChange: (searchTerm: string) => {setSearch(searchTerm)},
         onAddClick: () => {console.log("Add movie clicked")},
     };
 
-    const movieListProps = {
+    const movieListProps : ListProps = {
         items: data.data || [],
-        path: "movies",
+        path: "movies"
     }
 
     return (

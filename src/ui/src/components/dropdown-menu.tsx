@@ -5,10 +5,11 @@ import classNames from "classnames";
 export default function DropdownMenu(props : DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [selection, setSelection] = useState(props.initialValue);
+    const [selectionText, setSelectionText] = useState(props.initialText)
 
     return (
         <div 
-            className={"relative flex flex-col items-center h-full " + props.width}
+            className={"relative flex flex-col items-start h-full " + props.width}
         >
             <span
                 className="flex items-end w-full p-2 text-lg text-gray-500"
@@ -19,7 +20,8 @@ export default function DropdownMenu(props : DropdownProps) {
                         className="flex items-center rounded-full lg:p-2 cursor-pointer hover:bg-gray-300 transition-all duration-300 ease-in-out"
                         onClick={() => setIsOpen(!isOpen)}
                     >
-                        {props.title}
+                        {props.prefix ? `${props.prefix} ${selectionText}` :
+                            selectionText}
                         {props.icon}
                     </div>
                 </span>
@@ -48,6 +50,7 @@ export default function DropdownMenu(props : DropdownProps) {
                             )}
                             onClick={() => {
                                 setSelection(option.value);
+                                setSelectionText(option.key);
                                 props.onChange(option.value);
                                 setIsOpen(false);
                             }}

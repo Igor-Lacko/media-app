@@ -7,6 +7,7 @@ import Genre from "@shared/enum/genre";
 export interface FetchOptions {
     sortBy: SortKey;
     filter: Genre;
+    search?: string;
 }
 
 export default FetchOptions;

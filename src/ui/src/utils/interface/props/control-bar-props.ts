@@ -6,12 +6,8 @@ import Genre from "@shared/enum/genre";
  */
 export interface ControlBarProps {
     title: string;
-    genre: boolean;
-    rating: boolean;
-    numberOfEpisodes: boolean;
-    numberOfSeasons: boolean;
-    length: boolean;
-    enableFavorites: boolean;
+    filter: boolean;
+    sortOptions: SortKey[];
     onSortChange: (sortKey: SortKey) => void;
     onFilterChange: (filterKey: Genre) => void;
     onSearchChange: (searchTerm: string) => void;

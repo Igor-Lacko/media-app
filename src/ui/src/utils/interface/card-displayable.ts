@@ -1,4 +1,4 @@
-import Genre from "shared/enum/genre";
+import Genre from "@shared/enum/genre";
 /**
  * Common interface for movies/shows/subjects that can be displayed in a card.
  */

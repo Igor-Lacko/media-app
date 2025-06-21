@@ -7,9 +7,10 @@ import React from "react";
  */
 export interface DropdownProps {
     // Visual
-    title: string;
+    prefix?: string;
     icon: React.ReactNode;
     width: string;
+    initialText: string;
 
     // Options
     options: { key: string; value: SortKey | Genre }[];
