@@ -14,12 +14,14 @@ export default function DropdownMenu(props : DropdownProps) {
                 className="flex items-end w-full p-2 text-lg text-gray-500"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span
-                    className="flex items-end w-1/2 p-2 rounded-full cursor-pointer \
-                    hover:bg-gray-300 transition-all duration-300 ease-in-out"
-                >
-                    {props.title}
-                    {props.icon}
+                <span className="flex items-end w-1/2 p-2 sm:w-full sm:text-sm sm:p-0 md:text-base lg:text-lg">
+                    <div
+                        className="flex items-center rounded-full lg:p-2 cursor-pointer hover:bg-gray-300 transition-all duration-300 ease-in-out"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        {props.title}
+                        {props.icon}
+                    </div>
                 </span>
             </span>
             <div

@@ -1,7 +1,7 @@
 import { FaSort } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 
-import ControlBarProps from "utils/interface/control-bar-props";
+import ControlBarProps from "utils/interface/props/control-bar-props";
 import DropdownMenu from "./dropdown-menu";
 import SortKey from "@shared/enum/sort-key";
 import Genre from "@shared/enum/genre";
@@ -40,7 +40,7 @@ export default function ControlBar(props : ControlBarProps) {
             className={"flex items-center w-full h-1/10 justify-start p-5 border-b-2 border-gray-300 dark:border-gray-700"}
         >
             <span
-                className={"text-4xl font-semibold h-full w-2/10 text-black dark:text-gray-200 ml-10"}
+                className={"text-4xl sm:text-lg md:text-2xl font-semibold h-full w-2/10 text-black dark:text-gray-200 ml-10"}
             >
                 {props.title}
             </span>

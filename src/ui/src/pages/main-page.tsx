@@ -36,7 +36,7 @@ export default function MainPage() {
                     className={"flex flex-col w-6/7 flex-grow h-full m-0 items-start justify-start space-y-2"}
                 >
                     <div
-                        className="flex w-full h-1/25 items-center justify-end pt-4 pr-4"
+                        className="flex w-full h-1/25 sm:h-1/20 items-center justify-end pt-4 pr-4"
                     >
                         <FaBars
                             className={classNames(

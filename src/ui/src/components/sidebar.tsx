@@ -40,17 +40,17 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
             )}
         >
             <div
-                className={"flex w-full flex-col items-center space-y-2 pt-5 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
+                className={"flex w-full flex-col items-center space-y-2 pt-5 sm:pt-10 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
             >
                 <div
                     className={"flex items-center justify-end w-full"}
                 >
                     <FaVideo
-                        className={"text-purple-500 lg:text-7xl w-full md:text-md sm:text-sm font-bold justify-center"}
+                        className={"text-purple-500 lg:text-7xl w-full md:text-2xl sm:text-2xl font-bold justify-center"}
                     />
                 </div>
                 <span
-                    className={"text-purple-500 lg:text-5xl md:text-md sm:text-sm font-bold font-[lobster]"}
+                    className={"text-purple-500 lg:text-5xl md:text-lg sm:text-lg font-bold font-[lobster]"}
                 >Media Player</span>
             </div>
             <div
@@ -87,7 +87,7 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
             >
                 <button
                     className={"flex w-full h-full items-start justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500\
-                                text-black dark:text-gray-200 p-2 transition-all duration-300 ease-in-out"}
+                                text-black dark:text-gray-200 p-2 transition-all duration-300 ease-in-out sm:p-0.5 sm:text-sm"}
                     onClick={() => { handleToggle(); }}
                 >
                     Hide Sidebar
