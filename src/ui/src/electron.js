@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-const DEV_SERVER_URL = 'http://localhost:5173';
+const DEV_SERVER_URL = 'http://localhost:5173/';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST_PATH = `file://${join(__dirname, '../dist/index.html')}`
 

@@ -1,32 +1,54 @@
-import CardDisplayable from "@shared/interface/card-displayable";
 import { NavLink } from "react-router-dom";
+import ListProps from "utils/interface/list-props";
+import GenreAdapter from "utils/adapters/genre-adapter";
+import Genre from "@shared/enum/genre";
+import { FaStar } from "react-icons/fa";
 
 /**
  * List of media items with links to their pages.
+ * Inspired by MyAnimeList.
  */
-export default function MediaItemList({ items } : { items: CardDisplayable[] }) {
+export default function MediaItemList(props: ListProps) {
     return (
         <div className="flex flex-col items-center w-full h-full overflow-y-auto">
-            {items.map((item) => (
+            {props.items.map((item) => (
                 <NavLink
                     key={item.identifier}
-                    to={`/media/${item.identifier}`}
-                    className="w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                    to={`/${props.path}/${item.identifier}`}
+                    className="flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 >
-                    <div className="flex items-center space-x-4">
-                        {item.thumbnailUrl && (
-                            <img
-                                src={item.thumbnailUrl}
-                                alt={item.title}
-                                className="w-16 h-16 object-cover rounded"
-                            />
+                    <img
+                        src={item.thumbnailUrl}
+                        alt={item.title}
+                        className={"w-1/10 h-full"}
+                    />
+                    <div
+                        className={"flex flex-col h-full items-start justify-start w-4/10"}
+                    >
+                        <h3 className={"text-lg font-semibold"}>{item.title}</h3>
+                        {item.shortDescription && (
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                {item.shortDescription}
+                            </p>
                         )}
-                        <div>
-                            <h3 className="text-lg font-semibold">{item.title}</h3>
-                            {item.rating && (
-                                <p className="text-sm text-gray-500">Rating: {item.rating}</p>
-                            )}
-                        </div>
+                    </div>
+                    <div
+                        className={"flex h-full w-2/10 items-center justify-center"}
+                    >
+                        {item.genres.length > 0 && (
+                            <span
+                                className={"text-md text-gray-500 dark:text-gray-300"}
+                            >
+                                {item.genres.filter((genre) => (genre !== Genre.ALL)).map((genre) => (GenreAdapter(genre).key)).join(", ")}
+                            </span>
+                        )}
+                    </div>
+                    <div
+                        className={"flex flex-col h-full w-2/10 items-center justify-center"}
+                    >
+                        <span className={"text-lg text-yellow-500"}>
+                            {item.rating ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
+                        </span>
                     </div>
                 </NavLink>
             ))}

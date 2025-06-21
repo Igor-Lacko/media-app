@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev:ui": "pnpm --filter ./src/ui dev",
-    "dev:api": "tsx src/api/src/main.ts",
-    "dev:electron": "electron src/electron/main.ts",
-    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:api\" \"pnpm dev:electron\"",
-    "dev:app": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\""
+    "dev:api": "cd src/api && npm run dev",
+    "dev:electron": "cd src/ui && electron --gtk-version=3 .",
+    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:api\"",
+    "dev:app": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\" \"pnpm dev:api\""
   },
   "keywords": [],
   "author": "",

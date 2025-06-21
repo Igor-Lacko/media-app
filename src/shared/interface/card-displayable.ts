@@ -1,4 +1,4 @@
-import { Genre } from "@api/src/generated/prisma/enums";
+import Genre from "shared/enum/genre";
 /**
  * Common interface for movies/shows/lectures that can be displayed in a card.
  */

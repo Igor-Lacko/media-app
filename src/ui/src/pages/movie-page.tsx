@@ -7,6 +7,7 @@ import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
 import FetchData from "data/provider";
 import MediaItemList from "components/media-item-list";
+import path from "path";
 
 /**
  * App movie page.
@@ -36,6 +37,11 @@ export default function MoviePage() {
         onAddClick: () => {console.log("Add movie clicked")},
     };
 
+    const movieListProps = {
+        items: data.data || [],
+        path: "movies",
+    }
+
     return (
         <div
             className={"flex w-full h-full flex-col items-center justify-center p-0 m-0"}
@@ -44,7 +50,9 @@ export default function MoviePage() {
             <div
                 className={"flex flex-col w-full h-full p-4"}
             >
-                <MediaItemList items={data.data || []}></MediaItemList>
+                <MediaItemList
+                    {...movieListProps}
+                />
             </div>
         </div>
     );

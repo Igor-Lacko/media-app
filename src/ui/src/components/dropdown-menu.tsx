@@ -1,6 +1,4 @@
-import SortKey from "@shared/enum/sort-key";
-import Genre from "@shared/enum/genre";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DropdownProps from "utils/interface/dropdown-props";
 import classNames from "classnames";
 

@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
         "@shared/*": ["src/shared/*"],
-        "@ui/*": ["src/ui/*"],
-        "@api/*": ["src/api/*"]
+        "@ui/*": ["src/ui/src/*"],
+        "@api/*": ["src/api/src/*"]
     },
     },
     
