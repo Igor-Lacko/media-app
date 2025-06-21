@@ -63,6 +63,8 @@ export async function InsertMovie(movie: Movie): Promise<Movie | null> {
             },
         });
 
+        console.log(`Inserted movie: ${movie.title}`);
+
         return movie;
     } catch (error) {
         console.error("Error inserting movie: " + error);

@@ -6,7 +6,7 @@ export default async function seedMovies() {
         {
             title: "Inception",
             rating: 8.8,
-            genres: [Genre.DRAMA, Genre.HORROR], // Use enum values
+            genres: [Genre.DRAMA, Genre.HORROR, Genre.ALL], // Use enum values
             shortDescription: "A thief who steals corporate secrets through dream-sharing technology.",
             description: "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
