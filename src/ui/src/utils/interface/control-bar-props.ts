@@ -15,6 +15,7 @@ export interface ControlBarProps {
     onSortChange: (sortKey: SortKey) => void;
     onFilterChange: (filterKey: Genre) => void;
     onSearchChange: (searchTerm: string) => void;
+    onAddClick: () => void;
 }
 
 export default ControlBarProps;

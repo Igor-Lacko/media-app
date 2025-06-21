@@ -6,6 +6,7 @@ import useFilter from "hooks/use-filter";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
 import FetchData from "data/provider";
+import MediaItemList from "components/media-item-list";
 
 /**
  * App movie page.
@@ -18,7 +19,7 @@ export default function MoviePage() {
     // Fetch movies
     const data = useQuery({
         queryKey: ["movies", sort, filter],
-        queryFn: async () => await FetchData<movie>("movies", { sortBy : sort , filter : filter })
+        queryFn: async () => await FetchData<movie>("/api/movies", { sortBy : sort , filter : filter })
     })
 
     const controlBarProps = {
@@ -31,7 +32,8 @@ export default function MoviePage() {
         enableFavorites: true,
         onSortChange: (sortKey: SortKey) => {setSort(sortKey)},
         onFilterChange: (filterKey: Genre) => {setFilter(filterKey)},
-        onSearchChange: (searchTerm: string) => {setSearch(searchTerm)}
+        onSearchChange: (searchTerm: string) => {setSearch(searchTerm)},
+        onAddClick: () => {console.log("Add movie clicked")},
     };
 
     return (
@@ -42,7 +44,7 @@ export default function MoviePage() {
             <div
                 className={"flex flex-col w-full h-full p-4"}
             >
-
+                <MediaItemList items={data.data || []}></MediaItemList>
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
 
 export default defineConfig({
     plugins: [
@@ -14,7 +15,10 @@ export default defineConfig({
             'hooks': '/src/hooks',
             'context': '/src/context',
             'utils': '/src/utils',
-            '@shared': '../shared',
+            'data': '/src/data',
+            // Does not work normally for some reason
+            '@shared': path.resolve(__dirname, '../shared'),
+            '@api': path.resolve(__dirname, '../api/src'),
         }
     }
 })

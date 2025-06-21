@@ -8,13 +8,14 @@ import FetchOptions from 'utils/interface/fetch-options';
  * @returns Promise with the data object.
  */
 export default async function FetchData<T>(url: string, params : FetchOptions): Promise<T[] | null> {
+    console.log(`Fetching data from ${url} with params:`, params);
     return await axios.get<T[]>(url, {
         params: {
             ...params
         }
     })
-        .then(response => response.data)
-        .catch(_error => {
-            return null;
-        });
+    .then(response => response.data)
+    .catch(_error => {
+        return null;
+    });
 }
