@@ -15,7 +15,7 @@ import DropdownProps from "utils/interface/props/dropdown-props";
 export default function ControlBar(props : ControlBarProps) {
     // Sort and filter texts
     const spanClasses = "flex items-end text-lg p-2 rounded-full text-gray-500\
-        cursor-pointer hover:bg-gray-300 transition-all duration-300 ease-in-out";
+        cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-400 transition-all duration-300 ease-in-out";
     const dropdownWidth = "w-2/10";
 
     const sortProps : DropdownProps = {

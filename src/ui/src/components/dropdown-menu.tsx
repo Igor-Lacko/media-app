@@ -17,7 +17,8 @@ export default function DropdownMenu(props : DropdownProps) {
             >
                 <span className="flex items-end w-1/2 p-2 sm:w-full sm:text-sm sm:p-0 md:text-base lg:text-lg">
                     <div
-                        className="flex items-center rounded-full lg:p-2 cursor-pointer hover:bg-gray-300 transition-all duration-300 ease-in-out"
+                        className={"flex items-center rounded-full lg:p-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-400\
+                            transition-all duration-300 ease-in-out"}
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         {props.prefix ? `${props.prefix} ${selectionText}` :

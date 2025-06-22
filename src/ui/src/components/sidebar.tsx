@@ -40,7 +40,7 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
             )}
         >
             <div
-                className={"flex w-full flex-col items-start space-y-2 pt-5 sm:pt-10 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
+                className={"flex w-full flex-col items-center justify-start space-y-2 pt-5 sm:pt-10 border-b-2 border-b-gray-300 dark:border-b-gray-700 mb-2 h-4/20"}
             >
                 <div
                     className={"flex items-center justify-end w-full"}
