@@ -13,6 +13,7 @@ import SortKey from "@shared/enum/sort-key";
 import SliderOption from "components/options/slider-option";
 import DropdownProps from "utils/interface/props/dropdown-props";
 import SliderProps from "utils/interface/props/slider-props";
+import FileBrowseOption from "components/options/file-browse-option";
 
 /**
  * Form page for adding a new movie.
@@ -71,8 +72,8 @@ export default function AddMoviePage() {
             <div
                 className={"flex items-center justify-center w-full h-1/25 mt-10 mb-5 p-2"}
             >
-                <h1 className={"text-2xl font-bold text-gray-800 dark:text-gray-400"}>
-                    Add Movie
+                <h1 className={"text-4xl font-bold text-gray-800 dark:text-gray-400"}>
+                    New Movie
                 </h1>
             </div>
             <form
@@ -82,25 +83,46 @@ export default function AddMoviePage() {
                     console.log("Form submitted");
                 }}
             >
+                <h2
+                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
+                            mb-0 mt-10 border-t border-gray-300 dark:border-gray-600"}
+                >
+                    Movie Details
+                </h2>
                 <InputOption
                     title={"Title"}
                     placeholder={"Enter movie title"}
                     onChange={(value) => movieRef.current.title = value}
-                    extraClassnames={"border-t-5 border-gray-500 dark:border-gray-600"}
                 />
                 <TextAreaOption
                     title={"Short Description"}
                     placeholder={"Enter a short description of the movie"}
                     onChange={(value) => movieRef.current.shortDescription = value}
                 />
-                <DropdownCheckboxOption
-                    props={genreDropdownProps}
-                    title={"Genres"}
-                    extraClassNames={"border-t-5 border-gray-500 dark:border-gray-600 mt-5 mb-10"}
-                />
-                <SliderOption
-                    props={ratingSliderProps}
-                    title={"Rating"}
+                <h2
+                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
+                            mb-0 mt-10"}
+                >
+                    Additional Information
+                </h2>
+                    <DropdownCheckboxOption
+                        props={genreDropdownProps}
+                        title={"Genres"}
+                        extraClassNames={"mb-10"}
+                    />
+                    <SliderOption
+                        props={ratingSliderProps}
+                        title={"Rating"}
+                    />
+                <h2
+                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
+                            mb-0 mt-10"}
+                >
+                    Media Information
+                </h2>
+                <FileBrowseOption
+                    title={"Thumbnail"}
+                    onChange={(value) => movieRef.current.thumbnailUrl = value}
                 />
             </form>
         </div>

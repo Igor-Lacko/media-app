@@ -1,4 +1,4 @@
-import { app, BrowserWindow, protocol, net } from 'electron';
+import { app, BrowserWindow, protocol, net, ipcMain, dialog } from 'electron';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -10,6 +10,11 @@ function createWindow() {
     const mainWindow = new BrowserWindow({
         height: 600,
         width: 800,
+        webPreferences: {
+            preload: join(__dirname, 'electron/preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false
+        },
     });
 
     const isDev = !app.isPackaged;
@@ -17,6 +22,13 @@ function createWindow() {
 
     mainWindow.loadURL(startUrl);
 }
+
+ipcMain.handle('get-file', async () => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile']
+    });
+    return result.filePaths; 
+});
 
 app.whenReady().then(() => {
     // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)
