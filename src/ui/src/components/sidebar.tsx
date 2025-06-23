@@ -59,7 +59,7 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
                 <SidebarButton
                     label={"Home"}
                     icon={<FaHome />}
-                    link={"/home"}
+                    link={"/"}
                 />
                 <SidebarButton
                     label={"Movies"}

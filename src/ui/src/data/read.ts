@@ -3,7 +3,7 @@ import FetchOptions from 'utils/interface/fetch-options';
 import Settings from '@shared/interface/models/settings';
 
 /**
- * Fetches data from the given URL with the provided parameters.
+ * Fetches bulk data from the given URL with the provided parameters.
  * @param url API route to fetch data from.
  * @param params Additional params (Sort, filter, search, etc.) to be sent with the request.
  * @returns Promise with the data object.
@@ -33,3 +33,4 @@ export async function LoadSettings() : Promise<Settings> {
         return { darkMode: true };
     });
 }
+

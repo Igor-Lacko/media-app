@@ -5,10 +5,12 @@ import Movie from "@shared/interface/models/movie";
 import useFilter from "hooks/use-filter";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
-import { FetchData } from "data/provider";
+import { FetchData } from "data/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";
+import { Route, Routes } from "react-router-dom";
+import AddMoviePage from "./add-movie-page";
 
 /**
  * App Movie page.
@@ -31,7 +33,7 @@ export default function MoviePage() {
         onSortChange: (sortKey: SortKey) => {setSort(sortKey)},
         onFilterChange: (filterKey: Genre) => {setFilter(filterKey)},
         onSearchChange: (searchTerm: string) => {setSearch(searchTerm)},
-        onAddClick: () => {console.log("Add Movie clicked")},
+        path: "/movies"
     };
 
     const MovieListProps : ListProps = {

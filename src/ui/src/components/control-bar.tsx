@@ -8,6 +8,7 @@ import Genre from "@shared/enum/genre";
 import SortKeyAdapter from "utils/adapters/sort-key-adapter";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DropdownProps from "utils/interface/props/dropdown-props";
+import { NavLink } from "react-router-dom";
 
 /**
  * Control bar for filtering/sorting the list of media.
@@ -66,14 +67,17 @@ export default function ControlBar(props : ControlBarProps) {
                 {props.filter && <DropdownMenu
                     {...filterProps}
                 />}
-                <span
-                    className={spanClasses}
+                <NavLink
+                    to={props.path + "/add"}
                 >
-                    <FaPlus     
-                        className={"text-gray-500 font-light h-4 w-4"}
-                        onClick={props.onAddClick}
-                    />
-                </span>
+                    <span
+                        className={spanClasses}
+                    >
+                        <FaPlus     
+                            className={"text-gray-500 font-light h-4 w-4"}
+                        />
+                    </span>
+                </NavLink>
             </div>
         </div>
     )

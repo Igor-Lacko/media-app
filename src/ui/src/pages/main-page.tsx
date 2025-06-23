@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import classNames from "classnames";
 import { Outlet } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 import SettingsContext from "context/settings-context";
 import Sidebar from "components/sidebar";
 import Settings from "@shared/interface/models/settings";
-import { LoadSettings } from "data/provider";
+import { LoadSettings } from "data/read";
 
 export default function MainPage() {
     const [settings, setSettings] = useState<Settings>({darkMode: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
+    const isIndexPage = ["/", "tv-shows", "movies", "lectures", "settings"].some((path) => {
+        return useLocation().pathname.endsWith(path);
+    });
 
     useEffect(() => {
         const fetchSettings = async () => {
@@ -36,14 +40,20 @@ export default function MainPage() {
                     }
                 )}
             >
-                {<Sidebar
+                {isIndexPage && <Sidebar
                     visible={sidebarVisible}
                     onToggle={() => setSidebarVisible(!sidebarVisible)}
                 />}
                 <div
-                    className={"flex flex-col w-6/7 flex-grow h-full m-0 items-start justify-start space-y-2"}
+                    className={classNames(
+                        "flex flex-col flex-grow h-full m-0 items-start justify-start space-y-2",
+                        {
+                            "w-6/7": isIndexPage,
+                            "w-full": !isIndexPage
+                        }
+                    )}
                 >
-                    <div
+                    {isIndexPage && <div
                         className="flex w-full h-1/25 sm:h-1/20 items-center justify-end pt-4 pr-4"
                     >
                         <FaBars
@@ -56,12 +66,14 @@ export default function MainPage() {
                             )}
                             onClick={() => setSidebarVisible(true)}
                         />
-                    </div>
+                    </div>}
                     <div
                         className={classNames(
-                            "flex grow h-24/25 min-w-screen mt-10 items-start justify-center transition-all duration-500 ease-in-out",
+                            "flex grow min-w-screen mt-10 items-start justify-center transition-all duration-500 ease-in-out",
                             {
-                                "blur-sm" : sidebarVisible
+                                "blur-sm" : sidebarVisible,
+                                "h-24/25": isIndexPage,
+                                "h-full": !isIndexPage
                             }
                         )}
                     >

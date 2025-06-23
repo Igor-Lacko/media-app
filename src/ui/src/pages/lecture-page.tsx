@@ -4,10 +4,12 @@ import { useState } from "react";
 import ControlBar from "components/control-bar";
 import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
-import { FetchData } from "data/provider";
+import { FetchData } from "data/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";
+import { Route, Routes } from "react-router-dom";
+import AddMoviePage from "./add-movie-page";
 
 export default function LecturePage() {
     // Sort/search
@@ -27,7 +29,7 @@ export default function LecturePage() {
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: () => {},
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
-        onAddClick: () => { console.log("Add Subject clicked"); },
+        path: "/lectures"
     }
 
     const subjectListProps: ListProps = {
@@ -49,6 +51,9 @@ export default function LecturePage() {
                     {...subjectListProps}
                 />
             </div>
+            <Routes>
+                <Route path="/add" element={<AddMoviePage/>} />
+            </Routes>
         </div>
     );
 }

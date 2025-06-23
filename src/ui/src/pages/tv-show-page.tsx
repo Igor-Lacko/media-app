@@ -5,7 +5,7 @@ import TvShow from "@shared/interface/models/tv-show";
 import useFilter from "hooks/use-filter";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
-import { FetchData } from "data/provider";
+import { FetchData } from "data/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";
@@ -31,7 +31,7 @@ export default function TvShowPage() {
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
-        onAddClick: () => { console.log("Add TV show clicked"); },
+        path: "/tv-shows"
     }
 
     const tvShowListProps : ListProps = {

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { NukeDatabase } from "controllers/settings-controller";
+import { GetSettings } from "controllers/settings-controller";
 
 const router = Router();
 
@@ -11,6 +12,17 @@ router.post("/nuke", async (req, res) => {
     } catch (error) {
         console.error("Error nuking database:", error);
         res.status(500).json({ error: "Failed to nuke database" });
+    }
+});
+
+// Settings getter
+router.get("/", async (_req, res) => {
+    try {
+        const settings = await GetSettings();
+        res.status(200).json(settings);
+    } catch (error) {
+        console.error("Error fetching settings:", error);
+        res.status(500).json({ error: "Failed to fetch settings" });
     }
 });
 
