@@ -28,6 +28,8 @@ export default function ControlBar(props : ControlBarProps) {
         initialText: "name"
     }
 
+    console.log("sortProps", sortProps);
+
     const filterProps : DropdownProps = {
         width: dropdownWidth,
         icon: <FaSort className={"text-gray-500 h-4 w-4"} />,
@@ -36,6 +38,8 @@ export default function ControlBar(props : ControlBarProps) {
         initialValue: Genre.ALL,
         initialText: "All"
     }
+
+    console.log("filterProps", filterProps);
 
     return (
         <div

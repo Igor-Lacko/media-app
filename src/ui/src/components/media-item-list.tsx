@@ -35,7 +35,10 @@ export default function MediaItemList(props: ListProps) {
                     <div
                         className={"flex ml-3 flex-col h-full items-start justify-start w-4/10"}
                     >
-                        <h3 className={"text-lg font-semibold"}>{item.title}</h3>
+                        <h3 
+                            className={"text-lg font-semibold text-gray-900 dark:text-gray-400"}>
+                            {item.title}
+                        </h3>
                         {item.shortDescription && (
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                                 {item.shortDescription}

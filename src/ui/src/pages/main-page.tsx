@@ -29,7 +29,7 @@ export default function MainPage() {
         >
             <div
                 className={classNames(
-                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-auto overflow-x-hidden",
+                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-hidden overflow-x-hidden",
                     {
                         "dark" : settings.darkMode,
                         "light" : !settings.darkMode,

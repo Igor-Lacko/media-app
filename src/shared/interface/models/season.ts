@@ -9,7 +9,6 @@ export interface Season {
     episodes: Episode[];
     rating?: number;
     description?: string;
-    nofFinishedEpisodes: number;
 }
 
 export default Season;

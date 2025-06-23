@@ -38,13 +38,13 @@ export default function DropdownMenu(props : DropdownProps) {
                 )}
             >
                 <ul
-                    className={"flex flex-col p-2"}
+                    className={"flex flex-col p-2 max-h-60 overflow-y-auto text-gray-700 dark:text-gray-400"}
                 >
                     {props.options.map((option) => (
                         <li
                             key={option.key}
                             className={classNames(
-                                "p-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-200 text-hray-500",
+                                "p-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500 text-hray-500",
                                 {
                                     "bg-gray-300 dark:bg-gray-200": selection === option.value,
                                 }

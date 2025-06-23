@@ -7,6 +7,18 @@ export enum Genre {
     COMEDY = 'COMEDY',
     DRAMA = 'DRAMA',
     HORROR = 'HORROR',
-    SCIFI = 'SCIFI'
+    SCIFI = 'SCIFI',
+    ROMANCE = 'ROMANCE',
+    THRILLER = 'THRILLER',
+    FANTASY = 'FANTASY',
+    MYSTERY = 'MYSTERY',
+    DOCUMENTARY = 'DOCUMENTARY',
+    ADVENTURE = 'ADVENTURE',
+    BIOGRAPHY = 'BIOGRAPHY',
+    MUSICAL = 'MUSICAL',
+    SPORT = 'SPORT',
+    WAR = 'WAR',
+    WESTERN = 'WESTERN',
+    CRIME = 'CRIME',
 }
 export default Genre;

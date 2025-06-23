@@ -7,7 +7,6 @@ import Season from "./season";
  */
 export interface TvShow extends CardDisplayable, DetailFillable {
     seasons: Season[];
-    nofFinishedSeasons: number;
 }
 
 export default TvShow;

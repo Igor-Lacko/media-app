@@ -1,8 +1,11 @@
 import prisma from "db/db";
 import SortKey from "@shared/enum/sort-key";
-import { Genre, WatchStatus } from "generated/prisma/enums";
 import { TvShow } from "@shared/interface/models/tv-show";
-import { WASI } from "wasi";
+import { Genre } from "generated/prisma/enums";
+import SortTvShows from "utils/sort";
+import { Season } from "@shared/interface/models/season";
+import { Episode } from "@shared/interface/models/episode";
+import GetOrderBy from "utils/order-by";
 
 
 /**
@@ -19,9 +22,7 @@ export async function GetTvShows(
 ): Promise<TvShow[]> {
     try {
         const tvShows = await prisma.show.findMany({
-            orderBy: {
-                [key]: "desc",
-            },
+            orderBy: GetOrderBy(key),
 
             where: {
                 genres: {
@@ -46,23 +47,58 @@ export async function GetTvShows(
             }
         });
 
-        return tvShows.map(
+        return SortTvShows(tvShows.map(
             (show): TvShow => ({
                 ...show,
                 identifier: show.id,
                 genres: show.genres.map((genre): Genre => genre.genre),
-                nofFinishedSeasons: show.seasons.filter(
-                    season => season.episodes.every(
-                        episode => episode.watchStatus === WatchStatus.WATCHED
-                    )
-                ).length,
-                seasons: []
-            })
+                seasons: [], // Since we are just displaying on a card?
+                submediaString: `${show.seasons.length} seasons`,
+            })), key
         )
     }
 
     catch (error) {
         console.error("Error fetching TV shows: " + error);
         return [];
+    }
+}
+
+/**
+ * Inserts a TV show into the database.
+ * @param tvShow TvShow to insert.
+ * @returns TvShow object if successful, null otherwise.
+ */
+export async function InsertTvShow(tvShow: TvShow): Promise<TvShow | null> {
+    try {
+        await prisma.show.create({
+            data: {
+                ...tvShow,
+                seasons: {
+                    create: tvShow.seasons.map((season : Season) => ({
+                        ...season,
+                        episodes: {
+                            create: season.episodes.map((episode : Episode) => ({
+                                ...episode
+                            }))
+                        }
+                    }))
+                },
+
+                genres: {
+                    create: tvShow.genres.map((genre: Genre) => ({
+                        genre: genre
+                    }))
+                }
+            }
+        })
+
+        console.log(`Inserted TV show: ${tvShow.title}`);
+        return tvShow;
+    }
+
+    catch (error) {
+        console.error("Error inserting TV show: " + error);
+        return null;
     }
 }

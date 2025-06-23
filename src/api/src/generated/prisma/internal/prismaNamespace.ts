@@ -1146,7 +1146,7 @@ export const ShowScalarFieldEnum = {
   rating: 'rating',
   shortDescription: 'shortDescription',
   description: 'description',
-  episodes: 'episodes',
+  thumbnailUrl: 'thumbnailUrl',
   watchStatus: 'watchStatus'
 } as const
 

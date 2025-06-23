@@ -6,8 +6,9 @@ import SettingsRouter from "routes/settings";
 import TvShowRouter from "routes/tv-shows";
 import SubjectsRouter from "routes/subjects";
 import { NukeDatabase } from "controllers/settings-controller";
-import seedMovies from "utils/insert-mock-data";
+import seedData from "utils/insert-mock-data";
 import { GetMovies } from "controllers/movie-controller";
+import { GetTvShows } from "controllers/tv-show-controller";
 
 export const viteNodeApp = express();
 
@@ -27,9 +28,11 @@ viteNodeApp.use("/api/subjects", SubjectsRouter);
 (async () => {
     try {
         await NukeDatabase();
-        await seedMovies();
+        await seedData();
         const movies = await GetMovies();
+        const tvShows = await GetTvShows();
         console.log("Seeded movies:", movies);
+        console.log("Seeded TV shows:", tvShows);
     } catch (error) {
         console.error("Error occurred:", error);
         process.exit(1);

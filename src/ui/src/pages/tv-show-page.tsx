@@ -20,14 +20,14 @@ export default function TvShowPage() {
 
     // Fetch
     const data = useQuery({
-        queryKey: ["tv-shows", sort, filter, search],
-        queryFn: async () => await FetchData<TvShow>("/api/tv-shows", { sortBy: sort, filter: filter, search: search }),
+        queryKey: ["shows", sort, filter, search],
+        queryFn: async () => await FetchData<TvShow>("/api/shows", { sortBy: sort, filter: filter, search: search }),
     });
 
     const controlBarProps : ControlBarProps = {
         title: "Your TV shows",
         filter: true,
-        sortOptions: [SortKey.LENGTH, SortKey.NAME, SortKey.NOF_EPISODES, SortKey.NOF_SEASONS, SortKey.RATING],
+        sortOptions: [SortKey.NAME, SortKey.NOF_EPISODES, SortKey.NOF_SEASONS, SortKey.RATING],
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
