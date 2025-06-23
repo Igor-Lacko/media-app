@@ -27,11 +27,11 @@ export default function MediaItemList(props: ListProps) {
                         }
                     )}
                 >
-                    <img
+                    {props.showThumbnail && <img
                         src={`local://${item.thumbnailUrl}`}
                         alt={item.title}
                         className={"w-1/10 sm:w-1/10 h-full"}
-                    />
+                    />}
                     <div
                         className={"flex ml-3 flex-col h-full items-start justify-start w-4/10"}
                     >
@@ -53,7 +53,7 @@ export default function MediaItemList(props: ListProps) {
                     <div
                         className={"flex h-full w-2/10 items-center justify-center"}
                     >
-                        {item.genres.length > 0 && (
+                        {item.genres && (
                             <span
                                 className={"text-md text-gray-500 dark:text-gray-300"}
                             >
@@ -64,9 +64,9 @@ export default function MediaItemList(props: ListProps) {
                     <div
                         className={"flex flex-col h-full w-2/10 items-center justify-center"}
                     >
-                        <span className={"text-lg text-yellow-500"}>
+                        {props.showRating && <span className={"text-lg text-yellow-500"}>
                             {item.rating ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
-                        </span>
+                        </span>}
                     </div>
                     <span
                         className={classNames(

@@ -81,7 +81,7 @@ model Lecture {
     notes     Note[]
     videoUrl  String?
     subjectId Int
-    subject   Subject  @relation(fields: [subjectId], references: [id])
+    subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     length    Int?
     continueAt  Int @default(0)
 }

@@ -2,11 +2,13 @@ import { Genre } from "generated/prisma/enums";
 import { WatchStatus } from "generated/prisma/enums";
 import { InsertMovie } from "controllers/movie-controller";
 import { InsertTvShow } from "controllers/tv-show-controller";
+import { InsertSubject } from "controllers/subject-controller";
 import TvShow from "@shared/interface/models/tv-show";
 import Movie from "@shared/interface/models/movie";
+import Subject from "@shared/interface/models/subject";
 
 export default async function seedData() {
-    const mockMovies : Movie[] = [
+    const mockMovies: Movie[] = [
         {
             title: "Inception",
             rating: 8.8,
@@ -40,28 +42,6 @@ export default async function seedData() {
             watchStatus: WatchStatus.UNWATCHED,
             continueAt: 0,
         },
-        {
-            title: "The Dark Knight",
-            rating: 9.0,
-            genres: [Genre.ACTION, Genre.DRAMA, Genre.ALL],
-            shortDescription: "Batman faces the Joker, a criminal mastermind who wants to create chaos in Gotham City.",
-            description: "With the help of allies, Batman must stop the Joker's reign of terror...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/dark-knight.jpg",
-            length: 152,
-            watchStatus: WatchStatus.WATCHED,
-            continueAt: 0,
-        },
-        {
-            title: "Avatar",
-            rating: 7.8,
-            genres: [Genre.ACTION, Genre.SCIFI, Genre.ALL],
-            shortDescription: "A paraplegic Marine is sent to Pandora on a unique mission.",
-            description: "Jake Sully becomes torn between following orders and protecting the world he feels is his home...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/avatar.jpg",
-            length: 162,
-            watchStatus: WatchStatus.UNWATCHED,
-            continueAt: 0,
-        },
     ];
 
     const mockTvShows: TvShow[] = [
@@ -72,19 +52,6 @@ export default async function seedData() {
             description: "Walter White partners with Jesse Pinkman to navigate the criminal underworld...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/breaking-bad.jpg",
             rating: 9.5,
-            watchStatus: WatchStatus.UNWATCHED,
-            seasons: [
-                { seasonNumber: 1, episodes: [] },
-                { seasonNumber: 2, episodes: [] },
-            ],
-        },
-        {
-            title: "Game of Thrones",
-            genres: [Genre.DRAMA, Genre.FANTASY, Genre.ALL],
-            shortDescription: "Nine noble families fight for control over the lands of Westeros.",
-            description: "As ancient enemies return, the fate of Westeros hangs in the balance...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/game-of-thrones.jpg",
-            rating: 9.3,
             watchStatus: WatchStatus.UNWATCHED,
             seasons: [
                 { seasonNumber: 1, episodes: [] },
@@ -104,30 +71,67 @@ export default async function seedData() {
                 { seasonNumber: 2, episodes: [] },
             ],
         },
+    ];
+
+    const mockSubjects: Subject[] = [
         {
-            title: "The Office",
-            genres: [Genre.COMEDY, Genre.ALL],
-            shortDescription: "A mockumentary on a group of office workers.",
-            description: "The employees of Dunder Mifflin navigate their daily lives with humor and chaos...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/the-office.jpg",
-            rating: 8.8,
-            watchStatus: WatchStatus.UNWATCHED,
-            seasons: [
-                { seasonNumber: 1, episodes: [] },
-                { seasonNumber: 2, episodes: [] },
+            title: "Introduction to Programming",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/programming.jpg",
+            lectures: [
+                {
+                    title: "Variables and Data Types",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/variables.mp4",
+                    length: 45,
+                    continueAt: 0,
+                    notes: ["Learn about variables", "Understand primitive data types"],
+                },
+                {
+                    title: "Control Structures",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/control-structures.mp4",
+                    length: 50,
+                    continueAt: 0,
+                    notes: ["Learn about if-else statements", "Understand loops"],
+                },
             ],
         },
         {
-            title: "Friends",
-            genres: [Genre.COMEDY, Genre.ROMANCE, Genre.ALL],
-            shortDescription: "Six friends navigate life and love in New York City.",
-            description: "Rachel, Ross, Monica, Chandler, Joey, and Phoebe share laughs and drama...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/friends.jpg",
-            rating: 8.9,
-            watchStatus: WatchStatus.WATCHED,
-            seasons: [
-                { seasonNumber: 1, episodes: [] },
-                { seasonNumber: 2, episodes: [] },
+            title: "Data Structures and Algorithms",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/data-structures.jpg",
+            lectures: [
+                {
+                    title: "Arrays and Linked Lists",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/arrays.mp4",
+                    length: 60,
+                    continueAt: 0,
+                    notes: ["Understand arrays and linked lists", "Learn about their operations"],
+                },
+                {
+                    title: "Sorting Algorithms",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/sorting.mp4",
+                    length: 55,
+                    continueAt: 0,
+                    notes: ["Learn about bubble sort and quicksort", "Understand algorithm complexity"],
+                },
+            ],
+        },
+        {
+            title: "Operating Systems",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/operating-systems.jpg",
+            lectures: [
+                {
+                    title: "Process Management",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/process-management.mp4",
+                    length: 70,
+                    continueAt: 0,
+                    notes: ["Understand processes and threads", "Learn about scheduling algorithms"],
+                },
+                {
+                    title: "Memory Management",
+                    videoUrl: "/home/igor_lacko/Desktop/media-player/mock/memory-management.mp4",
+                    length: 40,
+                    continueAt: 0,
+                    notes: ["Learn about paging and segmentation", "Understand virtual memory"],
+                },
             ],
         },
     ];
@@ -165,4 +169,21 @@ export default async function seedData() {
     }
 
     console.log("Mock TV shows inserted successfully.");
+
+    // Insert mock subjects
+    for (const subject of mockSubjects) {
+        await InsertSubject(subject)
+            .then((result) => {
+                if (result) {
+                    console.log(`Inserted subject: ${result.title}`);
+                } else {
+                    console.error(`Failed to insert subject: ${subject.title}`);
+                }
+            })
+            .catch((error) => {
+                console.error(`Error inserting subject ${subject.title}:`, error);
+            });
+    }
+
+    console.log("Mock subjects inserted successfully.");
 }

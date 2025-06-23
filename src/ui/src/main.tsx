@@ -6,7 +6,6 @@ import 'typeface-lobster';
 
 import './index.css';
 import 'data/axios-config';
-import Settings from "@shared/interface/models/settings";
 import MainPage from 'pages/main-page';
 import HomePage from 'pages/home-page';
 import MoviePage from 'pages/movie-page';
@@ -25,7 +24,7 @@ const rootContainer : ReactNode = (
         <HashRouter>
             <Routes>
                 <Route path="/" element={<MainPage />}>
-                    <Route index path="home" element={<HomePage />} />
+                    <Route index element={<HomePage />} />
                     <Route path="movies" element={<MoviePage />} />
                     <Route path="tv-shows" element={<TvShowPage />} />
                     <Route path="lectures" element={<LecturePage />} />

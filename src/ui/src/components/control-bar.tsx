@@ -43,7 +43,7 @@ export default function ControlBar(props : ControlBarProps) {
 
     return (
         <div
-            className={"flex items-center w-full h-1/10 justify-start p-5 border-b-2 border-gray-300 dark:border-gray-700"}
+            className={"flex items-center w-full h-1/10 justify-center p-5 border-b-2 border-gray-300 dark:border-gray-700"}
         >
             <span
                 className={"text-4xl sm:text-lg md:text-2xl font-semibold h-full w-2/10 text-black dark:text-gray-200 ml-10"}
@@ -63,9 +63,9 @@ export default function ControlBar(props : ControlBarProps) {
                 <DropdownMenu
                     {...sortProps}
                 />
-                <DropdownMenu
+                {props.filter && <DropdownMenu
                     {...filterProps}
-                />
+                />}
                 <span
                     className={spanClasses}
                 >

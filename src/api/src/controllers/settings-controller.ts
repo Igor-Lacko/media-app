@@ -6,8 +6,7 @@ export async function NukeDatabase(): Promise<void> {
         await prisma.$transaction([
             prisma.movie.deleteMany(),
             prisma.show.deleteMany(),
-            prisma.episode.deleteMany(),
-            prisma.season.deleteMany(),
+            prisma.subject.deleteMany(),
         ]);
         console.log("Database nuked successfully.");
     } catch (error) {
