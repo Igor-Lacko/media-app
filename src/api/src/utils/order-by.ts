@@ -7,7 +7,7 @@ import SortKey from "@shared/enum/sort-key";
  */
 export default function GetOrderBy (key : SortKey) : { [key: string]: "desc"} | undefined {
     switch (key) {
-        case SortKey.NOF_EPISODES: case SortKey.NOF_SEASONS:
+        case SortKey.NOF_EPISODES: case SortKey.NOF_SEASONS: case SortKey.NOF_LECTURES:
             return undefined;
 
         default:

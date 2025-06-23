@@ -14,7 +14,6 @@ import { Movie } from "@shared/interface/models/movie";
 export async function GetMovies(
     key: SortKey = SortKey.NAME,
     filter: Genre = Genre.ALL,
-    search?: string
 ): Promise<Movie[]> {
     try {
         const movies = await prisma.movie.findMany({

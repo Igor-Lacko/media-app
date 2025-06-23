@@ -15,5 +15,7 @@ export default function SortKeyAdapter(sortKey: SortKey): { key: string; value: 
             return { key: "Number of Episodes", value: SortKey.NOF_EPISODES };
         case SortKey.NOF_SEASONS:
             return { key: "Number of Seasons", value: SortKey.NOF_SEASONS };
+        case SortKey.NOF_LECTURES:
+            return { key: "Number of Lectures", value: SortKey.NOF_LECTURES };
     }
 }

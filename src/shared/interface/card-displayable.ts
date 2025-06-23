@@ -11,7 +11,7 @@ export interface CardDisplayable {
     shortDescription?: string;
     submediaString?: string; // 7 seasons or 5 lectures
     watchStatus?: WatchStatus;
-    genres: Genre[];
+    genres?: Genre[];
 }
 
 export default CardDisplayable;

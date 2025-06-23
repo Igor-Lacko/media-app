@@ -5,7 +5,7 @@ import { Genre } from "generated/prisma/enums";
 import { Season } from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
-import SortTvShows from "utils/sort";
+import { SortTvShows } from "utils/sort";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -17,7 +17,6 @@ import SortTvShows from "utils/sort";
 export async function GetTvShows(
     key: SortKey = SortKey.NAME,
     filter: Genre = Genre.ALL,
-    search?: string
 ): Promise<TvShow[]> {
     try {
         const tvShows = await prisma.show.findMany({

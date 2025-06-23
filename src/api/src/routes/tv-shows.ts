@@ -8,7 +8,7 @@ const router = Router();
 // Getter for all TV shows
 router.get("/", async (req, res) => {
     // Sort/filter/search
-    const { sortBy, filter, search } = req.query;
+    const { sortBy, filter } = req.query;
     console.log("Fetching TV shows...");
     try {
         const tvShows = await GetTvShows(
