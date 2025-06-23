@@ -9,8 +9,6 @@ import { FetchData } from "data/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";
-import { Route, Routes } from "react-router-dom";
-import AddMoviePage from "./add-movie-page";
 
 /**
  * App Movie page.

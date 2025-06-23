@@ -9,6 +9,9 @@ import Sidebar from "components/sidebar";
 import Settings from "@shared/interface/models/settings";
 import { LoadSettings } from "data/read";
 
+/**
+ * App layout component (sidebar and toggle, invisible in non-index pages).
+ */
 export default function MainPage() {
     const [settings, setSettings] = useState<Settings>({darkMode: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -69,11 +72,12 @@ export default function MainPage() {
                     </div>}
                     <div
                         className={classNames(
-                            "flex grow min-w-screen mt-10 items-start justify-center transition-all duration-500 ease-in-out",
+                            "flex grow min-w-screen items-start justify-center transition-all duration-500 ease-in-out",
                             {
                                 "blur-sm" : sidebarVisible,
+                                "mt-10": isIndexPage,
                                 "h-24/25": isIndexPage,
-                                "h-full": !isIndexPage
+                                "min-h-screen": !isIndexPage
                             }
                         )}
                     >

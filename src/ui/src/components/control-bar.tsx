@@ -2,7 +2,7 @@ import { FaSort } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 
 import ControlBarProps from "utils/interface/props/control-bar-props";
-import DropdownMenu from "./dropdown-menu";
+import DropdownMenu from "./dropdowns/dropdown-menu";
 import SortKey from "@shared/enum/sort-key";
 import Genre from "@shared/enum/genre";
 import SortKeyAdapter from "utils/adapters/sort-key-adapter";
