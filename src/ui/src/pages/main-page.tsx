@@ -15,9 +15,11 @@ import { LoadSettings } from "data/read";
 export default function MainPage() {
     const [settings, setSettings] = useState<Settings>({darkMode: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
-    const isIndexPage = ["/", "tv-shows", "movies", "lectures", "settings"].some((path) => {
-        return useLocation().pathname.endsWith(path);
-    });
+    const location = useLocation();
+
+    const isIndexPage = ["/", "/movies", "/tv-shows", "/lectures", "/settings"].some(
+        (path) => location.pathname.endsWith(path) 
+    );
 
     useEffect(() => {
         const fetchSettings = async () => {

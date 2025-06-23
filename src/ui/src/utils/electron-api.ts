@@ -6,6 +6,7 @@ declare global {
     interface Window {
         electron?: {
             getFilePath: () => Promise<string | null>;
+            isValidFile: (filePath: string) => Promise<boolean>;
         };
     }
 }
@@ -14,9 +15,9 @@ declare global {
  * Invokes electron's IPC to get a file path from the user.
  * @returns File path as a string or null if no file was selected.
  */
-export default async function GetFilePath(): Promise<string | null> {
+export async function GetFilePath(): Promise<string | null> {
     if (!window.electron || !window.electron.getFilePath) {
-        throw new Error('Electron API is not available. Ensure preload.js is loaded.');
+        return null;
     }
 
     const path = await window.electron.getFilePath();

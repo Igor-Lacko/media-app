@@ -26,7 +26,6 @@ export default async function seedData() {
             genres: [Genre.ALL, Genre.ACTION],
             shortDescription: "A computer hacker learns about the true nature of his reality.",
             description: "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive...",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/matrix.png",
             length: 136,
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,

@@ -27,13 +27,16 @@ export default function MediaItemList(props: ListProps) {
                         }
                     )}
                 >
-                    {props.showThumbnail && <img
+                    {props.showThumbnail && item.thumbnailUrl && <img
                         src={`local://${item.thumbnailUrl}`}
                         alt={item.title}
-                        className={"w-1/10 sm:w-1/10 h-full"}
+                        className={"w-1/12 max-h-full rounded-lg"}
+                    />}
+                    {props.showThumbnail && !item.thumbnailUrl && <div
+                        className={"w-1/12 max-h-full rounded-lg"}
                     />}
                     <div
-                        className={"flex ml-3 flex-col h-full items-start justify-start w-4/10"}
+                        className={"flex ml-3 flex-col h-full items-start justify-start w-1/9"}
                     >
                         <h3 
                             className={"text-lg font-semibold text-gray-900 dark:text-gray-400"}>

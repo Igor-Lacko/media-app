@@ -1,4 +1,5 @@
 import { app, BrowserWindow, protocol, net, ipcMain, dialog } from 'electron';
+import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,6 +24,7 @@ function createWindow() {
     mainWindow.loadURL(startUrl);
 }
 
+// Gets a absolute file path
 ipcMain.handle('get-file', async () => {
     const result = await dialog.showOpenDialog({
         properties: ['openFile']

@@ -14,6 +14,7 @@ import SliderOption from "components/options/slider-option";
 import DropdownProps from "utils/interface/props/dropdown-props";
 import SliderProps from "utils/interface/props/slider-props";
 import FileBrowseOption from "components/options/file-browse-option";
+import SubmitButton from "components/buttons/submit";
 
 /**
  * Form page for adding a new movie.
@@ -99,6 +100,9 @@ export default function AddMoviePage() {
                     placeholder={"Enter a short description of the movie"}
                     onChange={(value) => movieRef.current.shortDescription = value}
                 />
+                <div
+                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
+                />
                 <h2
                     className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
                             mb-0 mt-10"}
@@ -114,6 +118,9 @@ export default function AddMoviePage() {
                         props={ratingSliderProps}
                         title={"Rating"}
                     />
+                <div
+                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
+                />
                 <h2
                     className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
                             mb-0 mt-10"}
@@ -124,6 +131,27 @@ export default function AddMoviePage() {
                     title={"Thumbnail"}
                     onChange={(value) => movieRef.current.thumbnailUrl = value}
                 />
+                <FileBrowseOption
+                    title={"Video File"}
+                    onChange={(value) => movieRef.current.videoUrl = value}
+                    extraClassnames={"mb-10"}
+                />
+                <div
+                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
+                />
+                <div
+                    className={"flex w-full items-center justify-end p-4"}
+                >
+                    <SubmitButton
+                        onClick={() => {
+                            // Here you would typically send the movieRef.current to your backend or state management
+                            console.log("Movie added:", movieRef.current);
+                            navigate(-1); // Go back after adding
+                        }}
+                        title={"Add Movie"}
+                        classNames={"w-1/15 h-full"}
+                    />
+                </div>
             </form>
         </div>
     );

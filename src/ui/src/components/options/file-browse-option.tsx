@@ -1,5 +1,5 @@
 import { useState } from "react"
-import GetFilePath from "utils/electron/get-filename";
+import { GetFilePath } from "utils/electron-api";
 
 /**
  * Option for file browsing in a form.
@@ -27,8 +27,8 @@ export default function FileBrowseOption({title, onChange, extraClassnames} : {t
                         border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200"}
                 >
                     <button
-                        className={"cursor-pointer rounded-lg h-full p-2 items-center justify-center bg-gray-500 dark:bg-gray-600\
-                            text-gray-400 hover:bg-gray-800 dark:hover:bg-gray-500 transition-all duration-300 ease-in-out"}
+                        className={"cursor-pointer rounded-lg h-full p-2 items-center justify-center bg-gray-300 dark:bg-gray-600\
+                            text-gray-400 hover:bg-gray-500 dark:hover:bg-gray-500 transition-all duration-300 ease-in-out"}
                         onClick={async () => {
                             const path = await GetFilePath();
                             if (path) {
