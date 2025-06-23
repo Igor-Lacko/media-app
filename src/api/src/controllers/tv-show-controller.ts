@@ -2,11 +2,10 @@ import prisma from "db/db";
 import SortKey from "@shared/enum/sort-key";
 import { TvShow } from "@shared/interface/models/tv-show";
 import { Genre } from "generated/prisma/enums";
-import SortTvShows from "utils/sort";
 import { Season } from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
-
+import SortTvShows from "utils/sort";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -30,35 +29,32 @@ export async function GetTvShows(
                         genre: filter,
                     },
                 },
-
-                title: {
-                    contains: search ? search : ""
-                }
             },
 
             include: {
                 seasons: {
                     include: {
                         episodes: true,
-                    }
+                    },
                 },
 
                 genres: true,
-            }
+            },
         });
 
-        return SortTvShows(tvShows.map(
-            (show): TvShow => ({
-                ...show,
-                identifier: show.id,
-                genres: show.genres.map((genre): Genre => genre.genre),
-                seasons: [], // Since we are just displaying on a card?
-                submediaString: `${show.seasons.length} seasons`,
-            })), key
-        )
-    }
-
-    catch (error) {
+        return SortTvShows(
+            tvShows.map(
+                (show): TvShow => ({
+                    ...show,
+                    identifier: show.id,
+                    genres: show.genres.map((genre): Genre => genre.genre),
+                    seasons: [], // Since we are just displaying on a card?
+                    submediaString: `${show.seasons.length} seasons`,
+                })
+            ),
+            key
+        );
+    } catch (error) {
         console.error("Error fetching TV shows: " + error);
         return [];
     }
@@ -75,29 +71,27 @@ export async function InsertTvShow(tvShow: TvShow): Promise<TvShow | null> {
             data: {
                 ...tvShow,
                 seasons: {
-                    create: tvShow.seasons.map((season : Season) => ({
+                    create: tvShow.seasons.map((season: Season) => ({
                         ...season,
                         episodes: {
-                            create: season.episodes.map((episode : Episode) => ({
-                                ...episode
-                            }))
-                        }
-                    }))
+                            create: season.episodes.map((episode: Episode) => ({
+                                ...episode,
+                            })),
+                        },
+                    })),
                 },
 
                 genres: {
                     create: tvShow.genres.map((genre: Genre) => ({
-                        genre: genre
-                    }))
-                }
-            }
-        })
+                        genre: genre,
+                    })),
+                },
+            },
+        });
 
         console.log(`Inserted TV show: ${tvShow.title}`);
         return tvShow;
-    }
-
-    catch (error) {
+    } catch (error) {
         console.error("Error inserting TV show: " + error);
         return null;
     }

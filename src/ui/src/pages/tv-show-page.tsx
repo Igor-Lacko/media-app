@@ -20,8 +20,8 @@ export default function TvShowPage() {
 
     // Fetch
     const data = useQuery({
-        queryKey: ["shows", sort, filter, search],
-        queryFn: async () => await FetchData<TvShow>("/api/shows", { sortBy: sort, filter: filter, search: search }),
+        queryKey: ["shows", sort, filter],
+        queryFn: async () => await FetchData<TvShow>("/api/shows", { sortBy: sort, filter: filter }),
     });
 
     const controlBarProps : ControlBarProps = {
@@ -35,7 +35,7 @@ export default function TvShowPage() {
     }
 
     const tvShowListProps : ListProps = {
-        items: data.data || [],
+        items: data.data?.filter((show) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
         path: "tv-shows"
     }
 

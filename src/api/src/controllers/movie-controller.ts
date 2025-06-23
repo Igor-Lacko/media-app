@@ -28,10 +28,6 @@ export async function GetMovies(
                         genre: filter,
                     },
                 },
-
-                title: {
-                    contains: search ? search : ""
-                }
             },
 
             include: {

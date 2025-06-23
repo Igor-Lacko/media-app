@@ -20,8 +20,8 @@ export default function MoviePage() {
 
     // Fetch movies
     const data = useQuery({
-        queryKey: ["movies", sort, filter, search],
-        queryFn: async () => await FetchData<movie>("/api/movies", { sortBy : sort , filter : filter, search: search }),
+        queryKey: ["movies", sort, filter],
+        queryFn: async () => await FetchData<movie>("/api/movies", { sortBy : sort , filter : filter }),
     })
 
     const controlBarProps : ControlBarProps = {
@@ -35,7 +35,8 @@ export default function MoviePage() {
     };
 
     const movieListProps : ListProps = {
-        items: data.data || [],
+        // Because refreshing the query on every search change is ehhh
+        items: data.data?.filter((movie) => movie.title.toLowerCase().includes(search.toLowerCase())) || [],
         path: "movies"
     }
 
