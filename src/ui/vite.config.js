@@ -16,6 +16,7 @@ export default defineConfig({
             'context': '/src/context',
             'utils': '/src/utils',
             'data': '/src/data',
+            'layouts': '/src/layouts',
             // Does not work normally for some reason
             '@shared': path.resolve(__dirname, '../shared'),
             '@api': path.resolve(__dirname, '../api/src'),

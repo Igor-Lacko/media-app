@@ -6,7 +6,7 @@ import 'typeface-lobster';
 
 import './index.css';
 import 'data/axios-config';
-import MainPage from 'pages/main-page';
+import MainPage from 'layouts/main-page';
 import HomePage from 'pages/home-page';
 import MoviePage from 'pages/movie-page';
 import TvShowPage from 'pages/tv-show-page';
