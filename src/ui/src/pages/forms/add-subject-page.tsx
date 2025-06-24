@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
 import Subject from "@shared/interface/models/subject";
+import { defaultSubject } from "utils/model-defaults";
 
 export default function AddSubjectPage() {
     // Go back

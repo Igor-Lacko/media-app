@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaTags } from "react-icons/fa";
 
 import Movie from "@shared/interface/models/movie";
@@ -15,12 +15,22 @@ import DropdownProps from "utils/interface/props/dropdown-props";
 import SliderProps from "utils/interface/props/slider-props";
 import FileBrowseOption from "components/options/file-browse-option";
 import SubmitButton from "components/buttons/submit";
-import { defaultMovie } from "data/defaults";
+import { defaultMovie } from "utils/model-defaults";
+import FormSection from "components/form-section";
+import ModalProps from "utils/interface/props/modal-props";
+import Modal from "components/modal";
+import SubmitMovie from "data/submit-handlers/movie-submit";
 
 /**
  * Form page for adding a new movie.
  */
 export default function AddMoviePage() {
+    // To show the error modal
+    const [error, setError] = useState(false);
+
+    // To show the success modal
+    const [success, setSuccess] = useState(false);
+
     // Go back
     const navigate = useNavigate();
 
@@ -59,9 +69,27 @@ export default function AddMoviePage() {
         initial: 0
     }
 
+    // Popup if a required field is missing
+    const errorModalProps : ModalProps = {
+        title: "Error",
+        message: "Please fill in all required fields.",
+        onClose: () => setError(false),
+    }
+
+    // Popup if the movie is added successfully
+    const successModalProps : ModalProps = {
+        title: "Success",
+        message: "Movie added successfully.",
+        onClose: () => {
+            setSuccess(false);
+            navigate(-1);
+        },
+    }
+
     return (
         <div 
-            className={"flex flex-col w-full h-full items-center justify-start overflow-x-hidden overflow-y-auto bg-white dark:bg-gray-800"}
+            className={"flex flex-col w-full h-full items-center justify-start\
+                    overflow-x-hidden overflow-y-auto bg-white dark:bg-gray-800"}
         >
             <div
                 className={"flex items-center justify-start ml-10 mt-5 w-full h-1/25 sm:h-1/20"}
@@ -79,81 +107,72 @@ export default function AddMoviePage() {
                 </h1>
             </div>
             <form
-                className={"flex flex-col w-full h-23/25 items-center justify-start"}
-                onSubmit={(event) => {
+                className={"flex flex-col w-full h-23/25 items-center justify-start space-y-10"}
+                onSubmit={async (event) => {
                     event.preventDefault();
-                    console.log("Form submitted");
+                    await SubmitMovie(movieRef.current) ? setSuccess(true) : setError(true);
                 }}
             >
-                <h2
-                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
-                            mb-0 mt-10 border-t border-gray-300 dark:border-gray-600"}
+                <FormSection
+                    title={"Basic Information"}
                 >
-                    Movie Details
-                </h2>
-                <InputOption
-                    title={"Title"}
-                    placeholder={"Enter movie title"}
-                    onChange={(value) => movieRef.current.title = value}
-                />
-                <TextAreaOption
-                    title={"Short Description"}
-                    placeholder={"Enter a short description of the movie"}
-                    onChange={(value) => movieRef.current.shortDescription = value}
-                />
-                <div
-                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
-                />
-                <h2
-                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
-                            mb-0 mt-10"}
+                    <InputOption
+                        title={"Title *"}
+                        placeholder={"Enter movie title"}
+                        onChange={(value) => movieRef.current.title = value}
+                    />
+                    <TextAreaOption
+                        title={"Short Description"}
+                        placeholder={"Enter a short description of the movie"}
+                        onChange={(value) => movieRef.current.shortDescription = value}
+                    />
+                </FormSection>
+                <FormSection
+                    title={"Additional Information"}
                 >
-                    Additional Information
-                </h2>
                     <DropdownCheckboxOption
                         props={genreDropdownProps}
-                        title={"Genres"}
-                        extraClassNames={"mb-10"}
+                        title={"Genres *"}
                     />
                     <SliderOption
                         props={ratingSliderProps}
                         title={"Rating"}
                     />
-                <div
-                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
-                />
-                <h2
-                    className={"text-3xl w-full items-center justify-start p-5 font-semibold text-gray-700 dark:text-gray-400\
-                            mb-0 mt-10"}
+                </FormSection>
+                <FormSection
+                    title={"Media Files"}
                 >
-                    Media Information
-                </h2>
-                <FileBrowseOption
-                    title={"Thumbnail"}
-                    onChange={(value) => movieRef.current.thumbnailUrl = value}
-                />
-                <FileBrowseOption
-                    title={"Video File"}
-                    onChange={(value) => movieRef.current.videoUrl = value}
-                    extraClassnames={"mb-10"}
-                />
+                    <FileBrowseOption
+                        title={"Thumbnail"}
+                        onChange={(value) => movieRef.current.thumbnailUrl = value}
+                    />
+                    <FileBrowseOption
+                        title={"Video File"}
+                        onChange={(value) => movieRef.current.videoUrl = value}
+                    />
+                </FormSection>
                 <div
-                    className={"flex w-full h-10 border-b-2 mt-50 border-gray-300 dark:border-gray-600"}
-                />
-                <div
-                    className={"flex w-full items-center justify-end p-4"}
+                    className={"flex w-full items-center justify-between p-4 border-t border-gray-300 dark:border-gray-600"}
                 >
+                    <span
+                        className={"text-gray-500 text-sm"}
+                    >
+                        Fields marked with * are required.
+                    </span>
                     <SubmitButton
-                        onClick={() => {
-                            // Here you would typically send the movieRef.current to your backend or state management
-                            console.log("Movie added:", movieRef.current);
-                            navigate(-1); // Go back after adding
-                        }}
                         title={"Add Movie"}
                         classNames={"w-1/15 h-full"}
                     />
                 </div>
             </form>
+            {error && <Modal
+                    {...errorModalProps}
+                />    
+            }
+            {success && <Modal
+                    {...successModalProps}
+                />
+            }
         </div>
     );
 }

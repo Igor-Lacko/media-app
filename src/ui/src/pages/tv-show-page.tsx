@@ -5,7 +5,7 @@ import TvShow from "@shared/interface/models/tv-show";
 import useFilter from "hooks/use-filter";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
-import { FetchData } from "data/read";
+import { FetchData } from "data/crud/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";

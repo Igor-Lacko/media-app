@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import SettingsContext from "context/settings-context";
 import Sidebar from "components/sidebar";
 import Settings from "@shared/interface/models/settings";
-import { LoadSettings } from "data/read";
+import { LoadSettings } from "data/crud/read";
 
 /**
  * App layout component (sidebar and toggle, invisible in non-index pages).

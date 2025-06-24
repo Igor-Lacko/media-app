@@ -15,7 +15,9 @@ export const defaultMovie: Movie = {
     title: "",
     genres: [Genre.ALL],
     watchStatus: WatchStatus.UNWATCHED,
-    continueAt: 0
+    continueAt: 0,
+    length: 0,
+    rating: 0
 };
 
 export const defaultTvShow: TvShow = {

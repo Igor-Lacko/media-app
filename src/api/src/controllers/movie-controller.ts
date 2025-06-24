@@ -54,6 +54,7 @@ export async function GetMovies(
  * @returns Movie object if successful, null otherwise.
  */
 export async function InsertMovie(movie: Movie): Promise<Movie | null> {
+    console.log("Inserting movie: ", movie);
     try {
         await prisma.movie.create({
             data: {

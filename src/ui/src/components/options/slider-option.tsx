@@ -6,7 +6,7 @@ import SliderProps from "utils/interface/props/slider-props";
 export default function SliderOption({props, title, extraClassNames} : {props : SliderProps, title : string, extraClassNames? : string}) {
     return (
         <div
-            className={"flex flex-col w-full h-1/10 items-start justify-center p-4 " + (extraClassNames || "")}
+            className={"flex flex-col w-full h-auto items-start justify-center p-4 space-y-4 " + (extraClassNames || "")}
         >
             <span
                 className={"text-lg flex font-semibold mb-5 items-center h-full text-gray-800 dark:text-gray-400"}

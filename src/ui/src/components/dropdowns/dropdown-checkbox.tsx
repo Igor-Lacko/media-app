@@ -29,7 +29,7 @@ export default function DropdownCheckbox(props : DropdownProps) {
             </span>
             <div
                 className={classNames(
-                    "absolute z-10 top-full w-full left-0  bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700\
+                    "absolute z-10 top-11 w-full left-0  bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700\
                     rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform origin-top",
                     {
                         "scale-y-0": !isOpen,

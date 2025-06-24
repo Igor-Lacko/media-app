@@ -4,12 +4,12 @@ import { useState } from "react";
 import ControlBar from "components/control-bar";
 import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
-import { FetchData } from "data/read";
+import { FetchData } from "data/crud/read";
 import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/interface/props/control-bar-props";
 import ListProps from "utils/interface/props/list-props";
 import { Route, Routes } from "react-router-dom";
-import AddMoviePage from "./add-movie-page";
+import AddSubjectPage from "./forms/add-subject-page";
 
 export default function LecturePage() {
     // Sort/search
@@ -52,7 +52,7 @@ export default function LecturePage() {
                 />
             </div>
             <Routes>
-                <Route path="/add" element={<AddMoviePage/>} />
+                <Route path="/add" element={<AddSubjectPage/>} />
             </Routes>
         </div>
     );

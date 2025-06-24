@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GetMovies } from "controllers/movie-controller";
+import { GetMovies, InsertMovie } from "controllers/movie-controller";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
 
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     const movie = req.body;
 
     try {
-        const newMovie = await GetMovies(movie);
+        const newMovie = await InsertMovie(movie);
         res.status(201).json(newMovie);
     } catch (error) {
         res.status(500).json({ error: "Failed to insert movie" });

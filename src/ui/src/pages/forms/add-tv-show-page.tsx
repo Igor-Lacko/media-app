@@ -1,5 +1,5 @@
 import TvShow from "@shared/interface/models/tv-show";
-import { defaultTvShow } from "data/defaults";
+import { defaultTvShow } from "utils/model-defaults";
 
 export default function AddTvShowPage() {
     return (
