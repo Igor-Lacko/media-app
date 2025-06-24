@@ -34,23 +34,30 @@ export const defaultSubject: Subject = {
     submediaString: "No known lectures :((",
 }
 
-export const defaultSeason: Season = {
-    seasonNumber: 1,
-    episodes: [],
-    description: "",
-};
-
-export const defaultEpisode: Episode = {
-    seasonNumber: 1,
-    episodeNumber: 1,
-    title: "",
-    watchStatus: WatchStatus.UNWATCHED,
-    continueAt: 0
+export function defaultSeason(seasonNumber: number = 1) : Season {
+    return {
+        seasonNumber: seasonNumber,
+        episodes: [],
+        description: "",
+    };
 }
 
-export const defaultLecture : Lecture = {
-    title: "",
-    watchStatus: WatchStatus.UNWATCHED,
-    continueAt: 0,
-    notes: []
+export function defaultEpisode(episodeNumber: number = 1, seasonNumber: number = 1) : Episode {
+    return {
+        episodeNumber: episodeNumber,
+        seasonNumber: seasonNumber,
+        title: "",
+        watchStatus: WatchStatus.UNWATCHED,
+        continueAt: 0,
+    };
+}
+
+export function defaultLecture(lectureNumber: number = 1) : Lecture{
+    return {
+        lectureNumber: lectureNumber,
+        title: "",
+        notes: [],
+        watchStatus: WatchStatus.UNWATCHED,
+        continueAt: 0,
+    };
 }

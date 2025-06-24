@@ -78,6 +78,7 @@ model Subject {
 model Lecture {
     id        Int      @id @default(autoincrement())
     title     String
+    lectureNumber Int
     notes     Note[]
     videoUrl  String?
     subjectId Int

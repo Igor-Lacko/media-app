@@ -1203,6 +1203,7 @@ export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeo
 export const LectureScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  lectureNumber: 'lectureNumber',
   videoUrl: 'videoUrl',
   subjectId: 'subjectId',
   length: 'length',

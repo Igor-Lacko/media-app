@@ -15,7 +15,7 @@ export default function TextAreaOption({
     extraClassnames?: string;
 }) {
     return (
-        <div className={"flex flex-col w-full space-y-3 items-start justify-center p-4 " + (extraClassnames || "")}>
+        <div className={"flex flex-col w-full ml-8 space-y-3 items-start justify-center p-4 " + (extraClassnames || "")}>
             <span
                 className={"text-lg mb-5 flex font-semibold items-center h-1/5 text-gray-700 dark:text-gray-400"}
             >

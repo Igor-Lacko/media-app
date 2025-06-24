@@ -1,12 +1,15 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import Subject from "@shared/interface/models/subject";
+import Lecture from "@shared/interface/models/lecture";
 import { defaultSubject } from "utils/model-defaults";
+import { defaultLecture } from "utils/model-defaults";
 import FormLayout from "layouts/form-layout";
 import SubjectSubmitHandler from "data/submit-handlers/subject-submit";
 import FormSection from "components/form-section";
 import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
+import FileBrowseOption from "components/options/file-browse-option";
 
 /**
  * Form page for adding a new subject.
@@ -14,6 +17,9 @@ import AddOption from "components/options/add-option";
 export default function AddSubjectPage() {
     // Constructed subject
     const subjectRef = useRef<Subject>(defaultSubject);
+
+    // To re-render on each add
+    const [lectures, setLectures] = useState<Lecture[]>([]);
 
     return (
         <FormLayout
@@ -27,7 +33,7 @@ export default function AddSubjectPage() {
                 title={"Basic Information"}
             >
                 <InputOption
-                    title={"Subject name *"}
+                    title={"Subject name*"}
                     placeholder={"Enter subject name"}
                     onChange={(value) => subjectRef.current.title = value}
                 />
@@ -36,10 +42,25 @@ export default function AddSubjectPage() {
                 title={"Lectures"}
             >
                 <AddOption
-                    title={"Add Lecture"}
                     buttonText={"New Lecture"}
-                    onChange={() => console.log("Lecture added")}
+                    onChange={() => setLectures([...lectures, defaultLecture()])}
                 />
+                {lectures.map((lecture, index) => (
+                    <FormSection
+                        key={index}
+                        title={`Lecture ${index + 1}`}
+                    >
+                        <InputOption
+                            title={"Lecture name*"}
+                            placeholder={"Enter lecture name"}
+                            onChange={(value) => lecture.title = value}
+                        />
+                        <FileBrowseOption
+                            title={"Lecture video"}
+                            onChange={(value) => lecture.videoUrl = value}
+                        />
+                    </FormSection>
+                ))}
             </FormSection>
         </FormLayout>
     )

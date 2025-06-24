@@ -83,6 +83,7 @@ export default async function seedData() {
                     length: 45,
                     continueAt: 0,
                     notes: ["Learn about variables", "Understand primitive data types"],
+                    lectureNumber: 1,
                 },
                 {
                     title: "Control Structures",
@@ -90,6 +91,7 @@ export default async function seedData() {
                     length: 50,
                     continueAt: 0,
                     notes: ["Learn about if-else statements", "Understand loops"],
+                    lectureNumber: 2,
                 },
             ],
         },
@@ -103,6 +105,7 @@ export default async function seedData() {
                     length: 60,
                     continueAt: 0,
                     notes: ["Understand arrays and linked lists", "Learn about their operations"],
+                    lectureNumber: 1,
                 },
                 {
                     title: "Sorting Algorithms",
@@ -110,6 +113,7 @@ export default async function seedData() {
                     length: 55,
                     continueAt: 0,
                     notes: ["Learn about bubble sort and quicksort", "Understand algorithm complexity"],
+                    lectureNumber: 2,
                 },
             ],
         },
@@ -123,6 +127,7 @@ export default async function seedData() {
                     length: 70,
                     continueAt: 0,
                     notes: ["Understand processes and threads", "Learn about scheduling algorithms"],
+                    lectureNumber: 1,
                 },
                 {
                     title: "Memory Management",
@@ -130,6 +135,7 @@ export default async function seedData() {
                     length: 40,
                     continueAt: 0,
                     notes: ["Learn about paging and segmentation", "Understand virtual memory"],
+                    lectureNumber: 2,
                 },
             ],
         },

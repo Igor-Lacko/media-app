@@ -52,10 +52,14 @@ export default function FormLayout<T>(props: FormProps<T>) {
                 className={"flex flex-col w-full h-24/25 items-center justify-start space-y-10"}
                 onSubmit={onSubmit}
             >
-                {props.children}
+                <div
+                    className={"flex-grow w-full"}
+                >
+                    {props.children}
+                </div>
                 <div
                     className={"flex w-full items-end justify-between p-4 border-t\
-                            border-gray-300 dark:border-gray-600 fixed bottom-0 bg-white dark:bg-gray-800"}
+                            border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"}
                 >
                     <span
                         className={"text-gray-500 text-sm"}

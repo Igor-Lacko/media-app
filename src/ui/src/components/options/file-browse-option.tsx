@@ -12,7 +12,7 @@ export default function FileBrowseOption({title, onChange, extraClassnames} : {t
 
     return (
         <div
-            className={"flex flex-col w-full items-start justify-center p-4 space-y-4 " + (extraClassnames || "")}
+            className={"flex flex-col w-full ml-8 items-start justify-center p-4 space-y-4 " + (extraClassnames || "")}
         >
             <span
                 className={"text-lg flex font-semibold items-center h-full text-gray-800 dark:text-gray-400"}
