@@ -10,6 +10,7 @@ import FormSection from "components/form-section";
 import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
+import RemoveOption from "components/options/remove-option";
 
 /**
  * Form page for adding a new subject.
@@ -58,6 +59,10 @@ export default function AddSubjectPage() {
                         <FileBrowseOption
                             title={"Lecture video"}
                             onChange={(value) => lecture.videoUrl = value}
+                        />
+                        <RemoveOption
+                            buttonText={"Remove Lecture"}
+                            onChange={() => {setLectures(lectures.filter((_, i) => i !== index))}}
                         />
                     </FormSection>
                 ))}
