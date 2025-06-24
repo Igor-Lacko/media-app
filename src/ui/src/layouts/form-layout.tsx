@@ -49,12 +49,13 @@ export default function FormLayout<T>(props: FormProps<T>) {
                 </h1>
             </div>
             <form
-                className={"flex flex-col w-full h-23/25 items-center justify-start space-y-10"}
+                className={"flex flex-col w-full h-24/25 items-center justify-start space-y-10"}
                 onSubmit={onSubmit}
             >
                 {props.children}
                 <div
-                    className={"flex w-full items-center justify-between p-4 border-t border-gray-300 dark:border-gray-600"}
+                    className={"flex w-full items-end justify-between p-4 border-t\
+                            border-gray-300 dark:border-gray-600 fixed bottom-0 bg-white dark:bg-gray-800"}
                 >
                     <span
                         className={"text-gray-500 text-sm"}
