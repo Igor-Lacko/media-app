@@ -23,8 +23,8 @@ export default function FormLayout<T>(props: FormProps<T>) {
     });
 
     // Submission
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const onSubmit = async () => {
+        console.log("Submitting form");
         await props.submitFunction(props.ref.current) ? setSuccess(true) : setError(true);
     };
 
@@ -48,9 +48,8 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     {props.title}
                 </h1>
             </div>
-            <form
+            <div
                 className={"flex flex-col w-full h-24/25 items-center justify-start space-y-10"}
-                onSubmit={onSubmit}
             >
                 <div
                     className={"flex-grow w-full"}
@@ -69,9 +68,10 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     <SubmitButton
                         title={props.title}
                         classNames={"w-1/15 h-full"}
+                        onClick={onSubmit}
                     />
                 </div>
-            </form>
+            </div>
             {error && <Modal
                 {...errorModalProps}
             />

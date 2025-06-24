@@ -25,13 +25,11 @@ export const defaultTvShow: TvShow = {
     genres: [Genre.ALL],
     seasons: [],
     watchStatus: WatchStatus.UNWATCHED,
-    submediaString: "No known seasons :(("
 }
 
 export const defaultSubject: Subject = {
     title: "",
     lectures: [],
-    submediaString: "No known lectures :((",
 }
 
 export function defaultSeason(seasonNumber: number = 1) : Season {
@@ -57,7 +55,6 @@ export function defaultLecture(lectureNumber: number = 1) : Lecture{
         lectureNumber: lectureNumber,
         title: "",
         notes: [],
-        watchStatus: WatchStatus.UNWATCHED,
         continueAt: 0,
     };
 }

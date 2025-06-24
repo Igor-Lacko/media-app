@@ -25,7 +25,7 @@ export default function AddSubjectPage() {
         <FormLayout
             title={"Add Subject"}
             ref={subjectRef}
-            submitFunction={SubjectSubmitHandler}
+            submitFunction={(subject : Subject) => SubjectSubmitHandler(subject, lectures)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={"Subject added successfully."}
         >

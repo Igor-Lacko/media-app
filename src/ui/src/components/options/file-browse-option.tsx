@@ -20,7 +20,7 @@ export default function FileBrowseOption({title, onChange, extraClassnames} : {t
                 {title}
             </span>
             <div
-                className={"flex items-center justify-start w-2/10"}
+                className={"flex items-center justify-start w-4/10"}
             >
                 <div
                     className={"flex items-center justify-start w-full h-10 rounded-lg border\
