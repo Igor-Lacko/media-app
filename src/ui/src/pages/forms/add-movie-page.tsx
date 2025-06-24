@@ -15,6 +15,7 @@ import DropdownProps from "utils/interface/props/dropdown-props";
 import SliderProps from "utils/interface/props/slider-props";
 import FileBrowseOption from "components/options/file-browse-option";
 import SubmitButton from "components/buttons/submit";
+import { defaultMovie } from "data/defaults";
 
 /**
  * Form page for adding a new movie.
@@ -24,7 +25,7 @@ export default function AddMoviePage() {
     const navigate = useNavigate();
 
     // Constructed object, do not want to render on every change
-    const movieRef = useRef<Movie>({} as Movie);
+    const movieRef = useRef<Movie>(defaultMovie);
 
     // Props for genre selection dropdown
     const genreDropdownProps : DropdownProps = {

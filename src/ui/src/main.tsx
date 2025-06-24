@@ -12,9 +12,9 @@ import MoviePage from 'pages/movie-page';
 import TvShowPage from 'pages/tv-show-page';
 import LecturePage from 'pages/lecture-page';
 import SettingsPage from 'pages/settings-page';
-import AddMoviePage from 'pages/add-movie-page';
-import AddTvShowPage from 'pages/add-tv-show-page';
-import AddSubjectPage from 'pages/add-subject-page';
+import AddMoviePage from 'pages/forms/add-movie-page';
+import AddTvShowPage from 'pages/forms/add-tv-show-page';
+import AddSubjectPage from 'pages/forms/add-subject-page';
 
 // React-query
 const queryClient = new QueryClient();

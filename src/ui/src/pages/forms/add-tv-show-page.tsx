@@ -1,3 +1,6 @@
+import TvShow from "@shared/interface/models/tv-show";
+import { defaultTvShow } from "data/defaults";
+
 export default function AddTvShowPage() {
     return (
         <div className="flex flex-col items-center justify-center h-screen w-screen z-100">
