@@ -1168,7 +1168,9 @@ export const SeasonScalarFieldEnum = {
   showId: 'showId',
   seasonNumber: 'seasonNumber',
   rating: 'rating',
-  description: 'description'
+  description: 'description',
+  shortDescription: 'shortDescription',
+  thumbnailUrl: 'thumbnailUrl'
 } as const
 
 export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
@@ -1180,7 +1182,7 @@ export const EpisodeScalarFieldEnum = {
   episodeNumber: 'episodeNumber',
   title: 'title',
   rating: 'rating',
-  description: 'description',
+  shortDescription: 'shortDescription',
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl',
   length: 'length',

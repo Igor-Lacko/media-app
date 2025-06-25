@@ -67,7 +67,7 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     </span>
                     <SubmitButton
                         title={props.title}
-                        classNames={"w-1/15 h-full"}
+                        classNames={"w-1/10 h-full"}
                         onClick={onSubmit}
                     />
                 </div>

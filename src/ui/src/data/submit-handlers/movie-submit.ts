@@ -18,7 +18,9 @@ export default async function SubmitMovie(movie: Movie): Promise<boolean> {
     try {
         await CreateData<Movie>("/api/movies", movie);
         return true;
-    } catch (error) {
+    } 
+
+    catch (error) {
         console.error("Error submitting movie:", error);
         return false;
     }

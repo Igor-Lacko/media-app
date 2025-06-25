@@ -49,7 +49,7 @@ export type EpisodeMinAggregateOutputType = {
   episodeNumber: number | null
   title: string | null
   rating: number | null
-  description: string | null
+  shortDescription: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
   length: number | null
@@ -63,7 +63,7 @@ export type EpisodeMaxAggregateOutputType = {
   episodeNumber: number | null
   title: string | null
   rating: number | null
-  description: string | null
+  shortDescription: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
   length: number | null
@@ -77,7 +77,7 @@ export type EpisodeCountAggregateOutputType = {
   episodeNumber: number
   title: number
   rating: number
-  description: number
+  shortDescription: number
   videoUrl: number
   thumbnailUrl: number
   length: number
@@ -111,7 +111,7 @@ export type EpisodeMinAggregateInputType = {
   episodeNumber?: true
   title?: true
   rating?: true
-  description?: true
+  shortDescription?: true
   videoUrl?: true
   thumbnailUrl?: true
   length?: true
@@ -125,7 +125,7 @@ export type EpisodeMaxAggregateInputType = {
   episodeNumber?: true
   title?: true
   rating?: true
-  description?: true
+  shortDescription?: true
   videoUrl?: true
   thumbnailUrl?: true
   length?: true
@@ -139,7 +139,7 @@ export type EpisodeCountAggregateInputType = {
   episodeNumber?: true
   title?: true
   rating?: true
-  description?: true
+  shortDescription?: true
   videoUrl?: true
   thumbnailUrl?: true
   length?: true
@@ -240,7 +240,7 @@ export type EpisodeGroupByOutputType = {
   episodeNumber: number
   title: string
   rating: number | null
-  description: string | null
+  shortDescription: string | null
   videoUrl: string | null
   thumbnailUrl: string | null
   length: number | null
@@ -277,7 +277,7 @@ export type EpisodeWhereInput = {
   episodeNumber?: Prisma.IntFilter<"Episode"> | number
   title?: Prisma.StringFilter<"Episode"> | string
   rating?: Prisma.FloatNullableFilter<"Episode"> | number | null
-  description?: Prisma.StringNullableFilter<"Episode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Episode"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   length?: Prisma.IntNullableFilter<"Episode"> | number | null
@@ -292,7 +292,7 @@ export type EpisodeOrderByWithRelationInput = {
   episodeNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -310,7 +310,7 @@ export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
   episodeNumber?: Prisma.IntFilter<"Episode"> | number
   title?: Prisma.StringFilter<"Episode"> | string
   rating?: Prisma.FloatNullableFilter<"Episode"> | number | null
-  description?: Prisma.StringNullableFilter<"Episode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Episode"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   length?: Prisma.IntNullableFilter<"Episode"> | number | null
@@ -325,7 +325,7 @@ export type EpisodeOrderByWithAggregationInput = {
   episodeNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -347,7 +347,7 @@ export type EpisodeScalarWhereWithAggregatesInput = {
   episodeNumber?: Prisma.IntWithAggregatesFilter<"Episode"> | number
   title?: Prisma.StringWithAggregatesFilter<"Episode"> | string
   rating?: Prisma.FloatNullableWithAggregatesFilter<"Episode"> | number | null
-  description?: Prisma.StringNullableWithAggregatesFilter<"Episode"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Episode"> | string | null
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Episode"> | string | null
   thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Episode"> | string | null
   length?: Prisma.IntNullableWithAggregatesFilter<"Episode"> | number | null
@@ -359,7 +359,7 @@ export type EpisodeCreateInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -374,7 +374,7 @@ export type EpisodeUncheckedCreateInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -386,7 +386,7 @@ export type EpisodeUpdateInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -401,7 +401,7 @@ export type EpisodeUncheckedUpdateInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -415,7 +415,7 @@ export type EpisodeCreateManyInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -427,7 +427,7 @@ export type EpisodeUpdateManyMutationInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -441,7 +441,7 @@ export type EpisodeUncheckedUpdateManyInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -465,7 +465,7 @@ export type EpisodeCountOrderByAggregateInput = {
   episodeNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
@@ -488,7 +488,7 @@ export type EpisodeMaxOrderByAggregateInput = {
   episodeNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
@@ -502,7 +502,7 @@ export type EpisodeMinOrderByAggregateInput = {
   episodeNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
@@ -565,7 +565,7 @@ export type EpisodeCreateWithoutSeasonInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -578,7 +578,7 @@ export type EpisodeUncheckedCreateWithoutSeasonInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -620,7 +620,7 @@ export type EpisodeScalarWhereInput = {
   episodeNumber?: Prisma.IntFilter<"Episode"> | number
   title?: Prisma.StringFilter<"Episode"> | string
   rating?: Prisma.FloatNullableFilter<"Episode"> | number | null
-  description?: Prisma.StringNullableFilter<"Episode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Episode"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Episode"> | string | null
   length?: Prisma.IntNullableFilter<"Episode"> | number | null
@@ -633,7 +633,7 @@ export type EpisodeCreateManySeasonInput = {
   episodeNumber: number
   title: string
   rating?: number | null
-  description?: string | null
+  shortDescription?: string | null
   videoUrl?: string | null
   thumbnailUrl?: string | null
   length?: number | null
@@ -645,7 +645,7 @@ export type EpisodeUpdateWithoutSeasonInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -658,7 +658,7 @@ export type EpisodeUncheckedUpdateWithoutSeasonInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -671,7 +671,7 @@ export type EpisodeUncheckedUpdateManyWithoutSeasonInput = {
   episodeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -687,7 +687,7 @@ export type EpisodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   episodeNumber?: boolean
   title?: boolean
   rating?: boolean
-  description?: boolean
+  shortDescription?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
   length?: boolean
@@ -702,7 +702,7 @@ export type EpisodeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   episodeNumber?: boolean
   title?: boolean
   rating?: boolean
-  description?: boolean
+  shortDescription?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
   length?: boolean
@@ -717,7 +717,7 @@ export type EpisodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   episodeNumber?: boolean
   title?: boolean
   rating?: boolean
-  description?: boolean
+  shortDescription?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
   length?: boolean
@@ -732,7 +732,7 @@ export type EpisodeSelectScalar = {
   episodeNumber?: boolean
   title?: boolean
   rating?: boolean
-  description?: boolean
+  shortDescription?: boolean
   videoUrl?: boolean
   thumbnailUrl?: boolean
   length?: boolean
@@ -740,7 +740,7 @@ export type EpisodeSelectScalar = {
   watchStatus?: boolean
 }
 
-export type EpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "seasonId" | "episodeNumber" | "title" | "rating" | "description" | "videoUrl" | "thumbnailUrl" | "length" | "continueAt" | "watchStatus", ExtArgs["result"]["episode"]>
+export type EpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "seasonId" | "episodeNumber" | "title" | "rating" | "shortDescription" | "videoUrl" | "thumbnailUrl" | "length" | "continueAt" | "watchStatus", ExtArgs["result"]["episode"]>
 export type EpisodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
 }
@@ -762,7 +762,7 @@ export type $EpisodePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     episodeNumber: number
     title: string
     rating: number | null
-    description: string | null
+    shortDescription: string | null
     videoUrl: string | null
     thumbnailUrl: string | null
     length: number | null
@@ -1197,7 +1197,7 @@ export interface EpisodeFieldRefs {
   readonly episodeNumber: Prisma.FieldRef<"Episode", 'Int'>
   readonly title: Prisma.FieldRef<"Episode", 'String'>
   readonly rating: Prisma.FieldRef<"Episode", 'Float'>
-  readonly description: Prisma.FieldRef<"Episode", 'String'>
+  readonly shortDescription: Prisma.FieldRef<"Episode", 'String'>
   readonly videoUrl: Prisma.FieldRef<"Episode", 'String'>
   readonly thumbnailUrl: Prisma.FieldRef<"Episode", 'String'>
   readonly length: Prisma.FieldRef<"Episode", 'Int'>

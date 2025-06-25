@@ -1,3 +1,4 @@
+import WatchStatus from "shared/enum/watch-status";
 import CardDisplayable from "../card-displayable";
 import DetailFillable from "../detail-fillable";
 
@@ -6,6 +7,7 @@ import DetailFillable from "../detail-fillable";
  */
 export interface Lecture extends CardDisplayable, DetailFillable {
     lectureNumber: number;
+    watchStatus: WatchStatus;
     notes: string[];
 }
 

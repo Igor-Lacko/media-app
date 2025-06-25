@@ -56,5 +56,6 @@ export function defaultLecture(lectureNumber: number = 1) : Lecture{
         title: "",
         notes: [],
         continueAt: 0,
+        watchStatus: WatchStatus.UNWATCHED
     };
 }

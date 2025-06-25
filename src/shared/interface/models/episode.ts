@@ -1,17 +1,13 @@
 import WatchStatus from "shared/enum/watch-status";
+import CardDisplayable from "../card-displayable";
 
 /**
  * Interface for tv show episodes.
  */
-export interface Episode {
-    identifier?: number;
+export interface Episode extends CardDisplayable {
     seasonNumber: number;
     episodeNumber: number;
-    title: string;
-    rating?: number;
-    description?: string;
     videoUrl?: string;
-    thumbnailUrl?: string;
     length?: number;
     continueAt: number;
     watchStatus: WatchStatus;

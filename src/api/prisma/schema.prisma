@@ -51,6 +51,8 @@ model Season {
     show         Show      @relation(fields: [showId], references: [id], onDelete: Cascade)
     rating       Float?
     description  String?
+    shortDescription String?
+    thumbnailUrl String?
 }
 
 model Episode {
@@ -59,7 +61,7 @@ model Episode {
     episodeNumber Int
     title         String
     rating        Float?
-    description   String?
+    shortDescription String?
     season        Season  @relation(fields: [seasonId], references: [id], onDelete: Cascade)
     videoUrl      String?
     thumbnailUrl  String?

@@ -74,7 +74,14 @@ export async function InsertTvShow(tvShow: TvShow): Promise<TvShow | null> {
                         ...season,
                         episodes: {
                             create: season.episodes.map((episode: Episode) => ({
-                                ...episode,
+                                // Can't do ...episode due to seasonNumber
+                                episodeNumber: episode.episodeNumber,
+                                title: episode.title,
+                                rating: episode.rating,
+                                shortDescription: episode.shortDescription,
+                                videoUrl: episode.videoUrl,
+                                thumbnailUrl: episode.thumbnailUrl,
+                                length: episode.length
                             })),
                         },
                     })),

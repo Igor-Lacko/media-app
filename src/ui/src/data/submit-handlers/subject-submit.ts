@@ -24,12 +24,11 @@ export default async function SubjectSubmitHandler(subject: Subject, lectures: L
 
     // Submit
     try {
-        if(await CreateData<Subject>("/api/subjects", subject)) {
-            return true;
-        }
+        await CreateData<Subject>("/api/subjects", subject);
+        return true;
+    } 
 
-        return false;
-    } catch (error) {
+    catch (error) {
         console.error("Error submitting subject:", error);
         return false;
     }
