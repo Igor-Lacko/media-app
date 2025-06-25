@@ -34,6 +34,7 @@ export const defaultSubject: Subject = {
 
 export function defaultSeason(seasonNumber: number = 1) : Season {
     return {
+        title: "",
         seasonNumber: seasonNumber,
         episodes: [],
         description: "",

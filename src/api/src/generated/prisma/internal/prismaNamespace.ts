@@ -1208,6 +1208,7 @@ export const LectureScalarFieldEnum = {
   lectureNumber: 'lectureNumber',
   videoUrl: 'videoUrl',
   subjectId: 'subjectId',
+  watchStatus: 'watchStatus',
   length: 'length',
   continueAt: 'continueAt'
 } as const

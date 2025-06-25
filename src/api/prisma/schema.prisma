@@ -85,6 +85,7 @@ model Lecture {
     videoUrl  String?
     subjectId Int
     subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+    watchStatus WatchStatus @default(UNWATCHED)
     length    Int?
     continueAt  Int @default(0)
 }
