@@ -1,5 +1,6 @@
 import WatchStatus from "@shared/enum/watch-status";
 import classNames from "classnames";
+import PlayButton from "components/buttons/play-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
 import DetailImage from "components/image/detail-image";
@@ -60,7 +61,7 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
                 </p>
                 
             </div>
-            { /* rating, watch status */}
+            { /* rating, watch status, play button */}
             <div
                 className={"flex flex-col items-center ml-10 justify-center py-5 w-2/10 h-full\
                         space-y-5 border-l-2 border-gray-400 dark:border-gray-600"}
@@ -70,6 +71,10 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
                 />}
                 {props.hasWatchStatus && <DetailWatchStatus
                     watchStatus={props.model.watchStatus}
+                />}
+                {props.playable && <PlayButton
+                    onClick={() => console.log("Play button clicked")}
+                    extraClassNames={"w-1/4 h-1/9 mt-30"}
                 />}
             </div>
         </div>
