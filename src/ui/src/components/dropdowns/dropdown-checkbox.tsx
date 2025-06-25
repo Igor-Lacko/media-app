@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DropdownProps from "utils/interface/props/dropdown-props";
+import DropdownProps from "utils/props/dropdown-props";
 import classNames from "classnames";
 import Genre from "@shared/enum/genre";
 

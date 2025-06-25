@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import ListProps from "utils/interface/props/list-props";
+import ListProps from "utils/props/list-props";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import Genre from "@shared/enum/genre";

@@ -1,4 +1,4 @@
-import ModalProps from "utils/interface/props/modal-props";
+import ModalProps from "utils/props/modal-props";
 
 /**
  * Hook to handle modal state and properties.

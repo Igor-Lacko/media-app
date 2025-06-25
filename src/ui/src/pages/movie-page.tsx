@@ -7,8 +7,8 @@ import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
 import { FetchData } from "data/crud/read";
 import MediaItemList from "components/media-item-list";
-import ControlBarProps from "utils/interface/props/control-bar-props";
-import ListProps from "utils/interface/props/list-props";
+import ControlBarProps from "utils/props/control-bar-props";
+import ListProps from "utils/props/list-props";
 
 /**
  * App Movie page.

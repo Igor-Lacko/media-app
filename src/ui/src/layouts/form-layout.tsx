@@ -1,7 +1,7 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-import FormProps from "utils/interface/props/form-props";
+import { useState } from "react";
+import FormProps from "utils/props/form-props";
 import SubmitButton from "components/buttons/submit";
 import useModal from "hooks/use-modal";
 import Modal from "components/modal";
@@ -37,7 +37,7 @@ export default function FormLayout<T>(props: FormProps<T>) {
                 className={"flex items-center justify-start ml-10 mt-5 w-full h-1/25 sm:h-1/20"}
             >
                 <FaArrowLeft
-                    className={"text-gray-500 text-2xl cursor-pointer transition-all duration-300 ease-in-out"}
+                    className={"text-gray-500 text-2xl cursor-pointer"}
                     onClick={() => navigate(-1)}
                 />
             </div>

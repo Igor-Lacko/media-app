@@ -1,5 +1,5 @@
 import axios from 'axios';
-import FetchOptions from 'utils/interface/props/fetch-options';
+import FetchOptions from 'utils/props/fetch-options';
 import Settings from '@shared/interface/models/settings';
 
 /**

@@ -1,4 +1,4 @@
-import ModalProps from "utils/interface/props/modal-props";
+import ModalProps from "utils/props/modal-props";
 
 /**
  * Render a modal component with a title, message, and close button.

@@ -1,13 +1,13 @@
 import { FaSort } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 
-import ControlBarProps from "utils/interface/props/control-bar-props";
+import ControlBarProps from "utils/props/control-bar-props";
 import DropdownMenu from "./dropdowns/dropdown-menu";
 import SortKey from "@shared/enum/sort-key";
 import Genre from "@shared/enum/genre";
 import SortKeyAdapter from "utils/adapters/sort-key-adapter";
 import GenreAdapter from "utils/adapters/genre-adapter";
-import DropdownProps from "utils/interface/props/dropdown-props";
+import DropdownProps from "utils/props/dropdown-props";
 import { NavLink } from "react-router-dom";
 
 /**
