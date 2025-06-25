@@ -19,6 +19,7 @@ model Movie {
     thumbnailUrl String?
     length       Int?
     watchStatus WatchStatus @default(UNWATCHED)
+    isFavorite   Boolean @default(false)
     continueAt  Int @default(0)
 }
 
@@ -31,6 +32,7 @@ model Show {
     description String?
     seasons     Season[]
     thumbnailUrl String?
+    isFavorite Boolean @default(false)
     watchStatus  WatchStatus @default(UNWATCHED)
 }
 
@@ -64,7 +66,6 @@ model Episode {
     shortDescription String?
     season        Season  @relation(fields: [seasonId], references: [id], onDelete: Cascade)
     videoUrl      String?
-    thumbnailUrl  String?
     length        Int?
     continueAt  Int @default(0)
     watchStatus WatchStatus @default(UNWATCHED)

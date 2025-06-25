@@ -49,6 +49,7 @@ export type MovieMinAggregateOutputType = {
   thumbnailUrl: string | null
   length: number | null
   watchStatus: $Enums.WatchStatus | null
+  isFavorite: boolean | null
   continueAt: number | null
 }
 
@@ -62,6 +63,7 @@ export type MovieMaxAggregateOutputType = {
   thumbnailUrl: string | null
   length: number | null
   watchStatus: $Enums.WatchStatus | null
+  isFavorite: boolean | null
   continueAt: number | null
 }
 
@@ -75,6 +77,7 @@ export type MovieCountAggregateOutputType = {
   thumbnailUrl: number
   length: number
   watchStatus: number
+  isFavorite: number
   continueAt: number
   _all: number
 }
@@ -104,6 +107,7 @@ export type MovieMinAggregateInputType = {
   thumbnailUrl?: true
   length?: true
   watchStatus?: true
+  isFavorite?: true
   continueAt?: true
 }
 
@@ -117,6 +121,7 @@ export type MovieMaxAggregateInputType = {
   thumbnailUrl?: true
   length?: true
   watchStatus?: true
+  isFavorite?: true
   continueAt?: true
 }
 
@@ -130,6 +135,7 @@ export type MovieCountAggregateInputType = {
   thumbnailUrl?: true
   length?: true
   watchStatus?: true
+  isFavorite?: true
   continueAt?: true
   _all?: true
 }
@@ -230,6 +236,7 @@ export type MovieGroupByOutputType = {
   thumbnailUrl: string | null
   length: number | null
   watchStatus: $Enums.WatchStatus
+  isFavorite: boolean
   continueAt: number
   _count: MovieCountAggregateOutputType | null
   _avg: MovieAvgAggregateOutputType | null
@@ -266,6 +273,7 @@ export type MovieWhereInput = {
   thumbnailUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
   length?: Prisma.IntNullableFilter<"Movie"> | number | null
   watchStatus?: Prisma.EnumWatchStatusFilter<"Movie"> | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFilter<"Movie"> | boolean
   continueAt?: Prisma.IntFilter<"Movie"> | number
   genres?: Prisma.EntertainmentGenreListRelationFilter
 }
@@ -280,6 +288,7 @@ export type MovieOrderByWithRelationInput = {
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
   genres?: Prisma.EntertainmentGenreOrderByRelationAggregateInput
 }
@@ -297,6 +306,7 @@ export type MovieWhereUniqueInput = Prisma.AtLeast<{
   thumbnailUrl?: Prisma.StringNullableFilter<"Movie"> | string | null
   length?: Prisma.IntNullableFilter<"Movie"> | number | null
   watchStatus?: Prisma.EnumWatchStatusFilter<"Movie"> | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFilter<"Movie"> | boolean
   continueAt?: Prisma.IntFilter<"Movie"> | number
   genres?: Prisma.EntertainmentGenreListRelationFilter
 }, "id">
@@ -311,6 +321,7 @@ export type MovieOrderByWithAggregationInput = {
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
   _count?: Prisma.MovieCountOrderByAggregateInput
   _avg?: Prisma.MovieAvgOrderByAggregateInput
@@ -332,6 +343,7 @@ export type MovieScalarWhereWithAggregatesInput = {
   thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   length?: Prisma.IntNullableWithAggregatesFilter<"Movie"> | number | null
   watchStatus?: Prisma.EnumWatchStatusWithAggregatesFilter<"Movie"> | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolWithAggregatesFilter<"Movie"> | boolean
   continueAt?: Prisma.IntWithAggregatesFilter<"Movie"> | number
 }
 
@@ -344,6 +356,7 @@ export type MovieCreateInput = {
   thumbnailUrl?: string | null
   length?: number | null
   watchStatus?: $Enums.WatchStatus
+  isFavorite?: boolean
   continueAt?: number
   genres?: Prisma.EntertainmentGenreCreateNestedManyWithoutMovieInput
 }
@@ -358,6 +371,7 @@ export type MovieUncheckedCreateInput = {
   thumbnailUrl?: string | null
   length?: number | null
   watchStatus?: $Enums.WatchStatus
+  isFavorite?: boolean
   continueAt?: number
   genres?: Prisma.EntertainmentGenreUncheckedCreateNestedManyWithoutMovieInput
 }
@@ -371,6 +385,7 @@ export type MovieUpdateInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   genres?: Prisma.EntertainmentGenreUpdateManyWithoutMovieNestedInput
 }
@@ -385,6 +400,7 @@ export type MovieUncheckedUpdateInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   genres?: Prisma.EntertainmentGenreUncheckedUpdateManyWithoutMovieNestedInput
 }
@@ -399,6 +415,7 @@ export type MovieCreateManyInput = {
   thumbnailUrl?: string | null
   length?: number | null
   watchStatus?: $Enums.WatchStatus
+  isFavorite?: boolean
   continueAt?: number
 }
 
@@ -411,6 +428,7 @@ export type MovieUpdateManyMutationInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -424,6 +442,7 @@ export type MovieUncheckedUpdateManyInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -437,6 +456,7 @@ export type MovieCountOrderByAggregateInput = {
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -457,6 +477,7 @@ export type MovieMaxOrderByAggregateInput = {
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -470,6 +491,7 @@ export type MovieMinOrderByAggregateInput = {
   thumbnailUrl?: Prisma.SortOrder
   length?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -513,6 +535,10 @@ export type EnumWatchStatusFieldUpdateOperationsInput = {
   set?: $Enums.WatchStatus
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -546,6 +572,7 @@ export type MovieCreateWithoutGenresInput = {
   thumbnailUrl?: string | null
   length?: number | null
   watchStatus?: $Enums.WatchStatus
+  isFavorite?: boolean
   continueAt?: number
 }
 
@@ -559,6 +586,7 @@ export type MovieUncheckedCreateWithoutGenresInput = {
   thumbnailUrl?: string | null
   length?: number | null
   watchStatus?: $Enums.WatchStatus
+  isFavorite?: boolean
   continueAt?: number
 }
 
@@ -587,6 +615,7 @@ export type MovieUpdateWithoutGenresInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -600,6 +629,7 @@ export type MovieUncheckedUpdateWithoutGenresInput = {
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -644,6 +674,7 @@ export type MovieSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   thumbnailUrl?: boolean
   length?: boolean
   watchStatus?: boolean
+  isFavorite?: boolean
   continueAt?: boolean
   genres?: boolean | Prisma.Movie$genresArgs<ExtArgs>
   _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
@@ -659,6 +690,7 @@ export type MovieSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   thumbnailUrl?: boolean
   length?: boolean
   watchStatus?: boolean
+  isFavorite?: boolean
   continueAt?: boolean
 }, ExtArgs["result"]["movie"]>
 
@@ -672,6 +704,7 @@ export type MovieSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   thumbnailUrl?: boolean
   length?: boolean
   watchStatus?: boolean
+  isFavorite?: boolean
   continueAt?: boolean
 }, ExtArgs["result"]["movie"]>
 
@@ -685,10 +718,11 @@ export type MovieSelectScalar = {
   thumbnailUrl?: boolean
   length?: boolean
   watchStatus?: boolean
+  isFavorite?: boolean
   continueAt?: boolean
 }
 
-export type MovieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "videoUrl" | "thumbnailUrl" | "length" | "watchStatus" | "continueAt", ExtArgs["result"]["movie"]>
+export type MovieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "rating" | "shortDescription" | "description" | "videoUrl" | "thumbnailUrl" | "length" | "watchStatus" | "isFavorite" | "continueAt", ExtArgs["result"]["movie"]>
 export type MovieInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genres?: boolean | Prisma.Movie$genresArgs<ExtArgs>
   _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
@@ -711,6 +745,7 @@ export type $MoviePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     thumbnailUrl: string | null
     length: number | null
     watchStatus: $Enums.WatchStatus
+    isFavorite: boolean
     continueAt: number
   }, ExtArgs["result"]["movie"]>
   composites: {}
@@ -1145,6 +1180,7 @@ export interface MovieFieldRefs {
   readonly thumbnailUrl: Prisma.FieldRef<"Movie", 'String'>
   readonly length: Prisma.FieldRef<"Movie", 'Int'>
   readonly watchStatus: Prisma.FieldRef<"Movie", 'WatchStatus'>
+  readonly isFavorite: Prisma.FieldRef<"Movie", 'Boolean'>
   readonly continueAt: Prisma.FieldRef<"Movie", 'Int'>
 }
     

@@ -1,8 +1,6 @@
-export interface DetailFillable {
-    identifier?: number;
-    title: string;
-    rating?: number;
-    thumbnailUrl?: string;
+import CardDisplayable from "./card-displayable";
+
+export interface DetailFillable extends CardDisplayable {
     videoUrl?: string;
     length?: number;
     description?: string;

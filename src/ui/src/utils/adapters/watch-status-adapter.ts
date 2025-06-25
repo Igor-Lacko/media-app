@@ -7,6 +7,6 @@ export default function watchStatusAdapter(watchStatus: WatchStatus): string {
         case WatchStatus.UNWATCHED:
             return "Not watched yet";
         case WatchStatus.WATCHING:
-            return "Watching";
+            return "Currently watching";
     }
 }

@@ -17,6 +17,7 @@ export interface DetailProps {
     hasSubmedia: boolean;
     canBeMarkedFavorite: boolean;
     headerType: DetailHeaders;
+    hasWatchStatus: boolean;
 }
 
 export default DetailProps;

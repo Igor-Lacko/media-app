@@ -1134,6 +1134,7 @@ export const MovieScalarFieldEnum = {
   thumbnailUrl: 'thumbnailUrl',
   length: 'length',
   watchStatus: 'watchStatus',
+  isFavorite: 'isFavorite',
   continueAt: 'continueAt'
 } as const
 
@@ -1147,6 +1148,7 @@ export const ShowScalarFieldEnum = {
   shortDescription: 'shortDescription',
   description: 'description',
   thumbnailUrl: 'thumbnailUrl',
+  isFavorite: 'isFavorite',
   watchStatus: 'watchStatus'
 } as const
 
@@ -1284,16 +1286,16 @@ export type EnumWatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 
 
 /**
- * Reference to a field of type 'Genre'
+ * Reference to a field of type 'Boolean'
  */
-export type EnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre'>
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'Genre'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type EnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre'>
     
 
 /**

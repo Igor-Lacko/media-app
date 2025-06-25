@@ -5,7 +5,7 @@ import DetailFillable from "../detail-fillable";
 /**
  * Interface representing a lecture.
  */
-export interface Lecture extends CardDisplayable, DetailFillable {
+export interface Lecture extends DetailFillable {
     lectureNumber: number;
     watchStatus: WatchStatus;
     notes: string[];
