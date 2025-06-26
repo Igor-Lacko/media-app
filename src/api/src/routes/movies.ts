@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GetMovieById, GetMovies, InsertMovie } from "controllers/movie-controller";
+import { GetMovieById, GetMovies, InsertMovie, UpdateMovie } from "controllers/movie-controller";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
 
@@ -11,12 +11,13 @@ router.get("/", async (req, res) => {
     const { sortBy, filter } = req.query;
     console.log("Fetching movies...");
 
-    try {
-        const movies = await GetMovies(sortBy as SortKey, filter as Genre);
+    // Fetch and return
+    const movies = await GetMovies(sortBy as SortKey, filter as Genre);
+    if(movies !== null) {
         res.json(movies);
-    } 
+    }
 
-    catch (error) {
+    else {
         res.status(500).json({ error: "Failed to fetch movies" });
     }
 });
@@ -37,11 +38,32 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     const movie = req.body;
 
-    try {
-        const newMovie = await InsertMovie(movie);
-        res.status(201).json(newMovie);
-    } catch (error) {
+    if(await InsertMovie(movie)) {
+        res.status(201).json({ message: "Movie inserted successfully" });
+    }
+
+    else {
         res.status(500).json({ error: "Failed to insert movie" });
+    }
+});
+
+// Movie updates
+router.patch("/:id", async (req, res) => {
+    // Parse ID
+    const movieId = parseInt(req.params.id, 10);
+    if (isNaN(movieId)) {
+        res.status(400).json({ error: "Invalid movie ID" });
+        return;
+    }
+
+    // Update
+    const updatedData = req.body;
+    if(await UpdateMovie(movieId, updatedData)) {
+        res.status(200).json({ message: "Movie updated successfully" });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to update movie" });
     }
 });
 

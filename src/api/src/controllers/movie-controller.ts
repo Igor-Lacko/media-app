@@ -88,12 +88,12 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
  * Updates a movie in the database.
  * @param id Unique identifier of the movie to update.
  * @param movie Partial movie object containing fields to update.
- * @returns The partially updated movie object if successful, null otherwise.
+ * @returns True if successful, false otherwise.
  */
-export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<Movie | null> {
+export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<boolean> {
     console.log("Updating movie: ", movie);
     try {
-        const updatedMovie = await prisma.movie.update({
+        await prisma.movie.update({
             where: {
                 id: id,
             },
@@ -110,21 +110,21 @@ export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<Mo
             }
         });
 
-        return updatedMovie;
+        return true;
     }
 
     catch (error) {
         console.error("Error updating movie: " + error);
-        return null;
+        return false;
     }
 }
 
 /**
  * Inserts a movie into the database.
  * @param movie Movie to insert.
- * @returns Movie object if successful, null otherwise.
+ * @returns True if successful, false otherwise.
  */
-export async function InsertMovie(movie: Movie): Promise<Movie | null> {
+export async function InsertMovie(movie: Movie): Promise<boolean> {
     console.log("Inserting movie: ", movie);
     try {
         await prisma.movie.create({
@@ -140,9 +140,9 @@ export async function InsertMovie(movie: Movie): Promise<Movie | null> {
 
         console.log(`Inserted movie: ${movie.title}`);
 
-        return movie;
+        return true;
     } catch (error) {
         console.error("Error inserting movie: " + error);
-        return null;
+        return false;
     }
 }

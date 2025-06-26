@@ -38,6 +38,6 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
 
     catch (error) {
         console.error("Error updating season: " + error);
-        return null;
+        return false;
     }
 }

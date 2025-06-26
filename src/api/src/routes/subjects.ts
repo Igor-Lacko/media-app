@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import SortKey from '@shared/enum/sort-key';
-import { GetSubjectById, GetSubjects, InsertSubject } from 'controllers/subject-controller';
+import { GetSubjectById, GetSubjects, InsertSubject, UpdateSubject } from 'controllers/subject-controller';
 
 const router = Router();
 
@@ -42,6 +42,24 @@ router.post('/', async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Failed to insert subject' });
+    }
+});
+
+// Subject updates
+router.patch('/:id', async (req, res) => {
+    const subjectId = parseInt(req.params.id, 10);
+    if (isNaN(subjectId)) {
+        res.status(400).json({ error: 'Invalid subject ID' });
+        return;
+    }
+
+    const updatedData = req.body;
+    if(await UpdateSubject(subjectId, updatedData)) {
+        res.status(200).json({ message: 'Subject updated successfully' });
+    }
+
+    else {
+        res.status(500).json({ error: 'Failed to update subject' });
     }
 });
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
-import { GetTvShowById, GetTvShows, InsertTvShow } from "controllers/tv-show-controller";
+import { GetTvShowById, GetTvShows, InsertTvShow, UpdateTvShow } from "controllers/tv-show-controller";
 
 const router = Router();
 
@@ -47,5 +47,27 @@ router.post("/", async (req, res) => {
         res.status(500).json({ error: "Failed to insert TV show" });
     }
 });
+
+// TV show updates
+router.patch("/:id", async (req, res) => {
+    
+    // Parse ID
+    const tvShowId = parseInt(req.params.id, 10);
+    if (isNaN(tvShowId)) {
+        res.status(400).json({ error: "Invalid TV show ID" });
+        return;
+    }
+
+    // Update
+    const updatedData = req.body;
+    if (await UpdateTvShow(tvShowId, updatedData)) {
+        res.status(200).json({ message: "TV show updated successfully" });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to update TV show" });
+    }
+});
+
 
 export default router;

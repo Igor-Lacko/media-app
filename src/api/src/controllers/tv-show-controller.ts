@@ -169,7 +169,7 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
  * @param tvShow TvShow to insert.
  * @returns TvShow object if successful, null otherwise.
  */
-export async function InsertTvShow(tvShow: TvShow): Promise<TvShow | null> {
+export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
     try {
         await prisma.show.create({
             data: {
@@ -201,9 +201,11 @@ export async function InsertTvShow(tvShow: TvShow): Promise<TvShow | null> {
         });
 
         console.log(`Inserted TV show: ${tvShow.title}`);
-        return tvShow;
-    } catch (error) {
+        return true;
+    } 
+
+    catch (error) {
         console.error("Error inserting TV show: " + error);
-        return null;
+        return false;
     }
 }

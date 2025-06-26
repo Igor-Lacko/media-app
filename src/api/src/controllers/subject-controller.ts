@@ -3,6 +3,7 @@ import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
 import { SortSubjects } from "utils/sort";
 import GetOrderBy from "utils/order-by";
+import { UpdateLecture } from "./lecture-controller";
 
 /**
  * Gets all subjects matching the given parameters.
@@ -95,7 +96,7 @@ export async function GetSubjectById(id: number): Promise<Subject | null> {
  * @param subject Subject to insert.
  * @returns Subject object if successful, null otherwise.
  */
-export async function InsertSubject(subject: Subject): Promise<Subject | null> {
+export async function InsertSubject(subject: Subject): Promise<boolean> {
     try {
         await prisma.subject.create({
             data: {
@@ -114,11 +115,51 @@ export async function InsertSubject(subject: Subject): Promise<Subject | null> {
         });
 
         console.log(`Inserted subject: ${subject.title}`);
-        return subject;
+        return true;
     }
 
     catch (error) {
         console.error("Error inserting subject: " + error);
-        return null;
+        return false;
+    }
+}
+
+/**
+ * Updates a subject by its ID.
+ * @param id Identifier of the subject to update.
+ * @param subjectData Partial object containing fields to update.
+ * @returns True if the update was successful, false otherwise.
+ */
+export async function UpdateSubject(id: number, subjectData: Partial<Subject>): Promise<boolean>  {
+    console.log("Updating subject with ID:", id);
+
+    // Update lectures first (if provided)
+    if(subjectData.lectures) {
+        for (const lecture of subjectData.lectures) {
+            await UpdateLecture(lecture.identifier, lecture);
+        }
+    }
+
+    // Update the subject itself
+    try {
+        await prisma.subject.update({
+            where: {
+                id: id
+            },
+
+            data: {
+                ...subjectData,
+
+                // Already updated, can safely ignore now
+                lectures: undefined,
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating subject: " + error);
+        return false;
     }
 }
