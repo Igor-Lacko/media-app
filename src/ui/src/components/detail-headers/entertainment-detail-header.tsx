@@ -22,13 +22,13 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
         >
             {/*  thumbnail */}
             {props.hasThumbnail && <div
-                className={"flex flex-col items-center justify-center w-1/10 py-5 h-full"}
+                className={"flex flex-col items-center justify-center w-3/10 py-5 h-full"}
             >
                 {props.model.thumbnailUrl && <DetailImage
                     src={props.model.thumbnailUrl}
                     classNames={"h-full"}
                 />} {!props.model.thumbnailUrl && <div
-                    className={"h-2/3 w-full"}
+                    className={"h-full w-full"}
                 />}
             </div>}
             {/*  title, genres, nof seasons/episodes or length */}
@@ -55,7 +55,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
             </div>
             {/* description*/}
             <div
-                className={"flex flex-col py-5 w-5/10 sm:ml-3 lg:ml-1 items-start justify-start h-full space-y-2 text-gray-400"}
+                className={"flex flex-col py-5 w-4/10 ml-10 items-start justify-start h-full space-y-2 text-gray-400"}
             >
                 <p className={"text-md overflow-y-auto text-black dark:text-gray-400"}>
                     {props.model.description || "No description available."}
@@ -77,7 +77,6 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 {props.playable && <PlayButton
                     onClick={() => console.log("Play button clicked")}
                     title={"Play movie"}
-                    extraClassNames={"w-2/5 h-2/10"}
                 />}
             </div>
         </div>

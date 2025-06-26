@@ -1,5 +1,4 @@
-import { Genre } from "generated/prisma/enums";
-import { WatchStatus } from "generated/prisma/enums";
+import { Genre, WatchStatus } from "generated/prisma/enums";
 import { InsertMovie } from "controllers/movie-controller";
 import { InsertTvShow } from "controllers/tv-show-controller";
 import { InsertSubject } from "controllers/subject-controller";
@@ -7,6 +6,9 @@ import TvShow from "@shared/interface/models/tv-show";
 import Movie from "@shared/interface/models/movie";
 import Subject from "@shared/interface/models/subject";
 
+/**
+ * Seeds mock data into the database.
+ */
 export default async function seedData() {
     const mockMovies: Movie[] = [
         {
@@ -26,6 +28,7 @@ export default async function seedData() {
             genres: [Genre.ALL, Genre.ACTION],
             shortDescription: "A computer hacker learns about the true nature of his reality.",
             description: "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive...",
+            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/matrix.jpg",
             length: 136,
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,
@@ -84,6 +87,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Learn about variables", "Understand primitive data types"],
                     lectureNumber: 1,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
                 {
                     title: "Control Structures",
@@ -92,6 +96,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Learn about if-else statements", "Understand loops"],
                     lectureNumber: 2,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
             ],
         },
@@ -106,6 +111,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Understand arrays and linked lists", "Learn about their operations"],
                     lectureNumber: 1,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
                 {
                     title: "Sorting Algorithms",
@@ -114,6 +120,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Learn about bubble sort and quicksort", "Understand algorithm complexity"],
                     lectureNumber: 2,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
             ],
         },
@@ -128,6 +135,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Understand processes and threads", "Learn about scheduling algorithms"],
                     lectureNumber: 1,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
                 {
                     title: "Memory Management",
@@ -136,59 +144,51 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: ["Learn about paging and segmentation", "Understand virtual memory"],
                     lectureNumber: 2,
+                    watchStatus: WatchStatus.UNWATCHED,
                 },
             ],
         },
     ];
 
     // Insert mock movies
-    for (const movie of mockMovies) {
-        await InsertMovie(movie)
-            .then((result) => {
-                if (result) {
-                    console.log(`Inserted movie: ${result.title}`);
-                } else {
-                    console.error(`Failed to insert movie: ${movie.title}`);
-                }
-            })
-            .catch((error) => {
+    await Promise.all(
+        mockMovies.map(async (movie) => {
+            try {
+                const result = await InsertMovie(movie);
+                console.log(`Inserted movie: ${result.title}`);
+            } catch (error) {
                 console.error(`Error inserting movie ${movie.title}:`, error);
-            });
-    }
+            }
+        })
+    );
 
     console.log("Mock movies inserted successfully.");
 
     // Insert mock TV shows
-    for (const tvShow of mockTvShows) {
-        await InsertTvShow(tvShow)
-            .then((result) => {
-                if (result) {
-                    console.log(`Inserted TV show: ${result.title}`);
-                } else {
-                    console.error(`Failed to insert TV show: ${tvShow.title}`);
-                }
-            })
-            .catch((error) => {
+    await Promise.all(
+        mockTvShows.map(async (tvShow) => {
+            try {
+                const result = await InsertTvShow(tvShow);
+                console.log(`Inserted TV show: ${result.title}`);
+            } catch (error) {
                 console.error(`Error inserting TV show ${tvShow.title}:`, error);
-            });
-    }
+            }
+        })
+    );
 
     console.log("Mock TV shows inserted successfully.");
 
     // Insert mock subjects
-    for (const subject of mockSubjects) {
-        await InsertSubject(subject)
-            .then((result) => {
-                if (result) {
-                    console.log(`Inserted subject: ${result.title}`);
-                } else {
-                    console.error(`Failed to insert subject: ${subject.title}`);
-                }
-            })
-            .catch((error) => {
+    await Promise.all(
+        mockSubjects.map(async (subject) => {
+            try {
+                const result = await InsertSubject(subject);
+                console.log(`Inserted subject: ${result.title}`);
+            } catch (error) {
                 console.error(`Error inserting subject ${subject.title}:`, error);
-            });
-    }
+            }
+        })
+    );
 
     console.log("Mock subjects inserted successfully.");
 }

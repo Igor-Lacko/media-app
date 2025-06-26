@@ -13,7 +13,7 @@ import WatchStatus from "@shared/enum/watch-status";
  */
 export default function MediaItemList(props: ListProps) {
     return (
-        <div className={"flex flex-col items-center w-full h-full overflow-y-auto"}>
+        <div className={"flex flex-col items-center w-full overflow-y-auto"}>
             {props.items.map((item, index) => (
                 <NavLink
                     key={item.identifier}

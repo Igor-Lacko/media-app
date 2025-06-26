@@ -12,7 +12,7 @@ export default function AddButton({ onClick, title, extraClassNames } : {
 }) {
     return (
         <div
-            className={"flex items-center justify-center rounded-lg bg-green-500 dark:bg-green-700 " +
+            className={"flex items-center p-3 justify-center rounded-lg bg-green-500 dark:bg-green-700 " +
             "hover:bg-green-600 text-gray-200 dark:text-gray-400 cursor-pointer " +
             "transition-colors duration-200 ease-in-out transform hover:scale-105 " + (extraClassNames || "")}
             onClick={onClick}
