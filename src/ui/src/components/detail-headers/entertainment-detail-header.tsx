@@ -1,8 +1,10 @@
+import DetailFillable from "@shared/interface/detail-fillable";
 import classNames from "classnames";
 import PlayButton from "components/buttons/play-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
 import DetailImage from "components/image/detail-image";
+import MediaItemList from "components/media-item-list";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail-props";
 
@@ -10,13 +12,12 @@ import DetailProps from "utils/props/detail-props";
  * Header for a entertainment model's (movie, show, season) detail page.
  * @param props Detail properties including model, submedia, title, and display options.
  */
-export default function EntertainmentDetailHeader(props: DetailProps) {
-    // placeholder for future header content
+export default function EntertainmentDetailHeader<T extends DetailFillable>(props: DetailProps<T>) {
     return (
         <div
             className={classNames(
                 "flex items-center justify-start w-full h-1/3 bg-gray-100 dark:bg-gray-700\
-                    px-5 ",
+                    px-5 border-t-2 border-gray-300 dark:border-gray-600",
                 )}
         >
             {/*  thumbnail */}
@@ -72,6 +73,7 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
                 {props.hasWatchStatus && <DetailWatchStatus
                     watchStatus={props.model.watchStatus}
                 />}
+                {/** TODO alt div if video doesn't exist */}
                 {props.playable && <PlayButton
                     onClick={() => console.log("Play button clicked")}
                     title={"Play movie"}

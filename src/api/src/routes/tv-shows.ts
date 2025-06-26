@@ -1,7 +1,7 @@
 import { Router } from "express";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
-import { GetTvShows, InsertTvShow } from "controllers/tv-show-controller";
+import { GetTvShowById, GetTvShows, InsertTvShow } from "controllers/tv-show-controller";
 
 const router = Router();
 
@@ -21,6 +21,18 @@ router.get("/", async (req, res) => {
     catch (error) {
         res.status(500).json({ error: "Failed to fetch TV shows" });
     }
+});
+
+// Getter for a TV show by ID
+router.get("/:id", async (req, res) => {
+    const tvShowId = parseInt(req.params.id, 10);
+    if (isNaN(tvShowId)) {
+        res.status(400).json({ error: "Invalid TV show ID" });
+        return;
+    }
+
+    const tvShow = await GetTvShowById(tvShowId);
+    tvShow ? res.json(tvShow) : res.status(404).json({ error: "TV show not found" });
 });
 
 // Setter for inserting a TV show

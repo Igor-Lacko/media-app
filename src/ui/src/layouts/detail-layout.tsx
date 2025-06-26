@@ -7,12 +7,14 @@ import SubjectDetailHeader from "components/detail-headers/subject-detail-header
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
 import EditBar from "components/edit-bar";
+import DetailFillable from "@shared/interface/detail-fillable";
+import MediaItemList from "components/media-item-list";
 
 /**
  * Layout for a detail element.
  * @param props Detail properties including model, submedia, title, and display options.
  */
-export default function DetailLayout(props : DetailProps) {
+export default function DetailLayout<T extends DetailFillable>(props : DetailProps<T>) {
     const navigate = useNavigate();
     return (
         <div
@@ -31,13 +33,12 @@ export default function DetailLayout(props : DetailProps) {
             {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader{...props} />}
             {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader{...props} />}
             <EditBar
-                editTitle={"Edit movie"}
-                onEdit={() => console.log("Edit clicked")}
-                deleteTitle={"Delete movie"}
-                onDelete={() => console.log("Delete clicked")}
-                hasMarkFavorite={props.canBeMarkedFavorite}
-                onMarkFavorite={() => console.log("Mark favorite clicked")}
-            />    
+                {...props.editBarProps}
+            />
+            {/** Submedia list */}
+            {props.listProps && <MediaItemList
+                {...props.listProps}
+            />}    
         </div>
     )
 }

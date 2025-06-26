@@ -60,6 +60,61 @@ export async function GetTvShows(
 }
 
 /**
+ * Returns a TV show by its ID.
+ * @param id Unique identifier of the TV show.
+ * @returns TvShow object if found (should always), null otherwise.
+ */
+export async function GetTvShowById(id: number): Promise<TvShow | null> {
+    try {
+        const tvShow = await prisma.show.findUnique({
+            where: {
+                id: id,
+            },
+
+            include: {
+                seasons: {
+                    include: {
+                        episodes: true,
+                    },
+                },
+
+                genres: true,
+            },
+        });
+
+        if (!tvShow) {
+            return null;
+        }
+
+        // Construct shared TV show object, map seasons/episodes
+        return {
+            ...tvShow,
+            identifier: tvShow.id,
+            genres: tvShow.genres.map((genre): Genre => genre.genre),
+            submediaString: `${tvShow.seasons.length} seasons`,
+            seasons: tvShow.seasons.map((season): Season => (
+                {
+                    ...season,
+                    title: `Season ${season.seasonNumber}`,
+                    identifier: season.id,
+                    episodes: season.episodes.map((episode) : Episode => (
+                        {
+                            seasonNumber: season.seasonNumber,
+                            ...episode
+                        }
+                    ))
+                }
+            ))
+        };
+    }
+
+    catch (error){
+        console.error("Error fetching TV show by ID: " + error);
+        return null;
+    }
+}
+
+/**
  * Inserts a TV show into the database.
  * @param tvShow TvShow to insert.
  * @returns TvShow object if successful, null otherwise.

@@ -49,6 +49,42 @@ export async function GetMovies(
 }
 
 /**
+ * Returns a movie by its ID.
+ * @param id Unique identifier of the movie.
+ * @returns Movie object if found (should always), null otherwise.
+ */
+export async function GetMovieById(id: number): Promise<Movie | null> {
+    try {
+        const movie = await prisma.movie.findUnique({
+            where: {
+                id: id,
+            },
+
+            include: {
+                genres: true,
+            }
+        });
+
+        if (!movie) {
+            console.error(`Movie with ID ${id} not found.`);
+            return null;
+        }
+
+        // Construct shared movie object
+        return {
+            ...movie,
+            identifier: movie.id,
+            genres: movie.genres.map((genre): Genre => genre.genre)
+        };
+    }
+
+    catch (error) {
+        console.error("Error fetching movie by ID: " + error);
+        return null;
+    }
+}
+
+/**
  * Inserts a movie into the database.
  * @param movie Movie to insert.
  * @returns Movie object if successful, null otherwise.

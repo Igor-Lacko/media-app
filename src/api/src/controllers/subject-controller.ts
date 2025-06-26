@@ -47,6 +47,50 @@ export async function GetSubjects(key: SortKey) : Promise<Subject[]> {
 }
 
 /**
+ * Returns a subject by its ID.
+ * @param id Unique identifier of the subject.
+ * @returns Subject object if found, null otherwise.
+ */
+export async function GetSubjectById(id: number): Promise<Subject | null> {
+    try {
+        const subject = await prisma.subject.findUnique({
+            where: {
+                id: id
+            },
+
+            include: {
+                lectures: {
+                    include: {
+                        notes: true
+                    }
+                }
+            }
+        });
+
+        if (!subject) {
+            return null;
+        }
+
+        // Map lectures and notes
+        return {
+            ...subject,
+            identifier: subject.id,
+            submediaString: `${subject.lectures.length} lectures`,
+            lectures: subject.lectures.map(lecture => ({
+                ...lecture,
+                identifier: lecture.id,
+                notes: lecture.notes.map(note => note.content)
+            }))
+        };
+    }
+
+    catch (error) {
+        console.error("Error fetching subject by ID: " + error);
+        return null;
+    }
+}
+
+/**
  * Inserts a subject into the database.
  * @param subject Subject to insert.
  * @returns Subject object if successful, null otherwise.

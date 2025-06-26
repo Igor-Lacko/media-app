@@ -10,6 +10,7 @@ import Settings from '@shared/interface/models/settings';
  */
 export async function FetchData<T>(url: string, params : FetchOptions): Promise<T[] | null> {
     console.log(`Fetching data from ${url} with params:`, params);
+
     return await axios.get<T[]>(url, {
         params: {
             ...params
@@ -17,6 +18,23 @@ export async function FetchData<T>(url: string, params : FetchOptions): Promise<
     })
     .then(response => response.data)
     .catch(_error => {
+        return null;
+    });
+}
+
+/**
+ * Fetches a single data object by its unique identifier from the given URL.
+ * @param url API route to fetch data from.
+ * @param id Unique identifier of the data to fetch.
+ * @returns Promise with the data object if found, null otherwise.
+ */
+export async function FetchDataWithId<T>(url: string, id: string): Promise<T | null> {
+    console.log(`Fetching data from ${url} with id:`, id);
+
+    return await axios.get<T>(`${url}/${id}`)
+    .then(response => response.data)
+    .catch(_error => {
+        console.error(`Failed to fetch data from ${url} with id: ${id}`);
         return null;
     });
 }

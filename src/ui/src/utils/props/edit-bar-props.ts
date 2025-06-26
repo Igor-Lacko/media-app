@@ -1,3 +1,5 @@
+import WatchStatus from "@shared/enum/watch-status";
+
 /**
  * Properties for the EditBar component (allows adding submedia, editing, deleting, and marking as favorite).
  */
@@ -10,4 +12,7 @@ export interface EditBarProps {
     onDelete?: () => void;
     hasMarkFavorite: boolean;
     onMarkFavorite?: () => void;
+    rateTitle?: string;
+    onRate?: () => void;
+    onSetWatchStatus?: () => void;
 }

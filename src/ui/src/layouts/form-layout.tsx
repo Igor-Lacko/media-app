@@ -2,7 +2,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormProps from "utils/props/form-props";
-import SubmitButton from "components/buttons/submit";
+import SubmitButton from "components/buttons/submit-button";
 import useModal from "hooks/use-modal";
 import Modal from "components/modal";
 

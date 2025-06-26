@@ -1,9 +1,10 @@
 import Genre from "@shared/enum/genre";
 import WatchStatus from "@shared/enum/watch-status";
+import Movie from "@shared/interface/models/movie";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
 
-export default function MockDetailProps(): DetailProps {
+export default function MockDetailProps(): DetailProps<Movie> {
     return {
         model: {
             identifier: 1,
@@ -22,8 +23,18 @@ export default function MockDetailProps(): DetailProps {
         hasDescription: true,
         canBeMarkedFavorite: true,
         playable: true,
-        hasSubmedia: false,
         headerType: DetailHeaders.ENTERTAINMENT,
         hasWatchStatus: true,
+        editBarProps: {
+            editTitle: "Edit",
+            onEdit: () => console.log("Edit clicked"),
+            deleteTitle: "Delete",
+            onDelete: () => console.log("Delete clicked"),
+            hasMarkFavorite: true,
+            onMarkFavorite: () => console.log("Mark favorite clicked"),
+            rateTitle: "Rate",
+            onRate: () => console.log("Rate clicked"),
+            onSetWatchStatus: () => console.log("Set watch status clicked")
+        }
     }
 }

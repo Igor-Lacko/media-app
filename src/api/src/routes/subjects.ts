@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import SortKey from '@shared/enum/sort-key';
-import { GetSubjects, InsertSubject } from 'controllers/subject-controller';
+import { GetSubjectById, GetSubjects, InsertSubject } from 'controllers/subject-controller';
 
 const router = Router();
 
@@ -15,6 +15,18 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch subjects' });
     }
+});
+
+// Getter for a subject by ID
+router.get('/:id', async (req, res) => {
+    const subjectId = parseInt(req.params.id, 10);
+    if (isNaN(subjectId)) {
+        res.status(400).json({ error: 'Invalid subject ID' });
+        return;
+    }
+
+    const subject = await GetSubjectById(subjectId);
+    subject ? res.json(subject) : res.status(404).json({ error: 'Subject not found' });
 });
 
 // Setter for inserting a subject
