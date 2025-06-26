@@ -6,6 +6,7 @@ import LectureDetailHeader from "components/detail-headers/lecture-detail-header
 import SubjectDetailHeader from "components/detail-headers/subject-detail-header";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
+import EditBar from "components/edit-bar";
 
 /**
  * Layout for a detail element.
@@ -29,6 +30,14 @@ export default function DetailLayout(props : DetailProps) {
             {props.headerType === DetailHeaders.ENTERTAINMENT && <EntertainmentDetailHeader{...props} />}
             {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader{...props} />}
             {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader{...props} />}
+            <EditBar
+                editTitle={"Edit movie"}
+                onEdit={() => console.log("Edit clicked")}
+                deleteTitle={"Delete movie"}
+                onDelete={() => console.log("Delete clicked")}
+                hasMarkFavorite={props.canBeMarkedFavorite}
+                onMarkFavorite={() => console.log("Mark favorite clicked")}
+            />    
         </div>
     )
 }

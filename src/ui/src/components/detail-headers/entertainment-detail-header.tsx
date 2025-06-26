@@ -1,11 +1,9 @@
-import WatchStatus from "@shared/enum/watch-status";
 import classNames from "classnames";
 import PlayButton from "components/buttons/play-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
 import DetailImage from "components/image/detail-image";
 import GenreAdapter from "utils/adapters/genre-adapter";
-import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import DetailProps from "utils/props/detail-props";
 
 /**
@@ -16,8 +14,10 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
     // placeholder for future header content
     return (
         <div
-            className={"flex items-center justify-start w-full h-1/3 bg-gray-100 dark:bg-gray-700\
-                    px-5 border-y-2 border-gray-400 dark:border-gray-600"}
+            className={classNames(
+                "flex items-center justify-start w-full h-1/3 bg-gray-100 dark:bg-gray-700\
+                    px-5 ",
+                )}
         >
             {/*  thumbnail */}
             {props.hasThumbnail && <div
@@ -34,7 +34,7 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
             <div
                 className={"flex flex-col py-5 w-2/10 items-start justify-start ml-15 h-full text-black dark:text-gray-400"}
             >
-                <h1 className={"text-4xl font-extrabold text-black dark:text-gray-200 tracking-wide"}>
+                <h1 className={"text-4xl font-extrabold text-black dark:text-gray-400 tracking-wide font-[Roboto]"}>
                     {props.title}
                 </h1>
                 <div
@@ -63,8 +63,8 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
             </div>
             { /* rating, watch status, play button */}
             <div
-                className={"flex flex-col items-center ml-10 justify-center py-5 w-2/10 h-full\
-                        space-y-5 border-l-2 border-gray-400 dark:border-gray-600"}
+                className={"flex flex-col items-center mt-3 ml-10 justify-between py-5 w-2/10 h-full\
+                        space-y-5"}
             >
                 {props.model.rating && <HeaderRating
                     rating={props.model.rating}
@@ -74,7 +74,8 @@ export default function EntertainmentDetailHeader(props: DetailProps) {
                 />}
                 {props.playable && <PlayButton
                     onClick={() => console.log("Play button clicked")}
-                    extraClassNames={"w-1/4 h-1/9 mt-30"}
+                    title={"Play movie"}
+                    extraClassNames={"w-2/5 h-2/10"}
                 />}
             </div>
         </div>

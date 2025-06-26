@@ -23,7 +23,11 @@ export default function DropdownCheckbox(props : DropdownProps) {
                     >
                         {props.prefix ? `${props.prefix} ${props.initialText}` : // Initial text constant for chexckboxes
                             props.initialText}
-                        {props.icon}
+                        <div
+                            className={"ml-1"}
+                        >
+                            {props.icon}
+                        </div>
                     </div>
                 </span>
             </span>

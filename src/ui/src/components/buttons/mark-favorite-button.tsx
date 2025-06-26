@@ -1,0 +1,41 @@
+import classNames from "classnames";
+import { useState } from "react";
+import { FaStar } from "react-icons/fa";
+
+/**
+ * Button for marking an item as favorite.
+ * @param param0 OnClick handler, favorite status, and optional extra class names.
+ */
+export default function MarkFavoriteButton({ onClick, isFavorite, extraClassNames } : {
+    onClick: () => void;
+    isFavorite: boolean;
+    extraClassNames?: string;
+}) {
+    const [markedAsFavorite, setMarkedAsFavorite] = useState(isFavorite);
+    return (
+        <div
+            className={classNames(
+            "flex items-center p-3 justify-center rounded-lg cursor-pointer transition-colors duration-200 ease-in-out transform hover:scale-105",
+            {
+                "bg-yellow-500 dark:bg-yellow-700 text-gray-200 dark:text-gray-400": markedAsFavorite,
+                "bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300": !markedAsFavorite,
+            }
+            )}
+            onClick={() => {setMarkedAsFavorite(!markedAsFavorite); onClick();}}
+        >
+            <FaStar
+            className={classNames(
+                "text-lg",
+                {
+                "text-yellow-200": markedAsFavorite,
+                "text-gray-400": !markedAsFavorite,
+                },
+                extraClassNames || ""
+            )}
+            />
+            <span className="ml-2">
+            {markedAsFavorite ? "Remove from favorites" : "Add to favorites"}
+            </span>
+        </div>
+    )
+}

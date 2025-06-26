@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fontsource/lobster": "^5.2.6",
+    "@fontsource/roboto": "^5.2.6",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.80.10",
     "autoprefixer": "^10.4.21",
