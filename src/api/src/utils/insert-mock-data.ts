@@ -78,7 +78,6 @@ export default async function seedData() {
     const mockSubjects: Subject[] = [
         {
             title: "Introduction to Programming",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/programming.jpg",
             lectures: [
                 {
                     title: "Variables and Data Types",
@@ -102,7 +101,6 @@ export default async function seedData() {
         },
         {
             title: "Data Structures and Algorithms",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/data-structures.jpg",
             lectures: [
                 {
                     title: "Arrays and Linked Lists",
@@ -126,7 +124,6 @@ export default async function seedData() {
         },
         {
             title: "Operating Systems",
-            thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/operating-systems.jpg",
             lectures: [
                 {
                     title: "Process Management",

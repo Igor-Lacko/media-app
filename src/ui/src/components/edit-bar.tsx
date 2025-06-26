@@ -14,7 +14,7 @@ export default function EditBar(props : EditBarProps) {
     return (
         <div
             className={"flex items-center w-full h-1/10 border-b-2 border-gray-400 dark:border-gray-600\
-                    bg-gray-100 dark:bg-gray-700 px-5 justify-between"}
+                    px-5 justify-between"}
         >
             <div
                 className={"flex items-center justify-start space-x-5"}

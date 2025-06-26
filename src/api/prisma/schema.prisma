@@ -75,7 +75,6 @@ model Subject {
     id           Int       @id @default(autoincrement())
     title        String
     lectures     Lecture[]
-    thumbnailUrl String?
 }
 
 model Lecture {

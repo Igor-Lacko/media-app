@@ -1,10 +1,8 @@
 import DetailFillable from "@shared/interface/detail-fillable";
-import classNames from "classnames";
 import PlayButton from "components/buttons/play-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
 import DetailImage from "components/image/detail-image";
-import MediaItemList from "components/media-item-list";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail-props";
 
@@ -15,10 +13,7 @@ import DetailProps from "utils/props/detail-props";
 export default function EntertainmentDetailHeader<T extends DetailFillable>(props: DetailProps<T>) {
     return (
         <div
-            className={classNames(
-                "flex items-center justify-start w-full h-1/3 bg-gray-100 dark:bg-gray-700\
-                    px-5 border-t-2 border-gray-300 dark:border-gray-600",
-                )}
+            className={"flex items-center justify-start w-full h-1/3 px-5"}
         >
             {/*  thumbnail */}
             {props.hasThumbnail && <div

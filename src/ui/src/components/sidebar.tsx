@@ -72,9 +72,9 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
                     link={"/tv-shows"}
                 />
                 <SidebarButton
-                    label={"Lectures"}
+                    label={"Subjects"}
                     icon={<FaChalkboardTeacher />}
-                    link={"/lectures"}
+                    link={"/subjects"}
                 />
                 <SidebarButton
                     label={"Settings"}

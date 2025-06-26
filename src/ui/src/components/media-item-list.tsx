@@ -36,7 +36,13 @@ export default function MediaItemList(props: ListProps) {
                         className={"w-1/12 max-h-full rounded-lg"}
                     />}
                     <div
-                        className={"flex ml-3 flex-col h-full items-start justify-start w-1/9"}
+                        className={classNames(
+                            "flex ml-3 flex-col h-full items-start justify-start",
+                            {
+                                "w-1/9": props.showThumbnail,
+                                "w-3/9": !props.showThumbnail
+                            }
+                        )}
                     >
                         <h3 
                             className={"text-lg font-semibold text-gray-900 dark:text-gray-400"}>

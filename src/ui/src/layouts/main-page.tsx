@@ -17,7 +17,7 @@ export default function MainPage() {
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
 
-    const isIndexPage = ["/", "/movies", "/tv-shows", "/lectures", "/settings"].some(
+    const isIndexPage = ["/", "/movies", "/tv-shows", "/subjects", "/settings"].some(
         (path) => location.pathname.endsWith(path) 
     );
 

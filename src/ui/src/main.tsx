@@ -8,11 +8,11 @@ import '@fontsource/roboto';
 import './index.css';
 import 'data/axios-config';
 import MainPage from 'layouts/main-page';
-import HomePage from 'pages/home-page';
-import MoviePage from 'pages/movie-page';
-import TvShowPage from 'pages/tv-show-page';
-import LecturePage from 'pages/lecture-page';
-import SettingsPage from 'pages/settings-page';
+import HomePage from 'pages/index/home-page';
+import MoviePage from 'pages/index/movie-page';
+import TvShowPage from 'pages/index/tv-show-page';
+import SubjectPage from 'pages/index/subject-page';
+import SettingsPage from 'pages/index/settings-page';
 import AddMoviePage from 'pages/forms/add-movie-page';
 import AddTvShowPage from 'pages/forms/add-tv-show-page';
 import AddSubjectPage from 'pages/forms/add-subject-page';
@@ -42,8 +42,8 @@ const rootContainer : ReactNode = (
                         <Route path="add" element={<AddTvShowPage />} />
                         <Route path=":id" element={<TvShowDetail/>}/>
                     </Route>
-                    <Route path="lectures">
-                        <Route index element={<LecturePage />} />
+                    <Route path="subjects">
+                        <Route index element={<SubjectPage />} />
                         <Route path="add" element={<AddSubjectPage />} />
                         <Route path=":id" element={<SubjectDetail/>} />
                     </Route>

@@ -9,9 +9,9 @@ import MediaItemList from "components/media-item-list";
 import ControlBarProps from "utils/props/control-bar-props";
 import ListProps from "utils/props/list-props";
 import { Route, Routes } from "react-router-dom";
-import AddSubjectPage from "./forms/add-subject-page";
+import AddSubjectPage from "../forms/add-subject-page";
 
-export default function LecturePage() {
+export default function SubjectPage() {
     // Sort/search
     const [sort, setSort] = useState(SortKey.NAME);
     const [search, setSearch] = useState("");
@@ -29,7 +29,7 @@ export default function LecturePage() {
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: () => {},
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
-        path: "/lectures"
+        path: "/subjects"
     }
 
     const subjectListProps: ListProps = {
