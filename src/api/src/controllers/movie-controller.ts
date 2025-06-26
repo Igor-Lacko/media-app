@@ -85,6 +85,41 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
 }
 
 /**
+ * Updates a movie in the database.
+ * @param id Unique identifier of the movie to update.
+ * @param movie Partial movie object containing fields to update.
+ * @returns The partially updated movie object if successful, null otherwise.
+ */
+export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<Movie | null> {
+    console.log("Updating movie: ", movie);
+    try {
+        const updatedMovie = await prisma.movie.update({
+            where: {
+                id: id,
+            },
+
+            // If genres are to be updated delete all existing genres and create new ones
+            data: {
+                ...movie,
+                genres: movie.genres ? {
+                    deleteMany: {},
+                    create: movie.genres.map((genre: Genre) => ({
+                        genre: genre
+                    }))
+                } : undefined,
+            }
+        });
+
+        return updatedMovie;
+    }
+
+    catch (error) {
+        console.error("Error updating movie: " + error);
+        return null;
+    }
+}
+
+/**
  * Inserts a movie into the database.
  * @param movie Movie to insert.
  * @returns Movie object if successful, null otherwise.

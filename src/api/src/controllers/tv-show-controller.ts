@@ -6,6 +6,7 @@ import { Season } from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
 import { SortTvShows } from "utils/sort";
+import { UpdateSeason } from "./season-controller";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -111,6 +112,55 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
     catch (error){
         console.error("Error fetching TV show by ID: " + error);
         return null;
+    }
+}
+
+/**
+ * Updates a TV show by its ID.
+ * @param id TV show's unique identifier.
+ * @param tvShowData Partial object containing fields to update.
+ * @returns True if successful, false otherwise.
+ */
+export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Promise<boolean> {
+    // Debug todo remove
+    console.log("Updating TV show with ID:", id);
+
+    // Update seasons first (if provided)
+    if (tvShowData.seasons) {
+        for (const season of tvShowData.seasons) {
+            await UpdateSeason(season.identifier, season);
+        }
+    }
+
+    // Update rest of the show
+    try {
+        await prisma.show.update({
+            where: {
+                id: id,
+            },
+
+            data: {
+                ...tvShowData,
+
+                // Already updated, can safely ignore now
+                seasons: undefined,
+
+                // Simpler than updating genres separately
+                genres: tvShowData.genres ? {
+                    deleteMany: {},
+                    create: tvShowData.genres.map((genre : Genre) => ({
+                            genre: genre,
+                    }))
+                } : undefined
+            }
+        })
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating TV show: " + error);
+        return false;
     }
 }
 

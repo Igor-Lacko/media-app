@@ -1,0 +1,43 @@
+import Season from "@shared/interface/models/season";
+import prisma from "db/db";
+import { UpdateEpisode } from "./episode-controller";
+
+/**
+ * Update a season by its ID. Also called by UpdateTvShow().
+ * @param id Identifier of the season to update.
+ * @param seasonData Partial object containing fields to update.
+ * @returns Updated Season object if successful, null otherwise.
+ */
+export async function UpdateSeason(id: number, seasonData: Partial<Season>): Promise<boolean> {
+    // Debug todo remove
+    console.log("Updating season with ID:", id);
+
+    // Update episodes first (if provided)
+    if (seasonData.episodes) {
+        for (const episode of seasonData.episodes) {
+            await UpdateEpisode(episode.identifier, episode);
+        }
+    }
+
+    try {
+        await prisma.season.update({
+            where: {
+                id: id
+            },
+
+            data: {
+                ...seasonData,
+
+                // Already updated, can safely ignore now
+                episodes: undefined,
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating season: " + error);
+        return null;
+    }
+}
