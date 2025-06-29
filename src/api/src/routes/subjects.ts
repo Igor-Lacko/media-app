@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import SortKey from '@shared/enum/sort-key';
-import { GetSubjectById, GetSubjects, InsertSubject, UpdateSubject } from 'controllers/subject-controller';
+import { DeleteSubject, GetSubjectById, GetSubjects, InsertSubject, UpdateSubject } from 'controllers/subject-controller';
 
 const router = Router();
 
@@ -60,6 +60,23 @@ router.patch('/:id', async (req, res) => {
 
     else {
         res.status(500).json({ error: 'Failed to update subject' });
+    }
+});
+
+// Subject deletion
+router.delete('/:id', async (req, res) => {
+    const subjectId = parseInt(req.params.id, 10);
+    if (isNaN(subjectId)) {
+        res.status(400).json({ error: 'Invalid subject ID' });
+        return;
+    }
+
+    if (await DeleteSubject(subjectId)) {
+        res.status(200).json({ message: 'Subject deleted successfully' });
+    } 
+
+    else {
+        res.status(500).json({ error: 'Failed to delete subject' });
     }
 });
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { GetMovieById, GetMovies, InsertMovie, UpdateMovie } from "controllers/movie-controller";
+import { DeleteMovie, GetMovieById, GetMovies, InsertMovie, UpdateMovie } from "controllers/movie-controller";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
 
@@ -64,6 +64,24 @@ router.patch("/:id", async (req, res) => {
 
     else {
         res.status(500).json({ error: "Failed to update movie" });
+    }
+});
+
+// Movie deletes
+router.delete("/:id", async (req, res) => {
+    const movieId = parseInt(req.params.id, 10);
+    if (isNaN(movieId)) {
+        res.status(400).json({ error: "Invalid movie ID" });
+        return;
+    }
+
+    // Delete
+    if (await DeleteMovie(movieId)) {
+        res.status(200).json({ message: "Movie deleted successfully" })
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to delete movie" });
     }
 });
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
-import { GetTvShowById, GetTvShows, InsertTvShow, UpdateTvShow } from "controllers/tv-show-controller";
+import { DeleteTvShow, GetTvShowById, GetTvShows, InsertTvShow, UpdateTvShow } from "controllers/tv-show-controller";
 
 const router = Router();
 
@@ -69,5 +69,21 @@ router.patch("/:id", async (req, res) => {
     }
 });
 
+// TV show deletion
+router.delete("/:id", async (req, res) => {
+    const tvShowId = parseInt(req.params.id, 10);
+    if (isNaN(tvShowId)) {
+        res.status(400).json({ error: "Invalid TV show ID" });
+        return;
+    }
+
+    if (await DeleteTvShow(tvShowId)) {
+        res.status(200).json({ message: "TV show deleted successfully" });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to delete TV show" });
+    }
+});
 
 export default router;
