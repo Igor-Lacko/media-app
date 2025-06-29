@@ -15,6 +15,7 @@ import { EditBarProps } from "utils/props/edit-bar-props";
 import ConfirmModal from "components/modals/confirm-modal";
 import Lecture from "@shared/interface/models/lecture";
 import Subject from "@shared/interface/models/subject";
+import SliderModal from "components/modals/slider-modal";
 
 /**
  * Layout for a detail element.
@@ -83,6 +84,15 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                     props.deleteFunction && await props.deleteFunction();
                     setVisibleModal(VisibleModal.NONE);
                     navigate(-1);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 2. Rate modal */}
+            {visibleModal === VisibleModal.RATE && <SliderModal
+                title={props.rateTitle || "Rate"}
+                onSelectRating={async (rating: number) => {
+                    props.rateFunction && await props.rateFunction(rating);
+                    setVisibleModal(VisibleModal.NONE);
                 }}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}

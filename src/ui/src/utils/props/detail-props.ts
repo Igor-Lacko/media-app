@@ -27,7 +27,7 @@ export interface DetailProps<T extends DetailFillable>{
     hasMarkFavorite: boolean;
     markFavoriteFunction?: () => Promise<void>;
     rateTitle?: string;
-    rateFunction?: (rating: number) => void;
+    rateFunction?: (rating: number) => Promise<void>;
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<void>;
 }
 

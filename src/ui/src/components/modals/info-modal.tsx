@@ -1,3 +1,4 @@
+import RoundedButton from "components/buttons/rounded-button";
 import ModalProps from "utils/props/modal-props";
 
 /**
@@ -24,13 +25,11 @@ export default function InfoModal(props : ModalProps) {
                 >
                     {props.message!}
                 </p>
-                <button
+                <RoundedButton
                     onClick={props.onClose}
-                    className={"px-4 py-2 bg-purple-800 text-gray-200 rounded-lg \
-                        hover:bg-purple-600 transition-colors cursor-pointer"}
-                >
-                    Close
-                </button>
+                    text={"Close"}
+                    extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
+                />
             </div>
         </div>
     );

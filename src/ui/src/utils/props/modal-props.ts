@@ -14,10 +14,10 @@ export interface ModalProps {
     onConfirm?: () => void;
 
     // For watch status select modals
-    onSelectWatchStatus?: (watchStatus : WatchStatus) => void;
+    onSelectWatchStatus?: (watchStatus : WatchStatus) => Promise<void>;
 
     // For rating select modals
-    onSelectRating?: (rating: number) => void;
+    onSelectRating?: (rating: number) => Promise<void>;
 
     // Each one also has this
     onClose: () => void;

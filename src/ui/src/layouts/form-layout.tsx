@@ -1,9 +1,9 @@
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormProps from "utils/props/form-props";
-import SubmitButton from "components/buttons/submit-button";
 import InfoModal from "components/modals/info-modal";
+import RoundedButton from "components/buttons/rounded-button";
 
 /**
  * Layout for a form page with a title, back button, content, submit button and modals for error/success.
@@ -57,10 +57,12 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     >
                         Fields marked with * are required.
                     </span>
-                    <SubmitButton
-                        title={props.title}
-                        classNames={"w-1/10 h-full"}
+                    <RoundedButton
+                        text={props.title}
                         onClick={onSubmit}
+                        extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800\
+                                w-1/10 h-full"}
+                        icon={<FaCheck/>}
                     />
                 </div>
             </div>
