@@ -14,8 +14,10 @@ import RemoveOption from "components/options/remove-option";
 
 /**
  * Form page for adding a new subject.
+ * Can also be used to edit an existing subject, this is done by passing a `subject` prop.
+ * @param subject Optional subject object to pre-fill the form.
  */
-export default function AddSubjectPage(subject? : Subject) {
+export default function AddSubjectPage({ subject }: { subject?: Subject }) {
     // Constructed subject
     const subjectRef = useRef<Subject>(subject || defaultSubject);
 

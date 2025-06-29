@@ -12,14 +12,21 @@ import FormLayout from "layouts/form-layout";
 import useGenreDropdown from "hooks/use-genre-dropdown";
 import useRatingSlider from "hooks/use-rating-slider";
 import SubmitMovie from "data/submit-handlers/movie-submit";
+import { useLocation } from "react-router-dom";
 
 /**
  * Form page for adding a new movie.
  * @param movie Optional movie object to pre-fill the form.
  */
-export default function AddMoviePage(movie? : Movie) {
+export default function AddMoviePage({ route } : { route?: any }) {
+    // Get movie
+    const location = useLocation();
+    const movie = location.state || undefined;
+
     // Constructed object, do not want to render on every change
-    const movieRef = useRef<Movie>(defaultMovie);
+    const movieRef = useRef<Movie>(movie || defaultMovie);
+
+    console.log("AddMoviePage", movieRef.current);
 
     // Props for genre selection dropdown
     const genreDropdownProps = useGenreDropdown(movieRef);

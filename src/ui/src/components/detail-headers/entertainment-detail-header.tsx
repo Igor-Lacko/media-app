@@ -1,3 +1,4 @@
+import Genre from "@shared/enum/genre";
 import DetailFillable from "@shared/interface/detail-fillable";
 import RoundedButton from "components/buttons/rounded-button";
 import DetailWatchStatus from "components/detail-watch-status";
@@ -44,7 +45,9 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     </span>}
                     {props.hasGenres && (
                         <div className="text-lg text-gray-500 dark:text-gray-400 italic">
-                            {props.model.genres!.map((genre) => GenreAdapter(genre).key).join(", ")}
+                            {props.model.genres!
+                            .filter((genre) => genre !== Genre.ALL)
+                            .map((genre) => GenreAdapter(genre).key).join(", ")}
                         </div>
                     )}
                 </div>

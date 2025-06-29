@@ -21,8 +21,10 @@ import FileBrowseOption from "components/options/file-browse-option";
 
 /**
  * Form page for adding a new TV show.
+ * Can also be used to edit an existing TV show, this is done by passing a `tvshow` prop.
+ * @param tvshow Optional TV show object to pre-fill the form.
  */
-export default function AddTvShowPage(tvshow? : TvShow) {
+export default function AddTvShowPage({ tvshow }: { tvshow?: TvShow }) {
     // Constructed TV show
     const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
 

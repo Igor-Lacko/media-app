@@ -17,7 +17,7 @@ export default function MovieDetail() {
     const movie : Movie | undefined = useFetchById<Movie>("/api/movies")
 
     if(!movie) {
-        return <NotFoundPage message="Movie not found" />
+        return <NotFoundPage message="Movie not found"/>
     }
 
     // Construct props for the detail layout
@@ -31,7 +31,6 @@ export default function MovieDetail() {
         canBeMarkedFavorite: true,
         headerType: DetailHeaders.ENTERTAINMENT,
         hasWatchStatus: true,
-        addTitle: "Add Movie",
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),

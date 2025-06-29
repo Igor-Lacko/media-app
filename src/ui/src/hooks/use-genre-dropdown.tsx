@@ -39,8 +39,12 @@ export default function useGenreDropdown<T extends { genres?: Genre[] }>(ref : R
         initialText: "genres",
 
         // Unused
-        initialValue: Genre.ALL
-    }
+        initialValue: Genre.ALL,
+
+        // Initial genres
+        initialSelections: ref.current.genres ? ref.current.genres.filter((genre) => genre !== Genre.ALL)
+            : [],
+    };
 
     return props;
 }
