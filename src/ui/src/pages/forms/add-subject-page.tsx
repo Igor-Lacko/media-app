@@ -11,15 +11,20 @@ import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
+import { useLocation } from "react-router-dom";
 
 /**
  * Form page for adding a new subject.
  * Can also be used to edit an existing subject, this is done by passing a `subject` prop.
  * @param subject Optional subject object to pre-fill the form.
  */
-export default function AddSubjectPage({ subject }: { subject?: Subject }) {
+export default function AddSubjectPage({ route } : { route?: any }) {
+    // Get param subject or use a blank one
+    const location = useLocation();
+    const subject = location.state || defaultSubject;
+
     // Constructed subject
-    const subjectRef = useRef<Subject>(subject || defaultSubject);
+    const subjectRef = useRef<Subject>(subject);
 
     // To re-render on each add
     const [lectures, setLectures] = useState(subjectRef.current.lectures);

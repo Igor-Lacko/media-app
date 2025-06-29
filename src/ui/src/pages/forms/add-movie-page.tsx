@@ -21,10 +21,10 @@ import { useLocation } from "react-router-dom";
 export default function AddMoviePage({ route } : { route?: any }) {
     // Get movie
     const location = useLocation();
-    const movie = location.state || undefined;
+    const movie = location.state || defaultMovie;
 
     // Constructed object, do not want to render on every change
-    const movieRef = useRef<Movie>(movie || defaultMovie);
+    const movieRef = useRef<Movie>(movie);
 
     console.log("AddMoviePage", movieRef.current);
 

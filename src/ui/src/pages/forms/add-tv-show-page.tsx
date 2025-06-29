@@ -18,19 +18,26 @@ import SliderOption from "components/options/slider-option";
 import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
+import { useLocation } from "react-router-dom";
 
 /**
  * Form page for adding a new TV show.
  * Can also be used to edit an existing TV show, this is done by passing a `tvshow` prop.
  * @param tvshow Optional TV show object to pre-fill the form.
  */
-export default function AddTvShowPage({ tvshow }: { tvshow?: TvShow }) {
+export default function AddTvShowPage({ route } : { route?: any }) {
+    // Get TV show or use a blank one
+    const location = useLocation();
+    const tvshow = location.state || defaultTvShow;
+
     // Constructed TV show
-    const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
+    const tvShowRef = useRef<TvShow>(tvshow);
 
     // To re-render on each add
-    const [seasons, setSeasons] = useState<Season[]>([]);
-    const [episodes, setEpisodes] = useState<Episode[]>([]);
+    const [seasons, setSeasons] = useState<Season[]>(tvShowRef.current.seasons);
+    const [episodes, setEpisodes] = useState<Episode[]>(tvShowRef.current.seasons
+        .flatMap(season => season.episodes)
+    );
 
     // Props
     const genreDropdownProps = useGenreDropdown(tvShowRef);

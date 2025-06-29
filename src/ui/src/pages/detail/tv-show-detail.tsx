@@ -4,6 +4,8 @@ import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail-props";
 import NotFoundPage from "pages/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
+import DeleteData from "data/crud/delete";
+import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
 
 /**
  * Component for displaying TV show details.
@@ -27,25 +29,22 @@ export default function TvShowDetail() {
         canBeMarkedFavorite: true,
         headerType: DetailHeaders.ENTERTAINMENT,
         hasWatchStatus: true,
-        editBarProps: {
-            addTitle: "Add Season",
-            onAdd: () => { /* Implement add season functionality */ },
-            editTitle: "Edit TV Show",
-            onEdit: () => { /* Implement edit functionality */ },
-            deleteTitle: "Delete TV Show",
-            onDelete: () => { /* Implement delete functionality */ },
-            hasMarkFavorite: true,
-            onMarkFavorite: () => { /* Implement mark favorite functionality */ },
-            rateTitle: "Rate TV Show",
-            onRate: () => { /* Implement rate functionality */ },
-            onSetWatchStatus: () => { /* Implement set watch status functionality */ },
-        },
         listProps: {
             path: "seasons",
             items: tvShow.seasons,
             showRating: true,
             showThumbnail: true
-        }
+        },
+        addTitle: "Add Season",
+        editTitle: "Edit TV Show",
+        deleteTitle: "Delete TV Show",
+        deleteFunction: async () => await DeleteData("/api/shows", tvShow.identifier!),
+        hasMarkFavorite: true,
+        markFavoriteFunction: async () => await MarkAsFavorite<TvShow>("/api/shows", tvShow),
+        rateTitle: "Rate TV Show",
+        rateFunction: async (rating: number) => await UpdateRating<TvShow>("/api/shows", tvShow, rating),
+        watchStatusFunction: async (watchStatus) => await UpdateWatchStatus<TvShow>("/api/shows", tvShow, watchStatus),
+        setDescriptionFunction: async (description: string) => await UpdateDescription<TvShow>("/api/shows", tvShow, description)
     };
 
     return <DetailLayout<TvShow> {...props} />;
