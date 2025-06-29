@@ -209,3 +209,28 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
         return false;
     }
 }
+
+/**
+ * Deletes a TV show by its ID.
+ * @param id Identifier of the TV show to delete.
+ * @returns True if successful, false otherwise.
+ */
+export async function DeleteTvShow(id: number): Promise<boolean> {
+    console.log("Deleting TV show with ID:", id);
+
+    // Seasons and episodes deleted by cascade
+    try {
+        await prisma.show.delete({
+            where: {
+                id: id,
+            },
+        });
+
+        return true;
+    } 
+
+    catch (error) {
+        console.error("Error deleting TV show: " + error);
+        return false;
+    }
+}

@@ -4,6 +4,8 @@ import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail-props";
 import NotFoundPage from "pages/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
+import UpdateData, { MarkAsFavorite, UpdateRating, UpdateWatchStatus } from "data/crud/update";
+import WatchStatus from "@shared/enum/watch-status";
 
 /**
  * Component for displaying movie details.
@@ -34,10 +36,10 @@ export default function MovieDetail() {
             deleteTitle: "Delete Movie",
             onDelete: () => { /* Implement delete functionality */ },
             hasMarkFavorite: true,
-            onMarkFavorite: () => { /* Implement mark favorite functionality */ },
+            onMarkFavorite: async () => { await MarkAsFavorite<Movie>("/api/movies", movie) },
             rateTitle: "Rate Movie",
-            onRate: () => { /* Implement rate functionality */ },
-            onSetWatchStatus: () => { /* Implement set watch status functionality */ },
+            onRate: async (rating : number) => { await UpdateRating<Movie>("/api/movies", movie, rating) },
+            onSetWatchStatus: async (watchStatus : WatchStatus) => { await UpdateWatchStatus<Movie>("/api/movies", movie, watchStatus)},
         },
     }
 

@@ -3,6 +3,7 @@ import DetailFillable from "../detail-fillable";
 
 export interface Movie extends DetailFillable {
     watchStatus: WatchStatus;
+    isFavorite: boolean;
 }
 
 export default Movie;

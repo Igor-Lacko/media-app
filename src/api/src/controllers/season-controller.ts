@@ -41,3 +41,28 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
         return false;
     }
 }
+
+/**
+ * Deletes a season by its ID.
+ * @param id Identifier of the season to delete.
+ * @returns True if the deletion was successful, false otherwise.
+ */
+export async function DeleteSeason(id: number): Promise<boolean> {
+    console.log("Deleting season with ID:", id);
+
+    // Episodes deleted by cascade
+    try {
+        await prisma.season.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error deleting season: " + error);
+        return false;
+    }
+}

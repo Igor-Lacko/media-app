@@ -4,7 +4,7 @@ import { useState } from "react";
 import FormProps from "utils/props/form-props";
 import SubmitButton from "components/buttons/submit-button";
 import useModal from "hooks/use-modal";
-import Modal from "components/modal";
+import InfoModal from "components/modals/info-modal";
 
 /**
  * Layout for a form page with a title, back button, content, submit button and modals for error/success.
@@ -16,8 +16,8 @@ export default function FormLayout<T>(props: FormProps<T>) {
     const navigate = useNavigate();
 
     // Modal props
-    const errorModalProps = useModal(true, props.errorModalMessage, () => { setError(false); })
-    const successModalProps = useModal(false, props.successModalMessage, () => {
+    const errorModalProps = useModal("Error", props.errorModalMessage, () => { setError(false); })
+    const successModalProps = useModal("Success", props.successModalMessage, () => {
         setSuccess(false);
         navigate(-1);
     });
@@ -72,11 +72,11 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     />
                 </div>
             </div>
-            {error && <Modal
+            {error && <InfoModal
                 {...errorModalProps}
             />
             }
-            {success && <Modal
+            {success && <InfoModal
                 {...successModalProps}
             />
             }

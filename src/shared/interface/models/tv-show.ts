@@ -8,6 +8,7 @@ import Season from "./season";
 export interface TvShow extends DetailFillable {
     seasons: Season[];
     watchStatus: WatchStatus;
+    isFavorite: boolean;
 }
 
 export default TvShow;

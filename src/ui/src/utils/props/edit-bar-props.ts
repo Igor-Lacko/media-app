@@ -13,6 +13,6 @@ export interface EditBarProps {
     hasMarkFavorite: boolean;
     onMarkFavorite?: () => void;
     rateTitle?: string;
-    onRate?: () => void;
-    onSetWatchStatus?: () => void;
+    onRate?: (rating : number) => void;
+    onSetWatchStatus?: (watchStatus : WatchStatus) => void;
 }

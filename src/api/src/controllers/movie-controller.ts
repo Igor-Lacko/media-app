@@ -146,3 +146,27 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
         return false;
     }
 }
+
+/**
+ * Deletes a movie by its ID.
+ * @param id Unique identifier of the movie to delete.
+ * @returns True if successful, false otherwise.
+ */
+export async function DeleteMovie(id: number): Promise<boolean> {
+    console.log("Deleting movie with ID:", id);
+
+    try {
+        await prisma.movie.delete({
+            where: {
+                id: id,
+            },
+        });
+
+        return true;
+    } 
+
+    catch (error) {
+        console.error("Error deleting movie: " + error);
+        return false;
+    }
+}

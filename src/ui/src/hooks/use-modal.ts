@@ -6,10 +6,11 @@ import ModalProps from "utils/props/modal-props";
  * @param message Error/success message to display in the modal.
  * @param close Close handler.
  */
-export default function useModal(isError : boolean, message : string, close : () => void) : ModalProps {
+export default function useModal(title : string, message : string, close : () => void, component? : React.ReactNode) : ModalProps {
     const props : ModalProps = {
-        title: isError ? "Error" : "Success",
+        title: title,
         message: message,
+        component: component,
         onClose: () => {
             close();
         },

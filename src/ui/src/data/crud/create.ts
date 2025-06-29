@@ -6,10 +6,10 @@ import axios from "axios";
  * @param data Data to insert
  * @returns Promise that resolves to the created data entry
  */
-export async function CreateData<T>(url: string, data: T): Promise<T> {
+export async function CreateData<T>(url: string, data: T): Promise<boolean> {
     try {
-        const response = await axios.post<T>(url, data);
-        return response.data;
+        await axios.post<T>(url, data);
+        return true;
     } catch (error) {
         console.error("Error creating data:", error);
         throw error;

@@ -35,3 +35,27 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
         return false;
     }
 }
+
+/**
+ * Deletes an episode by its ID.
+ * @param id Identifier of the episode to delete.
+ * @returns True if the deletion was successful, false otherwise.
+ */
+export async function DeleteEpisode(id: number): Promise<boolean> {
+    console.log("Deleting episode with ID:", id);
+
+    try {
+        await prisma.episode.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error deleting episode: " + error);
+        return false;
+    }
+}

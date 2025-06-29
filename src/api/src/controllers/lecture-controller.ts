@@ -37,3 +37,27 @@ export async function UpdateLecture(id : number, lecture: Partial<Lecture>): Pro
         return false;
     }
 }
+
+/**
+ * Deletes a lecture by its ID.
+ * @param id Lecture's unique identifier.
+ * @returns True if the deletion was successful, false otherwise.
+ */
+export async function DeleteLecture(id: number): Promise<boolean> {
+    console.log("Deleting lecture with ID:", id);
+
+    try {
+        await prisma.lecture.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error deleting lecture: " + error);
+        return false;
+    }
+}

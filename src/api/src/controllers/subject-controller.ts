@@ -163,3 +163,28 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
         return false;
     }
 }
+
+/**
+ * Deletes a subject by its ID.
+ * @param id Identifier of the subject to delete.
+ * @returns True if the deletion was successful, false otherwise.
+ */
+export async function DeleteSubject(id: number): Promise<boolean> {
+    console.log("Deleting subject with ID:", id);
+
+    // Lectures deleted by cascade
+    try {
+        await prisma.subject.delete({
+            where: {
+                id: id
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error deleting subject: " + error);
+        return false;
+    }
+} 
