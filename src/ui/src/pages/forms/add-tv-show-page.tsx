@@ -19,6 +19,7 @@ import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import { useLocation } from "react-router-dom";
+import UpdateData from "data/crud/update";
 
 /**
  * Form page for adding a new TV show.
@@ -45,11 +46,13 @@ export default function AddTvShowPage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={"Add TV Show"}
+            title={tvshow.title ? "Edit TV Show" : "Add TV Show"}
             ref={tvShowRef}
-            submitFunction={(tvShow: TvShow) => TvShowSubmitHandler(tvShow, seasons, episodes)}
+            submitFunction={tvshow.title ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes) :
+                async (tvShow: TvShow) => await UpdateData<TvShow>("/api/shows", tvShow.identifier!, tvShow)
+            }
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={"TV show added successfully."}
+            successModalMessage={tvshow ? "TV Show updated successfully." : "TV Show added successfully."}
         >
             <FormSection
                 title={"Basic Information"}

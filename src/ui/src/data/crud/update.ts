@@ -7,16 +7,17 @@ import axios from "axios";
  * @param url URL to send the request to.
  * @param id Entry identifier to update.
  * @param data Partial data to update the entry with.
- * @throws Error if the update fails.
+ * @return Promise resolving to true if the update was successful, false otherwise.
  */
-export default async function UpdateData<T>(url: string, id : number, data: Partial<T>) : Promise<void> {
+export default async function UpdateData<T>(url: string, id: number, data: Partial<T>): Promise<boolean> {
     try {
         await axios.patch<Partial<T>>(`${url}/${id}`, data);
+        return true;
     }
 
     catch (error) {
         console.error("Error updating data:", error);
-        throw error;
+        return false;
     }
 }
 
@@ -24,16 +25,17 @@ export default async function UpdateData<T>(url: string, id : number, data: Part
  * Marks a movie or TV show as favorite.
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
- * @throws Error if the operation fails.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T) : Promise<void> {
+export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T): Promise<boolean> {
     try {
         await UpdateData<T>(url, model.identifier!, { isFavorite: !model.isFavorite } as Partial<T>);
+        return true;
     }
 
     catch (error) {
         console.error("Error marking as favorite:", error);
-        throw error;
+        return false;
     }
 }
 
@@ -42,16 +44,18 @@ export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, mode
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
  * @param rating New rating value.
- * @throws Error if the update fails.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateRating<T extends { rating?: number, identifier?: number }>(url: string, model: T, rating: number) : Promise<void> {
+export async function UpdateRating<T extends { rating?: number, identifier?: number }>
+(url: string, model: T, rating: number): Promise<boolean> {
     try {
         await UpdateData<T>(url, model.identifier!, { rating } as Partial<T>);
+        return true;
     }
 
     catch (error) {
         console.error("Error updating rating:", error);
-        throw error;
+        return false;
     }
 }
 
@@ -60,16 +64,18 @@ export async function UpdateRating<T extends { rating?: number, identifier?: num
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
  * @param watchStatus New watch status value.
- * @throws Error if the update fails.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateWatchStatus<T extends { watchStatus: string, identifier?: number }>(url: string, model: T, watchStatus: string) : Promise<void> {
+export async function UpdateWatchStatus<T extends { watchStatus: string, identifier?: number }>
+(url: string, model: T, watchStatus: string): Promise<boolean> {
     try {
         await UpdateData<T>(url, model.identifier!, { watchStatus } as Partial<T>);
+        return true;
     }
 
     catch (error) {
         console.error("Error setting watch status:", error);
-        throw error;
+        return false;
     }
 }
 
@@ -78,15 +84,17 @@ export async function UpdateWatchStatus<T extends { watchStatus: string, identif
  * @param url URL to send the request to.
  * @param model Movie/tv show/subject model to update.
  * @param description New description value.
- * @throws Error if the update fails.
+ * @return Promise resolving to void if the operation was successful, throws an error otherwise.
  */
-export async function UpdateDescription<T extends { description?: string, identifier?: number }>(url: string, model: T, description: string) : Promise<void> {
+export async function UpdateDescription<T extends { description?: string, identifier?: number }>
+(url: string, model: T, description: string): Promise<boolean> {
     try {
         await UpdateData<T>(url, model.identifier!, { description } as Partial<T>);
+        return true;
     }
 
     catch (error) {
         console.error("Error updating description:", error);
-        throw error;
+        return false;
     }
 }

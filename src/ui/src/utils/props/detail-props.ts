@@ -3,6 +3,7 @@ import CardDisplayable from "@shared/interface/card-displayable";
 import DetailHeaders from "utils/enum/detail-headers";
 import ListProps from "./list-props";
 import WatchStatus from "@shared/enum/watch-status";
+import FormProps from "./form-props";
 
 /**
  * Interface for detail properties.
@@ -23,13 +24,13 @@ export interface DetailProps<T extends DetailFillable>{
     addTitle?: string;
     editTitle?: string;
     deleteTitle?: string;
-    deleteFunction?: () => Promise<void>;
+    deleteFunction?: () => Promise<boolean>;
     hasMarkFavorite: boolean;
-    markFavoriteFunction?: () => Promise<void>;
+    markFavoriteFunction?: () => Promise<boolean>;
     rateTitle?: string;
-    rateFunction?: (rating: number) => Promise<void>;
-    watchStatusFunction?: (watchStatus: WatchStatus) => Promise<void>;
-    setDescriptionFunction?: (description : string) => Promise<void>;
+    rateFunction?: (rating: number) => Promise<boolean>;
+    watchStatusFunction?: (watchStatus: WatchStatus) => Promise<boolean>;
+    setDescriptionFunction?: (description : string) => Promise<boolean>;
 }
 
 export default DetailProps;

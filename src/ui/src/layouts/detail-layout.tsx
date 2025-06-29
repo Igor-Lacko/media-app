@@ -125,6 +125,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {/** 4. Set description modal */}
             {visibleModal === VisibleModal.DESCRIPTION && <TextAreaModal
                 title={"Set Description"}
+                initialDescription={props.model.description}
                 onSetDescription={async (description: string) => {
                     props.setDescriptionFunction && await props.setDescriptionFunction(description);
                     setVisibleModal(VisibleModal.NONE);

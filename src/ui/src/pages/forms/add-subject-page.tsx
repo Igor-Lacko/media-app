@@ -12,6 +12,7 @@ import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
 import { useLocation } from "react-router-dom";
+import UpdateData from "data/crud/update";
 
 /**
  * Form page for adding a new subject.
@@ -31,11 +32,13 @@ export default function AddSubjectPage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={"Add Subject"}
+            title={subject.title ? "Edit Subject" : "Add Subject"}
             ref={subjectRef}
-            submitFunction={(subject : Subject) => SubjectSubmitHandler(subject, lectures)}
+            submitFunction={subject.title ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures) :
+                async (subject: Subject) => await UpdateData<Subject>("/api/subjects", subject.identifier!, subject)
+            }
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={"Subject added successfully."}
+            successModalMessage={subject.title ? "Subject updated successfully." : "Subject added successfully."}
         >
             <FormSection
                 title={"Basic Information"}

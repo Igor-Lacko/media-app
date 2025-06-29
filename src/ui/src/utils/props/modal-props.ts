@@ -24,6 +24,7 @@ export interface ModalProps {
 
     // For text area modals
     onSetDescription?: (description: string) => Promise<void>;
+    initialDescription?: string;
 
     // Each one also has this
     onClose: () => void;

@@ -13,6 +13,7 @@ import useGenreDropdown from "hooks/use-genre-dropdown";
 import useRatingSlider from "hooks/use-rating-slider";
 import SubmitMovie from "data/submit-handlers/movie-submit";
 import { useLocation } from "react-router-dom";
+import UpdateData from "data/crud/update";
 
 /**
  * Form page for adding a new movie.
@@ -36,9 +37,10 @@ export default function AddMoviePage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={"Add Movie"}
+            title={movie.title ? "Edit Movie" : "Add Movie"}
             ref={movieRef}
-            submitFunction={SubmitMovie}
+            submitFunction={movie.title ?  async (ref: Movie) => await SubmitMovie(ref) :
+                async (ref: Movie) => await UpdateData<Movie>("/api/movies", ref.identifier!, movie)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={"Movie added successfully."}
         >
