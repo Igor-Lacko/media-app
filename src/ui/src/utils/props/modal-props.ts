@@ -3,8 +3,7 @@
  */
 export interface ModalProps {
     title: string;
-    message: string;
-    component?: React.ReactNode;
+    children: React.ReactNode;
     onClose: () => void;
     classNames?: string;
 }

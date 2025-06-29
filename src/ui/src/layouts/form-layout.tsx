@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormProps from "utils/props/form-props";
 import SubmitButton from "components/buttons/submit-button";
-import useModal from "hooks/use-modal";
-import InfoModal from "components/modals/info-modal";
+import Modal from "components/modal";
 
 /**
  * Layout for a form page with a title, back button, content, submit button and modals for error/success.
@@ -14,13 +13,6 @@ export default function FormLayout<T>(props: FormProps<T>) {
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
-
-    // Modal props
-    const errorModalProps = useModal("Error", props.errorModalMessage, () => { setError(false); })
-    const successModalProps = useModal("Success", props.successModalMessage, () => {
-        setSuccess(false);
-        navigate(-1);
-    });
 
     // Submission
     const onSubmit = async () => {
@@ -72,13 +64,26 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     />
                 </div>
             </div>
-            {error && <InfoModal
-                {...errorModalProps}
-            />
+            {error && <Modal
+                title="Error"
+                onClose={() => setError(false)}
+            >
+                <p className="text-gray-700 dark:text-gray-300">
+                    {props.errorModalMessage}
+                </p>
+            </Modal>
             }
-            {success && <InfoModal
-                {...successModalProps}
-            />
+            {success && <Modal
+                title="Success"
+                onClose={() => {
+                    navigate(-1);
+                    setSuccess(false);
+                }}
+            >
+                <p className="text-gray-700 dark:text-gray-300">
+                    {props.successModalMessage}
+                </p>
+            </Modal>
             }
         </div>
     )
