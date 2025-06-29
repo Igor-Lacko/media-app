@@ -7,11 +7,11 @@ import axios from "axios";
  * @param url URL to send the request to.
  * @param id Entry identifier to update.
  * @param data Partial data to update the entry with.
+ * @throws Error if the update fails.
  */
-export default async function UpdateData<T>(url: string, id : number, data: Partial<T>) : Promise<boolean> {
+export default async function UpdateData<T>(url: string, id : number, data: Partial<T>) : Promise<void> {
     try {
         await axios.patch<Partial<T>>(`${url}/${id}`, data);
-        return true;
     }
 
     catch (error) {
@@ -24,12 +24,11 @@ export default async function UpdateData<T>(url: string, id : number, data: Part
  * Marks a movie or TV show as favorite.
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
- * @returns True if the operation was successful, false otherwise.
+ * @throws Error if the operation fails.
  */
-export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T) : Promise<boolean> {
+export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T) : Promise<void> {
     try {
         await UpdateData<T>(url, model.identifier!, { isFavorite: !model.isFavorite } as Partial<T>);
-        return true;
     }
 
     catch (error) {
@@ -43,12 +42,11 @@ export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, mode
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
  * @param rating New rating value.
- * @returns True if the operation was successful, false otherwise.
+ * @throws Error if the update fails.
  */
-export async function UpdateRating<T extends { rating?: number, identifier?: number }>(url: string, model: T, rating: number) : Promise<boolean> {
+export async function UpdateRating<T extends { rating?: number, identifier?: number }>(url: string, model: T, rating: number) : Promise<void> {
     try {
         await UpdateData<T>(url, model.identifier!, { rating } as Partial<T>);
-        return true;
     }
 
     catch (error) {
@@ -62,12 +60,11 @@ export async function UpdateRating<T extends { rating?: number, identifier?: num
  * @param url URL to send the request to.
  * @param model Movie or TV show model to update.
  * @param watchStatus New watch status value.
- * @returns True if the operation was successful, false otherwise.
+ * @throws Error if the update fails.
  */
-export async function UpdateWatchStatus<T extends { watchStatus: string, identifier?: number }>(url: string, model: T, watchStatus: string) : Promise<boolean> {
+export async function UpdateWatchStatus<T extends { watchStatus: string, identifier?: number }>(url: string, model: T, watchStatus: string) : Promise<void> {
     try {
         await UpdateData<T>(url, model.identifier!, { watchStatus } as Partial<T>);
-        return true;
     }
 
     catch (error) {

@@ -1,8 +1,8 @@
 import DetailFillable from "@shared/interface/detail-fillable";
 import CardDisplayable from "@shared/interface/card-displayable";
 import DetailHeaders from "utils/enum/detail-headers";
-import { EditBarProps } from "./edit-bar-props";
 import ListProps from "./list-props";
+import WatchStatus from "@shared/enum/watch-status";
 
 /**
  * Interface for detail properties.
@@ -19,8 +19,16 @@ export interface DetailProps<T extends DetailFillable>{
     canBeMarkedFavorite: boolean;
     headerType: DetailHeaders;
     hasWatchStatus: boolean;
-    editBarProps: EditBarProps;
     listProps?: ListProps;
+    addTitle?: string;
+    editTitle?: string;
+    deleteTitle?: string;
+    deleteFunction?: () => Promise<void>;
+    hasMarkFavorite: boolean;
+    markFavoriteFunction?: () => Promise<void>;
+    rateTitle?: string;
+    rateFunction?: (rating: number) => void;
+    watchStatusFunction?: (watchStatus: WatchStatus) => Promise<void>;
 }
 
 export default DetailProps;

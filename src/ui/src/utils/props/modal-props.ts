@@ -1,11 +1,29 @@
+import WatchStatus from "@shared/enum/watch-status";
+
 /**
  * Props for modal components.
  */
 export interface ModalProps {
+    // Each one has this
     title: string;
-    children: React.ReactNode;
+
+    // For info modals
+    message?: string;
+
+    // For close or confirm modals
+    onConfirm?: () => void;
+
+    // For watch status select modals
+    onSelectWatchStatus?: (watchStatus : WatchStatus) => void;
+
+    // For rating select modals
+    onSelectRating?: (rating: number) => void;
+
+    // Each one also has this
     onClose: () => void;
-    classNames?: string;
+
+    // Extra for styling
+    extraClassNames?: string;
 }
 
 export default ModalProps;

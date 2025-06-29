@@ -1,8 +1,10 @@
 import DetailFillable from "@shared/interface/detail-fillable";
 import PlayButton from "components/buttons/play-button";
+import RoundedButton from "components/buttons/rounded-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
 import DetailImage from "components/image/detail-image";
+import { FaPlay } from "react-icons/fa";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail-props";
 
@@ -69,9 +71,11 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     watchStatus={props.model.watchStatus}
                 />}
                 {/** TODO alt div if video doesn't exist */}
-                {props.playable && <PlayButton
+                {props.playable && <RoundedButton
+                    text={"Play"}
                     onClick={() => console.log("Play button clicked")}
-                    title={"Play movie"}
+                    extraClassNames={"bg-purple-500 dark:bg-purple-700 hover:bg-purple-600"}
+                    icon={<FaPlay/>}
                 />}
             </div>
         </div>

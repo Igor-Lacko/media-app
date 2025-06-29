@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormProps from "utils/props/form-props";
 import SubmitButton from "components/buttons/submit-button";
-import Modal from "components/modal";
+import InfoModal from "components/modals/info-modal";
 
 /**
  * Layout for a form page with a title, back button, content, submit button and modals for error/success.
@@ -64,26 +64,20 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     />
                 </div>
             </div>
-            {error && <Modal
+            {error && <InfoModal
                 title="Error"
                 onClose={() => setError(false)}
-            >
-                <p className="text-gray-700 dark:text-gray-300">
-                    {props.errorModalMessage}
-                </p>
-            </Modal>
+                message={props.errorModalMessage}
+            />
             }
-            {success && <Modal
-                title="Success"
+            {success && <InfoModal
+                title={"Success"}
                 onClose={() => {
                     navigate(-1);
                     setSuccess(false);
                 }}
-            >
-                <p className="text-gray-700 dark:text-gray-300">
-                    {props.successModalMessage}
-                </p>
-            </Modal>
+                message={props.successModalMessage}
+            />
             }
         </div>
     )

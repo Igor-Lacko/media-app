@@ -1,10 +1,7 @@
 import { EditBarProps } from "utils/props/edit-bar-props";
-import AddButton from "./buttons/add-button";
-import EditButton from "./buttons/edit-button";
-import DeleteButton from "./buttons/delete-button"
 import MarkFavoriteButton from "./buttons/mark-favorite-button";
-import RateButton from "./buttons/rate-button";
-import SetWatchStatusButton from "./buttons/set-watch-status-button";
+import RoundedButton from "./buttons/rounded-button";
+import { FaCheckCircle, FaPencilAlt, FaPlus, FaStar, FaTrash } from "react-icons/fa";
 
 /**
  * Edit bar component
@@ -19,17 +16,23 @@ export default function EditBar(props : EditBarProps) {
             <div
                 className={"flex items-center justify-start space-x-5"}
             >
-                {props.addTitle && props.onAdd && <AddButton
-                    title={props.addTitle}
+                {props.addTitle && props.onAdd && <RoundedButton
+                    text={props.addTitle}
                     onClick={props.onAdd}
+                    extraClassNames={"bg-green-500 dark:bg-green-700 hover:bg-green-600"}
+                    icon={<FaPlus/>}
                 />}
-                {props.editTitle && props.onEdit && <EditButton
-                    title={props.editTitle}
+                {props.editTitle && props.onEdit && <RoundedButton
+                    text={props.editTitle}
                     onClick={props.onEdit}
+                    extraClassNames={"bg-blue-500 dark:bg-blue-700 hover:bg-blue-600"}
+                    icon={<FaPencilAlt/>}
                 />}
-                {props.deleteTitle && props.onDelete && <DeleteButton
-                    title={props.deleteTitle}
+                {props.deleteTitle && props.onDelete && <RoundedButton
+                    text={props.deleteTitle}
                     onClick={props.onDelete}
+                    extraClassNames={"bg-red-500 dark:bg-red-700 hover:bg-red-600"}
+                    icon={<FaTrash/>}
                 />}
             </div>
             <div
@@ -39,11 +42,17 @@ export default function EditBar(props : EditBarProps) {
                     onClick={props.onMarkFavorite}
                     isFavorite={true}
                 />}
-                {props.rateTitle && props.onRate && <RateButton
+                {props.rateTitle && props.onRate && <RoundedButton
+                    text={props.rateTitle}
                     onClick={props.onRate}
+                    extraClassNames={"bg-orange-500 dark:bg-orange-600 hover:bg-orange-700"}
+                    icon={<FaStar/>}
                 />}
-                {props.onSetWatchStatus && <SetWatchStatusButton
+                {props.onSetWatchStatus && <RoundedButton
+                    text={"Set Watch Status"}
                     onClick={props.onSetWatchStatus}
+                    extraClassNames={"bg-green-500 dark:bg-green-600 hover:bg-green-700"}
+                    icon={<FaCheckCircle/>}
                 />}
             </div>
         </div>

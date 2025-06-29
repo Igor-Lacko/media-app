@@ -9,6 +9,12 @@ import DetailProps from "utils/props/detail-props";
 import EditBar from "components/edit-bar";
 import DetailFillable from "@shared/interface/detail-fillable";
 import MediaItemList from "components/media-item-list";
+import { useState } from "react";
+import VisibleModal from "utils/enum/visible-modal";
+import { EditBarProps } from "utils/props/edit-bar-props";
+import ConfirmModal from "components/modals/confirm-modal";
+import Lecture from "@shared/interface/models/lecture";
+import Subject from "@shared/interface/models/subject";
 
 /**
  * Layout for a detail element.
@@ -16,6 +22,35 @@ import MediaItemList from "components/media-item-list";
  */
 export default function DetailLayout<T extends DetailFillable>(props : DetailProps<T>) {
     const navigate = useNavigate();
+    const [visibleModal, setVisibleModal] = useState(VisibleModal.NONE);
+
+    // Edit bar props
+    const editBarProps : EditBarProps = {
+        
+        // Add
+        onAdd: props.addTitle ? () => navigate("add") : undefined,
+        addTitle: props.addTitle,
+
+        // Edit
+        editTitle: props.editTitle,
+        onEdit: props.editTitle ? () => navigate("edit") : undefined,
+
+        // Mark as favorite
+        hasMarkFavorite: props.hasMarkFavorite,
+        onMarkFavorite: props.markFavoriteFunction,
+        
+        // Rate
+        onRate: () => setVisibleModal(VisibleModal.RATE),
+        rateTitle: props.rateTitle,
+
+        // Delete
+        deleteTitle: props.deleteTitle,
+        onDelete: () => setVisibleModal(VisibleModal.DELETE),
+
+        // Set watch status
+        onSetWatchStatus: props.watchStatusFunction ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
+    }
+
     return (
         <div
             className={"flex flex-col w-full h-full items-center justify-start overflow-x-hidden\
@@ -30,15 +65,27 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 />
             </div>
             {props.headerType === DetailHeaders.ENTERTAINMENT && <EntertainmentDetailHeader{...props} />}
-            {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader{...props} />}
-            {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader{...props} />}
+            {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader {...props} model={props.model as unknown as Lecture} />}
+            {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader {...props} model={props.model as unknown as Subject} />}
             <EditBar
-                {...props.editBarProps}
+                {...editBarProps}
             />
             {/** Submedia list */}
             {props.listProps && <MediaItemList
                 {...props.listProps}
-            />}    
+            />}
+            {/** Modals */}
+            {/** 1. Delete modal */}
+            {visibleModal === VisibleModal.DELETE && <ConfirmModal
+                title={props.deleteTitle || "Delete"}
+                message={`Are you sure you want to delete ${props.title}? This action cannot be undone.`}
+                onConfirm={async () => {
+                    props.deleteFunction && await props.deleteFunction();
+                    setVisibleModal(VisibleModal.NONE);
+                    navigate(-1);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
         </div>
     )
 }

@@ -6,6 +6,7 @@ import NotFoundPage from "pages/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import UpdateData, { MarkAsFavorite, UpdateRating, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
+import DeleteData from "data/crud/delete";
 
 /**
  * Component for displaying movie details.
@@ -30,17 +31,15 @@ export default function MovieDetail() {
         canBeMarkedFavorite: true,
         headerType: DetailHeaders.ENTERTAINMENT,
         hasWatchStatus: true,
-        editBarProps: {
-            editTitle: "Edit Movie",
-            onEdit: () => { /* Implement edit functionality */ },
-            deleteTitle: "Delete Movie",
-            onDelete: () => { /* Implement delete functionality */ },
-            hasMarkFavorite: true,
-            onMarkFavorite: async () => { await MarkAsFavorite<Movie>("/api/movies", movie) },
-            rateTitle: "Rate Movie",
-            onRate: async (rating : number) => { await UpdateRating<Movie>("/api/movies", movie, rating) },
-            onSetWatchStatus: async (watchStatus : WatchStatus) => { await UpdateWatchStatus<Movie>("/api/movies", movie, watchStatus)},
-        },
+        addTitle: "Add Movie",
+        editTitle: "Edit Movie",
+        deleteTitle: "Delete Movie",
+        deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
+        hasMarkFavorite: true,
+        markFavoriteFunction: async () => await MarkAsFavorite<Movie>("/api/movies", movie),
+        rateTitle: "Rate Movie",
+        rateFunction: async (rating: number) => await UpdateRating<Movie>("/api/movies", movie, rating),
+        watchStatusFunction: async (watchStatus: WatchStatus) => await UpdateWatchStatus<Movie>("/api/movies", movie, watchStatus)
     }
 
     return <DetailLayout<Movie> {...props}/>;
