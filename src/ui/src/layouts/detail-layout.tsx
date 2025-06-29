@@ -16,6 +16,10 @@ import ConfirmModal from "components/modals/confirm-modal";
 import Lecture from "@shared/interface/models/lecture";
 import Subject from "@shared/interface/models/subject";
 import SliderModal from "components/modals/slider-modal";
+import EnumModal from "components/modals/enum-modal";
+import WatchStatus from "@shared/enum/watch-status";
+import watchStatusAdapter from "utils/adapters/watch-status-adapter";
+import TextAreaModal from "components/modals/text-area-modal";
 
 /**
  * Layout for a detail element.
@@ -50,6 +54,9 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Set watch status
         onSetWatchStatus: props.watchStatusFunction ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
+
+        // Set description
+        onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION) : undefined
     }
 
     return (
@@ -92,6 +99,35 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 title={props.rateTitle || "Rate"}
                 onSelectRating={async (rating: number) => {
                     props.rateFunction && await props.rateFunction(rating);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                initialRating={props.model.rating}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 3. Watch status modal */}
+            {visibleModal === VisibleModal.WATCH_STATUS && <EnumModal
+                title={"Select Watch Status"}
+                selectOptions={Object.values(WatchStatus).map((status) => {
+                    return {
+                        key: watchStatusAdapter(status),
+                        value: status
+                    }
+                })}
+                initialWatchStatus={{
+                    key: watchStatusAdapter(props.model.watchStatus),
+                    value: props.model.watchStatus
+                }}
+                onSelectWatchStatus={async (watchStatus: WatchStatus) => {
+                    props.watchStatusFunction && await props.watchStatusFunction(watchStatus);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 4. Set description modal */}
+            {visibleModal === VisibleModal.DESCRIPTION && <TextAreaModal
+                title={"Set Description"}
+                onSetDescription={async (description: string) => {
+                    props.setDescriptionFunction && await props.setDescriptionFunction(description);
                     setVisibleModal(VisibleModal.NONE);
                 }}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}

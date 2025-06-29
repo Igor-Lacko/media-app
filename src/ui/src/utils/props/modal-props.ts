@@ -15,9 +15,15 @@ export interface ModalProps {
 
     // For watch status select modals
     onSelectWatchStatus?: (watchStatus : WatchStatus) => Promise<void>;
+    initialWatchStatus?: { key: string; value: WatchStatus };
+    selectOptions?: { key: string; value: WatchStatus }[];
 
     // For rating select modals
     onSelectRating?: (rating: number) => Promise<void>;
+    initialRating?: number;
+
+    // For text area modals
+    onSetDescription?: (description: string) => Promise<void>;
 
     // Each one also has this
     onClose: () => void;

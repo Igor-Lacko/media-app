@@ -1,11 +1,16 @@
 import RoundedButton from "components/buttons/rounded-button";
 import Slider from "components/slider";
-import { useState } from "react";
+import { useRef } from "react";
 import ModalProps from "utils/props/modal-props";
 import AbstractModal from "./abstract-modal";
 
+/**
+ * Modal that provides a slider for selecting from a range of values.
+ * @param props Initial value, on select function, and title for the modal.
+ */
 export default function SliderModal(props : ModalProps) {
-    const [value, setValue] = useState(0);
+    const valueRef = useRef(0);
+
     return (
         <AbstractModal>
             <h2 
@@ -14,15 +19,17 @@ export default function SliderModal(props : ModalProps) {
                 {props.title}
             </h2>
             <Slider
-                onChange={setValue}
+                onChange={(v: number) => {
+                    valueRef.current = v;
+                }}
                 max={10}
-                initial={0}
+                initial={props.initialRating || 0}
             />
             <RoundedButton
                 text={"Close"}
                 extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 onClick={async () => {
-                    props.onSelectRating && await props.onSelectRating(value);
+                    props.onSelectRating && await props.onSelectRating(valueRef.current);
                     props.onClose();
                 }}
             />

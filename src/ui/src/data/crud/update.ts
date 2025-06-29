@@ -72,3 +72,21 @@ export async function UpdateWatchStatus<T extends { watchStatus: string, identif
         throw error;
     }
 }
+
+/**
+ * Updates the description of a movie/tv show/season
+ * @param url URL to send the request to.
+ * @param model Movie/tv show/subject model to update.
+ * @param description New description value.
+ * @throws Error if the update fails.
+ */
+export async function UpdateDescription<T extends { description?: string, identifier?: number }>(url: string, model: T, description: string) : Promise<void> {
+    try {
+        await UpdateData<T>(url, model.identifier!, { description } as Partial<T>);
+    }
+
+    catch (error) {
+        console.error("Error updating description:", error);
+        throw error;
+    }
+}

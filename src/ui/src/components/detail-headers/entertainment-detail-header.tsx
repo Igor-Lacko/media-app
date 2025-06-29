@@ -1,5 +1,4 @@
 import DetailFillable from "@shared/interface/detail-fillable";
-import PlayButton from "components/buttons/play-button";
 import RoundedButton from "components/buttons/rounded-button";
 import DetailWatchStatus from "components/detail-watch-status";
 import HeaderRating from "components/header-rating";
@@ -52,9 +51,9 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
             </div>
             {/* description*/}
             <div
-                className={"flex flex-col py-5 w-4/10 ml-10 items-start justify-start h-full space-y-2 text-gray-400"}
+                className={"flex flex-col py-5 w-4/10 ml-10 items-start overflow-y-auto justify-start h-full space-y-2 text-gray-400"}
             >
-                <p className={"text-md overflow-y-auto text-black dark:text-gray-400"}>
+                <p className={"text-md flex h-full w-full text-black wrap-anywhere dark:text-gray-400"}>
                     {props.model.description || "No description available."}
                 </p>
                 

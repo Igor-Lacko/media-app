@@ -29,6 +29,7 @@ export interface DetailProps<T extends DetailFillable>{
     rateTitle?: string;
     rateFunction?: (rating: number) => Promise<void>;
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<void>;
+    setDescriptionFunction?: (description : string) => Promise<void>;
 }
 
 export default DetailProps;

@@ -48,6 +48,12 @@ export default function EditBar(props : EditBarProps) {
                     extraClassNames={"bg-orange-500 dark:bg-orange-600 hover:bg-orange-700"}
                     icon={<FaStar/>}
                 />}
+                {props.onSetDescription && <RoundedButton
+                    text={"Set Description"}
+                    onClick={props.onSetDescription}
+                    extraClassNames={"bg-purple-500 dark:bg-purple-600 hover:bg-purple-700"}
+                    icon={<FaPencilAlt/>}
+                />}
                 {props.onSetWatchStatus && <RoundedButton
                     text={"Set Watch Status"}
                     onClick={props.onSetWatchStatus}

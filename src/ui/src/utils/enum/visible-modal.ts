@@ -5,6 +5,7 @@ export enum VisibleModal {
     NONE,
     DELETE,
     RATE,
+    DESCRIPTION,
     WATCH_STATUS
 }
 
