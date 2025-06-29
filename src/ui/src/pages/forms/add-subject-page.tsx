@@ -15,12 +15,12 @@ import RemoveOption from "components/options/remove-option";
 /**
  * Form page for adding a new subject.
  */
-export default function AddSubjectPage() {
+export default function AddSubjectPage(subject? : Subject) {
     // Constructed subject
-    const subjectRef = useRef<Subject>(defaultSubject);
+    const subjectRef = useRef<Subject>(subject || defaultSubject);
 
     // To re-render on each add
-    const [lectures, setLectures] = useState<Lecture[]>([]);
+    const [lectures, setLectures] = useState(subjectRef.current.lectures);
 
     return (
         <FormLayout
@@ -35,7 +35,7 @@ export default function AddSubjectPage() {
             >
                 <InputOption
                     title={"Subject name*"}
-                    placeholder={"Enter subject name"}
+                    initial={subjectRef.current.title}
                     onChange={(value) => subjectRef.current.title = value}
                 />
             </FormSection>
@@ -53,11 +53,12 @@ export default function AddSubjectPage() {
                     >
                         <InputOption
                             title={"Lecture name*"}
-                            placeholder={"Enter lecture name"}
+                            initial={lecture.title}
                             onChange={(value) => lecture.title = value}
                         />
                         <FileBrowseOption
                             title={"Lecture video"}
+                            initial={lecture.videoUrl || ""}
                             onChange={(value) => lecture.videoUrl = value}
                         />
                         <RemoveOption

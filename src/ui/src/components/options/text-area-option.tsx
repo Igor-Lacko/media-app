@@ -5,13 +5,13 @@
  */
 export default function TextAreaOption({
     title,
+    initial,
     onChange,
-    placeholder,
     extraClassnames
 }: {
     title: string;
+    initial: string;
     onChange: (value: string) => void;
-    placeholder: string;
     extraClassnames?: string;
 }) {
     return (
@@ -26,7 +26,8 @@ export default function TextAreaOption({
                 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 ease-in-out\
                 overflow-y-hidden"}
                 onChange={(e) => onChange(e.target.value)}
-                placeholder={placeholder}
+                defaultValue={initial}
+                placeholder={"..."}
             />
         </div>
     )

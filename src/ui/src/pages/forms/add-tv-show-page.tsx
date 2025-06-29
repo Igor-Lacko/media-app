@@ -22,9 +22,9 @@ import FileBrowseOption from "components/options/file-browse-option";
 /**
  * Form page for adding a new TV show.
  */
-export default function AddTvShowPage() {
+export default function AddTvShowPage(tvshow? : TvShow) {
     // Constructed TV show
-    const tvShowRef = useRef<TvShow>(defaultTvShow);
+    const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
 
     // To re-render on each add
     const [seasons, setSeasons] = useState<Season[]>([]);
@@ -47,12 +47,12 @@ export default function AddTvShowPage() {
             >
                 <InputOption
                     title={"TV Show Title*"}
-                    placeholder={"Enter TV show title"}
+                    initial={tvShowRef.current.title}
                     onChange={(value) => tvShowRef.current.title = value}
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    placeholder={"Enter a short description of the TV show"}
+                    initial={tvShowRef.current.shortDescription || ""}
                     onChange={(value) => tvShowRef.current.shortDescription = value}
                 />
             </FormSection>
@@ -83,7 +83,7 @@ export default function AddTvShowPage() {
                     >
                         <TextAreaOption
                             title={"Season short description"}
-                            placeholder={"Enter a short description for the season"}
+                            initial={season.description || ""}
                             onChange={(value) => season.description = value}
                         />
                         {/* The hook is probably unusable here */}
@@ -126,12 +126,12 @@ export default function AddTvShowPage() {
                                 >
                                     <InputOption
                                         title={"Episode Title*"}
-                                        placeholder={"Enter episode title"}
+                                        initial={episode.title}
                                         onChange={(value) => episode.title = value}
                                     />
                                     <TextAreaOption
                                         title={"Episode Short Description"}
-                                        placeholder={"Enter a short description for the episode"}
+                                        initial={episode.shortDescription || ""}
                                         onChange={(value) => episode.shortDescription = value}
                                     />
                                     <SliderOption
@@ -144,10 +144,12 @@ export default function AddTvShowPage() {
                                     />
                                     <FileBrowseOption
                                         title={"Episode Thumbnail"}
+                                        initial={episode.thumbnailUrl || ""}
                                         onChange={(value) => episode.thumbnailUrl = value}
                                     />
                                     <FileBrowseOption
                                         title={"Episode Video File"}
+                                        initial={episode.videoUrl || ""}
                                         onChange={(value) => episode.videoUrl = value}
                                     />
                                     <RemoveOption

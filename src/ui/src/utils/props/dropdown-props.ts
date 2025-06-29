@@ -16,6 +16,7 @@ export interface DropdownProps {
     options: { key: string; value: SortKey | Genre }[];
     onChange: (value: SortKey | Genre) => void;
     initialValue: SortKey | Genre;
+    initialSelections?: Genre[];
 }
 
 export default DropdownProps;

@@ -6,7 +6,7 @@ import { GetFilePath } from "utils/electron-api";
  * @param param0 title, onChange handler, and optional extra classnames for styling.
  * @returns React component for file browse option.
  */
-export default function FileBrowseOption({title, onChange, extraClassnames} : {title: string, onChange: (value: string) => void, extraClassnames?: string}) {
+export default function FileBrowseOption({title, initial, onChange, extraClassnames} : {title: string, initial : string, onChange: (value: string) => void, extraClassnames?: string}) {
     // To display the currently selected file name
     const [fileName, setFileName] = useState("");
 

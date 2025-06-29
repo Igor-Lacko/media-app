@@ -15,8 +15,9 @@ import SubmitMovie from "data/submit-handlers/movie-submit";
 
 /**
  * Form page for adding a new movie.
+ * @param movie Optional movie object to pre-fill the form.
  */
-export default function AddMoviePage() {
+export default function AddMoviePage(movie? : Movie) {
     // Constructed object, do not want to render on every change
     const movieRef = useRef<Movie>(defaultMovie);
 
@@ -39,12 +40,12 @@ export default function AddMoviePage() {
             >
                 <InputOption
                     title={"Title *"}
-                    placeholder={"Enter movie title"}
+                    initial={movieRef.current.title}
                     onChange={(value) => movieRef.current.title = value}
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    placeholder={"Enter a short description of the movie"}
+                    initial={movieRef.current.shortDescription || ""}
                     onChange={(value) => movieRef.current.shortDescription = value}
                 />
             </FormSection>
@@ -65,10 +66,12 @@ export default function AddMoviePage() {
             >
                 <FileBrowseOption
                     title={"Thumbnail"}
+                    initial={movieRef.current.thumbnailUrl || ""}
                     onChange={(value) => movieRef.current.thumbnailUrl = value}
                 />
                 <FileBrowseOption
                     title={"Video File"}
+                    initial={movieRef.current.videoUrl || ""}
                     onChange={(value) => movieRef.current.videoUrl = value}
                 />
             </FormSection>

@@ -5,7 +5,7 @@ import Genre from "@shared/enum/genre";
 
 export default function DropdownCheckbox(props : DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selections, setSelections] = useState<Genre[]>([]);
+    const [selections, setSelections] = useState(props.initialSelections || []);
 
     return (
         <div 
