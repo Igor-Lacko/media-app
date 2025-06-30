@@ -2,8 +2,39 @@ import Season from "@shared/interface/models/season";
 import prisma from "db/db";
 import { CreateEpisode, UpdateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
-import { SanitizeClientSeasonToDB } from "adapters/seasons";
+import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
+
+/**
+ * Gets a season by its ID, including its episodes.
+ * @param id Unique identifier of the season.
+ * @returns Season object if found, null otherwise.
+ */
+export async function GetSeasonById(id: number): Promise<Season | null> {
+    try {
+        const season = await prisma.season.findUnique({
+            where: {
+                id: id
+            },
+
+            include: {
+                episodes: true
+            }
+        });
+
+        if (!season) {
+            console.error(`Season with ID ${id} not found.`);
+            return null;
+        }
+
+        return DBSeasonToClient(season);
+    }
+
+    catch (error) {
+        console.error("Error fetching season by ID: " + error);
+        return null;
+    }
+}
 
 /**
  * Create a new season in the database.

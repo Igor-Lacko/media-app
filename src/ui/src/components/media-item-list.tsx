@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import ListProps from "utils/props/list-props";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
@@ -12,12 +12,15 @@ import WatchStatus from "@shared/enum/watch-status";
  * Inspired by MyAnimeList.
  */
 export default function MediaItemList(props: ListProps) {
+    // Current URL
+    const location = useLocation();
+
     return (
         <div className={"flex flex-col items-center w-full overflow-y-auto"}>
             {props.items.map((item, index) => (
                 <NavLink
                     key={item.identifier}
-                    to={`/${props.path}/${item.identifier}`}
+                    to={`${location.pathname}/${item.identifier}`}
                     className={classNames(
                         "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200",
                         {

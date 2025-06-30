@@ -21,6 +21,7 @@ import TvShowDetail from 'pages/detail/tv-show-detail';
 import SubjectDetail from 'pages/detail/subject-detail';
 import AddSeasonPage from 'pages/forms/add-season-page';
 import AddLecturePage from 'pages/forms/add-episode-page';
+import SeasonDetail from 'pages/detail/season-detail';
 
 // React-query
 const queryClient = new QueryClient();
@@ -34,25 +35,25 @@ const rootContainer: ReactNode = (
             <Routes>
                 <Route path="/" element={<MainPage />}>
                     <Route index element={<HomePage />} />
-                    <Route path="movies">
+                    <Route path="movies/*">
                         <Route index element={<MoviePage />} />
                         <Route path="add" element={<AddMoviePage />} />
                         <Route path=":id" element={<MovieDetail />} />
                         <Route path=":id/edit" element={<AddMoviePage />} />
                     </Route>
-                    <Route path="tv-shows">
+                    <Route path="tv-shows/*">
                         <Route index element={<TvShowPage />} />
                         <Route path="add" element={<AddTvShowPage />} />
                         <Route path=":id" element={<TvShowDetail />} />
                         <Route path=":id/edit" element={<AddTvShowPage />} />
                         <Route path=":id/add" element={<AddSeasonPage />} />
-                        <Route path=":id/:seasonId" element={<TvShowDetail />} />
+                        <Route path=":id/:seasonId" element={<SeasonDetail />} />
                         <Route path=":id/:seasonId/edit" element={<AddTvShowPage />} />
-                        <Route path=":id/:seasonId/add-episode" element={<AddTvShowPage />} />
+                        <Route path=":id/:seasonId/add" element={<AddTvShowPage />} />
                         <Route path=":id/:seasonId/episodes/:episodeId" element={<TvShowDetail />} />
                         <Route path=":id/:seasonId/episodes/:episodeId/edit" element={<AddTvShowPage />} />
                     </Route>
-                    <Route path="subjects">
+                    <Route path="subjects/*">
                         <Route index element={<SubjectPage />} />
                         <Route path="add" element={<AddSubjectPage />} />
                         <Route path=":id" element={<SubjectDetail />} />
@@ -61,7 +62,7 @@ const rootContainer: ReactNode = (
                         <Route path=":id/lectures/:lectureId" element={<SubjectDetail />} />
                         <Route path=":id/lectures/:lectureId/edit" element={<AddSubjectPage />} />
                     </Route>
-                    <Route path="settings" element={<SettingsPage />} />
+                    <Route path="settings/*" element={<SettingsPage />} />
                 </Route>
             </Routes>
         </HashRouter>

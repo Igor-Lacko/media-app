@@ -34,7 +34,6 @@ export default function SubjectPage() {
 
     const subjectListProps: ListProps = {
         items: data.data?.filter((subject) => subject.title.toLowerCase().includes(search.toLowerCase())) || [],
-        path: "subjects",
         showRating: false,
         showThumbnail: false
     }

@@ -1,6 +1,33 @@
 import Episode from "@shared/interface/models/episode";
-import { SanitizeClientEpisodeToDB } from "adapters/episodes";
+import { DBEpisodeToClient, SanitizeClientEpisodeToDB } from "adapters/episodes";
 import prisma from "db/db";
+
+/**
+ * Fetches a episode by its ID.
+ * @param id Unique identifier of the episode.
+ * @returns Episode object if found, null otherwise.
+ */
+export async function GetEpisodeById(id: number): Promise<Episode | null> {
+    try {
+        const episode = await prisma.episode.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        if (!episode) {
+            console.error(`Episode with ID ${id} not found.`);
+            return null;
+        }
+
+        return DBEpisodeToClient(episode);
+    }
+
+    catch (error) {
+        console.error("Error fetching episode by ID: " + error);
+        return null;
+    }
+}
 
 /**
  * Create a new episode in the database.

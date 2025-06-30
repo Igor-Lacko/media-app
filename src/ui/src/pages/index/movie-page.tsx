@@ -37,7 +37,6 @@ export default function MoviePage() {
     const MovieListProps : ListProps = {
         // Because refreshing the query on every search change is ehhh
         items: data.data?.filter((Movie) => Movie.title.toLowerCase().includes(search.toLowerCase())) || [],
-        path: "movies",
         showRating: true,
         showThumbnail: true
     }

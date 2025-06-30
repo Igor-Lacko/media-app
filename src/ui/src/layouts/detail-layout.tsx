@@ -44,7 +44,6 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         } }) : undefined,
 
         // Mark as favorite
-        hasMarkFavorite: props.hasMarkFavorite,
         onMarkFavorite: props.markFavoriteFunction,
         
         // Rate
@@ -56,10 +55,10 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         onDelete: () => setVisibleModal(VisibleModal.DELETE),
 
         // Set watch status
-        onSetWatchStatus: props.watchStatusFunction ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
+        onSetWatchStatus: props.watchStatus ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
 
         // Set description
-        onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION) : undefined
+        onSetDescription: props.description ? () => setVisibleModal(VisibleModal.DESCRIPTION) : undefined
     }
 
     return (
@@ -98,17 +97,17 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 2. Rate modal */}
-            {visibleModal === VisibleModal.RATE && <SliderModal
+            {visibleModal === VisibleModal.RATE && props.rating !== undefined && <SliderModal
                 title={props.rateTitle || "Rate"}
                 onSelectRating={async (rating: number) => {
                     props.rateFunction && await props.rateFunction(rating);
                     setVisibleModal(VisibleModal.NONE);
                 }}
-                initialRating={props.model.rating}
+                initialRating={props.rating}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 3. Watch status modal */}
-            {visibleModal === VisibleModal.WATCH_STATUS && <EnumModal
+            {visibleModal === VisibleModal.WATCH_STATUS && props.watchStatus && <EnumModal
                 title={"Select Watch Status"}
                 selectOptions={Object.values(WatchStatus).map((status) => {
                     return {
@@ -117,8 +116,8 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                     }
                 })}
                 initialWatchStatus={{
-                    key: watchStatusAdapter(props.model.watchStatus),
-                    value: props.model.watchStatus
+                    key: watchStatusAdapter(props.watchStatus),
+                    value: props.watchStatus
                 }}
                 onSelectWatchStatus={async (watchStatus: WatchStatus) => {
                     props.watchStatusFunction && await props.watchStatusFunction(watchStatus);
@@ -127,9 +126,9 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 4. Set description modal */}
-            {visibleModal === VisibleModal.DESCRIPTION && <TextAreaModal
+            {visibleModal === VisibleModal.DESCRIPTION && props.description && <TextAreaModal
                 title={"Set Description"}
-                initialDescription={props.model.description}
+                initialDescription={props.description}
                 onSetDescription={async (description: string) => {
                     props.setDescriptionFunction && await props.setDescriptionFunction(description);
                     setVisibleModal(VisibleModal.NONE);

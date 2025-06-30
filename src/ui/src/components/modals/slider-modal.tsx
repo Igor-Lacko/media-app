@@ -23,7 +23,7 @@ export default function SliderModal(props : ModalProps) {
                     valueRef.current = v;
                 }}
                 max={10}
-                initial={props.initialRating || 0}
+                initial={props.initialRating !== undefined ? props.initialRating :0}
             />
             <RoundedButton
                 text={"Close"}

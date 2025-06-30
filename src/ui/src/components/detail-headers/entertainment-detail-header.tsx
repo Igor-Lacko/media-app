@@ -63,7 +63,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 className={"flex flex-col py-5 w-4/10 ml-10 items-start overflow-y-auto justify-start h-full space-y-2 text-gray-400"}
             >
                 <p className={"text-md flex h-full w-full text-black wrap-anywhere dark:text-gray-400"}>
-                    {props.model.description || "No description available."}
+                    {props.description || "No description available."}
                 </p>
                 
             </div>
@@ -72,11 +72,11 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 className={"flex flex-col items-center mt-3 ml-10 justify-between py-5 w-2/10 h-full\
                         space-y-5"}
             >
-                {props.model.rating && <HeaderRating
-                    rating={props.model.rating}
+                {props.rating !== undefined && <HeaderRating
+                    rating={props.rating}
                 />}
-                {props.hasWatchStatus && <DetailWatchStatus
-                    watchStatus={props.model.watchStatus}
+                {props.watchStatus !== undefined && <DetailWatchStatus
+                    watchStatus={props.watchStatus}
                 />}
                 {/** TODO alt div if video doesn't exist */}
                 {props.playable && <RoundedButton

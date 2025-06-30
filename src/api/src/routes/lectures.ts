@@ -1,7 +1,19 @@
 import { Router } from "express";
-import { UpdateLecture, DeleteLecture, CreateLecture } from "controllers/lecture-controller";
+import { UpdateLecture, DeleteLecture, CreateLecture, GetLectureById } from "controllers/lecture-controller";
 
 const router = Router();
+
+// Lecture getter
+router.get("/:id", async (req, res) => {
+    const lectureId = parseInt(req.params.id, 10);
+    if (isNaN(lectureId)) {
+        res.status(400).json({ error: "Invalid lecture ID" });
+        return;
+    }
+
+    const lecture = await GetLectureById(lectureId);
+    lecture ? res.json(lecture) : res.status(404).json({ error: "Lecture not found" });
+});
 
 // Creating a new lecture
 router.post("/:id", async (req, res) => {

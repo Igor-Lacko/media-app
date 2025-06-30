@@ -1,7 +1,19 @@
 import { Router } from "express";
-import { CreateSeason, UpdateSeason, DeleteSeason } from "controllers/season-controller";
+import { CreateSeason, UpdateSeason, DeleteSeason, GetSeasonById } from "controllers/season-controller";
 
 const router = Router();
+
+// Season getter
+router.get("/:id", async (req, res) => {
+    const seasonId = parseInt(req.params.id, 10);
+    if (isNaN(seasonId)) {
+        res.status(400).json({ error: "Invalid season ID" });
+        return;
+    }
+
+    const season = await GetSeasonById(seasonId);
+    season ? res.json(season) : res.status(404).json({ error: "Season not found" });
+})
 
 // Create a new season
 router.post("/:id", async (req, res) => {

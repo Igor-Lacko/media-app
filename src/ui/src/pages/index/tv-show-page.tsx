@@ -36,7 +36,6 @@ export default function TvShowPage() {
 
     const tvShowListProps : ListProps = {
         items: data.data?.filter((show) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
-        path: "tv-shows",
         showRating: true,
         showThumbnail: true
     }

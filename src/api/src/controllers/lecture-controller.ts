@@ -1,6 +1,36 @@
 import Lecture from "@shared/interface/models/lecture";
-import { SanitizeClientLectureToDB } from "adapters/lectures";
+import { DBLectureToClient, SanitizeClientLectureToDB } from "adapters/lectures";
 import prisma from "db/db";
+
+/**
+ * Fetches a lecture by its ID.
+ * @param id Unique identifier of the lecture.
+ * @returns Lecture object if found, null otherwise.
+ */
+export async function GetLectureById(id: number): Promise<Lecture | null> {
+    try {
+        const lecture = await prisma.lecture.findUnique({
+            where: {
+                id: id
+            },
+
+            include: {
+                notes: true
+            }
+        });
+        if (!lecture) {
+            console.error(`Lecture with ID ${id} not found.`);
+            return null;
+        }
+
+        return DBLectureToClient(lecture);
+    }
+
+    catch (error) {
+        console.error("Error fetching lecture by ID: " + error);
+        return null;
+    }
+}
 
 /**
  * Create a new lecture for a specific subject.
@@ -50,7 +80,7 @@ export async function CreateLecture(lecture: Lecture, subjectId: number): Promis
  * @param lecture Partial object containing fields to update.
  * @returns True if the update was successful, false otherwise.
  */
-export async function UpdateLecture(id : number, lecture: Partial<Lecture>): Promise<boolean> {
+export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Promise<boolean> {
     console.log("Updating lecture with ID:", id);
 
     try {

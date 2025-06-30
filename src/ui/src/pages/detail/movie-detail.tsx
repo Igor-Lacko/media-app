@@ -7,6 +7,7 @@ import DetailHeaders from "utils/enum/detail-headers";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
 import DeleteData from "data/crud/delete";
+import { useState } from "react";
 
 /**
  * Component for displaying movie details.
@@ -16,6 +17,11 @@ export default function MovieDetail() {
     // Parse movie id
     const movie : Movie | undefined = useFetchById<Movie>("/api/movies")
 
+    // State vars
+    const [description, setDescription] = useState(movie?.description || "No description :((");
+    const [rating, setRating] = useState(movie?.rating || 3.14);
+    const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
+
     // 404, shouldn't happen?
     if(!movie) {
         return <NotFoundPage message="Movie not found"/>
@@ -24,22 +30,30 @@ export default function MovieDetail() {
     const props : DetailProps<Movie> = {
         model: movie,
         title: movie.title!,
+        description: description,
+        rating: rating,
+        watchStatus: watchStatus,
         hasThumbnail: true,
         hasGenres: true,
-        hasDescription: true,
         playable: true,
-        canBeMarkedFavorite: true,
         headerType: DetailHeaders.ENTERTAINMENT,
-        hasWatchStatus: true,
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
-        hasMarkFavorite: true,
         markFavoriteFunction: async () => await MarkAsFavorite<Movie>("/api/movies", movie),
         rateTitle: "Rate Movie",
-        rateFunction: async (rating: number) => await UpdateRating<Movie>("/api/movies", movie, rating),
-        watchStatusFunction: async (watchStatus: WatchStatus) => await UpdateWatchStatus<Movie>("/api/movies", movie, watchStatus),
-        setDescriptionFunction: async (description: string) => await UpdateDescription<Movie>("/api/movies", movie, description)
+        rateFunction: async (rating: number) => {
+            setRating(rating);
+            return await UpdateRating<Movie>("/api/movies", movie, rating)
+        },
+        watchStatusFunction: async (watchStatus: WatchStatus) => {
+            setWatchStatus(watchStatus);
+            return await UpdateWatchStatus<Movie>("/api/movies", movie, watchStatus);
+        },
+        setDescriptionFunction: async (description: string) => {
+            setDescription(description);
+            return await UpdateDescription<Movie>("/api/movies", movie, description)
+        }
     }
 
     return <DetailLayout<Movie> {...props}/>;
