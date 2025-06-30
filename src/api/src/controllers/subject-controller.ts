@@ -4,6 +4,7 @@ import SortKey from "@shared/enum/sort-key";
 import { SortSubjects } from "utils/sort";
 import GetOrderBy from "utils/order-by";
 import { UpdateLecture } from "./lecture-controller";
+import Lecture from "@shared/interface/models/lecture";
 
 /**
  * Gets all subjects matching the given parameters.
@@ -150,8 +151,14 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
             data: {
                 ...subjectData,
 
-                // Already updated, can safely ignore now
-                lectures: undefined,
+                // Delete lectures not present in the update, or ignore if lectures object not passed
+                lectures: subjectData.lectures ? {
+                    deleteMany: {
+                        id: {
+                            notIn: subjectData.lectures.map((lecture : Lecture) => lecture.identifier)
+                        }
+                    }
+                } : undefined,
             }
         });
 

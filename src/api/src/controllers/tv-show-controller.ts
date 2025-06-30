@@ -142,8 +142,14 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
             data: {
                 ...tvShowData,
 
-                // Already updated, can safely ignore now
-                seasons: undefined,
+                // Delete seasons not present in the update, or ignore if seasons object not passed
+                seasons: tvShowData.seasons ? {
+                    deleteMany: {
+                        id: {
+                            notIn: tvShowData.seasons.map((season: Season) => season.identifier)
+                        }
+                    }
+                } : undefined,
 
                 // Simpler than updating genres separately
                 genres: tvShowData.genres ? {

@@ -62,8 +62,14 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
             data: {
                 ...seasonData,
 
-                // Already updated, can safely ignore now
-                episodes: undefined,
+                // Delete episodes that are not in the new list
+                episodes: seasonData.episodes ? {
+                    deleteMany: {
+                        id: {
+                            notIn: seasonData.episodes.map((episode: Episode) => episode.identifier)
+                        }
+                    }
+                } : undefined,
             }
         });
 
