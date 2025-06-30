@@ -36,7 +36,6 @@ export const defaultSubject: Subject = {
 
 export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : Season {
     return {
-        showId: showId,
         seasonNumber: seasonNumber,
         episodes: [],
         description: "",
@@ -45,7 +44,6 @@ export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : S
 
 export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number = -1, seasonId: number = 0) : Episode {
     return {
-        seasonId: seasonId,
         episodeNumber: episodeNumber,
         seasonNumber: seasonNumber,
         title: "",
@@ -56,7 +54,6 @@ export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number 
 
 export function defaultLecture(lectureNumber: number = 1, subjectId: number = 0) : Lecture{
     return {
-        subjectId: subjectId,
         lectureNumber: lectureNumber,
         title: "",
         notes: [],

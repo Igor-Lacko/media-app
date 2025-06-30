@@ -14,7 +14,7 @@ export function SanitizeClientEpisodeToDB (episode : ClientEpisode): Partial<Cli
 }
 
 export function DBEpisodeToClient(episode: Episode): ClientEpisode {
-    const { id, ...data } = episode;
+    const { id, seasonId, ...data } = episode;
     return {
         ...data,
         identifier: id,

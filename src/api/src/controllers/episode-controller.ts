@@ -3,23 +3,63 @@ import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 import prisma from "db/db";
 
 /**
+ * Create a new episode in the database.
+ * @param episode Episode object to create.
+ * @param seasonId Identifier of the season to which the episode belongs.
+ * @returns True if the creation was successful, false otherwise.
+ */
+export async function CreateEpisode(episode: Episode, seasonId: number): Promise<boolean> {
+    const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;
+    try {
+        await prisma.episode.create({
+            data: {
+                ...sanitizedEpisode,
+                season: {
+                    connect: {
+                        id: seasonId
+                    }
+                }
+            }
+        })
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error creating episode: " + error);
+        return false;
+    }
+}
+
+/**
  * Update an episode by its ID. Also called by UpdateSeason() which is called by UpdateTvShow().
  * @param id Episode's unique identifier.
  * @param episodeData Partial object containing fields to update.
+ * @param seasonId Optional identifier of the season to which the episode belongs.
+ * @returns True if successful, false otherwise.
  */
-export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): Promise<boolean> {
-    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode);
+export async function UpdateEpisode(id: number, episodeData: Partial<Episode>, seasonId?: number): Promise<boolean> {
+    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
     // Debug todo remove
     console.log("Updating episode with ID:", id);
     try {
-        await prisma.episode.update({
+        await prisma.episode.upsert({
             where: {
                 id: id
             },
 
             // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
-            data: {
+            update: {
                 ...sanitizedEpisode
+            },
+
+            create: {
+                ...sanitizedEpisode,
+                season: {
+                    connect: {
+                        id: seasonId
+                    }
+                }
             }
         });
 

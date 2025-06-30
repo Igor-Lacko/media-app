@@ -3,9 +3,10 @@ import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
 import { SortSubjects } from "utils/sort";
 import GetOrderBy from "utils/order-by";
-import { UpdateLecture } from "./lecture-controller";
+import { CreateLecture, UpdateLecture } from "./lecture-controller";
 import Lecture from "@shared/interface/models/lecture";
 import { DBSubjectToClient, SanitizeClientSubjectToDB } from "adapters/subjects";
+import { SanitizeClientLectureToDB } from "adapters/lectures";
 
 /**
  * Gets all subjects matching the given parameters.
@@ -85,14 +86,17 @@ export async function InsertSubject(subject: Subject): Promise<boolean> {
             data: {
                 ...sanitizedSubject,
                 lectures: {
-                    create: subject.lectures.map(lecture => ({
-                        ...lecture,
-                        notes: {
-                            create: lecture.notes.map(note => ({
-                                content: note
-                            }))
+                    create: subject.lectures.map((lecture : Lecture) => {
+                        const sanitizedLecture = SanitizeClientLectureToDB(lecture);
+                        return {
+                            ...sanitizedLecture,
+                            notes: {
+                                create: lecture.notes.map((note : string) => ({
+                                    content: note
+                                }))
+                            }
                         }
-                    }))
+                    })
                 }
             }
         });
@@ -120,7 +124,8 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
     // Update lectures first (if provided)
     if(sanitizedSubject.lectures) {
         for (const lecture of sanitizedSubject.lectures) {
-            await UpdateLecture(lecture.identifier, lecture);
+            lecture.identifier ? await UpdateLecture(lecture.identifier, lecture) :
+            await CreateLecture(lecture, id);
         }
     }
 
@@ -138,7 +143,9 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
                 lectures: sanitizedSubject.lectures ? {
                     deleteMany: {
                         id: {
-                            notIn: sanitizedSubject.lectures.map((lecture : Lecture) => lecture.identifier)
+                            notIn: sanitizedSubject.lectures
+                            .filter((lecture: Lecture) => lecture.identifier !== undefined)
+                            .map((lecture : Lecture) => lecture.identifier)
                         }
                     }
                 } : undefined,

@@ -23,8 +23,8 @@ import { defaultEpisode, defaultSeason } from "utils/model-defaults";
 export default function AddSeasonPage({ route } : { route? : any}) {
     // Initial data, either get the tv show id as a param or use a default season
     const location = useLocation();
-    const id = location.state.id || 1;
-    const season : Season = location.state.model || defaultSeason(-1, id);
+    const showId = location.state.id || 1;
+    const season : Season = location.state.model || defaultSeason(-1, showId);
 
     // Constructed season
     const seasonRef = useRef<Season>(season);
@@ -40,7 +40,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             title={season.seasonNumber === -1 ? "Add Season" : "Edit Season"}
             ref={seasonRef}
             submitFunction={/** Doesn't need any validation */
-                season.seasonNumber === -1 ? async (ref: Season) => await CreateData<Season>("api/seasons", ref)
+                season.seasonNumber === -1 ? async (ref: Season) => await CreateData<Season>(`api/seasons/${showId}`, ref)
                     : async (ref: Season) => await UpdateData<Season>("api/seasons", seasonRef.current.identifier!, ref)
             }
             errorModalMessage={"Please fill in all required fields."}

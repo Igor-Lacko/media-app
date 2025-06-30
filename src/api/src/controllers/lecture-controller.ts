@@ -1,5 +1,42 @@
 import Lecture from "@shared/interface/models/lecture";
+import { SanitizeClientLectureToDB } from "adapters/lectures";
 import prisma from "db/db";
+
+/**
+ * Create a new lecture for a specific subject.
+ * @param lecture Lecture object containing details about the lecture.
+ * @param subjectId Identifier of the subject to which the lecture belongs.
+ * @returns True if the creation was successful, false otherwise.
+ */
+export async function CreateLecture(lecture: Lecture, subjectId: number): Promise<boolean> {
+    console.log("Creating new lecture:", lecture);
+    const sanitizedLecture = SanitizeClientLectureToDB(lecture);
+
+    try {
+        await prisma.lecture.create({
+            data: {
+                ...sanitizedLecture,
+                subject: {
+                    connect: {
+                        id: subjectId
+                    }
+                },
+
+                // This will probably always be empty on creation, but just in case?
+                notes: {
+                    create: lecture.notes.map((note) => ({
+                        content: note
+                    }))
+                }
+            }
+        })
+    }
+
+    catch (error) {
+        console.error("Error creating lecture: " + error);
+        return false;
+    }
+}
 
 /**
  * Update a lecture by its ID.

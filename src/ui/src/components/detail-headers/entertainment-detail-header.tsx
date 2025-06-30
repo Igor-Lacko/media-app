@@ -38,10 +38,16 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 <div
                     className={"flex flex-col text-lg items-start justify-end py-5 h-full w-full"}
                 >
+                    {/** Either length or nof seasons/episodes */}
                     {props.playable && props.model.length && <span
                         className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}
                     >
                         {props.model.length} {props.model.length > 1 ? "minutes" : "minute"}
+                    </span>}
+                    {props.model.submediaString && <span
+                        className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}
+                    >
+                        {props.model.submediaString}
                     </span>}
                     {props.hasGenres && (
                         <div className="text-lg text-gray-500 dark:text-gray-400 italic">

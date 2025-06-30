@@ -6,7 +6,7 @@ import { Season } from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
 import { SortTvShows } from "utils/sort";
-import { UpdateSeason } from "./season-controller";
+import { CreateSeason, UpdateSeason } from "./season-controller";
 import { DBTvShowToClient, SanitizeTvShowForDB } from "adapters/tv-shows";
 import { SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
@@ -104,15 +104,6 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
     // Remove unwanted fields
     const sanitized = SanitizeTvShowForDB(tvShowData as TvShow);
 
-    // Update seasons first (if provided)
-    if (tvShowData.seasons) {
-        for (const season of tvShowData.seasons) {
-            console.log("Updating season with season id:", season.identifier);
-            console.log("Season data:", season);
-            await UpdateSeason(season.identifier, season);
-        }
-    }
-
     // Update rest of the show
     try {
         await prisma.show.update({
@@ -127,7 +118,9 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
                 seasons: sanitized.seasons ? {
                     deleteMany: {
                         id: {
-                            notIn: sanitized.seasons.map((season: Season) => season.identifier)
+                            notIn: sanitized.seasons
+                            .filter((season: Season) => season.identifier !== undefined)
+                            .map((season: Season) => season.identifier)
                         }
                     }
                 } : undefined,
@@ -141,6 +134,14 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
                 } : undefined
             }
         })
+
+        // Create/update non-deleted seasons
+        if (tvShowData.seasons) {
+            for (const season of tvShowData.seasons) {
+                season.identifier ? await UpdateSeason(season.identifier, season) :
+                await CreateSeason(season, id);
+            }
+        }
 
         return true;
     }

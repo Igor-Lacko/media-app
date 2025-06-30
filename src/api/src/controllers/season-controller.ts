@@ -1,6 +1,6 @@
 import Season from "@shared/interface/models/season";
 import prisma from "db/db";
-import { UpdateEpisode } from "./episode-controller";
+import { CreateEpisode, UpdateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
 import { SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
@@ -14,14 +14,19 @@ import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 export async function CreateSeason(season: Season, showId: number): Promise<boolean> {
     const sanitizedSeason = SanitizeClientSeasonToDB(season);
     console.log("Creating new season:", season);
+    console.log("Show ID:", showId);
 
     try {
         await prisma.season.create({
             data: {
                 ...sanitizedSeason,
-                showId: showId,
+                show: {
+                    connect: {
+                        id: showId
+                    }
+                },
                 episodes: {
-                    create: season.episodes.map((episode : Episode) => {
+                    create: season.episodes.map((episode: Episode) => {
                         const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;
                         return {
                             ...sanitizedEpisode
@@ -31,6 +36,7 @@ export async function CreateSeason(season: Season, showId: number): Promise<bool
             }
         })
 
+        console.log(`Created season: ${season.title} for show ID: ${showId}`);
         return true;
     }
 
@@ -49,13 +55,6 @@ export async function CreateSeason(season: Season, showId: number): Promise<bool
 export async function UpdateSeason(id: number, seasonData: Partial<Season>): Promise<boolean> {
     const sanitizedSeason = SanitizeClientSeasonToDB(seasonData as Season);
 
-    // Update episodes first (if provided)
-    if (seasonData.episodes) {
-        for (const episode of seasonData.episodes) {
-            await UpdateEpisode(episode.identifier, episode);
-        }
-    }
-
     try {
         await prisma.season.update({
             where: {
@@ -69,12 +68,22 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
                 episodes: sanitizedSeason.episodes ? {
                     deleteMany: {
                         id: {
-                            notIn: sanitizedSeason.episodes.map((episode: Episode) => episode.identifier)
+                            notIn: sanitizedSeason.episodes
+                                .filter((episode: Episode) => episode.identifier !== undefined)
+                                .map((episode: Episode) => episode.identifier)
                         }
                     }
                 } : undefined,
             }
         });
+
+        // Update/create episodes
+        if (seasonData.episodes) {
+            for (const episode of seasonData.episodes) {
+                episode.identifier ? await UpdateEpisode(episode.identifier, episode, id) :
+                    await CreateEpisode(episode, id);
+            }
+        }
 
         return true;
     }

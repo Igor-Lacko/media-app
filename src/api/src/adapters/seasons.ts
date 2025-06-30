@@ -22,10 +22,12 @@ export function SanitizeClientSeasonToDB (season : ClientSeason): ClientSeason {
 }
 
 export function DBSeasonToClient (season: DBSeason): ClientSeason {
-    const { id, ...data } = season;
+    const { id, showId, ...data } = season;
     return {
-        identifier: id,
         ...data,
+        identifier: id,
+        title: `Season ${season.seasonNumber}`,
+        submediaString: `${season.episodes.length} episodes`,
         episodes: season.episodes.map(episode => DBEpisodeToClient(episode)),
     };
 }
