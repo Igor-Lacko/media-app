@@ -38,19 +38,17 @@ router.get("/:id", async (req, res) => {
 // Setter for inserting a TV show
 router.post("/", async (req, res) => {
     const tvShow = req.body;
-    try {
-        const newTvShow = await InsertTvShow(tvShow);
-        res.status(201).json(newTvShow);
-    } 
+    if (await InsertTvShow(tvShow)) {
+        res.status(201).json({ message: "TV show inserted successfully" });
+    }
 
-    catch (error) {
+    else {
         res.status(500).json({ error: "Failed to insert TV show" });
     }
 });
 
 // TV show updates
 router.patch("/:id", async (req, res) => {
-    
     // Parse ID
     const tvShowId = parseInt(req.params.id, 10);
     if (isNaN(tvShowId)) {

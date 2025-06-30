@@ -5,7 +5,7 @@ import WatchStatus from "shared/enum/watch-status";
  */
 export interface CardDisplayable {
     identifier?: number;
-    title: string;
+    title?: string;
     rating?: number;
     thumbnailUrl?: string;
     shortDescription?: string;

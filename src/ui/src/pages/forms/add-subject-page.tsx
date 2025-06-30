@@ -44,7 +44,7 @@ export default function AddSubjectPage({ route } : { route?: any }) {
             >
                 <InputOption
                     title={"Subject name*"}
-                    initial={subjectRef.current.title}
+                    initial={subjectRef.current.title!}
                     onChange={(value) => subjectRef.current.title = value}
                 />
             </FormSection>
@@ -62,7 +62,7 @@ export default function AddSubjectPage({ route } : { route?: any }) {
                     >
                         <InputOption
                             title={"Lecture name*"}
-                            initial={lecture.title}
+                            initial={lecture.title!}
                             onChange={(value) => lecture.title = value}
                         />
                         <FileBrowseOption

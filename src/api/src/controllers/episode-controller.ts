@@ -22,7 +22,6 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
                 rating: episodeData.rating || undefined,
                 shortDescription: episodeData.shortDescription || undefined,
                 videoUrl: episodeData.videoUrl || undefined,
-                thumbnailUrl: episodeData.thumbnailUrl || undefined,
                 length: episodeData.length || undefined
             }
         });

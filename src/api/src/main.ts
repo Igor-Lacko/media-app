@@ -5,6 +5,9 @@ import MovieRouter from "routes/movies";
 import SettingsRouter from "routes/settings";
 import TvShowRouter from "routes/tv-shows";
 import SubjectsRouter from "routes/subjects";
+import SeasonsRouter from "routes/seasons";
+import EpisodesRouter from "routes/episodes";
+import LecturesRouter from "routes/lectures";
 import { NukeDatabase } from "controllers/settings-controller";
 import seedData from "utils/insert-mock-data";
 import { GetMovies } from "controllers/movie-controller";
@@ -23,6 +26,9 @@ viteNodeApp.use("/api/movies", MovieRouter);
 viteNodeApp.use("/api/settings", SettingsRouter);
 viteNodeApp.use("/api/shows", TvShowRouter);
 viteNodeApp.use("/api/subjects", SubjectsRouter);
+viteNodeApp.use("/api/seasons", SeasonsRouter);
+viteNodeApp.use("/api/episodes", EpisodesRouter);
+viteNodeApp.use("/api/lectures", LecturesRouter);
 
 // TODO remove
 (async () => {

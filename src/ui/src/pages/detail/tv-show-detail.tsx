@@ -21,7 +21,7 @@ export default function TvShowDetail() {
     const props : DetailProps<TvShow> = {
         model: tvShow,
         submedia: tvShow.seasons,
-        title: tvShow.title,
+        title: tvShow.title!,
         hasThumbnail: true,
         hasGenres: true,
         hasDescription: true,

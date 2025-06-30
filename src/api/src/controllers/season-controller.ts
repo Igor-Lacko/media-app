@@ -15,6 +15,7 @@ export async function CreateSeason(season: Season): Promise<boolean> {
         await prisma.season.create({
             data: {
                 ...season,
+                showId: season.showId,
                 episodes: {
                     create: season.episodes.map((episode : Episode) => ({
                         episodeNumber: episode.episodeNumber,
@@ -28,6 +29,8 @@ export async function CreateSeason(season: Season): Promise<boolean> {
                 }
             }
         })
+
+        return true;
     }
 
     catch (error) {

@@ -73,7 +73,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
                     >
                         <InputOption
                             title={"Episode Title *"}
-                            initial={episode.title}
+                            initial={episode.title!}
                             onChange={(value) => episode.title = value}
                         />
                         <TextAreaOption
@@ -88,11 +88,6 @@ export default function AddSeasonPage({ route } : { route? : any}) {
                                 initial: episode.rating || 0,
                                 max: 10,
                             }}
-                        />
-                        <FileBrowseOption
-                            title={"Episode Thumbnail"}
-                            initial={episode.thumbnailUrl || ""}
-                            onChange={(value) => episode.thumbnailUrl = value}
                         />
                         <FileBrowseOption
                             title={"Episode Video File"}

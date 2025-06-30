@@ -49,7 +49,7 @@ export default function AddMoviePage({ route } : { route?: any }) {
             >
                 <InputOption
                     title={"Title *"}
-                    initial={movieRef.current.title}
+                    initial={movieRef.current.title!}
                     onChange={(value) => movieRef.current.title = value}
                 />
                 <TextAreaOption

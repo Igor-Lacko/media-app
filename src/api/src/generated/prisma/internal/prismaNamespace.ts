@@ -1186,7 +1186,6 @@ export const EpisodeScalarFieldEnum = {
   rating: 'rating',
   shortDescription: 'shortDescription',
   videoUrl: 'videoUrl',
-  thumbnailUrl: 'thumbnailUrl',
   length: 'length',
   continueAt: 'continueAt',
   watchStatus: 'watchStatus'
@@ -1197,8 +1196,7 @@ export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeo
 
 export const SubjectScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  thumbnailUrl: 'thumbnailUrl'
+  title: 'title'
 } as const
 
 export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeof SubjectScalarFieldEnum]

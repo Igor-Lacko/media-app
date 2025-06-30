@@ -96,7 +96,6 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
             seasons: tvShow.seasons.map((season): Season => (
                 {
                     ...season,
-                    title: `Season ${season.seasonNumber}`,
                     identifier: season.id,
                     episodes: season.episodes.map((episode) : Episode => (
                         {

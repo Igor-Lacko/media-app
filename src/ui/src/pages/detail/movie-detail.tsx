@@ -23,7 +23,7 @@ export default function MovieDetail() {
 
     const props : DetailProps<Movie> = {
         model: movie,
-        title: movie.title,
+        title: movie.title!,
         hasThumbnail: true,
         hasGenres: true,
         hasDescription: true,

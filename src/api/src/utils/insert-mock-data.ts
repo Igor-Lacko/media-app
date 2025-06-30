@@ -21,6 +21,7 @@ export default async function seedData() {
             length: 148,
             watchStatus: WatchStatus.WATCHED,
             continueAt: 0,
+            isFavorite: true,
         },
         {
             title: "The Matrix",
@@ -32,6 +33,7 @@ export default async function seedData() {
             length: 136,
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,
+            isFavorite: false,
         },
         {
             title: "Interstellar",
@@ -43,6 +45,7 @@ export default async function seedData() {
             length: 169,
             watchStatus: WatchStatus.UNWATCHED,
             continueAt: 0,
+            isFavorite: false,
         },
     ];
 

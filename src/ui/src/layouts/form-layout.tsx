@@ -16,8 +16,9 @@ export default function FormLayout<T>(props: FormProps<T>) {
 
     // Submission
     const onSubmit = async () => {
-        console.log("Submitting form");
-        await props.submitFunction(props.ref.current) ? setSuccess(true) : setError(true);
+        const result = await props.submitFunction(props.ref.current);
+        result ? setSuccess(true) : setError(true);
+        console.log("Form submitted with result:", result);
     };
 
     return (
