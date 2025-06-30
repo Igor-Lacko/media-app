@@ -5,6 +5,7 @@ import { SortSubjects } from "utils/sort";
 import GetOrderBy from "utils/order-by";
 import { UpdateLecture } from "./lecture-controller";
 import Lecture from "@shared/interface/models/lecture";
+import { DBSubjectToClient, SanitizeClientSubjectToDB } from "adapters/subjects";
 
 /**
  * Gets all subjects matching the given parameters.
@@ -26,18 +27,7 @@ export async function GetSubjects(key: SortKey) : Promise<Subject[]> {
         });
 
         return SortSubjects(
-            subjects.map(
-                (subject): Subject => ({
-                    ...subject,
-                    identifier: subject.id,
-                    submediaString: `${subject.lectures.length} lectures`,
-                    lectures: subject.lectures.map(lecture => ({
-                        ...lecture,
-                        identifier: lecture.id,
-                        notes: lecture.notes.map(note => note.content)
-                    }))
-                })
-            ),
+            subjects.map(subject => DBSubjectToClient(subject)),
             key
         );
     }
@@ -74,16 +64,7 @@ export async function GetSubjectById(id: number): Promise<Subject | null> {
         }
 
         // Map lectures and notes
-        return {
-            ...subject,
-            identifier: subject.id,
-            submediaString: `${subject.lectures.length} lectures`,
-            lectures: subject.lectures.map(lecture => ({
-                ...lecture,
-                identifier: lecture.id,
-                notes: lecture.notes.map(note => note.content)
-            }))
-        };
+        return DBSubjectToClient(subject);
     }
 
     catch (error) {
@@ -98,10 +79,11 @@ export async function GetSubjectById(id: number): Promise<Subject | null> {
  * @returns Subject object if successful, null otherwise.
  */
 export async function InsertSubject(subject: Subject): Promise<boolean> {
+    const sanitizedSubject = SanitizeClientSubjectToDB(subject);
     try {
         await prisma.subject.create({
             data: {
-                ...subject,
+                ...sanitizedSubject,
                 lectures: {
                     create: subject.lectures.map(lecture => ({
                         ...lecture,
@@ -132,11 +114,12 @@ export async function InsertSubject(subject: Subject): Promise<boolean> {
  * @returns True if the update was successful, false otherwise.
  */
 export async function UpdateSubject(id: number, subjectData: Partial<Subject>): Promise<boolean>  {
+    const sanitizedSubject = SanitizeClientSubjectToDB(subjectData as Subject);
     console.log("Updating subject with ID:", id);
 
     // Update lectures first (if provided)
-    if(subjectData.lectures) {
-        for (const lecture of subjectData.lectures) {
+    if(sanitizedSubject.lectures) {
+        for (const lecture of sanitizedSubject.lectures) {
             await UpdateLecture(lecture.identifier, lecture);
         }
     }
@@ -149,13 +132,13 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
             },
 
             data: {
-                ...subjectData,
+                ...sanitizedSubject,
 
                 // Delete lectures not present in the update, or ignore if lectures object not passed
-                lectures: subjectData.lectures ? {
+                lectures: sanitizedSubject.lectures ? {
                     deleteMany: {
                         id: {
-                            notIn: subjectData.lectures.map((lecture : Lecture) => lecture.identifier)
+                            notIn: sanitizedSubject.lectures.map((lecture : Lecture) => lecture.identifier)
                         }
                     }
                 } : undefined,

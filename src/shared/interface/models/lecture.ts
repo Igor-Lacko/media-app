@@ -6,7 +6,6 @@ import DetailFillable from "../detail-fillable";
  */
 export interface Lecture extends DetailFillable {
     title: string;
-    subjectId: number;
     lectureNumber: number;
     watchStatus: WatchStatus;
     notes: string[];

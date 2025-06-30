@@ -2,6 +2,7 @@ import prisma from "db/db";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
 import { Movie } from "@shared/interface/models/movie";
+import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
 
 
 /**
@@ -36,11 +37,7 @@ export async function GetMovies(
 
         // Map DB objects to movie interface for easier FE genre access
         return movies.map(
-            (movie): Movie => ({
-                ...movie,
-                identifier: movie.id,
-                genres: movie.genres.map((genre): Genre => genre.genre),
-            })
+            (movie): Movie => DBMovieToClient(movie)
         );
     } catch (error) {
         console.error("Error fetching movies: " + error);
@@ -71,11 +68,7 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
         }
 
         // Construct shared movie object
-        return {
-            ...movie,
-            identifier: movie.id,
-            genres: movie.genres.map((genre): Genre => genre.genre)
-        };
+        return DBMovieToClient(movie);
     }
 
     catch (error) {
@@ -91,7 +84,7 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
  * @returns True if successful, false otherwise.
  */
 export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<boolean> {
-    console.log("Updating movie: ", movie);
+    const sanitizedMovie = SanitizeClientMovieToDB(movie as Movie);
     try {
         await prisma.movie.update({
             where: {
@@ -100,7 +93,7 @@ export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<bo
 
             // If genres are to be updated delete all existing genres and create new ones
             data: {
-                ...movie,
+                ...sanitizedMovie,
                 genres: movie.genres ? {
                     deleteMany: {},
                     create: movie.genres.map((genre: Genre) => ({
@@ -125,11 +118,11 @@ export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<bo
  * @returns True if successful, false otherwise.
  */
 export async function InsertMovie(movie: Movie): Promise<boolean> {
-    console.log("Inserting movie: ", movie);
+    const sanitizedMovie = SanitizeClientMovieToDB(movie as Movie);
     try {
         await prisma.movie.create({
             data: {
-                ...movie,
+                ...sanitizedMovie,
                 genres: {
                     create: movie.genres.map((genre: Genre) => ({
                         genre: genre

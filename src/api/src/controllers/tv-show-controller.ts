@@ -7,6 +7,9 @@ import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
 import { SortTvShows } from "utils/sort";
 import { UpdateSeason } from "./season-controller";
+import { DBTvShowToClient, SanitizeTvShowForDB } from "adapters/tv-shows";
+import { SanitizeClientSeasonToDB } from "adapters/seasons";
+import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -44,13 +47,7 @@ export async function GetTvShows(
 
         return SortTvShows(
             tvShows.map(
-                (show): TvShow => ({
-                    ...show,
-                    identifier: show.id,
-                    genres: show.genres.map((genre): Genre => genre.genre),
-                    seasons: [], // Since we are just displaying on a card?
-                    submediaString: `${show.seasons.length} seasons`,
-                })
+                (show): TvShow => DBTvShowToClient(show)
             ),
             key
         );
@@ -88,24 +85,7 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
         }
 
         // Construct shared TV show object, map seasons/episodes
-        return {
-            ...tvShow,
-            identifier: tvShow.id,
-            genres: tvShow.genres.map((genre): Genre => genre.genre),
-            submediaString: `${tvShow.seasons.length} seasons`,
-            seasons: tvShow.seasons.map((season): Season => (
-                {
-                    ...season,
-                    identifier: season.id,
-                    episodes: season.episodes.map((episode) : Episode => (
-                        {
-                            seasonNumber: season.seasonNumber,
-                            ...episode
-                        }
-                    ))
-                }
-            ))
-        };
+        return DBTvShowToClient(tvShow);
     }
 
     catch (error){
@@ -121,8 +101,8 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
  * @returns True if successful, false otherwise.
  */
 export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Promise<boolean> {
-    // Debug todo remove
-    console.log("Updating TV show with ID:", id);
+    // Remove unwanted fields
+    const sanitized = SanitizeTvShowForDB(tvShowData as TvShow);
 
     // Update seasons first (if provided)
     if (tvShowData.seasons) {
@@ -139,21 +119,21 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
             },
 
             data: {
-                ...tvShowData,
+                ...sanitized,
 
                 // Delete seasons not present in the update, or ignore if seasons object not passed
-                seasons: tvShowData.seasons ? {
+                seasons: sanitized.seasons ? {
                     deleteMany: {
                         id: {
-                            notIn: tvShowData.seasons.map((season: Season) => season.identifier)
+                            notIn: sanitized.seasons.map((season: Season) => season.identifier)
                         }
                     }
                 } : undefined,
 
                 // Simpler than updating genres separately
-                genres: tvShowData.genres ? {
+                genres: sanitized.genres ? {
                     deleteMany: {},
-                    create: tvShowData.genres.map((genre : Genre) => ({
+                    create: sanitized.genres.map((genre : Genre) => ({
                             genre: genre,
                     }))
                 } : undefined
@@ -175,26 +155,26 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
  * @returns TvShow object if successful, null otherwise.
  */
 export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
+    const sanitizedTvShow = SanitizeTvShowForDB(tvShow);
     try {
         await prisma.show.create({
             data: {
-                ...tvShow,
+                ...sanitizedTvShow,
                 seasons: {
-                    create: tvShow.seasons.map((season: Season) => ({
-                        ...season,
-                        episodes: {
-                            create: season.episodes.map((episode: Episode) => ({
-                                // Can't do ...episode due to seasonNumber
-                                episodeNumber: episode.episodeNumber,
-                                title: episode.title,
-                                rating: episode.rating,
-                                shortDescription: episode.shortDescription,
-                                videoUrl: episode.videoUrl,
-                                thumbnailUrl: episode.thumbnailUrl,
-                                length: episode.length
-                            })),
-                        },
-                    })),
+                    create: tvShow.seasons.map((season : Season) => {
+                        const sanitizedSeason = SanitizeClientSeasonToDB(season);
+                        return {
+                            ...sanitizedSeason,
+                            episodes: {
+                                create: season.episodes.map((episode: Episode) => {
+                                    const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;;
+                                    return {
+                                        ...sanitizedEpisode,
+                                    };
+                                })
+                            }
+                        }
+                    }),
                 },
 
                 genres: {

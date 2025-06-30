@@ -6,7 +6,6 @@ import CardDisplayable from "../card-displayable";
  */
 export interface Episode extends CardDisplayable {
     title: string;
-    seasonId: number;
     seasonNumber: number;
     episodeNumber: number;
     videoUrl?: string;

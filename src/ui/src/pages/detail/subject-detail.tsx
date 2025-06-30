@@ -18,7 +18,7 @@ export default function SubjectDetail() {
     const props : DetailProps<Subject> = {
         model: subject,
         submedia: subject.lectures,
-        title: subject.title,
+        title: subject.title!,
         hasThumbnail: false,
         hasGenres: false,
         hasDescription: false,

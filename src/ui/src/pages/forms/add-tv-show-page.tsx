@@ -19,7 +19,6 @@ import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import { useLocation } from "react-router-dom";
-import UpdateData from "data/crud/update";
 
 /**
  * Form page for adding a new TV show.
@@ -29,7 +28,7 @@ import UpdateData from "data/crud/update";
 export default function AddTvShowPage({ route } : { route?: any }) {
     // Get TV show or use a blank one
     const location = useLocation();
-    const tvshow = location.state || defaultTvShow;
+    const tvshow = location.state.model || defaultTvShow;
 
     // Constructed TV show
     const tvShowRef = useRef<TvShow>(tvshow);

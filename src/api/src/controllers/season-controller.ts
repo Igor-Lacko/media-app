@@ -2,30 +2,31 @@ import Season from "@shared/interface/models/season";
 import prisma from "db/db";
 import { UpdateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
+import { SanitizeClientSeasonToDB } from "adapters/seasons";
+import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 
 /**
  * Create a new season in the database.
  * @param season Season object to create.
+ * @param showId Identifier of the show to which the season belongs.
  * @returns True if the creation was successful, false otherwise.
  */
-export async function CreateSeason(season: Season): Promise<boolean> {
+export async function CreateSeason(season: Season, showId: number): Promise<boolean> {
+    const sanitizedSeason = SanitizeClientSeasonToDB(season);
     console.log("Creating new season:", season);
 
     try {
         await prisma.season.create({
             data: {
-                ...season,
-                showId: season.showId,
+                ...sanitizedSeason,
+                showId: showId,
                 episodes: {
-                    create: season.episodes.map((episode : Episode) => ({
-                        episodeNumber: episode.episodeNumber,
-                        title: episode.title,
-                        rating: episode.rating,
-                        shortDescription: episode.shortDescription,
-                        videoUrl: episode.videoUrl,
-                        thumbnailUrl: episode.thumbnailUrl,
-                        length: episode.length
-                    }))
+                    create: season.episodes.map((episode : Episode) => {
+                        const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;
+                        return {
+                            ...sanitizedEpisode
+                        }
+                    })
                 }
             }
         })
@@ -46,8 +47,7 @@ export async function CreateSeason(season: Season): Promise<boolean> {
  * @returns Updated Season object if successful, null otherwise.
  */
 export async function UpdateSeason(id: number, seasonData: Partial<Season>): Promise<boolean> {
-    // Debug todo remove
-    console.log("Updating season with ID:", id);
+    const sanitizedSeason = SanitizeClientSeasonToDB(seasonData as Season);
 
     // Update episodes first (if provided)
     if (seasonData.episodes) {
@@ -63,13 +63,13 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
             },
 
             data: {
-                ...seasonData,
+                ...sanitizedSeason,
 
                 // Delete episodes that are not in the new list
-                episodes: seasonData.episodes ? {
+                episodes: sanitizedSeason.episodes ? {
                     deleteMany: {
                         id: {
-                            notIn: seasonData.episodes.map((episode: Episode) => episode.identifier)
+                            notIn: sanitizedSeason.episodes.map((episode: Episode) => episode.identifier)
                         }
                     }
                 } : undefined,

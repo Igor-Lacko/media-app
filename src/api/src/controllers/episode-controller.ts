@@ -1,4 +1,5 @@
 import Episode from "@shared/interface/models/episode";
+import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 import prisma from "db/db";
 
 /**
@@ -7,6 +8,7 @@ import prisma from "db/db";
  * @param episodeData Partial object containing fields to update.
  */
 export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): Promise<boolean> {
+    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode);
     // Debug todo remove
     console.log("Updating episode with ID:", id);
     try {
@@ -17,12 +19,7 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
 
             // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
             data: {
-                episodeNumber: episodeData.episodeNumber || undefined,
-                title: episodeData.title || undefined,
-                rating: episodeData.rating || undefined,
-                shortDescription: episodeData.shortDescription || undefined,
-                videoUrl: episodeData.videoUrl || undefined,
-                length: episodeData.length || undefined
+                ...sanitizedEpisode
             }
         });
 
