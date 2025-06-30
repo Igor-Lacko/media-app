@@ -13,6 +13,7 @@ import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
 import { useLocation } from "react-router-dom";
 import UpdateData from "data/crud/update";
+import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
 
 /**
  * Form page for adding a new subject.
@@ -22,13 +23,14 @@ import UpdateData from "data/crud/update";
 export default function AddSubjectPage({ route } : { route?: any }) {
     // Get param subject or use a blank one
     const location = useLocation();
-    const subject = location.state || defaultSubject;
+    const subject = location.state.model || defaultSubject;
 
     // Constructed subject
     const subjectRef = useRef<Subject>(subject);
 
     // To re-render on each add
     const [lectures, setLectures] = useState(subjectRef.current.lectures);
+    const counterRef = useRef(lectures.length + 1);
 
     return (
         <FormLayout
@@ -53,11 +55,11 @@ export default function AddSubjectPage({ route } : { route?: any }) {
             >
                 <AddOption
                     buttonText={"New Lecture"}
-                    onChange={() => setLectures([...lectures, defaultLecture()])}
+                    onChange={() => {setLectures([...lectures, defaultLecture(counterRef.current++)])}}
                 />
                 {lectures.map((lecture, index) => (
                     <FormSection
-                        key={index}
+                        key={lecture.lectureNumber}
                         title={`Lecture ${index + 1}`}
                     >
                         <InputOption
@@ -72,7 +74,12 @@ export default function AddSubjectPage({ route } : { route?: any }) {
                         />
                         <RemoveOption
                             buttonText={"Remove Lecture"}
-                            onChange={() => {setLectures(lectures.filter((_, i) => i !== index))}}
+                            onChange={() => RemoveLectureFilter(
+                                lecture,
+                                lectures,
+                                setLectures,
+                                counterRef
+                            )}
                         />
                     </FormSection>
                 ))}

@@ -12,11 +12,9 @@ import UpdateData from "data/crud/update";
 export default async function SubmitMovie(movie: Movie, updating: boolean, id: number = 0): Promise<boolean> {
     // These have to exist
     if (movie.title === "" || movie.genres!.length === 1) {
-        console.log(movie);
         return false;
     }
 
-    console.log("Submitting movie:", movie);
     // Create/update and return
     try {
         if (updating) {

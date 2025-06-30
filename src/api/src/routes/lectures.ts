@@ -1,7 +1,25 @@
 import { Router } from "express";
-import { UpdateLecture, DeleteLecture } from "controllers/lecture-controller";
+import { UpdateLecture, DeleteLecture, CreateLecture } from "controllers/lecture-controller";
 
 const router = Router();
+
+// Creating a new lecture
+router.post("/:id", async (req, res) => {
+    const subjectId = parseInt(req.params.id, 10);
+    if (isNaN(subjectId)) {
+        res.status(400).json({ error: "Invalid subject ID" });
+        return;
+    }
+
+    const lecture = req.body;
+    if (await CreateLecture(lecture, subjectId)) {
+        res.status(201).json({ message: "Lecture created successfully" });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to create lecture" });
+    }
+});
 
 // Lecture updates
 router.patch("/:id", async (req, res) => {

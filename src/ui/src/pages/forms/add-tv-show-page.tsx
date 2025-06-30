@@ -19,6 +19,8 @@ import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import { useLocation } from "react-router-dom";
+import RemoveEpisodeFilter from "utils/filters/remove-episode-filter";
+import RemoveSeasonFilter from "utils/filters/remove-season-filter";
 
 /**
  * Form page for adding a new TV show.
@@ -38,6 +40,8 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     const [episodes, setEpisodes] = useState<Episode[]>(tvShowRef.current.seasons
         .flatMap(season => season.episodes)
     );
+    const episodeCounterRef = useRef(episodes.length + 1);
+    const seasonCounterRef = useRef(seasons.length + 1);
 
     // Props
     const genreDropdownProps = useGenreDropdown(tvShowRef);
@@ -83,12 +87,12 @@ export default function AddTvShowPage({ route } : { route?: any }) {
             >
                 <AddOption
                     buttonText={"New Season"}
-                    onChange={() => {setSeasons([...seasons, defaultSeason()])}}
+                    onChange={() => {setSeasons([...seasons, defaultSeason(seasonCounterRef.current++)])}}
                 />
                 {/** Nested once for seasons */}
                 {seasons.map((season, index) => (
                     <FormSection
-                        key={index}
+                        key={season.seasonNumber}
                         title={`Season ${index + 1}`}
                     >
                         <TextAreaOption
@@ -107,18 +111,14 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                         />
                         <RemoveOption
                             buttonText={"Remove Season"}
-                            onChange={() => {
-                                // Remove this season and it's episodes and decrement season numbers of all episodes after this one
-                                setSeasons(seasons.filter((_, i) => i !== index));
-                                setEpisodes(
-                                    episodes.filter(episode => episode.seasonNumber !== index + 1)
-                                    .map(
-                                        episode => episode.seasonNumber > index + 1 ?
-                                        {...episode, seasonNumber: episode.seasonNumber - 1} :
-                                        episode
-                                    )
-                                );
-                            }}
+                            onChange={() => RemoveSeasonFilter(
+                                season,
+                                seasons,
+                                setSeasons,
+                                episodes,
+                                setEpisodes,
+                                seasonCounterRef
+                            )}
                         />
                         <FormSection
                             title={"Episodes"}
@@ -126,13 +126,13 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                         >
                             <AddOption
                                 buttonText={"New Episode"}
-                                onChange={() => {setEpisodes([...episodes, defaultEpisode(1, index + 1)])}}
+                                onChange={() => {setEpisodes([...episodes, defaultEpisode(episodeCounterRef.current++, season.seasonNumber)])}}
                             />
                             {/** Nested again for episodes */}
-                            {episodes.filter(episode => episode.seasonNumber === index + 1).map((episode, episodeIndex) => (
+                            {episodes.filter(episode => episode.seasonNumber === season.seasonNumber).map((episode, episodeIndex) => (
                                 <FormSection
-                                    key={episodeIndex}
-                                    title={`Episode ${episode.seasonNumber}.${episodeIndex + 1}`}
+                                    key={episode.episodeNumber}
+                                    title={`Episode ${index + 1}.${episodeIndex + 1}`}
                                 >
                                     <InputOption
                                         title={"Episode Title*"}
@@ -159,7 +159,12 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                                     />
                                     <RemoveOption
                                         buttonText={"Remove Episode"}
-                                        onChange={() => {setEpisodes(episodes.filter((_, i) => i !== episodeIndex))}}
+                                        onChange={() => RemoveEpisodeFilter(
+                                            episode,
+                                            episodes,
+                                            setEpisodes,
+                                            episodeCounterRef
+                                        )}
                                     />
                                 </FormSection>
                             ))}
