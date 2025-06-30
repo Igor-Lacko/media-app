@@ -12,7 +12,6 @@ import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
 import { useLocation } from "react-router-dom";
-import UpdateData from "data/crud/update";
 import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
 
 /**
@@ -78,7 +77,6 @@ export default function AddSubjectPage({ route } : { route?: any }) {
                                 lecture,
                                 lectures,
                                 setLectures,
-                                counterRef
                             )}
                         />
                     </FormSection>

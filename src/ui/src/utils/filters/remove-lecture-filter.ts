@@ -10,16 +10,9 @@ export default function RemoveLectureFilter(
     removed: Lecture,
     lectures: Lecture[],
     setLectures: (lectures: Lecture[]) => void,
-    counterRef: React.RefObject<number>
 ) {
     const updatedLectures = lectures
     .filter((lecture) => lecture.lectureNumber !== removed.lectureNumber)
-    .map((lecture) => ({
-        ...lecture,
-        lectureNumber: counterRef.current++
-    }));
-
-    console.log("Updated lectures:", updatedLectures);
 
     setLectures(updatedLectures);
 }

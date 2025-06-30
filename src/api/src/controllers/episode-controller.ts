@@ -14,6 +14,11 @@ export async function CreateEpisode(episode: Episode, seasonId: number): Promise
         await prisma.episode.create({
             data: {
                 ...sanitizedEpisode,
+                episodeNumber: episode.episodeNumber === -1 ? await prisma.episode.count({
+                    where: {
+                        seasonId: seasonId
+                    }
+                }) + 1 : episode.episodeNumber,
                 season: {
                     connect: {
                         id: seasonId

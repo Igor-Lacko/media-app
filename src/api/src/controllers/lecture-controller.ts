@@ -16,6 +16,12 @@ export async function CreateLecture(lecture: Lecture, subjectId: number): Promis
         await prisma.lecture.create({
             data: {
                 ...sanitizedLecture,
+                lectureNumber: lecture.lectureNumber === -1 ? await prisma.lecture.count({
+                    where: {
+                        subjectId: subjectId
+                    }
+                }) + 1 : lecture.lectureNumber,
+
                 subject: {
                     connect: {
                         id: subjectId

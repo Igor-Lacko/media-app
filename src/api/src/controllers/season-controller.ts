@@ -25,6 +25,11 @@ export async function CreateSeason(season: Season, showId: number): Promise<bool
                         id: showId
                     }
                 },
+                seasonNumber: season.seasonNumber === -1 ? await prisma.season.count({
+                    where: {
+                        showId: showId
+                    }
+                }) + 1 : season.seasonNumber,
                 episodes: {
                     create: season.episodes.map((episode: Episode) => {
                         const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;

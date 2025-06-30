@@ -9,10 +9,12 @@ import SliderOption from "components/options/slider-option";
 import TextAreaOption from "components/options/text-area-option";
 import { CreateData } from "data/crud/create";
 import UpdateData from "data/crud/update";
+import SubmitSeason from "data/submit-handlers/season-submit";
 import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
 import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { RemoveEpisodeFromSeasonFilter } from "utils/filters/remove-episode-filter";
 import { defaultEpisode, defaultSeason } from "utils/model-defaults";
 
 /**
@@ -31,6 +33,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
 
     // State episodes to re-render on each add
     const [episodes, setEpisodes] = useState<Episode[]>(seasonRef.current.episodes);
+    const counterRef = useRef(episodes.length + 1);
 
     // Slider props
     const ratingSliderProps = useRatingSlider(seasonRef);
@@ -40,8 +43,8 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             title={season.seasonNumber === -1 ? "Add Season" : "Edit Season"}
             ref={seasonRef}
             submitFunction={/** Doesn't need any validation */
-                season.seasonNumber === -1 ? async (ref: Season) => await CreateData<Season>(`api/seasons/${showId}`, ref)
-                    : async (ref: Season) => await UpdateData<Season>("api/seasons", seasonRef.current.identifier!, ref)
+                season.seasonNumber === -1 ? async (season: Season) => await SubmitSeason(season, false, showId) :
+                async (season: Season) => await SubmitSeason(season, true)
             }
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={season.seasonNumber === -1 ? "Season added successfully." : "Season updated successfully."}
@@ -64,11 +67,11 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             >
                 <AddOption
                     buttonText={"New Episode"}
-                    onChange={() => {setEpisodes([...episodes, defaultEpisode(-1, seasonRef.current.seasonNumber, seasonRef.current.identifier || 0)])}}
+                    onChange={() => {setEpisodes([...episodes, defaultEpisode(counterRef.current++)])}}
                 />
                 {episodes.map((episode, index) => (
                     <FormSection
-                        key={index}
+                        key={episode.episodeNumber}
                         title={`Episode ${index + 1}`}
                     >
                         <InputOption
@@ -96,7 +99,11 @@ export default function AddSeasonPage({ route } : { route? : any}) {
                         />
                         <RemoveOption
                             buttonText={"Remove Episode"}
-                            onChange={() => {setEpisodes(episodes.filter((_, i) => i !== index))}}
+                            onChange={() => RemoveEpisodeFromSeasonFilter(
+                                episode,
+                                episodes,
+                                setEpisodes
+                            )}
                         />
                     </FormSection>
                 ))}

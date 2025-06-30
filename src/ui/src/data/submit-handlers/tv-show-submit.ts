@@ -51,7 +51,9 @@ export default async function TvShowSubmitHandler(
         }
 
         return true;
-    } catch (error) {
+    } 
+
+    catch (error) {
         console.error("Error submitting TV show:", error);
         return false;
     }

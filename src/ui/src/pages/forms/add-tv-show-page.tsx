@@ -19,7 +19,7 @@ import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import { useLocation } from "react-router-dom";
-import RemoveEpisodeFilter from "utils/filters/remove-episode-filter";
+import { RemoveEpisodeFromShowFilter } from "utils/filters/remove-episode-filter";
 import RemoveSeasonFilter from "utils/filters/remove-season-filter";
 
 /**
@@ -117,7 +117,6 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                                 setSeasons,
                                 episodes,
                                 setEpisodes,
-                                seasonCounterRef
                             )}
                         />
                         <FormSection
@@ -159,11 +158,10 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                                     />
                                     <RemoveOption
                                         buttonText={"Remove Episode"}
-                                        onChange={() => RemoveEpisodeFilter(
+                                        onChange={() => RemoveEpisodeFromShowFilter(
                                             episode,
                                             episodes,
                                             setEpisodes,
-                                            episodeCounterRef
                                         )}
                                     />
                                 </FormSection>
