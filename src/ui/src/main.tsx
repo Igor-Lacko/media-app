@@ -19,6 +19,7 @@ import AddSubjectPage from 'pages/forms/add-subject-page';
 import MovieDetail from 'pages/detail/movie-detail';
 import TvShowDetail from 'pages/detail/tv-show-detail';
 import SubjectDetail from 'pages/detail/subject-detail';
+import AddSeasonPage from 'pages/forms/add-season-page';
 
 // React-query
 const queryClient = new QueryClient();
@@ -43,7 +44,7 @@ const rootContainer: ReactNode = (
                         <Route path="add" element={<AddTvShowPage />} />
                         <Route path=":id" element={<TvShowDetail />} />
                         <Route path=":id/edit" element={<AddTvShowPage />} />
-                        <Route path=":id/add-season" element={<AddTvShowPage />} />
+                        <Route path=":id/add" element={<AddSeasonPage />} />
                         <Route path=":id/:seasonId" element={<TvShowDetail />} />
                         <Route path=":id/:seasonId/edit" element={<AddTvShowPage />} />
                         <Route path=":id/:seasonId/add-episode" element={<AddTvShowPage />} />
@@ -55,7 +56,7 @@ const rootContainer: ReactNode = (
                         <Route path="add" element={<AddSubjectPage />} />
                         <Route path=":id" element={<SubjectDetail />} />
                         <Route path=":id/edit" element={<AddSubjectPage />} />
-                        <Route path=":id/add-lecture" element={<SubjectDetail />} />
+                        <Route path=":id/add" element={<SubjectDetail />} />
                         <Route path=":id/lectures/:lectureId" element={<SubjectDetail />} />
                         <Route path=":id/lectures/:lectureId/edit" element={<AddSubjectPage />} />
                     </Route>

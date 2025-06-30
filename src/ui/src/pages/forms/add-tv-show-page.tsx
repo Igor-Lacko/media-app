@@ -48,9 +48,8 @@ export default function AddTvShowPage({ route } : { route?: any }) {
         <FormLayout
             title={tvshow.title ? "Edit TV Show" : "Add TV Show"}
             ref={tvShowRef}
-            submitFunction={tvshow.title ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes) :
-                async (tvShow: TvShow) => await UpdateData<TvShow>("/api/shows", tvShow.identifier!, tvShow)
-            }
+            submitFunction={tvshow.title ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, true, tvshow.identifier!)
+                : async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={tvshow ? "TV Show updated successfully." : "TV Show added successfully."}
         >
@@ -103,7 +102,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                             title={"Season Rating"}
                             props={{
                                 onChange: (value) => season.rating = value,
-                                initial: 0,
+                                initial: season.rating || 0,
                                 max: 10
                             }}
                         />
@@ -150,7 +149,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                                         title={"Episode Rating"}
                                         props={{
                                             onChange: (value) => episode.rating = value,
-                                            initial: 0,
+                                            initial: episode.rating || 0,
                                             max: 10
                                         }}
                                     />

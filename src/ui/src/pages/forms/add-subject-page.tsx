@@ -34,9 +34,8 @@ export default function AddSubjectPage({ route } : { route?: any }) {
         <FormLayout
             title={subject.title ? "Edit Subject" : "Add Subject"}
             ref={subjectRef}
-            submitFunction={subject.title ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures) :
-                async (subject: Subject) => await UpdateData<Subject>("/api/subjects", subject.identifier!, subject)
-            }
+            submitFunction={subject.title ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, true, subject.identifier!)
+                : async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={subject.title ? "Subject updated successfully." : "Subject added successfully."}
         >

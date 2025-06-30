@@ -34,7 +34,7 @@ export const defaultSubject: Subject = {
     lectures: [],
 }
 
-export function defaultSeason(seasonNumber: number = 1, showId: number = 0) : Season {
+export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : Season {
     return {
         showId: showId,
         title: "",
@@ -44,7 +44,7 @@ export function defaultSeason(seasonNumber: number = 1, showId: number = 0) : Se
     };
 }
 
-export function defaultEpisode(episodeNumber: number = 1, seasonNumber: number = 1, seasonId: number = 0) : Episode {
+export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number = -1, seasonId: number = 0) : Episode {
     return {
         seasonId: seasonId,
         episodeNumber: episodeNumber,

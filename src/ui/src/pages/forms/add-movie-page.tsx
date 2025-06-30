@@ -39,8 +39,8 @@ export default function AddMoviePage({ route } : { route?: any }) {
         <FormLayout
             title={movie.title ? "Edit Movie" : "Add Movie"}
             ref={movieRef}
-            submitFunction={movie.title ?  async (ref: Movie) => await SubmitMovie(ref) :
-                async (ref: Movie) => await UpdateData<Movie>("/api/movies", ref.identifier!, movie)}
+            submitFunction={movie.title ?  async (ref: Movie) => await SubmitMovie(ref, true, movie.identifier!)
+                : async (ref: Movie) => await SubmitMovie(ref, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={"Movie added successfully."}
         >

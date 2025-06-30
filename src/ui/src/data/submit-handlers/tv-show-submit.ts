@@ -18,7 +18,7 @@ export default async function TvShowSubmitHandler(
     seasons: Season[],
     episodes: Episode[],
     update: boolean,
-    id: number
+    id: number = 0
 ): Promise<boolean> {
     // Only mandatory fields
     if (tvShow.title === "" || tvShow.genres?.length === 1) {

@@ -15,7 +15,7 @@ export default async function SubjectSubmitHandler(
     subject: Subject,
     lectures: Lecture[],
     updating: boolean,
-    id: number
+    id: number = 0
 ): Promise<boolean> {
     // Only mandatory field
     if (subject.title === "") {
