@@ -16,11 +16,11 @@ export default function MovieDetail() {
     // Parse movie id
     const movie : Movie | undefined = useFetchById<Movie>("/api/movies")
 
+    // 404, shouldn't happen?
     if(!movie) {
         return <NotFoundPage message="Movie not found"/>
     }
 
-    // Construct props for the detail layout
     const props : DetailProps<Movie> = {
         model: movie,
         title: movie.title,

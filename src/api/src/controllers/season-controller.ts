@@ -1,6 +1,40 @@
 import Season from "@shared/interface/models/season";
 import prisma from "db/db";
 import { UpdateEpisode } from "./episode-controller";
+import Episode from "@shared/interface/models/episode";
+
+/**
+ * Create a new season in the database.
+ * @param season Season object to create.
+ * @returns True if the creation was successful, false otherwise.
+ */
+export async function CreateSeason(season: Season): Promise<boolean> {
+    console.log("Creating new season:", season);
+
+    try {
+        await prisma.season.create({
+            data: {
+                ...season,
+                episodes: {
+                    create: season.episodes.map((episode : Episode) => ({
+                        episodeNumber: episode.episodeNumber,
+                        title: episode.title,
+                        rating: episode.rating,
+                        shortDescription: episode.shortDescription,
+                        videoUrl: episode.videoUrl,
+                        thumbnailUrl: episode.thumbnailUrl,
+                        length: episode.length
+                    }))
+                }
+            }
+        })
+    }
+
+    catch (error) {
+        console.error("Error creating season: " + error);
+        return false;
+    }
+}
 
 /**
  * Update a season by its ID. Also called by UpdateTvShow().
