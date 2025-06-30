@@ -93,8 +93,8 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                     >
                         <TextAreaOption
                             title={"Season short description"}
-                            initial={season.description || ""}
-                            onChange={(value) => season.description = value}
+                            initial={season.shortDescription || ""}
+                            onChange={(value) => season.shortDescription = value}
                         />
                         {/* The hook is probably unusable here */}
                         <SliderOption

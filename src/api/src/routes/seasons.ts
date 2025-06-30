@@ -4,9 +4,15 @@ import { CreateSeason, UpdateSeason, DeleteSeason } from "controllers/season-con
 const router = Router();
 
 // Create a new season
-router.post("/", async (req, res) => {
+router.post("/:id", async (req, res) => {
+    const showId = parseInt(req.params.id, 10);
+    if (isNaN(showId)) {
+        res.status(400).json({ error: "Invalid show ID" });
+        return;
+    }
+
     const season = req.body;
-    if (await CreateSeason(season)) {
+    if (await CreateSeason(season, showId)) {
         res.status(201).json({ message: "Season created successfully" });
     } 
 

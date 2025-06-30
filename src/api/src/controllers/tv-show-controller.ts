@@ -107,6 +107,8 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
     // Update seasons first (if provided)
     if (tvShowData.seasons) {
         for (const season of tvShowData.seasons) {
+            console.log("Updating season with season id:", season.identifier);
+            console.log("Season data:", season);
             await UpdateSeason(season.identifier, season);
         }
     }

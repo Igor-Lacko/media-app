@@ -59,6 +59,7 @@ export default defineConfig({
             'db': path.resolve(__dirname, './src/db'),
             'generated': path.resolve(__dirname, './src/generated'),
             'utils': path.resolve(__dirname, './src/utils'),
+            'adapters': path.resolve(__dirname, './src/adapters'),
             '@shared': path.resolve(__dirname, '../shared')
         }
     }

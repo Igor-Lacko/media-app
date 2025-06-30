@@ -24,6 +24,7 @@ export function SanitizeClientSeasonToDB (season : ClientSeason): ClientSeason {
 export function DBSeasonToClient (season: DBSeason): ClientSeason {
     const { id, ...data } = season;
     return {
+        identifier: id,
         ...data,
         episodes: season.episodes.map(episode => DBEpisodeToClient(episode)),
     };
