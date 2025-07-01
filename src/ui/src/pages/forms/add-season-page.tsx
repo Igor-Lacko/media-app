@@ -43,8 +43,8 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             title={creating ? "Add Season" : "Edit Season"}
             ref={seasonRef}
             submitFunction={/** Doesn't need any validation */
-                creating ? async (season: Season) => await SubmitSeason(season, false, showId) :
-                async (season: Season) => await SubmitSeason(season, true)
+                creating ? async (season: Season) => await SubmitSeason(season, false, episodes, showId) :
+                async (season: Season) => await SubmitSeason(season, true, episodes)
             }
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={creating ? "Season added successfully." : "Season updated successfully."}

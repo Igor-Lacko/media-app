@@ -3,7 +3,7 @@ import DeleteData from "data/crud/delete";
 import { UpdateDescription, UpdateRating } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
 
@@ -15,8 +15,15 @@ export default function SeasonDetail() {
     const season : Season | undefined = useFetchById<Season>("/api/seasons", "seasonId");
 
     // State vars
-    const [description, setDescription] = useState(season?.description || "No description :((");
-    const [rating, setRating] = useState(season?.rating || 3.14);
+    const [description, setDescription] = useState(season?.description);
+    const [rating, setRating] = useState(season?.rating);
+
+    useEffect(() => {
+        if (season) {
+            setDescription(season.description);
+            setRating(season.rating);
+        }
+    }, [season]);
 
     if (!season) {
         return <div>Season not found</div>;

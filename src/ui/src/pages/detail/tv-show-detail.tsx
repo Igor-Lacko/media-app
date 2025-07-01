@@ -6,7 +6,7 @@ import NotFoundPage from "pages/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import DeleteData from "data/crud/delete";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WatchStatus from "@shared/enum/watch-status";
 
 /**
@@ -17,9 +17,18 @@ export default function TvShowDetail() {
     const tvShow : TvShow | undefined = useFetchById<TvShow>("/api/shows");
 
     // State vars
-    const [description, setDescription] = useState(tvShow?.description || "No description :((");
-    const [rating, setRating] = useState(tvShow?.rating || 3.14);
+    const [description, setDescription] = useState(tvShow?.description);
+    const [rating, setRating] = useState(tvShow?.rating);
     const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.UNWATCHED);
+
+    // UseEffect to load the TV show if it doesn't immediately
+    useEffect(() => {
+        if (tvShow) {
+            setDescription(tvShow.description);
+            setRating(tvShow.rating);
+            setWatchStatus(tvShow.watchStatus || WatchStatus.UNWATCHED);
+        }
+    }, [tvShow]);
 
     if(!tvShow) {
         return <NotFoundPage message="TV Show not found" />

@@ -39,7 +39,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     className={"flex flex-col text-lg items-start justify-end py-5 h-full w-full"}
                 >
                     {/** Either length or nof seasons/episodes */}
-                    {props.playable && props.model.length && <span
+                    {props.playable && props.model.length !== undefined && props.model.length !== null && <span
                         className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}
                     >
                         {props.model.length} {props.model.length > 1 ? "minutes" : "minute"}
@@ -72,10 +72,10 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 className={"flex flex-col items-center mt-3 ml-10 justify-between py-5 w-2/10 h-full\
                         space-y-5"}
             >
-                {props.rating !== undefined && <HeaderRating
+                {props.rating !== undefined && props.rating !== null && <HeaderRating
                     rating={props.rating}
                 />}
-                {props.watchStatus !== undefined && <DetailWatchStatus
+                {props.watchStatus !== undefined && props.rating !== null && <DetailWatchStatus
                     watchStatus={props.watchStatus}
                 />}
                 {/** TODO alt div if video doesn't exist */}

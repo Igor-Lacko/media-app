@@ -25,6 +25,11 @@ export default async function TvShowSubmitHandler(
         return false;
     }
 
+    // Each episode has to have a title
+    if (episodes.some((episode) => episode.title === "")) {
+        return false;
+    }
+
     // Add episodes to seasons and seasons to TV show
     tvShow.seasons = seasons.map((season, index) => {
         return {

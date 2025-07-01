@@ -1,3 +1,4 @@
+import Episode from "@shared/interface/models/episode";
 import Season from "@shared/interface/models/season";
 import { CreateData } from "data/crud/create";
 import UpdateData from "data/crud/update";
@@ -11,9 +12,15 @@ import UpdateData from "data/crud/update";
 export default async function SubmitSeason(
     season: Season,
     updating: boolean,
+    episodes: Episode[],
     showId: number = 0
 ) : Promise<boolean> {
-    season.episodes = season.episodes.map((episode, index) => {
+    // Each episode has to have a title
+    if (episodes.some((episode) => episode.title === "")) {
+        return false;
+    }
+
+    season.episodes = episodes.map((episode, index) => {
         return {
             ...episode,
             episodeNumber: index + 1,

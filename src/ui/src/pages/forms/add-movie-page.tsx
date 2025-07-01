@@ -20,7 +20,7 @@ import useFetchById from "hooks/use-fetch-by-id";
  */
 export default function AddMoviePage({ route } : { route?: any }) {
     // Get movie
-    const movie : Movie = useFetchById<Movie>("/api/movies");
+    const movie : Movie | undefined = useFetchById<Movie>("/api/movies");
     const creating = !movie;
 
     // Constructed object, do not want to render on every change

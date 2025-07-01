@@ -10,7 +10,7 @@ export interface Episode extends CardDisplayable {
     episodeNumber: number;
     videoUrl?: string;
     length?: number;
-    continueAt: number;
+    continueAt?: number;
     watchStatus: WatchStatus;
 }
 

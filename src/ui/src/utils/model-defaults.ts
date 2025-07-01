@@ -12,18 +12,13 @@ import { WatchStatus } from "@shared/enum/watch-status";
  */
 
 export const defaultMovie: Movie = {
-    identifier: -1,
     title: "",
     genres: [Genre.ALL],
     watchStatus: WatchStatus.UNWATCHED,
-    continueAt: 0,
-    length: 0,
-    rating: 0,
     isFavorite: false,
 };
 
 export const defaultTvShow: TvShow = {
-    identifier: -1,
     title: "",
     genres: [Genre.ALL],
     seasons: [],
@@ -32,38 +27,31 @@ export const defaultTvShow: TvShow = {
 }
 
 export const defaultSubject: Subject = {
-    identifier: -1,
     title: "",
     lectures: [],
 }
 
 export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : Season {
     return {
-        identifier: -1,
         seasonNumber: seasonNumber,
         episodes: [],
-        description: "",
     };
 }
 
 export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number = -1, seasonId: number = 0) : Episode {
     return {
-        identifier: -1,
         episodeNumber: episodeNumber,
         seasonNumber: seasonNumber,
         title: "",
         watchStatus: WatchStatus.UNWATCHED,
-        continueAt: 0,
     };
 }
 
 export function defaultLecture(lectureNumber: number = 1, subjectId: number = 0) : Lecture{
     return {
-        identifier: -1,
         lectureNumber: lectureNumber,
         title: "",
         notes: [],
-        continueAt: 0,
         watchStatus: WatchStatus.UNWATCHED
     };
 }

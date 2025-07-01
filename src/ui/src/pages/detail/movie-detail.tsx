@@ -7,7 +7,7 @@ import DetailHeaders from "utils/enum/detail-headers";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
 import DeleteData from "data/crud/delete";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Component for displaying movie details.
@@ -18,9 +18,20 @@ export default function MovieDetail() {
     const movie : Movie | undefined = useFetchById<Movie>("/api/movies");
 
     // State vars
-    const [description, setDescription] = useState(movie?.description || "No description :((");
-    const [rating, setRating] = useState(movie?.rating || 3.14);
+    const [description, setDescription] = useState(movie?.description);
+    const [rating, setRating] = useState(movie?.rating);
     const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
+
+    // UseEffect to load ther movie if it doesn't immediately
+    useEffect(() => {
+        if (movie) {
+            setDescription(movie.description);
+            setRating(movie.rating);
+            setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
+        }
+    }, [movie]);
+
+    console.log("MovieDetail", movie);
 
     // 404, shouldn't happen?
     if(!movie) {

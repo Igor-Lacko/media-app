@@ -14,11 +14,14 @@ export default function useFetchById<T>(url: string, param: string = "id", deps:
         : param === "lectureId" ? params.lectureId
             : (() => { throw new Error(`Invalid parameter: ${param}. Expected 'id' or 'seasonId'.`) })();
 
+    console.log(`useFetchById: Fetching data from ${url} with id: ${id}`);
+
     // Fetch
     const data = id ? useQuery({
         queryKey: [url, id, ...deps],
         queryFn: async () => await FetchDataWithId<T>(url, id),
     }) : undefined;
+    console.log(`useFetchById: Fetched data:`, data?.data);
 
     return data?.data || undefined;
 }
