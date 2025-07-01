@@ -153,6 +153,45 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
 }
 
 /**
+ * Updates the season numbers for a TV show to be sequential.
+ * @param id Identifier of the TV show to update.
+ * @returns True if successful, false otherwise.
+ */
+export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
+    try {
+        const seasons = await prisma.season.findMany({
+            where: {
+                showId: id,
+            },
+
+            orderBy: {
+                seasonNumber: 'asc',
+            },
+        });
+
+        for (let i = 0; i < seasons.length; i++) {
+            const season = seasons[i];
+            if (season.seasonNumber !== i + 1) {
+                await prisma.season.update({
+                    where: {
+                        id: season.id,
+                    },
+
+                    data: {
+                        seasonNumber: i + 1,
+                    },
+                });
+            }
+        }
+    }
+
+    catch (error) {
+        console.error("Error updating season numbers: " + error);
+        return false;
+    }
+}
+
+/**
  * Inserts a TV show into the database.
  * @param tvShow TvShow to insert.
  * @returns TvShow object if successful, null otherwise.

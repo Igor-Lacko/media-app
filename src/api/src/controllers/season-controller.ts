@@ -4,6 +4,7 @@ import { CreateEpisode, UpdateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
 import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
+import { UpdateSeasonNumbers } from "./tv-show-controller";
 
 /**
  * Gets a season by its ID, including its episodes.
@@ -131,6 +132,46 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
 }
 
 /**
+ * Updates the episode numbers for a season to be sequential.
+ * Called after removing a episode, for example episode 2 -- 1 and 3 keep their numbers, so 3 has to be decremented.
+ * @param seasonId Identifier of the season to update.
+ * @returns True if the update was successful, false otherwise.
+ */
+export async function UpdateEpisodeNumbers(seasonId: number) : Promise<boolean> {
+    try {
+        const episodes = await prisma.episode.findMany({
+            where: {
+                seasonId: seasonId
+            },
+
+            orderBy: {
+                episodeNumber: 'asc'
+            }
+        });
+
+        for (let i = 0; i < episodes.length; i++) {
+            const episode = episodes[i];
+            if (episode.episodeNumber !== i + 1) {
+                await prisma.episode.update({
+                    where: {
+                        id: episode.id
+                    },
+
+                    data: {
+                        episodeNumber: i + 1
+                    }
+                });
+            }
+        }
+    }
+
+    catch (error) {
+        console.error("Error updating episode numbers: " + error);
+        return false;
+    }
+}
+
+/**
  * Deletes a season by its ID.
  * @param id Identifier of the season to delete.
  * @returns True if the deletion was successful, false otherwise.
@@ -140,13 +181,26 @@ export async function DeleteSeason(id: number): Promise<boolean> {
 
     // Episodes deleted by cascade
     try {
+        // Get the show ID first
+        const showID = await prisma.season.findUnique({
+            where: {
+                id: id
+            },
+
+            select: {
+                showId: true
+            }
+        });
+
+        // Delete season
         await prisma.season.delete({
             where: {
                 id: id
             }
         });
 
-        return true;
+        // Update other seasons (should never fail but prisma query results are optional)
+        return await UpdateSeasonNumbers(showID?.showId || -1);
     }
 
     catch (error) {

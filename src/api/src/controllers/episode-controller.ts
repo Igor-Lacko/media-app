@@ -1,6 +1,7 @@
 import Episode from "@shared/interface/models/episode";
 import { DBEpisodeToClient, SanitizeClientEpisodeToDB } from "adapters/episodes";
 import prisma from "db/db";
+import { UpdateEpisodeNumbers } from "./season-controller";
 
 /**
  * Fetches a episode by its ID.
@@ -113,13 +114,25 @@ export async function DeleteEpisode(id: number): Promise<boolean> {
     console.log("Deleting episode with ID:", id);
 
     try {
+        // Get the season ID first
+        const seasonID = await prisma.episode.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                seasonId: true
+            }
+        });
+
+        // Delete the episode
         await prisma.episode.delete({
             where: {
                 id: id
             }
         });
 
-        return true;
+        // Update other episodes in the season
+        return await UpdateEpisodeNumbers(seasonID?.seasonId || -1);
     }
 
     catch (error) {
