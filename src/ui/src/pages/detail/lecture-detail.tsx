@@ -4,7 +4,7 @@ import { UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import NotFoundPage from "pages/not-found";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
 
@@ -17,10 +17,14 @@ export default function LectureDetail() {
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
 
+    // Ref
+    const videoUrlRef = useRef(lecture?.videoUrl || "");
+
     // To load on render
     useEffect(() => {
         if (lecture) {
             setWatchStatus(lecture.watchStatus);
+            videoUrlRef.current = lecture.videoUrl || "";
         }
     }, [lecture]);
 
@@ -33,6 +37,7 @@ export default function LectureDetail() {
         model: lecture,
         title: lecture.title!,
         watchStatus: watchStatus,
+        videoUrl: videoUrlRef,
         hasThumbnail: false,
         hasGenres: false,
         playTitle: "Play Lecture",
@@ -40,7 +45,10 @@ export default function LectureDetail() {
         editTitle: "Edit Lecture",
         deleteTitle: "Delete Lecture",
         deleteFunction: async () => await DeleteData("/api/lectures", lecture.identifier!),
-        setVideoUrlFunction: async (videoUrl: string) => await UpdateVideoUrl<Lecture>("/api/lectures", lecture, videoUrl),
+        setVideoUrlFunction: async (videoUrl: string) => {
+            videoUrlRef.current = videoUrl;
+            return await UpdateVideoUrl<Lecture>("/api/lectures", lecture, videoUrl);
+        },
         watchStatusFunction: async (watchStatus: string) => {
             setWatchStatus(watchStatus);
             return await UpdateWatchStatus<Lecture>("/api/lectures", lecture, watchStatus);

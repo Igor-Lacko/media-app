@@ -1,10 +1,10 @@
 import Episode from "@shared/interface/models/episode";
 import DeleteData from "data/crud/delete";
-import { UpdateRating, UpdateWatchStatus } from "data/crud/update";
+import { UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import NotFoundPage from "pages/not-found";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
 
@@ -18,11 +18,15 @@ export default function EpisodeDetail() {
     const [rating, setRating] = useState(episode?.rating);
     const [watchStatus, setWatchStatus] = useState(episode?.watchStatus);
 
+    // Ref
+    const videoUrlRef = useRef(episode?.videoUrl || "");
+
     // To load on render
     useEffect(() => {
         if (episode) {
             setRating(episode.rating);
             setWatchStatus(episode.watchStatus);
+            videoUrlRef.current = episode.videoUrl || "";
         }
     }, [episode]);
 
@@ -36,6 +40,7 @@ export default function EpisodeDetail() {
         title: episode.title!,
         rating: rating,
         watchStatus: watchStatus,
+        videoUrl: videoUrlRef,
         hasThumbnail: false,
         hasGenres: false,
         playTitle: "Play Episode",
@@ -47,6 +52,10 @@ export default function EpisodeDetail() {
         rateFunction: async (rating: number) => {
             setRating(rating);
             return await UpdateRating<Episode>("/api/episodes", episode, rating);
+        },
+        setVideoUrlFunction: async (videoUrl: string) => {
+            videoUrlRef.current = videoUrl;
+            return await UpdateVideoUrl<Episode>("/api/episodes", episode, videoUrl);
         },
         watchStatusFunction: async (watchStatus: string) => {
             setWatchStatus(watchStatus);

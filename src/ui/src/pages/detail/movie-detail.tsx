@@ -7,7 +7,7 @@ import DetailHeaders from "utils/enum/detail-headers";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
 import DeleteData from "data/crud/delete";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Component for displaying movie details.
@@ -22,12 +22,16 @@ export default function MovieDetail() {
     const [rating, setRating] = useState(movie?.rating);
     const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
 
+    // Video url ref
+    const videoUrlRef = useRef(movie?.videoUrl || "");
+
     // UseEffect to load the movie if it doesn't immediately, todo refactor loading?
     useEffect(() => {
         if (movie) {
             setDescription(movie.description || "");
             setRating(movie.rating || -1);
             setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
+            videoUrlRef.current = movie.videoUrl || "";
         }
     }, [movie]);
 
@@ -43,6 +47,7 @@ export default function MovieDetail() {
         title: movie.title!,
         description: description,
         rating: rating,
+        videoUrl: videoUrlRef,
         watchStatus: watchStatus,
         hasThumbnail: true,
         hasGenres: true,
@@ -53,7 +58,10 @@ export default function MovieDetail() {
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
         markFavoriteFunction: async () => await MarkAsFavorite<Movie>("/api/movies", movie),
         rateTitle: "Rate Movie",
-        setVideoUrlFunction: async (videoUrl: string) => await UpdateVideoUrl<Movie>("/api/movies", movie, videoUrl),
+        setVideoUrlFunction: async (videoUrl: string) => {
+            videoUrlRef.current = videoUrl;
+            return await UpdateVideoUrl<Movie>("/api/movies", movie, videoUrl);
+        },
         rateFunction: async (rating: number) => {
             setRating(rating);
             return await UpdateRating<Movie>("/api/movies", movie, rating)

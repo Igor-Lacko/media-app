@@ -65,13 +65,13 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         // Play (will navigate to "/play" later)
         playTitle: props.playTitle,
         onPlay: props.playTitle ? async () => {
-            if (!props.model.videoUrl) {
+            if (!props.videoUrl?.current) {
                 setVisibleModal(VisibleModal.PLAY_NOFILE);
                 return;
             }
 
-            if (await IsValidFile(props.model.videoUrl)) {
-                console.log("Playing video:", props.model.videoUrl);
+            if (await IsValidFile(props.videoUrl.current)) {
+                console.log("Playing video:", props.videoUrl.current);
                 return;
             }
 
@@ -166,7 +166,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {visibleModal === VisibleModal.PLAY_NOFILE && <FileBrowseModal
                 title={"Error: No video found"}
                 message={`${props.title} does not have a video file associated with it yet. Please select a video file to play.`}
-                initialText={props.model.videoUrl || ""}
+                initialText={props.videoUrl?.current || ""}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
                     setVisibleModal(VisibleModal.NONE);
@@ -177,7 +177,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {visibleModal === VisibleModal.PLAY_WRONG_FILE && <FileBrowseModal
                 title={"Error: Invalid video file"}
                 message={`The video file for ${props.title} is invalid or does not exist. Please select a valid video file.`}
-                initialText={props.model.videoUrl || ""}
+                initialText={props.videoUrl?.current || ""}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
                     setVisibleModal(VisibleModal.NONE);

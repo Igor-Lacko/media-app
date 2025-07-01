@@ -34,6 +34,7 @@ ipcMain.handle('get-file', async () => {
 
 // Checks if a file exists
 ipcMain.handle('check-file-exists', async (event, filePath) => {
+    console.log(`Checking if file exists: ${filePath}`);
     return existsSync(filePath);
 });
 

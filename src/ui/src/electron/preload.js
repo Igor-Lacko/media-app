@@ -7,7 +7,8 @@ contextBridge.exposeInMainWorld('electron', {
         return paths && paths.length > 0 ? paths[0] : null; // Return the first file path
     },
 
-    doesFileExist: async (filePath) => {
+    isValidFile: async (filePath) => {
+        console.log(`Checking if file exists: ${filePath}`);
         return await ipcRenderer.invoke('check-file-exists', filePath);
     }
 });

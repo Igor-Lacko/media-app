@@ -30,6 +30,7 @@ export async function GetFilePath(): Promise<string | null> {
  */
 export async function IsValidFile(path: string): Promise<boolean> {
     if(!window.electron || !window.electron.isValidFile) {
+        console.log("Electron API not available for file validation.");
         return false;
     }
 
