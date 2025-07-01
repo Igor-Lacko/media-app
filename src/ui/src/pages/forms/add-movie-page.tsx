@@ -12,8 +12,7 @@ import FormLayout from "layouts/form-layout";
 import useGenreDropdown from "hooks/use-genre-dropdown";
 import useRatingSlider from "hooks/use-rating-slider";
 import SubmitMovie from "data/submit-handlers/movie-submit";
-import { useLocation } from "react-router-dom";
-import UpdateData from "data/crud/update";
+import useFetchById from "hooks/use-fetch-by-id";
 
 /**
  * Form page for adding a new movie.
@@ -21,11 +20,11 @@ import UpdateData from "data/crud/update";
  */
 export default function AddMoviePage({ route } : { route?: any }) {
     // Get movie
-    const location = useLocation();
-    const movie = location.state || defaultMovie;
+    const movie : Movie = useFetchById<Movie>("/api/movies");
+    const creating = !movie;
 
     // Constructed object, do not want to render on every change
-    const movieRef = useRef<Movie>(movie);
+    const movieRef = useRef<Movie>(movie || defaultMovie);
 
     console.log("AddMoviePage", movieRef.current);
 
@@ -37,12 +36,12 @@ export default function AddMoviePage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={movie.title ? "Edit Movie" : "Add Movie"}
+            title={!creating ? "Edit Movie" : "Add Movie"}
             ref={movieRef}
-            submitFunction={movie.title ?  async (ref: Movie) => await SubmitMovie(ref, true, movie.identifier!)
+            submitFunction={!creating ?  async (ref: Movie) => await SubmitMovie(ref, true, movie.identifier!)
                 : async (ref: Movie) => await SubmitMovie(ref, false)}
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={"Movie added successfully."}
+            successModalMessage={!creating ? "Movie updated successfully." : "Movie added successfully."}
         >
             <FormSection
                 title={"Basic Information"}

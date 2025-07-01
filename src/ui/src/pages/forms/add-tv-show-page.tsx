@@ -18,9 +18,9 @@ import SliderOption from "components/options/slider-option";
 import AddOption from "components/options/add-option";
 import RemoveOption from "components/options/remove-option";
 import FileBrowseOption from "components/options/file-browse-option";
-import { useLocation } from "react-router-dom";
 import { RemoveEpisodeFromShowFilter } from "utils/filters/remove-episode-filter";
 import RemoveSeasonFilter from "utils/filters/remove-season-filter";
+import useFetchById from "hooks/use-fetch-by-id";
 
 /**
  * Form page for adding a new TV show.
@@ -29,11 +29,11 @@ import RemoveSeasonFilter from "utils/filters/remove-season-filter";
  */
 export default function AddTvShowPage({ route } : { route?: any }) {
     // Get TV show or use a blank one
-    const location = useLocation();
-    const tvshow = location.state.model || defaultTvShow;
+    const tvshow = useFetchById<TvShow>("/api/shows");
+    const creating = !tvshow;
 
     // Constructed TV show
-    const tvShowRef = useRef<TvShow>(tvshow);
+    const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
 
     // To re-render on each add
     const [seasons, setSeasons] = useState<Season[]>(tvShowRef.current.seasons);
@@ -49,12 +49,12 @@ export default function AddTvShowPage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={tvshow.title ? "Edit TV Show" : "Add TV Show"}
+            title={!creating ? "Edit TV Show" : "Add TV Show"}
             ref={tvShowRef}
-            submitFunction={tvshow.title ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, true, tvshow.identifier!)
+            submitFunction={!creating ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, true, tvshow.identifier!)
                 : async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, false)}
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={tvshow ? "TV Show updated successfully." : "TV Show added successfully."}
+            successModalMessage={!creating ? "TV Show updated successfully." : "TV Show added successfully."}
         >
             <FormSection
                 title={"Basic Information"}

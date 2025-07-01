@@ -39,9 +39,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Edit
         editTitle: props.editTitle,
-        onEdit: props.editTitle ? () => navigate("edit", { state: {
-            model: props.model,
-        } }) : undefined,
+        onEdit: props.editTitle ? () => navigate("edit") : undefined,
 
         // Mark as favorite
         onMarkFavorite: props.markFavoriteFunction,
@@ -97,7 +95,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 2. Rate modal */}
-            {visibleModal === VisibleModal.RATE && props.rating !== undefined && <SliderModal
+            {visibleModal === VisibleModal.RATE && props.rating !== undefined && props.rating !== null && <SliderModal
                 title={props.rateTitle || "Rate"}
                 onSelectRating={async (rating: number) => {
                     props.rateFunction && await props.rateFunction(rating);

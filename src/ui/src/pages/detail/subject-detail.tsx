@@ -21,11 +21,8 @@ export default function SubjectDetail() {
         title: subject.title!,
         hasThumbnail: false,
         hasGenres: false,
-        hasDescription: false,
         playable: false,
-        canBeMarkedFavorite: false,
         headerType: DetailHeaders.SUBJECT,
-        hasWatchStatus: false,
         listProps: {
             path: "lectures",
             items: subject.lectures,
@@ -36,7 +33,6 @@ export default function SubjectDetail() {
         editTitle: "Edit Subject",
         deleteTitle: "Delete Subject",
         deleteFunction: async () => await DeleteData("/api/subjects", subject.identifier!),
-        hasMarkFavorite: false
     }
 
     return (

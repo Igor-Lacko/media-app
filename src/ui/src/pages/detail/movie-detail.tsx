@@ -15,7 +15,7 @@ import { useState } from "react";
  */
 export default function MovieDetail() {
     // Parse movie id
-    const movie : Movie | undefined = useFetchById<Movie>("/api/movies")
+    const movie : Movie | undefined = useFetchById<Movie>("/api/movies");
 
     // State vars
     const [description, setDescription] = useState(movie?.description || "No description :((");

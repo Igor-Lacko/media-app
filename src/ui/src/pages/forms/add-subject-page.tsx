@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 
 import Subject from "@shared/interface/models/subject";
-import Lecture from "@shared/interface/models/lecture";
 import { defaultSubject } from "utils/model-defaults";
 import { defaultLecture } from "utils/model-defaults";
 import FormLayout from "layouts/form-layout";
@@ -11,8 +10,8 @@ import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
-import { useLocation } from "react-router-dom";
 import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
+import useFetchById from "hooks/use-fetch-by-id";
 
 /**
  * Form page for adding a new subject.
@@ -21,11 +20,11 @@ import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
  */
 export default function AddSubjectPage({ route } : { route?: any }) {
     // Get param subject or use a blank one
-    const location = useLocation();
-    const subject = location.state.model || defaultSubject;
+    const subject = useFetchById<Subject>("/api/subjects");
+    const creating = !subject;
 
     // Constructed subject
-    const subjectRef = useRef<Subject>(subject);
+    const subjectRef = useRef<Subject>(subject || defaultSubject);
 
     // To re-render on each add
     const [lectures, setLectures] = useState(subjectRef.current.lectures);
@@ -33,12 +32,12 @@ export default function AddSubjectPage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={subject.title ? "Edit Subject" : "Add Subject"}
+            title={!creating ? "Edit Subject" : "Add Subject"}
             ref={subjectRef}
-            submitFunction={subject.title ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, true, subject.identifier!)
+            submitFunction={!creating ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, true, subject.identifier!)
                 : async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, false)}
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={subject.title ? "Subject updated successfully." : "Subject added successfully."}
+            successModalMessage={!creating ? "Subject updated successfully." : "Subject added successfully."}
         >
             <FormSection
                 title={"Basic Information"}

@@ -7,9 +7,8 @@ import InputOption from "components/options/input-option";
 import RemoveOption from "components/options/remove-option";
 import SliderOption from "components/options/slider-option";
 import TextAreaOption from "components/options/text-area-option";
-import { CreateData } from "data/crud/create";
-import UpdateData from "data/crud/update";
 import SubmitSeason from "data/submit-handlers/season-submit";
+import useFetchById from "hooks/use-fetch-by-id";
 import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
 import { useRef, useState } from "react";
@@ -26,10 +25,11 @@ export default function AddSeasonPage({ route } : { route? : any}) {
     // Initial data, either get the tv show id as a param or use a default season
     const location = useLocation();
     const showId = location.state.id || 1;
-    const season : Season = location.state.model || defaultSeason(-1, showId);
+    const season : Season | undefined = useFetchById<Season>("/api/seasons", "seasonId");
+    const creating = !season;
 
     // Constructed season
-    const seasonRef = useRef<Season>(season);
+    const seasonRef = useRef<Season>(season || defaultSeason(-1, showId));
 
     // State episodes to re-render on each add
     const [episodes, setEpisodes] = useState<Episode[]>(seasonRef.current.episodes);
@@ -40,14 +40,14 @@ export default function AddSeasonPage({ route } : { route? : any}) {
 
     return (
         <FormLayout
-            title={season.seasonNumber === -1 ? "Add Season" : "Edit Season"}
+            title={creating ? "Add Season" : "Edit Season"}
             ref={seasonRef}
             submitFunction={/** Doesn't need any validation */
-                season.seasonNumber === -1 ? async (season: Season) => await SubmitSeason(season, false, showId) :
+                creating ? async (season: Season) => await SubmitSeason(season, false, showId) :
                 async (season: Season) => await SubmitSeason(season, true)
             }
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={season.seasonNumber === -1 ? "Season added successfully." : "Season updated successfully."}
+            successModalMessage={creating ? "Season added successfully." : "Season updated successfully."}
         >
             <FormSection
                 title={"Season Information"}
