@@ -25,8 +25,8 @@ export default function MovieDetail() {
     // UseEffect to load the movie if it doesn't immediately, todo refactor loading?
     useEffect(() => {
         if (movie) {
-            setDescription(movie.description);
-            setRating(movie.rating);
+            setDescription(movie.description || "");
+            setRating(movie.rating || -1);
             setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
         }
     }, [movie]);
@@ -46,7 +46,7 @@ export default function MovieDetail() {
         watchStatus: watchStatus,
         hasThumbnail: true,
         hasGenres: true,
-        playable: true,
+        playTitle: "Play Movie",
         headerType: DetailHeaders.ENTERTAINMENT,
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",

@@ -1,15 +1,13 @@
 import Genre from "@shared/enum/genre";
 import DetailFillable from "@shared/interface/detail-fillable";
-import RoundedButton from "components/buttons/rounded-button";
-import DetailWatchStatus from "components/detail-watch-status";
-import HeaderRating from "components/header-rating";
+import DetailWatchStatus from "components/other/detail-watch-status";
+import HeaderRating from "components/other/header-rating";
 import DetailImage from "components/image/detail-image";
-import { FaPlay } from "react-icons/fa";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail-props";
 
 /**
- * Header for a entertainment model's (movie, show, season) detail page.
+ * Header for a entertainment model's (movie, show) detail page.
  * @param props Detail properties including model, submedia, title, and display options.
  */
 export default function EntertainmentDetailHeader<T extends DetailFillable>(props: DetailProps<T>) {
@@ -39,7 +37,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     className={"flex flex-col text-lg items-start justify-end py-5 h-full w-full"}
                 >
                     {/** Either length or nof seasons/episodes */}
-                    {props.playable && props.model.length !== undefined && props.model.length !== null && <span
+                    {props.playTitle && props.model.length !== undefined && props.model.length !== null && <span
                         className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}
                     >
                         {props.model.length} {props.model.length > 1 ? "minutes" : "minute"}
@@ -69,21 +67,14 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
             </div>
             { /* rating, watch status, play button */}
             <div
-                className={"flex flex-col items-center mt-3 ml-10 justify-between py-5 w-2/10 h-full\
+                className={"flex flex-col items-center mt-3 ml-10 justify-center py-5 w-2/10 h-full\
                         space-y-5"}
             >
-                {props.rating !== undefined && props.rating !== null && <HeaderRating
+                {props.rating !== undefined && props.rating !== null && props.rating !== -1 && <HeaderRating
                     rating={props.rating}
                 />}
                 {props.watchStatus !== undefined && props.rating !== null && <DetailWatchStatus
                     watchStatus={props.watchStatus}
-                />}
-                {/** TODO alt div if video doesn't exist */}
-                {props.playable && <RoundedButton
-                    text={"Play"}
-                    onClick={() => console.log("Play button clicked")}
-                    extraClassNames={"bg-purple-500 dark:bg-purple-700 hover:bg-purple-600"}
-                    icon={<FaPlay/>}
                 />}
             </div>
         </div>

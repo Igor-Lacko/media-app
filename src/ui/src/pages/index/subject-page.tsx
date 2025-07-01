@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-import ControlBar from "components/control-bar";
+import ControlBar from "components/controls/control-bar";
 import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
 import { FetchData } from "data/crud/read";
-import MediaItemList from "components/media-item-list";
+import MediaItemList from "components/other/media-item-list";
 import ControlBarProps from "utils/props/control-bar-props";
 import ListProps from "utils/props/list-props";
 import { Route, Routes } from "react-router-dom";

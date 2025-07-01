@@ -81,6 +81,7 @@ export async function CreateLecture(lecture: Lecture, subjectId: number): Promis
  * @returns True if the update was successful, false otherwise.
  */
 export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Promise<boolean> {
+    const sanitizedLecture = SanitizeClientLectureToDB(lecture as Lecture);
     console.log("Updating lecture with ID:", id);
 
     try {
@@ -90,12 +91,12 @@ export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Prom
             },
 
             data: {
-                ...lecture,
+                ...sanitizedLecture,
 
                 // If provided
-                notes: lecture.notes ? {
+                notes: sanitizedLecture.notes ? {
                     deleteMany: {},
-                    create: lecture.notes.map((note) => ({
+                    create: sanitizedLecture.notes.map((note) => ({
                         content: note
                     }))
                 } : undefined,

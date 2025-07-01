@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
 import SettingsContext from "context/settings-context";
-import Sidebar from "components/sidebar";
+import Sidebar from "components/other/sidebar";
 import Settings from "@shared/interface/models/settings";
 import { LoadSettings } from "data/crud/read";
 

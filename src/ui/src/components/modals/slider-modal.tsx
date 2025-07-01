@@ -9,7 +9,7 @@ import AbstractModal from "./abstract-modal";
  * @param props Initial value, on select function, and title for the modal.
  */
 export default function SliderModal(props : ModalProps) {
-    const valueRef = useRef(0);
+    const valueRef = useRef(props.initialRating ?? 0);
 
     return (
         <AbstractModal>

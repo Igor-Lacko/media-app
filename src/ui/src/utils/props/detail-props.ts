@@ -17,7 +17,7 @@ export interface DetailProps<T extends DetailFillable>{
     title: string;
     hasThumbnail: boolean;
     hasGenres: boolean;
-    playable: boolean;
+    playTitle?: string;
     headerType: DetailHeaders;
     listProps?: ListProps;
     addTitle?: string;

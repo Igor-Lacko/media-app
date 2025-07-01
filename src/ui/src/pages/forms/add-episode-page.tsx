@@ -1,5 +1,5 @@
 import Episode from "@shared/interface/models/episode";
-import FormSection from "components/form-section";
+import FormSection from "components/other/form-section";
 import FileBrowseOption from "components/options/file-browse-option";
 import InputOption from "components/options/input-option";
 import SliderOption from "components/options/slider-option";

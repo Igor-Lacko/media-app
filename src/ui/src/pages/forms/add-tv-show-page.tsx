@@ -8,7 +8,7 @@ import { defaultSeason } from "utils/model-defaults";
 import { defaultEpisode } from "utils/model-defaults";
 import FormLayout from "layouts/form-layout";
 import TvShowSubmitHandler from "data/submit-handlers/tv-show-submit";
-import FormSection from "components/form-section";
+import FormSection from "components/other/form-section";
 import InputOption from "components/options/input-option";
 import TextAreaOption from "components/options/text-area-option";
 import DropdownCheckboxOption from "components/options/dropdown-checkbox-option";

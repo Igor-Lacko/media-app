@@ -6,9 +6,9 @@ import LectureDetailHeader from "components/detail-headers/lecture-detail-header
 import SubjectDetailHeader from "components/detail-headers/subject-detail-header";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
-import EditBar from "components/edit-bar";
+import EditBar from "components/controls/edit-bar";
 import DetailFillable from "@shared/interface/detail-fillable";
-import MediaItemList from "components/media-item-list";
+import MediaItemList from "components/other/media-item-list";
 import { useState } from "react";
 import VisibleModal from "utils/enum/visible-modal";
 import { EditBarProps } from "utils/props/edit-bar-props";
@@ -20,6 +20,10 @@ import EnumModal from "components/modals/enum-modal";
 import WatchStatus from "@shared/enum/watch-status";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import TextAreaModal from "components/modals/text-area-modal";
+import SeasonDetailHeader from "components/detail-headers/season-detail-header";
+import Season from "@shared/interface/models/season";
+import EpisodeDetailHeader from "components/detail-headers/episode-detail-header";
+import Episode from "@shared/interface/models/episode";
 
 /**
  * Layout for a detail element.
@@ -56,11 +60,16 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         deleteTitle: props.deleteTitle,
         onDelete: () => setVisibleModal(VisibleModal.DELETE),
 
+        // Play (will navigate to "/play" later)
+        playTitle: props.playTitle,
+        onPlay: props.playTitle ? () => console.log("Play button clicked") : undefined,
+
         // Set watch status
         onSetWatchStatus: props.watchStatus ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
 
         // Set description
-        onSetDescription: props.description ? () => setVisibleModal(VisibleModal.DESCRIPTION) : undefined
+        onSetDescription: props.description !== null && props.description !== undefined ? () => setVisibleModal(VisibleModal.DESCRIPTION) 
+        : undefined
     }
 
     return (
@@ -79,6 +88,8 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {props.headerType === DetailHeaders.ENTERTAINMENT && <EntertainmentDetailHeader{...props} />}
             {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader {...props} model={props.model as unknown as Lecture} />}
             {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader {...props} model={props.model as unknown as Subject} />}
+            {props.headerType === DetailHeaders.SEASON && <SeasonDetailHeader {...props} model={props.model as unknown as Season} />}
+            {props.headerType === DetailHeaders.EPISODE && <EpisodeDetailHeader {...props} model={props.model as unknown as Episode} />}
             <EditBar
                 {...editBarProps}
             />
@@ -105,7 +116,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                     props.rateFunction && await props.rateFunction(rating);
                     setVisibleModal(VisibleModal.NONE);
                 }}
-                initialRating={props.rating || 0}
+                initialRating={props.rating && props.rating > 0 ? props.rating : 0}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 3. Watch status modal */}
@@ -128,7 +139,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 4. Set description modal */}
-            {visibleModal === VisibleModal.DESCRIPTION && props.description && <TextAreaModal
+            {visibleModal === VisibleModal.DESCRIPTION && props.description !== null && props.description !== undefined && <TextAreaModal
                 title={"Set Description"}
                 initialDescription={props.description}
                 onSetDescription={async (description: string) => {

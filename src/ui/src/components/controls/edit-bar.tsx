@@ -1,6 +1,7 @@
 import { EditBarProps } from "utils/props/edit-bar-props";
-import MarkFavoriteButton from "./buttons/mark-favorite-button";
-import RoundedButton from "./buttons/rounded-button";
+import MarkFavoriteButton from "../buttons/mark-favorite-button";
+import RoundedButton from "../buttons/rounded-button";
+import { FaPlay } from "react-icons/fa";
 import { FaCheckCircle, FaPencilAlt, FaPlus, FaStar, FaTrash } from "react-icons/fa";
 
 /**
@@ -33,6 +34,12 @@ export default function EditBar(props : EditBarProps) {
                     onClick={props.onDelete}
                     extraClassNames={"bg-red-500 dark:bg-red-700 hover:bg-red-600"}
                     icon={<FaTrash/>}
+                />}
+                {props.playTitle && props.onPlay && <RoundedButton
+                    text={props.playTitle}
+                    onClick={props.onPlay}
+                    extraClassNames={"bg-purple-500 dark:bg-purple-700 hover:bg-purple-600"}
+                    icon={<FaPlay/>}
                 />}
             </div>
             <div

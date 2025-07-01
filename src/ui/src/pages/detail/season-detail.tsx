@@ -3,6 +3,7 @@ import DeleteData from "data/crud/delete";
 import { UpdateDescription, UpdateRating } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
+import NotFoundPage from "pages/not-found";
 import { useEffect, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail-props";
@@ -20,13 +21,13 @@ export default function SeasonDetail() {
 
     useEffect(() => {
         if (season) {
-            setDescription(season.description);
-            setRating(season.rating);
+            setDescription(season.description || "");
+            setRating(season.rating || -1);
         }
     }, [season]);
 
     if (!season) {
-        return <div>Season not found</div>;
+        return <NotFoundPage message={"Season not found."} />;
     }
 
     // Props including children (episodes)
@@ -38,8 +39,7 @@ export default function SeasonDetail() {
         rating: rating,
         hasThumbnail: false,
         hasGenres: false,
-        playable: false,
-        headerType: DetailHeaders.ENTERTAINMENT,
+        headerType: DetailHeaders.SEASON,
         listProps: {
             path: "episodes",
             items: season.episodes,

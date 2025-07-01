@@ -17,7 +17,7 @@ export default function SettingsPage() {
             />
             <InputOption
                 title={"sdaadsads"}
-                placeholder={"Enter your name"}
+                initial={"Enter your name"}
                 onChange={(value: string) => console.log(value)}
             />
         </div>

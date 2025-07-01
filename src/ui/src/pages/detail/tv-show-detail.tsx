@@ -44,7 +44,6 @@ export default function TvShowDetail() {
         description: description,
         rating: rating,
         watchStatus: watchStatus,
-        playable: false,
         headerType: DetailHeaders.ENTERTAINMENT,
         listProps: {
             path: "seasons",

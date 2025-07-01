@@ -1,5 +1,5 @@
 import Subject from "@shared/interface/models/subject";
-import ProgressBar from "components/progress-bar";
+import ProgressBar from "components/other/progress-bar";
 import useProgressBar from "hooks/use-progress-bar";
 import DetailProps from "utils/props/detail-props";
 

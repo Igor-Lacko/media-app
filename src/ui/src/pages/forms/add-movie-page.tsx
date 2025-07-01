@@ -7,7 +7,7 @@ import DropdownCheckboxOption from "components/options/dropdown-checkbox-option"
 import SliderOption from "components/options/slider-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import { defaultMovie } from "utils/model-defaults";
-import FormSection from "components/form-section";
+import FormSection from "components/other/form-section";
 import FormLayout from "layouts/form-layout";
 import useGenreDropdown from "hooks/use-genre-dropdown";
 import useRatingSlider from "hooks/use-rating-slider";

@@ -8,7 +8,7 @@ import ModalProps from "utils/props/modal-props";
  * @param props Props for the modal including title, onSetDescription function, and onClose function.
  */
 export default function TextAreaModal(props: ModalProps) {
-    const description = useRef("");
+    const description = useRef(props.initialDescription || "");
 
     return (
         <AbstractModal>

@@ -21,7 +21,6 @@ export default function SubjectDetail() {
         title: subject.title!,
         hasThumbnail: false,
         hasGenres: false,
-        playable: false,
         headerType: DetailHeaders.SUBJECT,
         listProps: {
             path: "lectures",
