@@ -1,6 +1,6 @@
 import Season from "@shared/interface/models/season";
 import prisma from "db/db";
-import { CreateEpisode, UpdateEpisode } from "./episode-controller";
+import { CreateEpisode, UpdateEpisode, UpdateOrCreateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
 import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
@@ -117,7 +117,7 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
         // Update/create episodes
         if (seasonData.episodes) {
             for (const episode of seasonData.episodes) {
-                episode.identifier ? await UpdateEpisode(episode.identifier, episode, id) :
+                episode.identifier ? await UpdateEpisode(episode.identifier, episode) :
                     await CreateEpisode(episode, id);
             }
         }

@@ -39,7 +39,11 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Edit
         editTitle: props.editTitle,
-        onEdit: props.editTitle ? () => navigate("edit") : undefined,
+        onEdit: props.editTitle ? () => navigate("edit", {
+            state: {
+                id: props.model.identifier
+            }
+        }) : undefined,
 
         // Mark as favorite
         onMarkFavorite: props.markFavoriteFunction,

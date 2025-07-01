@@ -19,6 +19,7 @@ export default async function SubmitEpisode(
     }
 
     if (creating) {
+        console.log("Creating new episode:", episode);
         return await CreateData<Episode>(`/api/episodes/${seasonId}`, episode);
     }
 

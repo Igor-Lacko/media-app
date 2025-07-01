@@ -65,13 +65,44 @@ export async function CreateEpisode(episode: Episode, seasonId: number): Promise
 }
 
 /**
- * Update an episode by its ID. Also called by UpdateSeason() which is called by UpdateTvShow().
+ * Update an episode by its ID.
  * @param id Episode's unique identifier.
  * @param episodeData Partial object containing fields to update.
- * @param seasonId Optional identifier of the season to which the episode belongs.
  * @returns True if successful, false otherwise.
  */
-export async function UpdateEpisode(id: number, episodeData: Partial<Episode>, seasonId?: number): Promise<boolean> {
+export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): Promise<boolean> {
+    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
+    // Debug todo remove
+    console.log("Updating episode with ID:", id);
+    try {
+        await prisma.episode.update({
+            where: {
+                id: id
+            },
+
+            // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
+            data: {
+                ...sanitizedEpisode
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating episode: " + error);
+        return false;
+    }
+}
+
+/**
+ * Update an episode by its ID and season ID. Called by UpdateSeason()
+ * @param id Episode's unique identifier.
+ * @param episodeData Partial object containing fields to update.
+ * @param seasonId Identifier of the season to which the episode belongs.
+ * @returns True if successful, false otherwise.
+ */
+export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Episode>, seasonId?: number): Promise<boolean> {
     const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
     // Debug todo remove
     console.log("Updating episode with ID:", id);

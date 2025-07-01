@@ -22,7 +22,7 @@ export default function MovieDetail() {
     const [rating, setRating] = useState(movie?.rating);
     const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
 
-    // UseEffect to load ther movie if it doesn't immediately
+    // UseEffect to load the movie if it doesn't immediately, todo refactor loading?
     useEffect(() => {
         if (movie) {
             setDescription(movie.description);
