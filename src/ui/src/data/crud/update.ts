@@ -98,3 +98,23 @@ export async function UpdateDescription<T extends { description?: string, identi
         return false;
     }
 }
+
+/**
+ * Updates the video URL of a movie/episode/lecture.
+ * @param url URL to send the request to.
+ * @param model Movie/episode/lecture model to update.
+ * @param videoUrl New video URL value.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function UpdateVideoUrl<T extends { videoUrl?: string, identifier?: number }>
+(url: string, model: T, videoUrl: string): Promise<boolean> {
+    try {
+        await UpdateData<T>(url, model.identifier!, { videoUrl } as Partial<T>);
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating video URL:", error);
+        return false;
+    }
+}

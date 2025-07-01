@@ -20,6 +20,18 @@ export async function GetFilePath(): Promise<string | null> {
         return null;
     }
 
-    const path = await window.electron.getFilePath();
-    return path;
+    return await window.electron.getFilePath();
+}
+
+/**
+ * Checks if a file exists at the given path.
+ * @param path Path to the file.
+ * @returns True if the file exists, false otherwise.
+ */
+export async function IsValidFile(path: string): Promise<boolean> {
+    if(!window.electron || !window.electron.isValidFile) {
+        return false;
+    }
+
+    return await window.electron.isValidFile(path);
 }

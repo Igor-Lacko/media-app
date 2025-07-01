@@ -32,6 +32,11 @@ ipcMain.handle('get-file', async () => {
     return result.filePaths; 
 });
 
+// Checks if a file exists
+ipcMain.handle('check-file-exists', async (event, filePath) => {
+    return existsSync(filePath);
+});
+
 app.whenReady().then(() => {
     // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)
     protocol.handle('local', async (request, callback) => {

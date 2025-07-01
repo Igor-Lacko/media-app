@@ -22,9 +22,9 @@ export interface ModalProps {
     onSelectRating?: (rating: number) => Promise<void>;
     initialRating?: number;
 
-    // For text area modals
-    onSetDescription?: (description: string) => Promise<void>;
-    initialDescription?: string;
+    // For text area/filepath modals
+    onSetText?: (text: string) => Promise<void>;
+    initialText?: string;
 
     // Each one also has this
     onClose: () => void;

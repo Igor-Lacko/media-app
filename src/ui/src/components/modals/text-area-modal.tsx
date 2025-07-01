@@ -5,10 +5,10 @@ import ModalProps from "utils/props/modal-props";
 
 /**
  * Modal that provides a text area for entering a description.
- * @param props Props for the modal including title, onSetDescription function, and onClose function.
+ * @param props Props for the modal including title, onSetText function, and onClose function.
  */
 export default function TextAreaModal(props: ModalProps) {
-    const description = useRef(props.initialDescription || "");
+    const description = useRef(props.initialText || "");
 
     return (
         <AbstractModal>
@@ -21,7 +21,7 @@ export default function TextAreaModal(props: ModalProps) {
                 className={"w-full h-40 p-2 border rounded-lg dark:bg-gray-700 dark:text-gray-200\
                         focus:outline-none focus:ring-2 focus:ring-purple-500 overflow-y-auto"}
                 placeholder={"..."}
-                defaultValue={props.initialDescription || ""}
+                defaultValue={props.initialText || ""}
                 onChange={(e) => {
                     description.current = e.target.value;
                 }}
@@ -30,7 +30,7 @@ export default function TextAreaModal(props: ModalProps) {
                 text={"Close"}
                 extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 onClick={async () => {
-                    props.onSetDescription && await props.onSetDescription(description.current);
+                    props.onSetText && await props.onSetText(description.current);
                     props.onClose();
                 }}
             />

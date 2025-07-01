@@ -1,6 +1,6 @@
 import Lecture from "@shared/interface/models/lecture";
 import DeleteData from "data/crud/delete";
-import { UpdateWatchStatus } from "data/crud/update";
+import { UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import NotFoundPage from "pages/not-found";
@@ -40,6 +40,7 @@ export default function LectureDetail() {
         editTitle: "Edit Lecture",
         deleteTitle: "Delete Lecture",
         deleteFunction: async () => await DeleteData("/api/lectures", lecture.identifier!),
+        setVideoUrlFunction: async (videoUrl: string) => await UpdateVideoUrl<Lecture>("/api/lectures", lecture, videoUrl),
         watchStatusFunction: async (watchStatus: string) => {
             setWatchStatus(watchStatus);
             return await UpdateWatchStatus<Lecture>("/api/lectures", lecture, watchStatus);

@@ -24,6 +24,8 @@ import SeasonDetailHeader from "components/detail-headers/season-detail-header";
 import Season from "@shared/interface/models/season";
 import EpisodeDetailHeader from "components/detail-headers/episode-detail-header";
 import Episode from "@shared/interface/models/episode";
+import { IsValidFile } from "utils/electron-api";
+import FileBrowseModal from "components/modals/file-browse-modal";
 
 /**
  * Layout for a detail element.
@@ -62,7 +64,19 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Play (will navigate to "/play" later)
         playTitle: props.playTitle,
-        onPlay: props.playTitle ? () => console.log("Play button clicked") : undefined,
+        onPlay: props.playTitle ? async () => {
+            if (!props.model.videoUrl) {
+                setVisibleModal(VisibleModal.PLAY_NOFILE);
+                return;
+            }
+
+            if (await IsValidFile(props.model.videoUrl)) {
+                console.log("Playing video:", props.model.videoUrl);
+                return;
+            }
+
+            setVisibleModal(VisibleModal.PLAY_WRONG_FILE);
+        } : undefined,
 
         // Set watch status
         onSetWatchStatus: props.watchStatus ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
@@ -141,9 +155,31 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {/** 4. Set description modal */}
             {visibleModal === VisibleModal.DESCRIPTION && props.description !== null && props.description !== undefined && <TextAreaModal
                 title={"Set Description"}
-                initialDescription={props.description}
-                onSetDescription={async (description: string) => {
+                initialText={props.description}
+                onSetText={async (description: string) => {
                     props.setDescriptionFunction && await props.setDescriptionFunction(description);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 5. No video file yet modal */}
+            {visibleModal === VisibleModal.PLAY_NOFILE && <FileBrowseModal
+                title={"Error: No video found"}
+                message={`${props.title} does not have a video file associated with it yet. Please select a video file to play.`}
+                initialText={props.model.videoUrl || ""}
+                onSetText={async (videoUrl: string) => {
+                    props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 6. Invalid video file modal */}
+            {visibleModal === VisibleModal.PLAY_WRONG_FILE && <FileBrowseModal
+                title={"Error: Invalid video file"}
+                message={`The video file for ${props.title} is invalid or does not exist. Please select a valid video file.`}
+                initialText={props.model.videoUrl || ""}
+                onSetText={async (videoUrl: string) => {
+                    props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
                     setVisibleModal(VisibleModal.NONE);
                 }}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}

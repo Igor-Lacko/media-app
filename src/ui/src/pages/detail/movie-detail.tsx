@@ -4,7 +4,7 @@ import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail-props";
 import NotFoundPage from "pages/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
-import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
+import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
 import DeleteData from "data/crud/delete";
 import { useEffect, useState } from "react";
@@ -53,6 +53,7 @@ export default function MovieDetail() {
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
         markFavoriteFunction: async () => await MarkAsFavorite<Movie>("/api/movies", movie),
         rateTitle: "Rate Movie",
+        setVideoUrlFunction: async (videoUrl: string) => await UpdateVideoUrl<Movie>("/api/movies", movie, videoUrl),
         rateFunction: async (rating: number) => {
             setRating(rating);
             return await UpdateRating<Movie>("/api/movies", movie, rating)

@@ -6,7 +6,9 @@ export enum VisibleModal {
     DELETE,
     RATE,
     DESCRIPTION,
-    WATCH_STATUS
+    WATCH_STATUS,
+    PLAY_NOFILE,
+    PLAY_WRONG_FILE,
 }
 
 export default VisibleModal;

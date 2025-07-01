@@ -42,8 +42,8 @@ export default function EpisodeDetail() {
         headerType: DetailHeaders.EPISODE,
         editTitle: "Edit Episode",
         deleteTitle: "Delete Episode",
-        deleteFunction: async () => await DeleteData("/api/episodes", episode.identifier!),
         rateTitle: "Rate Episode",
+        deleteFunction: async () => await DeleteData("/api/episodes", episode.identifier!),
         rateFunction: async (rating: number) => {
             setRating(rating);
             return await UpdateRating<Episode>("/api/episodes", episode, rating);

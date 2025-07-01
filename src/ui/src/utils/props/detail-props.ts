@@ -23,12 +23,13 @@ export interface DetailProps<T extends DetailFillable>{
     addTitle?: string;
     editTitle?: string;
     deleteTitle?: string;
+    rateTitle?: string;
     deleteFunction?: () => Promise<boolean>;
     markFavoriteFunction?: () => Promise<boolean>;
-    rateTitle?: string;
     rateFunction?: (rating: number) => Promise<boolean>;
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<boolean>;
     setDescriptionFunction?: (description : string) => Promise<boolean>;
+    setVideoUrlFunction?: (videoUrl: string) => Promise<boolean>;
 }
 
 export default DetailProps;
