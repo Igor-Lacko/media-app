@@ -1,4 +1,4 @@
-import Toggle from "components/toggle";
+import Toggle from "components/buttons/toggle";
 
 export default function ToggleOption({ title, checked, onChange, extraClassNames }: { title: string, checked: boolean, onChange: (checked: boolean) => void, extraClassNames?: string }) {
     return (

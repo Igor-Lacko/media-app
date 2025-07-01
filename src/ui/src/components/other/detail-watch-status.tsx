@@ -1,5 +1,4 @@
 import WatchStatus from "@shared/enum/watch-status";
-import React from "react";
 import { FaCheckCircle, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 
