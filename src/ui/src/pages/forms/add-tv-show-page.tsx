@@ -81,6 +81,11 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                     props={ratingSliderProps}
                     title={"Rating"}
                 />
+                <FileBrowseOption
+                    title={"Thumbnail Image"}
+                    initial={tvShowRef.current.thumbnailUrl || ""}
+                    onChange={(value) => tvShowRef.current.thumbnailUrl = value}
+                />
             </FormSection>
             <FormSection
                 title={"Seasons"}

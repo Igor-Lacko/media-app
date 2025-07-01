@@ -54,7 +54,6 @@ model Season {
     rating       Float?
     description  String?
     shortDescription String?
-    thumbnailUrl String?
 }
 
 model Episode {

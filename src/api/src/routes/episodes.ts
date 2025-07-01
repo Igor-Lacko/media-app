@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { DeleteEpisode, GetEpisodeById, UpdateEpisode } from "controllers/episode-controller";
+import { CreateEpisode, DeleteEpisode, GetEpisodeById, UpdateEpisode } from "controllers/episode-controller";
 
 const router = Router();
 
@@ -13,6 +13,24 @@ router.get("/:id", async (req, res) => {
 
     const episode = await GetEpisodeById(episodeId);
     episode ? res.json(episode) : res.status(404).json({ error: "Episode not found" });
+});
+
+// Create a new episode
+router.post("/:id", async (req, res) => {
+    const seasonId = parseInt(req.params.id, 10);
+    if (isNaN(seasonId)) {
+        res.status(400).json({ error: "Invalid season ID" });
+        return;
+    }
+
+    const episode = req.body;
+    if (await CreateEpisode(episode, seasonId)) {
+        res.status(201).json({ message: "Episode created successfully" });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to create episode" });
+    }
 });
 
 // Episode updates

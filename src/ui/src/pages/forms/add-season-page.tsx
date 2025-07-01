@@ -19,9 +19,8 @@ import { defaultEpisode, defaultSeason } from "utils/model-defaults";
 /**
  * Form page for adding a new season to a TV show.
  * Can also be used to edit an existing season, this is done by passing a route param.
- * @param route Optional route parameter containing the season data to pre-fill the form.
  */
-export default function AddSeasonPage({ route } : { route? : any}) {
+export default function AddSeasonPage() {
     // Initial data, either get the tv show id as a param or use a default season
     const location = useLocation();
     const showId = location.state.id || 1;

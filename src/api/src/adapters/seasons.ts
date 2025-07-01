@@ -16,6 +16,7 @@ export function SanitizeClientSeasonToDB (season : ClientSeason): ClientSeason {
         watchStatus,
         title,
         videoUrl,
+        thumbnailUrl,
         ...sanitizedSeason
     } = season;
     return sanitizedSeason;

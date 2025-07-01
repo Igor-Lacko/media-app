@@ -36,7 +36,7 @@ export default function SeasonDetail() {
         title: `Season ${season.seasonNumber}`,
         description: description,
         rating: rating,
-        hasThumbnail: true,
+        hasThumbnail: false,
         hasGenres: false,
         playable: false,
         headerType: DetailHeaders.ENTERTAINMENT,
@@ -44,7 +44,7 @@ export default function SeasonDetail() {
             path: "episodes",
             items: season.episodes,
             showRating: true,
-            showThumbnail: true
+            showThumbnail: false
         },
         addTitle: "Add Episode",
         editTitle: "Edit Season",

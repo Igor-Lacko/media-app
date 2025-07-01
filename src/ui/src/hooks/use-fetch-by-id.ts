@@ -8,10 +8,11 @@ import { FetchDataWithId } from "data/crud/read";
  */
 export default function useFetchById<T>(url: string, param: string = "id", deps: any[] = []): T | undefined {
     // Get param id depending on the provided parameter
-    const params = useParams<{ id?: string; seasonId?: string; lectureId?: string; }>();
+    const params = useParams<{ id?: string; seasonId?: string; lectureId?: string; episodeId?: string; }>();
     const id = param === "id" ? params.id
         : param === "seasonId" ? params.seasonId
         : param === "lectureId" ? params.lectureId
+        : param === "episodeId" ? params.episodeId
             : (() => { throw new Error(`Invalid parameter: ${param}. Expected 'id' or 'seasonId'.`) })();
 
     console.log(`useFetchById: Fetching data from ${url} with id: ${id}`);
