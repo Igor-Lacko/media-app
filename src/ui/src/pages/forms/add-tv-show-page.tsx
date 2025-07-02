@@ -83,6 +83,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                 />
                 <FileBrowseOption
                     title={"Thumbnail Image"}
+                    extensions={[".jpg", ".jpeg", ".png", ".webp"]}
                     initial={tvShowRef.current.thumbnailUrl || ""}
                     onChange={(value) => tvShowRef.current.thumbnailUrl = value}
                 />
@@ -158,6 +159,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                                     />
                                     <FileBrowseOption
                                         title={"Episode Video File"}
+                                        extensions={[".mp4", ".mkv", ".avi", ".mov"]}
                                         initial={episode.videoUrl || ""}
                                         onChange={(value) => episode.videoUrl = value}
                                     />

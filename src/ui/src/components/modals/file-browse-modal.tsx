@@ -20,6 +20,7 @@ export default function FileBrowseModal(props: ModalProps) {
             )}
             <FileBrowseButton
                 initial={props.initialText || ""}
+                extensions={props.extensions || []}
                 onChange={(value: string) => {
                     path.current = value;
                 }}

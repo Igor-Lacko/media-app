@@ -26,6 +26,9 @@ export interface ModalProps {
     onSetText?: (text: string) => Promise<void>;
     initialText?: string;
 
+    // Strictly for file browse modals
+    extensions?: string[];
+
     // Each one also has this
     onClose: () => void;
 

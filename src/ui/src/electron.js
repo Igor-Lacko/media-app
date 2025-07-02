@@ -24,10 +24,17 @@ function createWindow() {
     mainWindow.loadURL(startUrl);
 }
 
-// Gets a absolute file path
-ipcMain.handle('get-file', async () => {
+// Gets a absolute file path, allows only files ending with "extensions" to be selected
+ipcMain.handle('get-file', async (event, extensions) => {
+    console.log(`Opening file dialog with extensions: ${extensions}`);
     const result = await dialog.showOpenDialog({
-        properties: ['openFile']
+        properties: ['openFile'],
+        filters: [
+            {
+                name: 'Media Files',
+                extensions: extensions || ['*']
+            }
+        ]
     });
     return result.filePaths; 
 });
@@ -37,6 +44,12 @@ ipcMain.handle('check-file-exists', async (event, filePath) => {
     console.log(`Checking if file exists: ${filePath}`);
     return existsSync(filePath);
 });
+
+// Checks if a file is a valid video
+ipcMain.handle('is-valid-video', async (event, filePath) => {
+    const validExtensions = ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.webm'];
+    return validExtensions.some(ext => filePath.endsWith(ext));
+})
 
 app.whenReady().then(() => {
     // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)

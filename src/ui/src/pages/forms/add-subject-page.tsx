@@ -67,6 +67,7 @@ export default function AddSubjectPage({ route } : { route?: any }) {
                         />
                         <FileBrowseOption
                             title={"Lecture video"}
+                            extensions={[".mp4", ".mkv", ".avi", ".mov"]}
                             initial={lecture.videoUrl || ""}
                             onChange={(value) => lecture.videoUrl = value}
                         />

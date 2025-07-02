@@ -45,6 +45,7 @@ export default function AddLecturePage({ route }: { route?: any }) {
                 />
                 <FileBrowseOption
                     title={"Lecture video"}
+                    extensions={[".mp4", ".mkv", ".avi", ".mov"]}
                     initial={lectureRef.current.videoUrl || ""}
                     onChange={(value) => lectureRef.current.videoUrl = value}
                 />
