@@ -25,6 +25,9 @@ import SeasonDetail from 'pages/detail/season-detail';
 import AddEpisodePage from 'pages/forms/add-episode-page';
 import EpisodeDetail from 'pages/detail/episode-detail';
 import LectureDetail from 'pages/detail/lecture-detail';
+import LectureVideo from 'pages/video/lecture-video';
+import EpisodeVideo from 'pages/video/episode-video';
+import MovieVideo from 'pages/video/movie-video';
 
 // React-query
 const queryClient = new QueryClient();
@@ -43,6 +46,7 @@ const rootContainer: ReactNode = (
                         <Route path="add" element={<AddMoviePage />} />
                         <Route path=":id" element={<MovieDetail />} />
                         <Route path=":id/edit" element={<AddMoviePage />} />
+                        <Route path=":id/play" element={<MovieVideo />} />
                     </Route>
                     <Route path="tv-shows/*">
                         <Route index element={<TvShowPage />} />
@@ -55,6 +59,7 @@ const rootContainer: ReactNode = (
                         <Route path=":id/:seasonId/add" element={<AddEpisodePage />} />
                         <Route path=":id/:seasonId/:episodeId" element={<EpisodeDetail />} />
                         <Route path=":id/:seasonId/:episodeId/edit" element={<AddEpisodePage />} />
+                        <Route path=":id/:seasonId/:episodeId/play" element={<EpisodeVideo />} />
                     </Route>
                     <Route path="subjects/*">
                         <Route index element={<SubjectPage />} />
@@ -64,6 +69,7 @@ const rootContainer: ReactNode = (
                         <Route path=":id/add" element={<AddLecturePage />} />
                         <Route path=":id/:lectureId" element={<LectureDetail />} />
                         <Route path=":id/:lectureId/edit" element={<AddLecturePage />} />
+                        <Route path=":id/:lectureId/play" element={<LectureVideo />} />
                     </Route>
                     <Route path="settings/*" element={<SettingsPage />} />
                 </Route>

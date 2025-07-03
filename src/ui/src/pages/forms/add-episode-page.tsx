@@ -61,7 +61,7 @@ export default function AddEpisodePage() {
             >
                 <FileBrowseOption
                     title={"Video File"}
-                    extensions={[".mp4", ".mkv", ".avi", ".mov"]}
+                    allowed={"video"}
                     initial={episodeRef.current.videoUrl || ""}
                     onChange={(value) => episodeRef.current.videoUrl = value}
                 />

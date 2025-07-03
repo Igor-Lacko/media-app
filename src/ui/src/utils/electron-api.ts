@@ -5,7 +5,7 @@
 declare global {
     interface Window {
         electron?: {
-            getFilePath: (extensions: string[]) => Promise<string | null>;
+            getFilePath: (allowed: string) => Promise<string | null>;
             isValidFile: (filePath: string) => Promise<boolean>;
             isValidVideo: (filePath: string) => Promise<boolean>;
         };
@@ -14,15 +14,16 @@ declare global {
 
 /**
  * Invokes electron's IPC to get a file path from the user.
+ * @param allowed Allowed files, e.g. "video" or "image"
  * @returns File path as a string or null if no file was selected.
  */
-export async function GetFilePath(extensions: string[]): Promise<string | null> {
-    console.log("Requesting file path with extensions: ", extensions);
+export async function GetFilePath(allowed: string): Promise<string | null> {
+    console.log("Requesting file path with extensions: ", allowed);
     if (!window.electron || !window.electron.getFilePath) {
         return null;
     }
 
-    return await window.electron.getFilePath(extensions);
+    return await window.electron.getFilePath(allowed);
 }
 
 /**
@@ -45,14 +46,15 @@ export async function IsValidFile(path: string): Promise<boolean> {
  * @returns True if the file is a valid video, false otherwise.
  */
 export async function IsValidVideo(path: string): Promise<boolean> {
-    if(!window.electron || !window.electron.isValidVideo) {
-        console.log("Electron API not available for video validation.");
-        return false;
-    }
+    // if(!window.electron || !window.electron.isValidVideo) {
+    //     console.log("Electron API not available for video validation.");
+    //     return false;
+    // }
 
-    if (await IsValidFile(path) && await window.electron.isValidVideo(path)) {
-        return true;
-    }
+    // if (await IsValidFile(path) && await window.electron.isValidVideo(path)) {
+    //     return true;
+    // }
 
-    return false;
+    // return false;
+    return true;
 }

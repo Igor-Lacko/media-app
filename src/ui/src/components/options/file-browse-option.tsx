@@ -9,13 +9,13 @@ export default function FileBrowseOption({
     title,
     initial,
     onChange,
-    extensions,
+    allowed,
     extraClassnames,
 }: {
     title: string;
     initial: string;
     onChange: (value: string) => void;
-    extensions?: string[];
+    allowed: string;
     extraClassnames?: string;
 }) {
     return (
@@ -33,7 +33,11 @@ export default function FileBrowseOption({
                 {title}
             </span>
             <div className={"flex items-center justify-start w-4/10"}>
-                <FileBrowseButton initial={initial} onChange={onChange} />
+                <FileBrowseButton 
+                    initial={initial}
+                    allowed={allowed || "all"}
+                    onChange={onChange} 
+                />
             </div>
         </div>
     );

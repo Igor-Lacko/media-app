@@ -2,7 +2,7 @@ import DetailLayout from "layouts/detail-layout";
 import Movie from "@shared/interface/models/movie";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail-props";
-import NotFoundPage from "pages/not-found";
+import NotFoundPage from "pages/other/not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";

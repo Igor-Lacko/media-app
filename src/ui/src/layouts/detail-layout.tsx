@@ -71,7 +71,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             }
 
             if (await IsValidVideo(props.videoUrl.current)) {
-                console.log("Playing video:", props.videoUrl.current);
+                navigate("play")
                 return;
             }
 
@@ -167,7 +167,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 title={"Error: No video found"}
                 message={`${props.title} does not have a video file associated with it yet. Please select a video file to play.`}
                 initialText={props.videoUrl?.current || ""}
-                extensions={[".mp4", ".mkv", ".avi", ".mov"]}
+                allowed={"video"}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
                     setVisibleModal(VisibleModal.NONE);
@@ -179,7 +179,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 title={"Error: Invalid video file"}
                 message={`The video file for ${props.title} is invalid or does not exist. Please select a valid video file.`}
                 initialText={props.videoUrl?.current || ""}
-                extensions={[".mp4", ".mkv", ".avi", ".mov"]}
+                allowed={"video"}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
                     setVisibleModal(VisibleModal.NONE);

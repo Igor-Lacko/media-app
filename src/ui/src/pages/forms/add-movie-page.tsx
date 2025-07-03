@@ -74,13 +74,13 @@ export default function AddMoviePage({ route } : { route?: any }) {
             >
                 <FileBrowseOption
                     title={"Thumbnail"}
-                    extensions={[".jpg", ".jpeg", ".png", ".webp"]}
+                    allowed={"image"}
                     initial={movieRef.current.thumbnailUrl || ""}
                     onChange={(value) => movieRef.current.thumbnailUrl = value}
                 />
                 <FileBrowseOption
                     title={"Video File"}
-                    extensions={[".mp4", ".mkv", ".avi", ".mov"]}
+                    allowed={"video"}
                     initial={movieRef.current.videoUrl || ""}
                     onChange={(value) => movieRef.current.videoUrl = value}
                 />

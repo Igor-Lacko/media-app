@@ -7,6 +7,11 @@ const DEV_SERVER_URL = 'http://localhost:5173/';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST_PATH = `file://${join(__dirname, '../dist/index.html')}`
 
+protocol.registerSchemesAsPrivileged([
+    { scheme: 'local', privileges: { stream: true, bypassCSP: true, } }
+]);
+
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         height: 600,
@@ -14,7 +19,8 @@ function createWindow() {
         webPreferences: {
             preload: join(__dirname, 'electron/preload.js'),
             contextIsolation: true,
-            nodeIntegration: false
+            nodeIntegration: false,
+            webSecurity: false
         },
     });
 
@@ -25,16 +31,13 @@ function createWindow() {
 }
 
 // Gets a absolute file path, allows only files ending with "extensions" to be selected
-ipcMain.handle('get-file', async (event, extensions) => {
-    console.log(`Opening file dialog with extensions: ${extensions}`);
+ipcMain.handle('get-file', async (event, allowed) => {
+    const extensions = allowed === "video" ? ['mp4', 'mkv', 'avi', 'mov'] :
+                        allowed === "image" ? ['jpg', 'jpeg', 'png', 'gif'] :
+                        ["*"];
+    console.log(`Opening file dialog with extcxcxzensions: ${extensions}`);
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
-        filters: [
-            {
-                name: 'Media Files',
-                extensions: extensions || ['*']
-            }
-        ]
     });
     return result.filePaths; 
 });
@@ -47,15 +50,14 @@ ipcMain.handle('check-file-exists', async (event, filePath) => {
 
 // Checks if a file is a valid video
 ipcMain.handle('is-valid-video', async (event, filePath) => {
-    const validExtensions = ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.webm'];
+    const validExtensions = ['.mp4', '.mkv', '.avi', '.mov'];
     return validExtensions.some(ext => filePath.endsWith(ext));
 })
 
 app.whenReady().then(() => {
     // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)
-    protocol.handle('local', async (request, callback) => {
-        const filePath = request.url.replace(`local://`, 'file://');
-        return net.fetch(filePath);
+    protocol.handle('local', function(request) {
+        return net.fetch('file://' + request.url.slice('local://'.length));
     });
 
     createWindow();

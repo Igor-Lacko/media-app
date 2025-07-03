@@ -2,8 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 // Expose the API to the renderer process
 contextBridge.exposeInMainWorld('electron', {
-    getFilePath: async (extensions) => {
-        const paths = await ipcRenderer.invoke('get-file', extensions);
+    getFilePath: async (allowed) => {
+        const paths = await ipcRenderer.invoke('get-file', allowed);
         return paths && paths.length > 0 ? paths[0] : null; // Return the first file path
     },
 

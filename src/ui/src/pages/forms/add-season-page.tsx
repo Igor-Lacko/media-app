@@ -94,7 +94,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
                         />
                         <FileBrowseOption
                             title={"Episode Video File"}
-                            extensions={[".mp4", ".mkv", ".avi", ".mov"]}
+                            allowed={"video"}
                             initial={episode.videoUrl || ""}
                             onChange={(value) => episode.videoUrl = value}
                         />

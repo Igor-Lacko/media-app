@@ -27,7 +27,7 @@ export interface ModalProps {
     initialText?: string;
 
     // Strictly for file browse modals
-    extensions?: string[];
+    allowed?: string;
 
     // Each one also has this
     onClose: () => void;
