@@ -13,18 +13,19 @@ protocol.registerSchemesAsPrivileged([
 
 
 function createWindow() {
+    const isDev = !app.isPackaged;
     const mainWindow = new BrowserWindow({
+        titleBarStyle: 'hidden',
         height: 600,
         width: 800,
         webPreferences: {
             preload: join(__dirname, 'electron/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
-            webSecurity: false
+            webSecurity: !isDev
         },
     });
 
-    const isDev = !app.isPackaged;
     const startUrl = isDev ? DEV_SERVER_URL : DIST_PATH;
 
     mainWindow.loadURL(startUrl);

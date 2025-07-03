@@ -1,21 +1,61 @@
+import VideoLowerBar from "components/controls/video-lower-bar";
+import VideoUpperBar from "components/controls/video-upper-bar";
+import useVideo from "hooks/use-video";
+import { useRef, useState } from "react";
+import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import videoPlayerProps from "utils/props/video-player-props";
+import VideoUpperBarProps from "utils/props/video-upper-bar-props";
 
+/**
+ * Layout for the video player page.
+ * @param props Title, URL, button handlers.
+ */
 export default function VideoPlayerLayout(props : videoPlayerProps) {
+    // To control lower/upper bars on mouse movement
+    const [areBarsVisible, setAreBarsVisible] = useState(true);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    // To control the video
+    const {videoRef, ...videoControls} = useVideo();
+
+    // placeholders
+    const lowerBarProps : VideoLowerBarProps = {
+        isVisible: areBarsVisible,
+        title: props.title,
+        currentSpeed: videoRef.current?.playbackRate,
+        ...videoControls,
+    }
+
+    const upperBarProps : VideoUpperBarProps = {
+        isVisible: areBarsVisible,
+        onNoteClick: () => console.log("Note clicked"),
+    }
     return (
-        <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="text-2xl font-bold mb-4">{props.title}</h1>
-            <video
-                className="w-full max-w-3xl rounded-lg shadow-lg"
-                controls
-                src={`file://${props.url}`}
-                onError={(e) => console.error('Video error:', e)}
+        <div
+            className={"flex flex-col overflow-hidden w-full h-full items-center justify-start"}
+            onMouseMove={() => {
+                // Set to visible and set a timer to hide after 3 seconds
+                setAreBarsVisible(true);
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                }
+
+                timeoutRef.current = setTimeout(() => {
+                    setAreBarsVisible(false);
+                }, 3000);
+            }}
+        >
+            <VideoUpperBar
+                {...upperBarProps}
             />
-            <button
-                className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                onClick={props.onClose}
-            >
-                Close
-            </button>
+            <video
+                src={`file://${props.url}`}
+                className={"w-full h-full object-fill"}
+                ref={videoRef}
+            />
+            <VideoLowerBar
+                {...lowerBarProps}
+            />
         </div>
     );
 }
