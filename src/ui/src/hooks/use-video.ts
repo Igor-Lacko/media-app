@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 /**
  * Custom hook to manage video playback and controls.
@@ -6,7 +6,7 @@ import React, { useRef } from "react";
  * 
  * @returns An object containing the video reference, playback control functions, and playback state.
  */
-export default function useVideo() : {
+export default function useVideo(playbackStoreFunction: (time: number) => Promise<void>, initialPlayback?: number) : {
     videoRef: React.RefObject<HTMLVideoElement | null>;
     onSwitchPlaying: () => void;
     isPlaying: boolean;
@@ -22,10 +22,11 @@ export default function useVideo() : {
     const [isPlaying, setPlaying] = React.useState(false);
 
     // Handlers
-    const onSwitchPlaying = () => {
+    const onSwitchPlaying = async () => {
         if (videoRef.current) {
             if (isPlaying) {
                 videoRef.current.pause();
+                await playbackStoreFunction(videoRef.current.currentTime);
             } else {
                 videoRef.current.play();
             }
@@ -56,6 +57,15 @@ export default function useVideo() : {
             videoRef.current.playbackRate -= 0.25;
         }
     }
+
+    // Set initial playback position and play
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.currentTime = initialPlayback || 0;
+            videoRef.current.play();
+            setPlaying(true);
+        }
+    }, [videoRef]);
 
     return {
         videoRef,

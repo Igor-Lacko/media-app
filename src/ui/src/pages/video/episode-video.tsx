@@ -1,4 +1,5 @@
 import Episode from "@shared/interface/models/episode";
+import { UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 
@@ -11,7 +12,10 @@ export default function EpisodeVideo() {
         <VideoPlayerLayout
             title={episode.title || "Episode Video"}
             url={episode.videoUrl || ""}
-            onClose={() => window.history.back()}
+            saveContinueAt={async (time: number) => {
+                await UpdatePlaybackPosition<Episode>("/api/episodes", episode, time);
+            }}
+            initialPlaybackTime={episode.continueAt || 0}
         />
     )
 }

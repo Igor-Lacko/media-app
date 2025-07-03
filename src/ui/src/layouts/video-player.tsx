@@ -1,7 +1,7 @@
 import VideoLowerBar from "components/controls/video-lower-bar";
 import VideoUpperBar from "components/controls/video-upper-bar";
 import useVideo from "hooks/use-video";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import videoPlayerProps from "utils/props/video-player-props";
 import VideoUpperBarProps from "utils/props/video-upper-bar-props";
@@ -16,7 +16,7 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // To control the video
-    const {videoRef, ...videoControls} = useVideo();
+    const {videoRef, ...videoControls} = useVideo(props.saveContinueAt, props.initialPlaybackTime);
 
     // placeholders
     const lowerBarProps : VideoLowerBarProps = {

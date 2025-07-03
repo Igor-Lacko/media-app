@@ -61,7 +61,8 @@ export async function CreateLecture(lecture: Lecture, subjectId: number): Promis
                 // This will probably always be empty on creation, but just in case?
                 notes: {
                     create: lecture.notes.map((note) => ({
-                        content: note
+                        content: note.content,
+                        timestamp: note.timestamp
                     }))
                 }
             }
@@ -97,7 +98,8 @@ export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Prom
                 notes: sanitizedLecture.notes ? {
                     deleteMany: {},
                     create: sanitizedLecture.notes.map((note) => ({
-                        content: note
+                        content: note.content,
+                        timestamp: note.timestamp
                     }))
                 } : undefined,
             }

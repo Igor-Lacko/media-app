@@ -92,6 +92,7 @@ model Lecture {
 model Note {
     id      Int     @id @default(autoincrement())
     content String
+    timestamp Int?  // Notes can also be added in the lecture's page/detail footer, so a timestamp can't be mandatory
     lectureId Int
     lecture Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }

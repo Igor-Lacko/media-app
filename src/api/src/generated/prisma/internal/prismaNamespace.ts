@@ -1171,8 +1171,7 @@ export const SeasonScalarFieldEnum = {
   seasonNumber: 'seasonNumber',
   rating: 'rating',
   description: 'description',
-  shortDescription: 'shortDescription',
-  thumbnailUrl: 'thumbnailUrl'
+  shortDescription: 'shortDescription'
 } as const
 
 export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
@@ -1219,6 +1218,7 @@ export type LectureScalarFieldEnum = (typeof LectureScalarFieldEnum)[keyof typeo
 export const NoteScalarFieldEnum = {
   id: 'id',
   content: 'content',
+  timestamp: 'timestamp',
   lectureId: 'lectureId'
 } as const
 

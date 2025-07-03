@@ -27,29 +27,34 @@ export type AggregateNote = {
 
 export type NoteAvgAggregateOutputType = {
   id: number | null
+  timestamp: number | null
   lectureId: number | null
 }
 
 export type NoteSumAggregateOutputType = {
   id: number | null
+  timestamp: number | null
   lectureId: number | null
 }
 
 export type NoteMinAggregateOutputType = {
   id: number | null
   content: string | null
+  timestamp: number | null
   lectureId: number | null
 }
 
 export type NoteMaxAggregateOutputType = {
   id: number | null
   content: string | null
+  timestamp: number | null
   lectureId: number | null
 }
 
 export type NoteCountAggregateOutputType = {
   id: number
   content: number
+  timestamp: number
   lectureId: number
   _all: number
 }
@@ -57,29 +62,34 @@ export type NoteCountAggregateOutputType = {
 
 export type NoteAvgAggregateInputType = {
   id?: true
+  timestamp?: true
   lectureId?: true
 }
 
 export type NoteSumAggregateInputType = {
   id?: true
+  timestamp?: true
   lectureId?: true
 }
 
 export type NoteMinAggregateInputType = {
   id?: true
   content?: true
+  timestamp?: true
   lectureId?: true
 }
 
 export type NoteMaxAggregateInputType = {
   id?: true
   content?: true
+  timestamp?: true
   lectureId?: true
 }
 
 export type NoteCountAggregateInputType = {
   id?: true
   content?: true
+  timestamp?: true
   lectureId?: true
   _all?: true
 }
@@ -173,6 +183,7 @@ export type NoteGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type NoteGroupByOutputType = {
   id: number
   content: string
+  timestamp: number | null
   lectureId: number
   _count: NoteCountAggregateOutputType | null
   _avg: NoteAvgAggregateOutputType | null
@@ -202,6 +213,7 @@ export type NoteWhereInput = {
   NOT?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
   id?: Prisma.IntFilter<"Note"> | number
   content?: Prisma.StringFilter<"Note"> | string
+  timestamp?: Prisma.IntNullableFilter<"Note"> | number | null
   lectureId?: Prisma.IntFilter<"Note"> | number
   lecture?: Prisma.XOR<Prisma.LectureScalarRelationFilter, Prisma.LectureWhereInput>
 }
@@ -209,6 +221,7 @@ export type NoteWhereInput = {
 export type NoteOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrderInput | Prisma.SortOrder
   lectureId?: Prisma.SortOrder
   lecture?: Prisma.LectureOrderByWithRelationInput
 }
@@ -219,6 +232,7 @@ export type NoteWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.NoteWhereInput[]
   NOT?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
   content?: Prisma.StringFilter<"Note"> | string
+  timestamp?: Prisma.IntNullableFilter<"Note"> | number | null
   lectureId?: Prisma.IntFilter<"Note"> | number
   lecture?: Prisma.XOR<Prisma.LectureScalarRelationFilter, Prisma.LectureWhereInput>
 }, "id">
@@ -226,6 +240,7 @@ export type NoteWhereUniqueInput = Prisma.AtLeast<{
 export type NoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrderInput | Prisma.SortOrder
   lectureId?: Prisma.SortOrder
   _count?: Prisma.NoteCountOrderByAggregateInput
   _avg?: Prisma.NoteAvgOrderByAggregateInput
@@ -240,44 +255,52 @@ export type NoteScalarWhereWithAggregatesInput = {
   NOT?: Prisma.NoteScalarWhereWithAggregatesInput | Prisma.NoteScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Note"> | number
   content?: Prisma.StringWithAggregatesFilter<"Note"> | string
+  timestamp?: Prisma.IntNullableWithAggregatesFilter<"Note"> | number | null
   lectureId?: Prisma.IntWithAggregatesFilter<"Note"> | number
 }
 
 export type NoteCreateInput = {
   content: string
+  timestamp?: number | null
   lecture: Prisma.LectureCreateNestedOneWithoutNotesInput
 }
 
 export type NoteUncheckedCreateInput = {
   id?: number
   content: string
+  timestamp?: number | null
   lectureId: number
 }
 
 export type NoteUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lecture?: Prisma.LectureUpdateOneRequiredWithoutNotesNestedInput
 }
 
 export type NoteUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lectureId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type NoteCreateManyInput = {
   id?: number
   content: string
+  timestamp?: number | null
   lectureId: number
 }
 
 export type NoteUpdateManyMutationInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type NoteUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lectureId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -294,28 +317,33 @@ export type NoteOrderByRelationAggregateInput = {
 export type NoteCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   lectureId?: Prisma.SortOrder
 }
 
 export type NoteAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   lectureId?: Prisma.SortOrder
 }
 
 export type NoteMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   lectureId?: Prisma.SortOrder
 }
 
 export type NoteMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   lectureId?: Prisma.SortOrder
 }
 
 export type NoteSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   lectureId?: Prisma.SortOrder
 }
 
@@ -363,11 +391,13 @@ export type NoteUncheckedUpdateManyWithoutLectureNestedInput = {
 
 export type NoteCreateWithoutLectureInput = {
   content: string
+  timestamp?: number | null
 }
 
 export type NoteUncheckedCreateWithoutLectureInput = {
   id?: number
   content: string
+  timestamp?: number | null
 }
 
 export type NoteCreateOrConnectWithoutLectureInput = {
@@ -401,26 +431,31 @@ export type NoteScalarWhereInput = {
   NOT?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
   id?: Prisma.IntFilter<"Note"> | number
   content?: Prisma.StringFilter<"Note"> | string
+  timestamp?: Prisma.IntNullableFilter<"Note"> | number | null
   lectureId?: Prisma.IntFilter<"Note"> | number
 }
 
 export type NoteCreateManyLectureInput = {
   id?: number
   content: string
+  timestamp?: number | null
 }
 
 export type NoteUpdateWithoutLectureInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type NoteUncheckedUpdateWithoutLectureInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type NoteUncheckedUpdateManyWithoutLectureInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -428,6 +463,7 @@ export type NoteUncheckedUpdateManyWithoutLectureInput = {
 export type NoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
+  timestamp?: boolean
   lectureId?: boolean
   lecture?: boolean | Prisma.LectureDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
@@ -435,6 +471,7 @@ export type NoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type NoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
+  timestamp?: boolean
   lectureId?: boolean
   lecture?: boolean | Prisma.LectureDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
@@ -442,6 +479,7 @@ export type NoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type NoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
+  timestamp?: boolean
   lectureId?: boolean
   lecture?: boolean | Prisma.LectureDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
@@ -449,10 +487,11 @@ export type NoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type NoteSelectScalar = {
   id?: boolean
   content?: boolean
+  timestamp?: boolean
   lectureId?: boolean
 }
 
-export type NoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "lectureId", ExtArgs["result"]["note"]>
+export type NoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "timestamp" | "lectureId", ExtArgs["result"]["note"]>
 export type NoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lecture?: boolean | Prisma.LectureDefaultArgs<ExtArgs>
 }
@@ -471,6 +510,7 @@ export type $NotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     content: string
+    timestamp: number | null
     lectureId: number
   }, ExtArgs["result"]["note"]>
   composites: {}
@@ -898,6 +938,7 @@ export interface Prisma__NoteClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface NoteFieldRefs {
   readonly id: Prisma.FieldRef<"Note", 'Int'>
   readonly content: Prisma.FieldRef<"Note", 'String'>
+  readonly timestamp: Prisma.FieldRef<"Note", 'Int'>
   readonly lectureId: Prisma.FieldRef<"Note", 'Int'>
 }
     

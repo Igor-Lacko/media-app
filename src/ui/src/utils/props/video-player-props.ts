@@ -4,7 +4,11 @@
 export interface videoPlayerProps {
     title: string;
     url: string;
-    onClose: () => void;
+    initialPlaybackTime?: number;
+    saveContinueAt(time: number): Promise<void>;
+    addNote?(time: number, content: string): Promise<void>;
+    nextEpisodeFunction?(): void;
+    previousEpisodeFunction?(): void;
 }
 
 export default videoPlayerProps;

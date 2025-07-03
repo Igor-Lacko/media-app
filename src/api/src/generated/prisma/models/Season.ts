@@ -46,7 +46,6 @@ export type SeasonMinAggregateOutputType = {
   rating: number | null
   description: string | null
   shortDescription: string | null
-  thumbnailUrl: string | null
 }
 
 export type SeasonMaxAggregateOutputType = {
@@ -56,7 +55,6 @@ export type SeasonMaxAggregateOutputType = {
   rating: number | null
   description: string | null
   shortDescription: string | null
-  thumbnailUrl: string | null
 }
 
 export type SeasonCountAggregateOutputType = {
@@ -66,7 +64,6 @@ export type SeasonCountAggregateOutputType = {
   rating: number
   description: number
   shortDescription: number
-  thumbnailUrl: number
   _all: number
 }
 
@@ -92,7 +89,6 @@ export type SeasonMinAggregateInputType = {
   rating?: true
   description?: true
   shortDescription?: true
-  thumbnailUrl?: true
 }
 
 export type SeasonMaxAggregateInputType = {
@@ -102,7 +98,6 @@ export type SeasonMaxAggregateInputType = {
   rating?: true
   description?: true
   shortDescription?: true
-  thumbnailUrl?: true
 }
 
 export type SeasonCountAggregateInputType = {
@@ -112,7 +107,6 @@ export type SeasonCountAggregateInputType = {
   rating?: true
   description?: true
   shortDescription?: true
-  thumbnailUrl?: true
   _all?: true
 }
 
@@ -209,7 +203,6 @@ export type SeasonGroupByOutputType = {
   rating: number | null
   description: string | null
   shortDescription: string | null
-  thumbnailUrl: string | null
   _count: SeasonCountAggregateOutputType | null
   _avg: SeasonAvgAggregateOutputType | null
   _sum: SeasonSumAggregateOutputType | null
@@ -242,7 +235,6 @@ export type SeasonWhereInput = {
   rating?: Prisma.FloatNullableFilter<"Season"> | number | null
   description?: Prisma.StringNullableFilter<"Season"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Season"> | string | null
-  thumbnailUrl?: Prisma.StringNullableFilter<"Season"> | string | null
   episodes?: Prisma.EpisodeListRelationFilter
   show?: Prisma.XOR<Prisma.ShowScalarRelationFilter, Prisma.ShowWhereInput>
 }
@@ -254,7 +246,6 @@ export type SeasonOrderByWithRelationInput = {
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   episodes?: Prisma.EpisodeOrderByRelationAggregateInput
   show?: Prisma.ShowOrderByWithRelationInput
 }
@@ -269,7 +260,6 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<{
   rating?: Prisma.FloatNullableFilter<"Season"> | number | null
   description?: Prisma.StringNullableFilter<"Season"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Season"> | string | null
-  thumbnailUrl?: Prisma.StringNullableFilter<"Season"> | string | null
   episodes?: Prisma.EpisodeListRelationFilter
   show?: Prisma.XOR<Prisma.ShowScalarRelationFilter, Prisma.ShowWhereInput>
 }, "id">
@@ -281,7 +271,6 @@ export type SeasonOrderByWithAggregationInput = {
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SeasonCountOrderByAggregateInput
   _avg?: Prisma.SeasonAvgOrderByAggregateInput
   _max?: Prisma.SeasonMaxOrderByAggregateInput
@@ -299,7 +288,6 @@ export type SeasonScalarWhereWithAggregatesInput = {
   rating?: Prisma.FloatNullableWithAggregatesFilter<"Season"> | number | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Season"> | string | null
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Season"> | string | null
-  thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Season"> | string | null
 }
 
 export type SeasonCreateInput = {
@@ -307,7 +295,6 @@ export type SeasonCreateInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
   episodes?: Prisma.EpisodeCreateNestedManyWithoutSeasonInput
   show: Prisma.ShowCreateNestedOneWithoutSeasonsInput
 }
@@ -319,7 +306,6 @@ export type SeasonUncheckedCreateInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
   episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutSeasonInput
 }
 
@@ -328,7 +314,6 @@ export type SeasonUpdateInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.EpisodeUpdateManyWithoutSeasonNestedInput
   show?: Prisma.ShowUpdateOneRequiredWithoutSeasonsNestedInput
 }
@@ -340,7 +325,6 @@ export type SeasonUncheckedUpdateInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutSeasonNestedInput
 }
 
@@ -351,7 +335,6 @@ export type SeasonCreateManyInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
 }
 
 export type SeasonUpdateManyMutationInput = {
@@ -359,7 +342,6 @@ export type SeasonUpdateManyMutationInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SeasonUncheckedUpdateManyInput = {
@@ -369,7 +351,6 @@ export type SeasonUncheckedUpdateManyInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SeasonListRelationFilter = {
@@ -389,7 +370,6 @@ export type SeasonCountOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  thumbnailUrl?: Prisma.SortOrder
 }
 
 export type SeasonAvgOrderByAggregateInput = {
@@ -406,7 +386,6 @@ export type SeasonMaxOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  thumbnailUrl?: Prisma.SortOrder
 }
 
 export type SeasonMinOrderByAggregateInput = {
@@ -416,7 +395,6 @@ export type SeasonMinOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  thumbnailUrl?: Prisma.SortOrder
 }
 
 export type SeasonSumOrderByAggregateInput = {
@@ -492,7 +470,6 @@ export type SeasonCreateWithoutShowInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
   episodes?: Prisma.EpisodeCreateNestedManyWithoutSeasonInput
 }
 
@@ -502,7 +479,6 @@ export type SeasonUncheckedCreateWithoutShowInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
   episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutSeasonInput
 }
 
@@ -541,7 +517,6 @@ export type SeasonScalarWhereInput = {
   rating?: Prisma.FloatNullableFilter<"Season"> | number | null
   description?: Prisma.StringNullableFilter<"Season"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Season"> | string | null
-  thumbnailUrl?: Prisma.StringNullableFilter<"Season"> | string | null
 }
 
 export type SeasonCreateWithoutEpisodesInput = {
@@ -549,7 +524,6 @@ export type SeasonCreateWithoutEpisodesInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
   show: Prisma.ShowCreateNestedOneWithoutSeasonsInput
 }
 
@@ -560,7 +534,6 @@ export type SeasonUncheckedCreateWithoutEpisodesInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
 }
 
 export type SeasonCreateOrConnectWithoutEpisodesInput = {
@@ -584,7 +557,6 @@ export type SeasonUpdateWithoutEpisodesInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   show?: Prisma.ShowUpdateOneRequiredWithoutSeasonsNestedInput
 }
 
@@ -595,7 +567,6 @@ export type SeasonUncheckedUpdateWithoutEpisodesInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SeasonCreateManyShowInput = {
@@ -604,7 +575,6 @@ export type SeasonCreateManyShowInput = {
   rating?: number | null
   description?: string | null
   shortDescription?: string | null
-  thumbnailUrl?: string | null
 }
 
 export type SeasonUpdateWithoutShowInput = {
@@ -612,7 +582,6 @@ export type SeasonUpdateWithoutShowInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.EpisodeUpdateManyWithoutSeasonNestedInput
 }
 
@@ -622,7 +591,6 @@ export type SeasonUncheckedUpdateWithoutShowInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutSeasonNestedInput
 }
 
@@ -632,7 +600,6 @@ export type SeasonUncheckedUpdateManyWithoutShowInput = {
   rating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -673,7 +640,6 @@ export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   rating?: boolean
   description?: boolean
   shortDescription?: boolean
-  thumbnailUrl?: boolean
   episodes?: boolean | Prisma.Season$episodesArgs<ExtArgs>
   show?: boolean | Prisma.ShowDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
@@ -686,7 +652,6 @@ export type SeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   rating?: boolean
   description?: boolean
   shortDescription?: boolean
-  thumbnailUrl?: boolean
   show?: boolean | Prisma.ShowDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
@@ -697,7 +662,6 @@ export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   rating?: boolean
   description?: boolean
   shortDescription?: boolean
-  thumbnailUrl?: boolean
   show?: boolean | Prisma.ShowDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
@@ -708,10 +672,9 @@ export type SeasonSelectScalar = {
   rating?: boolean
   description?: boolean
   shortDescription?: boolean
-  thumbnailUrl?: boolean
 }
 
-export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "showId" | "seasonNumber" | "rating" | "description" | "shortDescription" | "thumbnailUrl", ExtArgs["result"]["season"]>
+export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "showId" | "seasonNumber" | "rating" | "description" | "shortDescription", ExtArgs["result"]["season"]>
 export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episodes?: boolean | Prisma.Season$episodesArgs<ExtArgs>
   show?: boolean | Prisma.ShowDefaultArgs<ExtArgs>
@@ -737,7 +700,6 @@ export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     rating: number | null
     description: string | null
     shortDescription: string | null
-    thumbnailUrl: string | null
   }, ExtArgs["result"]["season"]>
   composites: {}
 }
@@ -1169,7 +1131,6 @@ export interface SeasonFieldRefs {
   readonly rating: Prisma.FieldRef<"Season", 'Float'>
   readonly description: Prisma.FieldRef<"Season", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Season", 'String'>
-  readonly thumbnailUrl: Prisma.FieldRef<"Season", 'String'>
 }
     
 

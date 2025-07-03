@@ -1,4 +1,6 @@
+import Lecture from "@shared/interface/models/lecture";
 import Movie from "@shared/interface/models/movie";
+import Note from "@shared/interface/models/note";
 import TvShow from "@shared/interface/models/tv-show";
 import axios from "axios";
 
@@ -106,15 +108,55 @@ export async function UpdateDescription<T extends { description?: string, identi
  * @param videoUrl New video URL value.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateVideoUrl<T extends { videoUrl?: string, identifier?: number }>
+export async function UpdateVideoUrl<T extends { videoUrl?: string, continueAt?: number, identifier?: number }>
 (url: string, model: T, videoUrl: string): Promise<boolean> {
     try {
-        await UpdateData<T>(url, model.identifier!, { videoUrl } as Partial<T>);
+        // Also reset current playback position
+        await UpdateData<T>(url, model.identifier!, { videoUrl, continueAt: 0 } as Partial<T>);
         return true;
     }
 
     catch (error) {
         console.error("Error updating video URL:", error);
+        return false;
+    }
+}
+
+/**
+ * Updates the playback position of a movie/episode/lecture.
+ * @param url URL to send the request to.
+ * @param model Movie/episode/lecture model to update.
+ * @param continueAt New playback position in seconds.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function UpdatePlaybackPosition<T extends { continueAt?: number, identifier?: number }> 
+(url: string, model: T, continueAt: number): Promise<boolean> {
+    try {
+        await UpdateData<T>(url, model.identifier!, { continueAt } as Partial<T>);
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating playback position:", error);
+        return false;
+    }
+}
+
+/**
+ * Updates notes for a lecture model.
+ * @param url URL to send the request to.
+ * @param model Lecture model to update.
+ * @param notes Array of notes to set.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function UpdateNotes(url: string, model: Lecture, notes: Note[]): Promise<boolean> {
+    try {
+        await UpdateData<Lecture>(url, model.identifier!, { notes } as Partial<Lecture>);
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating notes:", error);
         return false;
     }
 }
