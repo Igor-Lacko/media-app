@@ -1,7 +1,7 @@
 import VideoLowerBar from "components/controls/video-lower-bar";
 import VideoUpperBar from "components/controls/video-upper-bar";
 import useVideo from "hooks/use-video";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import videoPlayerProps from "utils/props/video-player-props";
 import VideoUpperBarProps from "utils/props/video-upper-bar-props";
@@ -19,7 +19,7 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     const {videoRef, ...videoControls} = useVideo(props.saveContinueAt, props.initialPlaybackTime);
 
 
-    // Lowe bar props
+    // Lower bar props
     const lowerBarProps : VideoLowerBarProps = {
         // Visual
         isVisible: areBarsVisible,
@@ -51,7 +51,9 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
             className={"flex flex-col overflow-hidden w-full h-full items-center justify-start"}
             onMouseMove={() => {
                 // Set to visible and set a timer to hide after 3 seconds
-                setAreBarsVisible(true);
+                if (!areBarsVisible) {
+                    setAreBarsVisible(true);
+                }
                 if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
                 }

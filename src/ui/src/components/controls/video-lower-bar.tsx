@@ -15,6 +15,7 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
     const [time, setTime] = useState(props.ref.current?.currentTime || 0);
     const [duration, setDuration] = useState(props.ref.current?.duration || 0);
 
+    // Use effect to map video state to the component state
     useEffect(() => {
         if (props.ref.current) {
             props.ref.current.onplay = () => setPlaying(true);
