@@ -36,7 +36,10 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         onGoBack: videoControls.onGoBack,
         onIncreaseSpeed: videoControls.onIncreaseSpeed,
         onDecreaseSpeed: videoControls.onDecreaseSpeed,
-        onTimeChange: videoControls.onTimeChange
+        onTimeChange: videoControls.onTimeChange,
+        saveLength: async (length: number) => {
+            await props.saveLength(length);
+        },
     }
 
     const upperBarProps : VideoUpperBarProps = {

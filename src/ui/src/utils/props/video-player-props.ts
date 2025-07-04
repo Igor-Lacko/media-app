@@ -6,6 +6,7 @@ export interface videoPlayerProps {
     url: string;
     initialPlaybackTime?: number;
     saveContinueAt(time: number): Promise<void>;
+    saveLength(length: number): Promise<void>;
     addNote?(time: number, content: string): Promise<void>;
     nextEpisodeFunction?(): void;
     previousEpisodeFunction?(): void;

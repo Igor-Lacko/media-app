@@ -5,6 +5,7 @@ import HeaderRating from "components/other/header-rating";
 import DetailImage from "components/image/detail-image";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail-props";
+import { LengthToTimeHeader} from "utils/adapters/length-to-time";
 
 /**
  * Header for a entertainment model's (movie, show) detail page.
@@ -40,7 +41,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     {props.playTitle && props.model.length !== undefined && props.model.length !== null && <span
                         className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}
                     >
-                        {props.model.length} {props.model.length > 1 ? "minutes" : "minute"}
+                        {LengthToTimeHeader(props.model.length)}
                     </span>}
                     {props.model.submediaString && <span
                         className={"text-gray-500 dark:text-gray-400 text-md font-medium italic"}

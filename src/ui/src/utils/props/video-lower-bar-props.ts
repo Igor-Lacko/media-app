@@ -23,6 +23,9 @@ export interface VideoLowerBarProps {
     onPreviousEpisode?: () => void;
     onNextEpisode?: () => void;
 
+    // On load
+    saveLength: (length: number) => Promise<void>;
+
     // Video seeking
     onTimeChange?: (time: number) => void;
 

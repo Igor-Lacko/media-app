@@ -1,5 +1,6 @@
 import Lecture from "@shared/interface/models/lecture";
 import DetailWatchStatus from "components/other/detail-watch-status";
+import { LengthToTimeHeader} from "utils/adapters/length-to-time";
 import DetailProps from "utils/props/detail-props";
 
 export default function LectureDetailHeader(props : DetailProps<Lecture>) {
@@ -17,7 +18,7 @@ export default function LectureDetailHeader(props : DetailProps<Lecture>) {
                 <span
                     className={"text-lg text-gray-500 dark:text-gray-400 italic"}
                 >
-                    {props.model.length ? `${props.model.length} ${props.model.length > 1 ? "minutes" : "minute"}`
+                    {props.model.length ? LengthToTimeHeader(props.model.length)
                         : "Unknown length"}
                 </span>
             </div>

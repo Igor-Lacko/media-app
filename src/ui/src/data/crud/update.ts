@@ -160,3 +160,23 @@ export async function UpdateNotes(url: string, model: Lecture, notes: Note[]): P
         return false;
     }
 }
+
+/**
+ * Updates the length of a movie/episode/lecture.
+ * @param url URL to send the request to.
+ * @param model Movie/episode/lecture model to update.
+ * @param length New length in seconds.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function UpdateLength<T extends { length?: number, identifier?: number }>
+(url: string, model: T, length: number): Promise<boolean> {
+    try {
+        await UpdateData<T>(url, model.identifier!, { length } as Partial<T>);
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error updating length:", error);
+        return false;
+    }
+}

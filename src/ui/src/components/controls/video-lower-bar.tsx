@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaPause, FaPlay, FaForward, FaBackward, FaFastForward, FaFastBackward } from "react-icons/fa";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import PlaybackSlider from "./playback-slider";
+import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 
 /**
  * Lower bar for the video player with play, pause, forward, and backward controls.
@@ -20,10 +21,11 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
             props.ref.current.onpause = () => setPlaying(false);
             props.ref.current.onratechange = () => setSpeed(props.ref.current!.playbackRate);
             props.ref.current.ontimeupdate = () => setTime(props.ref.current!.currentTime);
-            props.ref.current.onloadedmetadata = () => {
+            props.ref.current.onloadedmetadata = async () => {
                 props.ref.current?.play();
                 setDuration(props.ref.current!.duration);
                 setTime(props.ref.current!.currentTime);
+                await props.saveLength(props.ref.current!.duration);
             };
         }
     }, [props.ref]);
@@ -111,7 +113,7 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                 <div
                     className={"flex items-center justify-center w-4/10 h-full text-gray-500 text-lg"}
                 >
-                    {time.toFixed(0)} / {duration.toFixed(0)} seconds
+                    {LengthToTimeVideo(time)} / {LengthToTimeVideo(duration)}
                 </div>
             </div>
         </div>

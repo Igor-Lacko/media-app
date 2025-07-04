@@ -18,7 +18,7 @@ export default async function seedData() {
             shortDescription: "A thief who steals corporate secrets through dream-sharing technology.",
             description: "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
-            length: 148,
+            length: 148 * 60, // Converted to seconds
             watchStatus: WatchStatus.WATCHED,
             continueAt: 0,
             isFavorite: true,
@@ -30,7 +30,7 @@ export default async function seedData() {
             shortDescription: "A computer hacker learns about the true nature of his reality.",
             description: "Neo believes that Morpheus, an elusive figure considered to be the most dangerous man alive...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/matrix.jpg",
-            length: 136,
+            length: 136 * 60, // Converted to seconds
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,
             isFavorite: false,
@@ -42,7 +42,7 @@ export default async function seedData() {
             shortDescription: "A team of explorers travel through a wormhole in space.",
             description: "With humanity's survival at stake, a group of astronauts venture into the unknown...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/interstellar.jpg",
-            length: 169,
+            length: 169 * 60, // Converted to seconds
             watchStatus: WatchStatus.UNWATCHED,
             continueAt: 0,
             isFavorite: false,
