@@ -1,6 +1,5 @@
 import SliderProps from "utils/props/slider-props";
 import { useState } from "react";
-import classNames from "classnames";
 
 /**
  * Slider component for selecting a value within a range.

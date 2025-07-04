@@ -1,10 +1,13 @@
+import React from "react";
+
 /**
  * Props for a playback slider/video position controller
  */
 export interface PlaybackSliderProps {
-    max: number;
     value: number;
-    onChange: (value: number) => void;
+    setValue: (value: number) => void;
+    duration: number;
+    extraClassNames?: string;
 }
 
 export default PlaybackSliderProps;

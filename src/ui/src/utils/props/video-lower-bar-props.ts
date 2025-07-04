@@ -1,10 +1,11 @@
+import React from "react";
+
 /**
  * Props for the VideoLowerBar component.
  */
 export interface VideoLowerBarProps {
     // Visual stuff
     isVisible: boolean;
-    isPlaying: boolean;
     title: string;
 
     // Pause/play
@@ -15,13 +16,17 @@ export interface VideoLowerBarProps {
     onGoBack: () => void;
 
     // Playback speed
-    currentSpeed?: number;
     onIncreaseSpeed: () => void;
     onDecreaseSpeed: () => void;
 
     // For tv shows and lectures, to switch episodes
     onPreviousEpisode?: () => void;
     onNextEpisode?: () => void;
+
+    // Video seeking
+    onTimeChange?: (time: number) => void;
+
+    ref: React.RefObject<HTMLVideoElement | null>;
 
     // Styling
     extraClassNames?: string;

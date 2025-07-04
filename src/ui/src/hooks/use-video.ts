@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 /**
  * Custom hook to manage video playback and controls.
@@ -9,28 +9,24 @@ import React, { useEffect, useRef } from "react";
 export default function useVideo(playbackStoreFunction: (time: number) => Promise<void>, initialPlayback?: number) : {
     videoRef: React.RefObject<HTMLVideoElement | null>;
     onSwitchPlaying: () => void;
-    isPlaying: boolean;
     onGoForward: () => void;
     onGoBack: () => void;
     onIncreaseSpeed: () => void;
     onDecreaseSpeed: () => void;
+    onTimeChange: (time: number) => void;
 } {
     // Video ref
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    // State
-    const [isPlaying, setPlaying] = React.useState(false);
-
     // Handlers
     const onSwitchPlaying = async () => {
         if (videoRef.current) {
-            if (isPlaying) {
+            if (!videoRef.current.paused) {
                 videoRef.current.pause();
                 await playbackStoreFunction(videoRef.current.currentTime);
             } else {
                 videoRef.current.play();
             }
-            setPlaying(!isPlaying);
         }
     }
 
@@ -58,22 +54,19 @@ export default function useVideo(playbackStoreFunction: (time: number) => Promis
         }
     }
 
-    // Set initial playback position and play
-    useEffect(() => {
+    const onTimeChange = (time: number) => {
         if (videoRef.current) {
-            videoRef.current.currentTime = initialPlayback || 0;
-            videoRef.current.play();
-            setPlaying(true);
+            videoRef.current.currentTime = time;
         }
-    }, [videoRef]);
+    }
 
     return {
         videoRef,
         onSwitchPlaying,
-        isPlaying,
         onGoForward,
         onGoBack,
         onIncreaseSpeed,
         onDecreaseSpeed,
+        onTimeChange
     };
 }

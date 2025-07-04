@@ -18,12 +18,25 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     // To control the video
     const {videoRef, ...videoControls} = useVideo(props.saveContinueAt, props.initialPlaybackTime);
 
-    // placeholders
+
+    // Lowe bar props
     const lowerBarProps : VideoLowerBarProps = {
+        // Visual
         isVisible: areBarsVisible,
         title: props.title,
-        currentSpeed: videoRef.current?.playbackRate,
-        ...videoControls,
+
+        // Seeking
+        ref: videoRef,
+
+        // Handlers
+        onSwitchPlaying: async () => {
+            videoControls.onSwitchPlaying();
+        },
+        onGoForward: videoControls.onGoForward,
+        onGoBack: videoControls.onGoBack,
+        onIncreaseSpeed: videoControls.onIncreaseSpeed,
+        onDecreaseSpeed: videoControls.onDecreaseSpeed,
+        onTimeChange: videoControls.onTimeChange
     }
 
     const upperBarProps : VideoUpperBarProps = {
