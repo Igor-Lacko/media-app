@@ -1,5 +1,6 @@
 import VideoLowerBar from "components/controls/video-lower-bar";
 import VideoUpperBar from "components/controls/video-upper-bar";
+import InfoModal from "components/modals/info-modal";
 import useVideo from "hooks/use-video";
 import { useRef, useState } from "react";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
@@ -14,6 +15,9 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     // To control lower/upper bars on mouse movement
     const [areBarsVisible, setAreBarsVisible] = useState(true);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Error modal if the next episode does not exist
+    const [errorModalVisible, setErrorModalVisible] = useState(false);
 
     // To control the video
     const {videoRef, ...videoControls} = useVideo(props.saveContinueAt, props.initialPlaybackTime);
@@ -39,16 +43,19 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         onTimeChange: videoControls.onTimeChange,
         saveLength: async (length: number) => {
             await props.saveLength(length);
-        },
+        }
     }
 
+    // Upper bar props
     const upperBarProps : VideoUpperBarProps = {
         isVisible: areBarsVisible,
-        onNoteClick: () => console.log("Note clicked"),
+        onNoteClick: props.onNoteClick ? () => props.onNoteClick!(videoRef.current?.currentTime || 0) 
+                    : undefined,
     }
+
     return (
         <div
-            className={"flex flex-col overflow-hidden w-full h-full items-center justify-start"}
+            className={"flex relative w-screen h-screen flex-col overflow-hidden items-center justify-start"}
             onMouseMove={() => {
                 // Set to visible and set a timer to hide after 3 seconds
                 if (!areBarsVisible) {
@@ -74,6 +81,12 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
             <VideoLowerBar
                 {...lowerBarProps}
             />
+            {/** Error modal */}
+            {errorModalVisible && <InfoModal
+                title={"Error"}
+                message={"The video you are trying to access does not have a file associated with it. You can add it in it's detail page."}
+                onClose={() => setErrorModalVisible(false)}
+            />}
         </div>
     );
 }

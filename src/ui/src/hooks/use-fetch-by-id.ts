@@ -13,7 +13,7 @@ export default function useFetchById<T>(url: string, param: string = "id", deps:
         : param === "seasonId" ? params.seasonId
         : param === "lectureId" ? params.lectureId
         : param === "episodeId" ? params.episodeId
-            : (() => { throw new Error(`Invalid parameter: ${param}. Expected 'id' or 'seasonId'.`) })();
+            : (() => { throw new Error(`Invalid parameter: ${param}`) })();
 
     console.log(`useFetchById: Fetching data from ${url} with id: ${id}`);
 

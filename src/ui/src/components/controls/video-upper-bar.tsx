@@ -2,7 +2,6 @@ import VideoUpperBarProps from "utils/props/video-upper-bar-props";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaStickyNote } from "react-icons/fa";
 import classNames from "classnames";
-import { useState, useEffect } from "react";
 
 /**
  * Upper bar for the video player with a back button and a note button (for lectures).
@@ -15,7 +14,7 @@ export default function VideoUpperBar(props : VideoUpperBarProps) {
         <div
             className={classNames(
                 "absolute top-0 left-0 flex items-center justify-between w-full py-5 px-5 \
-                transition-all bg-black z-50 duration-300 ease-in-out " + (props.extraClassNames || ""),
+                transition-all bg-black z-30 duration-300 ease-in-out " + (props.extraClassNames || ""),
                 {
                     "opacity-70": props.isVisible,
                     "opacity-0": !props.isVisible,

@@ -45,16 +45,20 @@ export async function IsValidFile(path: string): Promise<boolean> {
  * @param path Path to the file.
  * @returns True if the file is a valid video, false otherwise.
  */
-export async function IsValidVideo(path: string): Promise<boolean> {
-    // if(!window.electron || !window.electron.isValidVideo) {
-    //     console.log("Electron API not available for video validation.");
-    //     return false;
-    // }
+export async function IsValidVideo(path?: string): Promise<boolean> {
+    if(!window.electron || !window.electron.isValidVideo) {
+        console.log("Electron API not available for video validation.");
+        return false;
+    }
 
-    // if (await IsValidFile(path) && await window.electron.isValidVideo(path)) {
-    //     return true;
-    // }
+    // No video avaliable
+    if (!path) {
+        return false;
+    }
 
-    // return false;
-    return true;
+    if (await IsValidFile(path) && await window.electron.isValidVideo(path)) {
+        return true;
+    }
+
+    return false;
 }

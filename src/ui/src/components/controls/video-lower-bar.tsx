@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { FaPause, FaPlay, FaForward, FaBackward, FaFastForward, FaFastBackward } from "react-icons/fa";
+import { FaPause, FaPlay, FaForward, FaBackward, FaFastForward, FaFastBackward, FaStepForward, FaStepBackward } from "react-icons/fa";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import PlaybackSlider from "./playback-slider";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
@@ -35,7 +35,7 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
         <div
             className={classNames(
                 "absolute flex-col flex bottom-0 left-0 items-center justify-start w-full h-16 \
-                transition-all bg-black z-50 overflow-visible duration-500 ease-in-out backdrop-blur-md " + (props.extraClassNames || ""),
+                transition-all bg-black z-30 overflow-visible duration-500 ease-in-out backdrop-blur-md " + (props.extraClassNames || ""),
                 {
                     "opacity-70": props.isVisible,
                     "opacity-0": !props.isVisible,
@@ -110,9 +110,28 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                 >
                     {props.title || "Video Player"}
                 </div>
+                {/** Previous/Next episode */}
+                <div
+                    className={"flex items-center justify-end w-2/10 h-full space-x-5 text-gray-500 text-lg"}
+                >
+                    {props.onPreviousEpisode && <div
+                        className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 ml-5 space-x-5"}
+                        onClick={props.onPreviousEpisode}
+                    >
+                        <FaStepBackward />
+                        Previous episode
+                    </div>}
+                    {props.onNextEpisode && <div
+                        className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 space-x-5"}
+                        onClick={props.onNextEpisode}
+                    >
+                        Next episode
+                        <FaStepForward />
+                    </div>}
+                </div>
                 {/** Time */}
                 <div
-                    className={"flex items-center justify-center w-4/10 h-full text-gray-500 text-lg"}
+                    className={"flex items-center justify-center w-2/10 h-full text-gray-500 text-lg"}
                 >
                     {LengthToTimeVideo(time)} / {LengthToTimeVideo(duration)}
                 </div>
