@@ -1,19 +1,34 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { FaPause, FaPlay, FaForward, FaBackward, FaFastForward, FaFastBackward, FaStepForward, FaStepBackward } from "react-icons/fa";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import PlaybackSlider from "./playback-slider";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
+import useVideo from "hooks/use-video";
 
 /**
  * Lower bar for the video player with play, pause, forward, and backward controls.
  * @param props Include button handlers, isVisible ref and extra class names.
  */
 export default function VideoLowerBar(props : VideoLowerBarProps) {
+    // State
     const [speed, setSpeed] = useState(props.ref.current?.playbackRate || 1.0);
     const [playing, setPlaying] = useState(!props.ref.current?.paused || false);
     const [time, setTime] = useState(props.ref.current?.currentTime || 0);
     const [duration, setDuration] = useState(props.ref.current?.duration || 0);
+
+    // Controls
+    const { onSwitchPlaying, onGoForward, onGoBack, onIncreaseSpeed, onDecreaseSpeed } = useVideo(
+        props.ref,
+        props.initialTime,
+        setPlaying,
+        setSpeed,
+        setTime,
+        setDuration,
+        props.saveContinueAt,
+        props.saveLength,
+        props.timestampRef
+    );
 
     // Use effect to map video state to the component state
     useEffect(() => {
@@ -75,11 +90,11 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     {playing ?
                         <FaPause
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
-                            onClick={() => {props.ref.current?.pause();}} 
+                            onClick={onSwitchPlaying} 
                         /> : 
                         <FaPlay
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
-                            onClick={() => {props.ref.current?.play();}}
+                            onClick={onSwitchPlaying}
                         />
                     }
                 </div>
@@ -90,11 +105,11 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     Forward/Backward
                     <FaBackward
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 ml-5"}
-                        onClick={props.onGoBack}
+                        onClick={onGoBack}
                     />
                     <FaForward
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
-                        onClick={props.onGoForward}
+                        onClick={onGoForward}
                     />
                 </div>
                 {/** Increase/decrease playback speed */}
@@ -104,17 +119,11 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     Playback speed: {speed.toFixed(2) || "1.00"}x
                     <FaFastBackward
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 ml-5"}
-                        onClick={() => {
-                            props.onDecreaseSpeed();
-                            setSpeed((prev) => Math.max(0.25, prev - 0.25));
-                        }}
+                        onClick={onDecreaseSpeed}
                     />
                     <FaFastForward 
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
-                        onClick={() => {
-                            props.onIncreaseSpeed();
-                            setSpeed((prev) => prev + 0.25);
-                        }}
+                        onClick={onIncreaseSpeed}
                     />
                 </div>
                 {/** Title  */}
@@ -122,25 +131,6 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     className={"flex items-center justify-start w-1/10 h-full text-gray-500 text-lg"}
                 >
                     {props.title || "Video Player"}
-                </div>
-                {/** Previous/Next episode */}
-                <div
-                    className={"flex items-center justify-end w-2/10 h-full space-x-5 text-gray-500 text-lg"}
-                >
-                    {props.onPreviousEpisode && <div
-                        className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 ml-5 space-x-5"}
-                        onClick={props.onPreviousEpisode}
-                    >
-                        <FaStepBackward />
-                        Previous episode
-                    </div>}
-                    {props.onNextEpisode && <div
-                        className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 space-x-5"}
-                        onClick={props.onNextEpisode}
-                    >
-                        Next episode
-                        <FaStepForward />
-                    </div>}
                 </div>
                 {/** Time */}
                 <div

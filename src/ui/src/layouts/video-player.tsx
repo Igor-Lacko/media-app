@@ -19,12 +19,15 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     // Error modal if the next episode does not exist
     const [errorModalVisible, setErrorModalVisible] = useState(false);
 
-    // To control the video
-    const {videoRef, ...videoControls} = useVideo();
+    // Video ref
+    const videoRef = useRef<HTMLVideoElement>(null);
 
 
     // Lower bar props
     const lowerBarProps : VideoLowerBarProps = {
+        // Seeking
+        ref: videoRef,
+
         // Visual
         isVisible: areBarsVisible,
         title: props.title,
@@ -32,21 +35,10 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         // Initial time
         initialTime: props.initialPlaybackTime || 0,
 
-        // Seeking
-        ref: videoRef,
-
         // Handlers
-        onGoForward: videoControls.onGoForward,
-        onGoBack: videoControls.onGoBack,
-        onIncreaseSpeed: videoControls.onIncreaseSpeed,
-        onDecreaseSpeed: videoControls.onDecreaseSpeed,
-        onTimeChange: videoControls.onTimeChange,
-        saveLength: async (length: number) => {
-            await props.saveLength(length);
-        },
-        saveContinueAt: async (time: number) => {
-            await props.saveContinueAt(time);
-        },
+        saveLength: props.saveLength,
+        saveContinueAt: props.saveContinueAt,
+
         // To sync with the notebook, if provided
         timestampRef: props.timestampRef
     }

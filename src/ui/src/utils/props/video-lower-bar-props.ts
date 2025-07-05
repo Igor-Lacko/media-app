@@ -8,32 +8,17 @@ export interface VideoLowerBarProps {
     isVisible: boolean;
     title: string;
 
+    // Video ref
+    ref: React.RefObject<HTMLVideoElement | null>;
+
     // Initial time and saving
     initialTime: number;
     saveContinueAt: (time: number) => Promise<void>;
 
-    // Forward/backward controls
-    onGoForward: () => void;
-    onGoBack: () => void;
-
-    // Playback speed
-    onIncreaseSpeed: () => void;
-    onDecreaseSpeed: () => void;
-
-    // For tv shows and lectures, to switch episodes
-    onPreviousEpisode?: () => void;
-    onNextEpisode?: () => void;
-
-    // On load
+    // Save duration on load
     saveLength: (length: number) => Promise<void>;
 
-    // Video seeking
-    onTimeChange?: (time: number) => void;
-
-    // Video ref
-    ref: React.RefObject<HTMLVideoElement | null>;
-
-    // Since all the video handlers are added to it in the lower bar, this is here too
+    // Timestamp reference for syncing with the notebook
     timestampRef?: React.RefObject<number>;
 
     // Styling
