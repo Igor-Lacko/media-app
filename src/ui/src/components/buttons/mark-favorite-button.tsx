@@ -15,7 +15,8 @@ export default function MarkFavoriteButton({ onClick, isFavorite, extraClassName
     return (
         <div
             className={classNames(
-            "flex items-center p-3 justify-center rounded-lg cursor-pointer transition-colors duration-200 ease-in-out transform hover:scale-105",
+            "flex items-center p-3 justify-center rounded-lg cursor-pointer transition-colors duration-200 ease-in-out transform hover:scale-105\
+            sm:text-xs",
             {
                 "bg-yellow-500 dark:bg-yellow-700 text-gray-200 dark:text-gray-400": markedAsFavorite,
                 "bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300": !markedAsFavorite,

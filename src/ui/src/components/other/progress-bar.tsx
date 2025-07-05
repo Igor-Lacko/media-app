@@ -6,7 +6,7 @@ import ProgressBarProps from "utils/props/progress-bar-props";
  * @returns Progress bar component
  */
 export default function ProgressBar(props: ProgressBarProps) {
-    const width = `w-${parseInt(((props.value / props.max) * 100).toString())}/100`;
+    const width = props.max === 0 ? 0 : (props.value / props.max) * 100;
     return (
         <div
             className={"flex flex-col items-center justify-center space-y-1 p-3 " + (props.extraClassNames || "")}
@@ -20,7 +20,8 @@ export default function ProgressBar(props: ProgressBarProps) {
                 className={"rounded-full flex w-full h-1/6 bg-gray-700"}
             >
                 <div
-                    className={`rounded-full h-full bg-yellow-500 dark:bg-yellow-400 ${width} flex items-center`}
+                    className={"rounded-full h-full bg-yellow-500 z-20 dark:bg-yellow-400 flex items-center"}
+                    style={{ width: `${width}%` }}
                 />
             </div>
         </div>
