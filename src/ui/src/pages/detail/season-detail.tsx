@@ -44,7 +44,9 @@ export default function SeasonDetail() {
             path: "episodes",
             items: season.episodes,
             showRating: true,
-            showThumbnail: false
+            showThumbnail: false,
+            notFoundTitle: "No episodes found",
+            notFoundMessage: "This season has no episodes yet. You can add one by clicking the 'Add Episode' button above, or edit the season to add an episode.",
         },
         addTitle: "Add Episode",
         editTitle: "Edit Season",

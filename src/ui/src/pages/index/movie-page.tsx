@@ -38,7 +38,9 @@ export default function MoviePage() {
         // Because refreshing the query on every search change is ehhh
         items: data.data?.filter((Movie) => Movie.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: true,
-        showThumbnail: true
+        showThumbnail: true,
+        notFoundTitle: "No movies found :((",
+        notFoundMessage: "There are no movies that match your search criteria.",
     }
 
     return (

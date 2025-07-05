@@ -37,7 +37,9 @@ export default function TvShowPage() {
     const tvShowListProps : ListProps = {
         items: data.data?.filter((show) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: true,
-        showThumbnail: true
+        showThumbnail: true,
+        notFoundTitle: "No TV shows found :((",
+        notFoundMessage: "There are no TV shows that match your search criteria.",
     }
 
     return (

@@ -26,7 +26,9 @@ export default function SubjectDetail() {
             path: "lectures",
             items: subject.lectures,
             showRating: false,
-            showThumbnail: false
+            showThumbnail: false,
+            notFoundTitle: "No lectures found",
+            notFoundMessage: "This subject has no lectures yet. You can add one by clicking the 'Add Lecture' button above, or edit the subject to add a lecture.",
         },
         addTitle: "Add Lecture",
         editTitle: "Edit Subject",

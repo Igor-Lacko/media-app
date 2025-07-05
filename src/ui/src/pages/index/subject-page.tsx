@@ -35,7 +35,9 @@ export default function SubjectPage() {
     const subjectListProps: ListProps = {
         items: data.data?.filter((subject) => subject.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: false,
-        showThumbnail: false
+        showThumbnail: false,
+        notFoundTitle: "No subjects found :((",
+        notFoundMessage: "It appears you have no subjects yet. You can add one by clicking the "+" button on this page."
     }
 
     return (

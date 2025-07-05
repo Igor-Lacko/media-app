@@ -49,7 +49,9 @@ export default function TvShowDetail() {
             path: "seasons",
             items: tvShow.seasons,
             showRating: true,
-            showThumbnail: true
+            showThumbnail: true,
+            notFoundTitle: "No seasons found",
+            notFoundMessage: "This TV show has no seasons yet. You can add one by clicking the 'Add Season' button above, or edit the TV show to add a season.",
         },
         addTitle: "Add Season",
         editTitle: "Edit TV Show",

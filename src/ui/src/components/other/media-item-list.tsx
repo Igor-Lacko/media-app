@@ -6,6 +6,7 @@ import Genre from "@shared/enum/genre";
 import { FaStar } from "react-icons/fa";
 import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
+import ListNotFound from "not-found/list-not-found";
 
 /**
  * List of media items with links to their pages.
@@ -14,6 +15,13 @@ import WatchStatus from "@shared/enum/watch-status";
 export default function MediaItemList(props: ListProps) {
     // Current URL
     const location = useLocation();
+
+    if (props.items.length === 0) {
+        return <ListNotFound
+            title={props.notFoundTitle || "No items found"}
+            message={props.notFoundMessage || "There are no items to display."}
+        />
+    }
 
     return (
         <div className={"flex flex-col items-center w-full overflow-y-auto"}>
