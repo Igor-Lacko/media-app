@@ -31,7 +31,9 @@ export default function FileBrowseButton({initial, onChange, allowed, extraClass
                 Choose file
             </button>
             <span
-                className={"ml-2 text-gray-500 dark:text-gray-300 flex justify-center items-center h-full"}
+                className={"ml-2 text-gray-500 dark:text-gray-300 flex justify-start items-center h-full\
+                    overflow-hidden whitespace-nowrap text-ellipsis"}
+                style={{ direction: "rtl" }}
             >
                 {fileName || "No file selected"}
             </span>
