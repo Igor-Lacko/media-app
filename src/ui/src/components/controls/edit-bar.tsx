@@ -9,6 +9,7 @@ import { FaCheckCircle, FaPencilAlt, FaPlus, FaStar, FaTrash } from "react-icons
  * @param props 
  */
 export default function EditBar(props : EditBarProps) {
+    console.log("EditBar rendered with props:", props);
     return (
         <div
             className={"flex items-center w-full h-1/10 border-b-2 border-gray-400 dark:border-gray-600\
@@ -40,6 +41,12 @@ export default function EditBar(props : EditBarProps) {
                     onClick={props.onPlay}
                     extraClassNames={"bg-purple-500 dark:bg-purple-700 hover:bg-purple-600"}
                     icon={<FaPlay/>}
+                />}
+                {props.onAddNote && <RoundedButton
+                    text={"Add Note"}
+                    onClick={props.onAddNote}
+                    extraClassNames={"bg-yellow-500 dark:bg-yellow-600 hover:bg-yellow-700"}
+                    icon={<FaPlus/>}
                 />}
             </div>
             <div

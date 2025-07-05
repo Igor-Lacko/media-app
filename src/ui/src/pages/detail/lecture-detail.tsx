@@ -1,6 +1,8 @@
 import Lecture from "@shared/interface/models/lecture";
+import Note from "@shared/interface/models/note";
+import LectureDetailFooter from "components/detail-footers/lecture-detail-footer";
 import DeleteData from "data/crud/delete";
-import { UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
+import { UpdateNotes, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import NotFoundPage from "pages/other/not-found";
@@ -13,9 +15,11 @@ import DetailProps from "utils/props/detail-props";
  */
 export default function LectureDetail() {
     const lecture : Lecture | undefined = useFetchById<Lecture>("/api/lectures", "lectureId");
+    console.debug("LectureDetail", lecture);
 
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
+    const [notes, setNotes] = useState<Note[]>(lecture?.notes || []);
 
     // Ref
     const videoUrlRef = useRef(lecture?.videoUrl || "");
@@ -24,6 +28,7 @@ export default function LectureDetail() {
     useEffect(() => {
         if (lecture) {
             setWatchStatus(lecture.watchStatus);
+            setNotes(lecture.notes)
             videoUrlRef.current = lecture.videoUrl || "";
         }
     }, [lecture]);
@@ -52,8 +57,25 @@ export default function LectureDetail() {
         watchStatusFunction: async (watchStatus: string) => {
             setWatchStatus(watchStatus);
             return await UpdateWatchStatus<Lecture>("/api/lectures", lecture, watchStatus);
+        },
+        addNoteFunction: async (note: Note) => {
+            const updatedNotes = [...notes, note];
+            setNotes(updatedNotes);
+            return await UpdateNotes("/api/lectures", lecture, updatedNotes);
         }
     }
 
-    return <DetailLayout<Lecture> {...props} />;
+    return (
+        <DetailLayout<Lecture>
+            {...props}
+        >
+            <LectureDetailFooter
+                notes={notes}
+                updateNotes={async (notes) => {
+                    setNotes(notes);
+                    await UpdateNotes("/api/lectures", lecture, notes);
+                }}
+            />
+        </DetailLayout>
+    )
 }

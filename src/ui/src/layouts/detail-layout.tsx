@@ -83,7 +83,10 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Set description
         onSetDescription: props.description !== null && props.description !== undefined ? () => setVisibleModal(VisibleModal.DESCRIPTION) 
-        : undefined
+        : undefined,
+
+        // Open notes modal
+        onAddNote: props.addNoteFunction ? () => setVisibleModal(VisibleModal.ADD_NOTE) : undefined
     }
 
     return (
@@ -111,6 +114,10 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {props.listProps && <MediaItemList
                 {...props.listProps}
             />}
+
+            {/** Other children */}
+            {props.children}
+
             {/** Modals */}
             {/** 1. Delete modal */}
             {visibleModal === VisibleModal.DELETE && <ConfirmModal
@@ -182,6 +189,16 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 allowed={"video"}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 7. Add note modal */}
+            {visibleModal === VisibleModal.ADD_NOTE && props.addNoteFunction && <TextAreaModal
+                title={"Add Note"}
+                initialText={""}
+                onSetText={async (note: string) => {
+                    props.addNoteFunction && await props.addNoteFunction({ content: note });
                     setVisibleModal(VisibleModal.NONE);
                 }}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}

@@ -9,6 +9,7 @@ export enum VisibleModal {
     WATCH_STATUS,
     PLAY_NOFILE,
     PLAY_WRONG_FILE,
+    ADD_NOTE
 }
 
 export default VisibleModal;

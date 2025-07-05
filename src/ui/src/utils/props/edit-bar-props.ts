@@ -12,6 +12,7 @@ export interface EditBarProps {
     rateTitle?: string;
     playTitle?: string;
     onPlay?: () => void;
+    onAddNote?: () => void;
     onSetDescription?: () => void;
     onRate?: () => void;
     onSetWatchStatus?: () => void;

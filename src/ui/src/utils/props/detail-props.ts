@@ -3,6 +3,7 @@ import CardDisplayable from "@shared/interface/card-displayable";
 import DetailHeaders from "utils/enum/detail-headers";
 import ListProps from "./list-props";
 import WatchStatus from "@shared/enum/watch-status";
+import Note from "@shared/interface/models/note";
 
 /**
  * Interface for detail properties.
@@ -51,6 +52,10 @@ export interface DetailProps<T extends DetailFillable>{
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<boolean>;
     setDescriptionFunction?: (description : string) => Promise<boolean>;
     setVideoUrlFunction?: (videoUrl: string) => Promise<boolean>;
+    addNoteFunction?: (note: Note) => Promise<boolean>;
+
+    // Optional other children (footers)
+    children?: React.ReactNode;
 }
 
 export default DetailProps;
