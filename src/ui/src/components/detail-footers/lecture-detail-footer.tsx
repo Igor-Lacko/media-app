@@ -1,5 +1,6 @@
 import Note from "@shared/interface/models/note"
 import classNames from "classnames";
+import ListNotFound from "not-found/list-not-found";
 import { FaCircle, FaTrash } from "react-icons/fa"
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 
@@ -7,6 +8,12 @@ import { LengthToTimeVideo } from "utils/adapters/length-to-time";
  * Detail footer for lecture pages. Basically displays a list of notes.
  */
 export default function LectureDetailFooter({ notes, updateNotes }: { notes: Note[], updateNotes: (notes: Note[]) => Promise<void> }) {
+    if (notes.length === 0) {
+        return <ListNotFound
+                    title={"No notes here yet :(("}
+                    message={"You can add notes by clicking the notebook icon in the video player or the yellow button on this page."}
+                />
+    }
     return (
             <div
                 className={"flex flex-col overflow-x-hidden overflow-y-auto w-full h-full bg-white dark:bg-gray-800"}
