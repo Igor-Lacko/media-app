@@ -6,9 +6,8 @@ import React, { useRef } from "react";
  * 
  * @returns An object containing the video reference, playback control functions, and playback state.
  */
-export default function useVideo(playbackStoreFunction: (time: number) => Promise<void>, initialPlayback?: number) : {
+export default function useVideo() : {
     videoRef: React.RefObject<HTMLVideoElement | null>;
-    onSwitchPlaying: () => void;
     onGoForward: () => void;
     onGoBack: () => void;
     onIncreaseSpeed: () => void;
@@ -17,18 +16,6 @@ export default function useVideo(playbackStoreFunction: (time: number) => Promis
 } {
     // Video ref
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    // Handlers
-    const onSwitchPlaying = async () => {
-        if (videoRef.current) {
-            if (!videoRef.current.paused) {
-                videoRef.current.pause();
-                await playbackStoreFunction(videoRef.current.currentTime);
-            } else {
-                videoRef.current.play();
-            }
-        }
-    }
 
     const onGoForward = () => {
         if (videoRef.current) {
@@ -62,7 +49,6 @@ export default function useVideo(playbackStoreFunction: (time: number) => Promis
 
     return {
         videoRef,
-        onSwitchPlaying,
         onGoForward,
         onGoBack,
         onIncreaseSpeed,

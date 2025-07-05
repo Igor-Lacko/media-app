@@ -8,8 +8,9 @@ export interface VideoLowerBarProps {
     isVisible: boolean;
     title: string;
 
-    // Pause/play
-    onSwitchPlaying: () => void;
+    // Initial time and saving
+    initialTime: number;
+    saveContinueAt: (time: number) => Promise<void>;
 
     // Forward/backward controls
     onGoForward: () => void;
@@ -29,7 +30,11 @@ export interface VideoLowerBarProps {
     // Video seeking
     onTimeChange?: (time: number) => void;
 
+    // Video ref
     ref: React.RefObject<HTMLVideoElement | null>;
+
+    // Since all the video handlers are added to it in the lower bar, this is here too
+    timestampRef?: React.RefObject<number>;
 
     // Styling
     extraClassNames?: string;

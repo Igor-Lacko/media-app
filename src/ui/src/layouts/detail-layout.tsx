@@ -24,7 +24,7 @@ import SeasonDetailHeader from "components/detail-headers/season-detail-header";
 import Season from "@shared/interface/models/season";
 import EpisodeDetailHeader from "components/detail-headers/episode-detail-header";
 import Episode from "@shared/interface/models/episode";
-import { IsValidFile, IsValidVideo } from "utils/electron-api";
+import { IsValidVideo } from "utils/electron-api";
 import FileBrowseModal from "components/modals/file-browse-modal";
 
 /**

@@ -1,5 +1,6 @@
 import RoundedButton from "components/buttons/rounded-button";
 import ModalProps from "utils/props/modal-props";
+import AbstractModal from "./abstract-modal";
 
 /**
  * Returns a modal component with child components inside it's body and a close button with an handler.
@@ -8,13 +9,7 @@ import ModalProps from "utils/props/modal-props";
  */
 export default function InfoModal(props : ModalProps) {
     return (
-        <div 
-            className={"fixed inset-0 flex backdrop-blur-sm items-center justify-center z-50 \
-                " + (props.extraClassNames || "")}
-        >
-            <div 
-                className={"bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md"}
-            >
+        <AbstractModal>
                 <h2 
                     className={"text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4"}
                 >
@@ -30,7 +25,6 @@ export default function InfoModal(props : ModalProps) {
                     text={"Close"}
                     extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 />
-            </div>
-        </div>
+        </AbstractModal>
     );
 }

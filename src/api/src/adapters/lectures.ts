@@ -25,6 +25,8 @@ export function DBLectureToClient (lecture: DBLecture): ClientLecture {
     return {
         ...data,
         identifier: id,
-        notes: lecture.notes.map(note => note.content)
+        notes: lecture.notes.map((note) => {
+            return {content: note.content, timestamp: note.timestamp}
+        })
     };
 }

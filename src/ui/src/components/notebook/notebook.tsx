@@ -1,7 +1,10 @@
 import NotebookProps from "utils/props/notebook-props";
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import NotebookHeader from "./notebook-header";
+import NotebookNoteList from "./notebook-note-list";
+import NotebookAddNote from "./notebook-add-note";
+import Note from "@shared/interface/models/note";
 
 /**
  * Retractable notebook component.
@@ -10,28 +13,40 @@ import NotebookHeader from "./notebook-header";
 export default function Notebook (props: NotebookProps) {
     // Whether to display the note list. If false, displays tye "add note" textfield/area/whatever.
     const [noteListDisplayed, setNoteListDisplayed] = useState(true);
+    const [notes, setNotes] = useState(props.notes);
 
     return (
         <div
             className={classNames(
-                "flex-col items-center justify-start w-full h-1/2 dark:bg-gray-800 z-50 \
-                transition-transform duration-300 ease-in-out absolute bottom-0 left-0",
+                "flex-col items-center justify-start w-full h-1/2 dark:bg-gray-800 bg-gray-200 z-50 \
+                transition-transform flex duration-300 ease-in-out absolute bottom-0 left-0 rounded-t-lg",
                 {
-                    "translate-y-full hidden": !props.isVisible,
-                    "translate-y-0 flex": props.isVisible,
+                    "translate-y-full": !props.isVisible,
+                    "translate-y-0": props.isVisible,
                 }
             )}
         >
             <NotebookHeader
                 onSwitch={() => setNoteListDisplayed(!noteListDisplayed)}
-                extraClassNames={"h-1/10"}
+                noteListDisplayed={noteListDisplayed}
+                extraClassNames={"h-1/10 border-b-1 border-gray-400"}
             />
-            {/** placeholder */}
-            <div
-                className={"h-9/10 bg-purple-700"}
-            >
-                To muj je brat
-            </div>
+            {/** Add note or show notes */}
+            {noteListDisplayed ? (
+                <NotebookNoteList
+                    notes={notes}
+                />
+            ) : (
+                <NotebookAddNote
+                    onAdd={async (note: Note) => {
+                        await props.onUpdateNotes([...notes, note]);
+                        setNotes([...notes, note]);
+                        console.log("notes: ", notes);
+                        setNoteListDisplayed(true);
+                    }}
+                    timestamp={props.timestamp}
+                />
+            )}
         </div>
     )
 }

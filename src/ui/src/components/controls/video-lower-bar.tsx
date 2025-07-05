@@ -19,11 +19,24 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
     useEffect(() => {
         if (props.ref.current) {
             props.ref.current.onplay = () => setPlaying(true);
-            props.ref.current.onpause = () => setPlaying(false);
+            props.ref.current.onpause = async () => {
+                setPlaying(false); 
+                await props.saveContinueAt(props.ref.current!.currentTime);
+            }
+
             props.ref.current.onratechange = () => setSpeed(props.ref.current!.playbackRate);
-            props.ref.current.ontimeupdate = () => setTime(props.ref.current!.currentTime);
+
+            props.ref.current.ontimeupdate = props.timestampRef ?  
+            () => {
+                setTime(props.ref.current!.currentTime); 
+                props.timestampRef!.current = props.ref.current!.currentTime;
+            } :
+            () => setTime(props.ref.current!.currentTime);
+
             props.ref.current.onloadedmetadata = async () => {
-                props.ref.current?.play();
+                console.log("Video loaded metadata, initial time: ", props.initialTime);
+                props.ref.current!.currentTime = props.initialTime;
+                props.ref.current!.play();
                 setDuration(props.ref.current!.duration);
                 setTime(props.ref.current!.currentTime);
                 await props.saveLength(props.ref.current!.duration);
@@ -62,11 +75,11 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     {playing ?
                         <FaPause
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
-                            onClick={props.onSwitchPlaying} 
+                            onClick={() => {props.ref.current?.pause();}} 
                         /> : 
                         <FaPlay
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
-                            onClick={props.onSwitchPlaying}
+                            onClick={() => {props.ref.current?.play();}}
                         />
                     }
                 </div>

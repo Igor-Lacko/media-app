@@ -27,7 +27,12 @@ export default function VideoUpperBar(props : VideoUpperBarProps) {
             >
                 <FaArrowLeft
                     className={"text-gray-500 hover:text-gray-600 text-2xl cursor-pointer"}
-                    onClick={() => navigate(-1)}
+                    onClick={async () => {
+                        if(props.ref.current) {
+                            await props.saveContinueAt(props.ref.current.currentTime);
+                        }
+                        navigate(-1);
+                    }}
                 />
             </div>
             {/** Note button */}

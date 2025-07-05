@@ -4,7 +4,7 @@ import Notebook from "components/notebook/notebook";
 import { UpdateLength, UpdateNotes, UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 /**
  * Lecture video player page.
@@ -14,10 +14,14 @@ export default function LectureVideo() {
 
     // For the notebook
     const [notebookVisible, setNotebookVisible] = useState(false);
-    const [timestamp, setTimestamp] = useState(0);
+    const timestampRef = useRef<number>(0);
+
+    console.log("Lecture: ", lecture);
 
     return (
-        <>
+        <div
+            className={"relative overflow-hidden"}
+        >
             <VideoPlayerLayout
                 title={lecture.title || "Lecture Video"}
                 url={lecture.videoUrl || ""}
@@ -27,18 +31,19 @@ export default function LectureVideo() {
                 saveLength={async (length: number) => {
                     await UpdateLength<Lecture>("/api/lectures", lecture, length);
                 }}
-                onNoteClick={(currentTime: number) => {
-                    setTimestamp(currentTime);
-                    setNotebookVisible(true);
+                onNoteClick={() => {
+                    setNotebookVisible(!notebookVisible);
                 }}
                 initialPlaybackTime={lecture.continueAt || 0}
+                timestampRef={timestampRef}
             />
             <Notebook
                 isVisible={notebookVisible}
-                timestamp={timestamp}
+                timestamp={timestampRef}
+                notes={lecture.notes}
                 onClose={() => setNotebookVisible(false)}
                 onUpdateNotes={async (notes: Note[]) => await UpdateNotes("/api/lectures", lecture, notes)}
             />
-        </>
+        </div>
     );
 }

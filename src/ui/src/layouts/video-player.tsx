@@ -20,7 +20,7 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
     const [errorModalVisible, setErrorModalVisible] = useState(false);
 
     // To control the video
-    const {videoRef, ...videoControls} = useVideo(props.saveContinueAt, props.initialPlaybackTime);
+    const {videoRef, ...videoControls} = useVideo();
 
 
     // Lower bar props
@@ -29,13 +29,13 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         isVisible: areBarsVisible,
         title: props.title,
 
+        // Initial time
+        initialTime: props.initialPlaybackTime || 0,
+
         // Seeking
         ref: videoRef,
 
         // Handlers
-        onSwitchPlaying: async () => {
-            videoControls.onSwitchPlaying();
-        },
         onGoForward: videoControls.onGoForward,
         onGoBack: videoControls.onGoBack,
         onIncreaseSpeed: videoControls.onIncreaseSpeed,
@@ -43,7 +43,12 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         onTimeChange: videoControls.onTimeChange,
         saveLength: async (length: number) => {
             await props.saveLength(length);
-        }
+        },
+        saveContinueAt: async (time: number) => {
+            await props.saveContinueAt(time);
+        },
+        // To sync with the notebook, if provided
+        timestampRef: props.timestampRef
     }
 
     // Upper bar props
@@ -51,6 +56,10 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         isVisible: areBarsVisible,
         onNoteClick: props.onNoteClick ? () => props.onNoteClick!(videoRef.current?.currentTime || 0) 
                     : undefined,
+        saveContinueAt: async (time: number) => {
+            await props.saveContinueAt(time);
+        },
+        ref: videoRef
     }
 
     return (
@@ -77,6 +86,11 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
                 src={`file://${props.url}`}
                 className={"w-full h-full object-fill"}
                 ref={videoRef}
+                onClick={() => {
+                    if(videoRef.current) {
+                        videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause();
+                    }
+                }}
             />
             <VideoLowerBar
                 {...lowerBarProps}

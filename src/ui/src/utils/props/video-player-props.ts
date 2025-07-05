@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Props for the video player page layout.
  */
@@ -10,6 +12,9 @@ export interface videoPlayerProps {
     initialPlaybackTime?: number;
     saveContinueAt(time: number): Promise<void>;
     saveLength(length: number): Promise<void>;
+
+    // To sync with the notebook
+    timestampRef?: React.RefObject<number>;
 
     // If this is defined, a notebook button appears (for lectures)
     onNoteClick?(currentTime: number): void;
