@@ -23,7 +23,7 @@ export default function LectureVideo() {
             className={"relative overflow-hidden"}
         >
             <VideoPlayerLayout
-                title={lecture.title || "Lecture Video"}
+                title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
                 url={lecture.videoUrl || ""}
                 saveContinueAt={async (time: number) => {
                     await UpdatePlaybackPosition<Lecture>("/api/lectures", lecture, time);

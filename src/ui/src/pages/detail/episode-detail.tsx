@@ -14,6 +14,9 @@ import DetailProps from "utils/props/detail-props";
 export default function EpisodeDetail() {
     const episode : Episode | undefined = useFetchById<Episode>("/api/episodes", "episodeId");
 
+    // Fetch season for title
+    const season : Episode | undefined = useFetchById<Episode>("/api/seasons", "seasonId");
+
     // State
     const [rating, setRating] = useState(episode?.rating);
     const [watchStatus, setWatchStatus] = useState(episode?.watchStatus);
@@ -37,7 +40,8 @@ export default function EpisodeDetail() {
 
     const props : DetailProps<Episode> = {
         model: episode,
-        title: episode.title!,
+        title: season ? `S${season.seasonNumber}:E${episode.episodeNumber} - ${episode.title}`
+            : `Episode ${episode.episodeNumber} : ${episode.title}`,
         rating: rating,
         watchStatus: watchStatus,
         videoUrl: videoUrlRef,

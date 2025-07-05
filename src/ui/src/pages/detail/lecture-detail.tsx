@@ -35,7 +35,7 @@ export default function LectureDetail() {
 
     const props : DetailProps<Lecture> = {
         model: lecture,
-        title: lecture.title!,
+        title: `Lecture ${lecture.lectureNumber}: ${lecture.title}`,
         watchStatus: watchStatus,
         videoUrl: videoUrlRef,
         hasThumbnail: false,
