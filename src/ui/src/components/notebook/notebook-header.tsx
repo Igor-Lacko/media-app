@@ -11,7 +11,7 @@ export default function NotebookHeader({onSwitch, noteListDisplayed, extraClassN
 
     return (
         <div
-            className={"flex justify-between w-full items-center " + (extraClassNames || "")}
+            className={"flex justify-between w-full items-center rounded-t-lg " + (extraClassNames || "")}
         >
             <div
                 className={"flex items-center justify-start w-2/10 h-full"}
@@ -21,8 +21,8 @@ export default function NotebookHeader({onSwitch, noteListDisplayed, extraClassN
                         "flex items-center h-full justify-center w-1/2 text-black dark:text-gray-300\
                         text-lg cursor-pointer rounded-tl-lg",
                         {
-                            "hover:bg-gray-300 dark:hover-bg-gray-500": noteListDisplayed,
-                            "bg-gray-400 dark:bg-gray-600": !noteListDisplayed,
+                            "hover:bg-gray-300 dark:hover:bg-gray-600": noteListDisplayed,
+                            "bg-gray-400 dark:bg-gray-700": !noteListDisplayed,
                         }
                     )}
                     onClick={onSwitch}
@@ -37,8 +37,8 @@ export default function NotebookHeader({onSwitch, noteListDisplayed, extraClassN
                     className={classNames(
                         "flex items-center justify-center h-full w-1/2 text-black dark:text-gray-300 text-lg cursor-pointer",
                         {
-                            "hover:bg-gray-300 dark:hover-bg-gray-500": !noteListDisplayed,
-                            "bg-gray-400 dark:br-gray-600": noteListDisplayed,
+                            "hover:bg-gray-300 dark:hover:bg-gray-600": !noteListDisplayed,
+                            "bg-gray-400 dark:bg-gray-700": noteListDisplayed,
                         }
                     )}
                     onClick={onSwitch}

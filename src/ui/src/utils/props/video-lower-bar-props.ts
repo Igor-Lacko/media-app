@@ -4,9 +4,8 @@ import React from "react";
  * Props for the VideoLowerBar component.
  */
 export interface VideoLowerBarProps {
-    // Visual stuff
+    // If it's visible
     isVisible: boolean;
-    title: string;
 
     // Video ref
     ref: React.RefObject<HTMLVideoElement | null>;

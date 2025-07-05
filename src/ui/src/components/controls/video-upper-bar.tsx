@@ -7,7 +7,7 @@ import classNames from "classnames";
  * Upper bar for the video player with a back button and a note button (for lectures).
  * @param props Visibility state, note click handler, and extra class names.
  */
-export default function VideoUpperBar(props : VideoUpperBarProps) {
+export default function VideoUpperBar(props: VideoUpperBarProps) {
     const navigate = useNavigate();
 
     return (
@@ -28,18 +28,28 @@ export default function VideoUpperBar(props : VideoUpperBarProps) {
                 <FaArrowLeft
                     className={"text-gray-500 hover:text-gray-600 text-2xl cursor-pointer"}
                     onClick={async () => {
-                        if(props.ref.current) {
+                        if (props.ref.current) {
                             await props.saveContinueAt(props.ref.current.currentTime);
                         }
                         navigate(-1);
                     }}
                 />
             </div>
+            {/** Title  */}
+            <div
+                className={"flex items-center justify-center w-8/10 h-full text-gray-500 text-lg"}
+            >
+                {props.title || "Video Player"}
+            </div>
             {/** Note button */}
-            {props.onNoteClick && <FaStickyNote
-                className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
-                onClick={props.onNoteClick}
-            />}
+            {props.onNoteClick && <div
+                className={"flex items-center justify-end w-1/10 h-full"}
+            >
+                <FaStickyNote
+                    className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
+                    onClick={props.onNoteClick}
+                />
+            </div>}
         </div>
     )
 }

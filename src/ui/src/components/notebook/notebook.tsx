@@ -29,7 +29,7 @@ export default function Notebook (props: NotebookProps) {
             <NotebookHeader
                 onSwitch={() => setNoteListDisplayed(!noteListDisplayed)}
                 noteListDisplayed={noteListDisplayed}
-                extraClassNames={"h-1/10 border-b-1 border-gray-400"}
+                extraClassNames={"h-1/10 border-y-1 border-gray-400 dark:border-gray-600"}
             />
             {/** Add note or show notes */}
             {noteListDisplayed ? (

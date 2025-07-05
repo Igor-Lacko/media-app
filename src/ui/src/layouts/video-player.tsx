@@ -1,7 +1,6 @@
 import VideoLowerBar from "components/controls/video-lower-bar";
 import VideoUpperBar from "components/controls/video-upper-bar";
 import InfoModal from "components/modals/info-modal";
-import useVideo from "hooks/use-video";
 import { useRef, useState } from "react";
 import VideoLowerBarProps from "utils/props/video-lower-bar-props";
 import videoPlayerProps from "utils/props/video-player-props";
@@ -30,7 +29,6 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
 
         // Visual
         isVisible: areBarsVisible,
-        title: props.title,
 
         // Initial time
         initialTime: props.initialPlaybackTime || 0,
@@ -45,9 +43,15 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
 
     // Upper bar props
     const upperBarProps : VideoUpperBarProps = {
+        // Visual
+        title: props.title,
         isVisible: areBarsVisible,
+
+        // Notebook
         onNoteClick: props.onNoteClick ? () => props.onNoteClick!(videoRef.current?.currentTime || 0) 
                     : undefined,
+
+        // Time handler and ref
         saveContinueAt: async (time: number) => {
             await props.saveContinueAt(time);
         },
