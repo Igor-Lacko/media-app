@@ -49,7 +49,7 @@ export default function useVideo(
             ref.current.onratechange = () => setSpeed(ref.current!.playbackRate);
 
             // Time update, update the timestamp if provided
-            if (timestampRef) {
+            if (timestampRef && ref.current) {
                 ref.current.ontimeupdate = () => {
                     setTime(ref.current!.currentTime);
                     timestampRef.current = ref.current!.currentTime;

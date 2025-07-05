@@ -13,8 +13,9 @@ export default interface NotebookProps {
     // Initial notes, used as state
     notes: Note[];
 
-    // Function to update notes
-    onUpdateNotes(notes: Note[]): Promise<Boolean>;
+    // Functions to update notes
+    onUpdateNotes(notes: Note[]): Promise<void>;
+    onAddNote(note: Note): Promise<void>;
 
     // To close
     onClose(): void;

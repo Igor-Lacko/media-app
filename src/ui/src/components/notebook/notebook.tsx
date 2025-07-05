@@ -13,7 +13,6 @@ import Note from "@shared/interface/models/note";
 export default function Notebook (props: NotebookProps) {
     // Whether to display the note list. If false, displays tye "add note" textfield/area/whatever.
     const [noteListDisplayed, setNoteListDisplayed] = useState(true);
-    const [notes, setNotes] = useState(props.notes);
 
     return (
         <div
@@ -34,14 +33,13 @@ export default function Notebook (props: NotebookProps) {
             {/** Add note or show notes */}
             {noteListDisplayed ? (
                 <NotebookNoteList
-                    notes={notes}
+                    notes={props.notes}
+                    updateNotes={props.onUpdateNotes}
                 />
             ) : (
                 <NotebookAddNote
                     onAdd={async (note: Note) => {
-                        await props.onUpdateNotes([...notes, note]);
-                        setNotes([...notes, note]);
-                        console.log("notes: ", notes);
+                        await props.onAddNote(note);
                         setNoteListDisplayed(true);
                     }}
                     timestamp={props.timestamp}

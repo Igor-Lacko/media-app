@@ -92,7 +92,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
     return (
         <div
             className={"flex flex-col w-full h-full items-center justify-start overflow-x-hidden\
-                    overflow-y-auto bg-white dark:bg-gray-800"}
+                    overflow-y-hidden bg-white dark:bg-gray-800"}
         >
             <div
                 className={"flex items-center justify-start ml-10 mt-5 w-full h-1/25 sm:h-1/20"}
