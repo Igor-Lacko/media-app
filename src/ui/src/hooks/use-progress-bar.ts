@@ -1,4 +1,4 @@
-import ProgressBarProps from "utils/props/progress-bar-props";
+import ProgressBarProps from "utils/props/other/progress-bar-props";
 import CardDisplayable from "@shared/interface/card-displayable";
 import WatchStatus from "@shared/enum/watch-status";
 

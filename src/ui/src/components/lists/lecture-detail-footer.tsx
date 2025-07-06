@@ -1,6 +1,6 @@
 import Note from "@shared/interface/models/note"
 import classNames from "classnames";
-import ListNotFound from "not-found/list-not-found";
+import ListNotFound from "components/not-found/item-not-found";
 import { FaCircle, FaTrash } from "react-icons/fa"
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 

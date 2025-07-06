@@ -1,7 +1,7 @@
 import DetailFillable from "@shared/interface/detail-fillable";
 import CardDisplayable from "@shared/interface/card-displayable";
 import DetailHeaders from "utils/enum/detail-headers";
-import ListProps from "./list-props";
+import ListProps from "../model-elements/list-props";
 import WatchStatus from "@shared/enum/watch-status";
 import Note from "@shared/interface/models/note";
 

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classNames from "classnames"
 
-import SidebarButtonProps from "utils/props/sidebar-button-props";
+import SidebarButtonProps from "utils/props/other/sidebar-button-props";
 
 /**
  * @param props icon, label, link

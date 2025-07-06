@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalProps from "utils/props/modal-props";
+import ModalProps from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 import { FaCheckCircle } from "react-icons/fa";
 import RoundedButton from "components/buttons/rounded-button";

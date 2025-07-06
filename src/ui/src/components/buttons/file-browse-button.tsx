@@ -9,7 +9,6 @@ export default function FileBrowseButton({initial, onChange, allowed, extraClass
 }) {
     // To display the currently selected file name
     const [fileName, setFileName] = useState(initial);
-    console.log("allowed: ", allowed);
 
     return (
         <div

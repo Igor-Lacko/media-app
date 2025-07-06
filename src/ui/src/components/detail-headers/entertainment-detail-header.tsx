@@ -4,7 +4,7 @@ import DetailWatchStatus from "components/other/detail-watch-status";
 import HeaderRating from "components/other/header-rating";
 import DetailImage from "components/image/detail-image";
 import GenreAdapter from "utils/adapters/genre-adapter";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 import { LengthToTimeHeader} from "utils/adapters/length-to-time";
 
 /**

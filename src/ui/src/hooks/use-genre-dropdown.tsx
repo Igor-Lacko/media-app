@@ -1,6 +1,6 @@
 import { FaTags } from "react-icons/fa";
 import GenreAdapter from "utils/adapters/genre-adapter";
-import DropdownProps from "utils/props/dropdown-props";
+import DropdownProps from "utils/props/control-elements/dropdown-props";
 import Genre from "@shared/enum/genre";
 import SortKey from "@shared/enum/sort-key";
 

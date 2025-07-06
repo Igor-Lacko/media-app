@@ -1,4 +1,4 @@
-import { EditBarProps } from "utils/props/edit-bar-props";
+import { EditBarProps } from "utils/props/control-elements/edit-bar-props";
 import MarkFavoriteButton from "../buttons/mark-favorite-button";
 import RoundedButton from "../buttons/rounded-button";
 import { FaPlay } from "react-icons/fa";

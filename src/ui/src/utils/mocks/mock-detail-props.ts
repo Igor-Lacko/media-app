@@ -2,7 +2,7 @@ import Genre from "@shared/enum/genre";
 import WatchStatus from "@shared/enum/watch-status";
 import Movie from "@shared/interface/models/movie";
 import DetailHeaders from "utils/enum/detail-headers";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 export default function MockDetailProps(): DetailProps<Movie> {
     return {

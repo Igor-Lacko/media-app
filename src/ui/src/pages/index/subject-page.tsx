@@ -6,8 +6,8 @@ import Subject from "@shared/interface/models/subject";
 import SortKey from "@shared/enum/sort-key";
 import { FetchData } from "data/crud/read";
 import MediaItemList from "components/other/media-item-list";
-import ControlBarProps from "utils/props/control-bar-props";
-import ListProps from "utils/props/list-props";
+import ControlBarProps from "utils/props/control-elements/control-bar-props";
+import ListProps from "utils/props/model-elements/list-props";
 import { Route, Routes } from "react-router-dom";
 import AddSubjectPage from "../forms/add-subject-page";
 

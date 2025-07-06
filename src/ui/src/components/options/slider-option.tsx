@@ -1,5 +1,5 @@
 import Slider from "components/controls/slider";
-import SliderProps from "utils/props/slider-props";
+import SliderProps from "utils/props/control-elements/slider-props";
 /**
  * SliderOption component for rendering a slider input with a label.
  */

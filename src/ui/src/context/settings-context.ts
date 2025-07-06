@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SettingsContextProps } from 'utils/props/settings-props';
+import { SettingsContextProps } from 'utils/props/other/settings-props';
 
 export const SettingsContext = createContext<SettingsContextProps>(
     {

@@ -5,13 +5,13 @@ import EntertainmentDetailHeader from "components/detail-headers/entertainment-d
 import LectureDetailHeader from "components/detail-headers/lecture-detail-header";
 import SubjectDetailHeader from "components/detail-headers/subject-detail-header";
 import DetailHeaders from "utils/enum/detail-headers";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 import EditBar from "components/controls/edit-bar";
 import DetailFillable from "@shared/interface/detail-fillable";
 import MediaItemList from "components/other/media-item-list";
 import { useState } from "react";
 import VisibleModal from "utils/enum/visible-modal";
-import { EditBarProps } from "utils/props/edit-bar-props";
+import { EditBarProps } from "utils/props/control-elements/edit-bar-props";
 import ConfirmModal from "components/modals/confirm-modal";
 import Lecture from "@shared/interface/models/lecture";
 import Subject from "@shared/interface/models/subject";

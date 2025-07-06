@@ -39,6 +39,12 @@ ipcMain.handle('get-file', async (event, allowed) => {
     console.log(`Opening file dialog with extcxcxzensions: ${extensions}`);
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
+        filters: [
+            {
+                name: 'Files',
+                extensions: extensions
+            }
+        ]
     });
     return result.filePaths; 
 });

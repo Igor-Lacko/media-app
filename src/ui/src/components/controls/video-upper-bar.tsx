@@ -1,4 +1,4 @@
-import VideoUpperBarProps from "utils/props/video-upper-bar-props";
+import VideoUpperBarProps from "utils/props/video/video-upper-bar-props";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaStickyNote } from "react-icons/fa";
 import classNames from "classnames";

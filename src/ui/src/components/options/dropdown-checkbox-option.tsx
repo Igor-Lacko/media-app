@@ -1,5 +1,5 @@
 import DropdownCheckbox from "components/dropdowns/dropdown-checkbox";
-import DropdownProps from "utils/props/dropdown-props";
+import DropdownProps from "utils/props/control-elements/dropdown-props";
 
 /**
  * Form option for a dropdown with checkboxes. (E.g. movie genres)

@@ -1,4 +1,4 @@
-import RoundedButtonProps from "utils/props/rounded-button-props";
+import RoundedButtonProps from "utils/props/control-elements/rounded-button-props";
 
 /**
  * Returns a rounded button component.

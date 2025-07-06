@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import AbstractModal from "./abstract-modal";
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/modal-props";
+import ModalProps from "utils/props/other/modal-props";
 
 /**
  * Modal that provides a text area for entering a description.

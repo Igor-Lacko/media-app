@@ -1,10 +1,9 @@
-import { FaInbox } from "react-icons/fa";
-
 /**
  * The component that is displayed when a list has zero items.
+ * Also used in place of thumbnails when they are not found.
  * @param param0 Title, message
  */
-export default function ListNotFound({ title, message }: { title:string; message: string }) {
+export default function ItemNotFound({ title, message }: { title:string; message: string }) {
     return (
         <div
             className={"flex flex-col items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-800\

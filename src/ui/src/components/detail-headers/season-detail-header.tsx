@@ -1,6 +1,6 @@
 import Season from "@shared/interface/models/season";
 import HeaderRating from "components/other/header-rating";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 /**
  * Header for a season detail page.

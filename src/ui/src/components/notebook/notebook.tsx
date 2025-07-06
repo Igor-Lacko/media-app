@@ -1,4 +1,4 @@
-import NotebookProps from "utils/props/notebook-props";
+import NotebookProps from "utils/props/other/notebook-props";
 import classNames from "classnames";
 import { useRef, useState } from "react";
 import NotebookHeader from "./notebook-header";

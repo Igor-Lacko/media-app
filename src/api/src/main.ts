@@ -8,6 +8,7 @@ import SubjectsRouter from "routes/subjects";
 import SeasonsRouter from "routes/seasons";
 import EpisodesRouter from "routes/episodes";
 import LecturesRouter from "routes/lectures";
+import FavoritesRouter from "routes/favorites";
 import { NukeDatabase } from "controllers/settings-controller";
 import seedData from "utils/insert-mock-data";
 import { GetMovies } from "controllers/movie-controller";
@@ -29,6 +30,7 @@ viteNodeApp.use("/api/subjects", SubjectsRouter);
 viteNodeApp.use("/api/seasons", SeasonsRouter);
 viteNodeApp.use("/api/episodes", EpisodesRouter);
 viteNodeApp.use("/api/lectures", LecturesRouter);
+viteNodeApp.use("/api/favorites", FavoritesRouter);
 
 // TODO remove
 (async () => {

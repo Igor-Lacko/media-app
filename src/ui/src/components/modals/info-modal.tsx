@@ -1,5 +1,5 @@
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/modal-props";
+import ModalProps from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 
 /**

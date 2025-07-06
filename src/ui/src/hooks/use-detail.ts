@@ -1,7 +1,7 @@
 import CardDisplayable from "@shared/interface/card-displayable";
 import DetailFillable from "@shared/interface/detail-fillable";
 import { title } from "process";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 /**
  * Returns detail props from a model.

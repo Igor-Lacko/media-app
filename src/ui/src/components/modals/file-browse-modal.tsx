@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import ModalProps from "utils/props/modal-props";
+import ModalProps from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 import FileBrowseButton from "components/buttons/file-browse-button";
 import RoundedButton from "components/buttons/rounded-button";

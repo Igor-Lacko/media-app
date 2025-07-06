@@ -2,9 +2,9 @@ import Subject from "@shared/interface/models/subject";
 import DeleteData from "data/crud/delete";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import NotFoundPage from "not-found/not-found";
+import NotFoundPage from "components/not-found/page-not-found";
 import DetailHeaders from "utils/enum/detail-headers";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 export default function SubjectDetail() {
     // Subject for which the detail is displayed

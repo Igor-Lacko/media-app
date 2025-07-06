@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PlaybackSliderProps from "utils/props/playback-slider-props";
+import PlaybackSliderProps from "utils/props/control-elements/playback-slider-props";
 
 /**
  * Playback slider component for controlling video position.

@@ -2,9 +2,9 @@ import VideoLowerBar from "components/controls/video-lower-bar";
 import VideoUpperBar from "components/controls/video-upper-bar";
 import InfoModal from "components/modals/info-modal";
 import { useRef, useState } from "react";
-import VideoLowerBarProps from "utils/props/video-lower-bar-props";
-import videoPlayerProps from "utils/props/video-player-props";
-import VideoUpperBarProps from "utils/props/video-upper-bar-props";
+import VideoLowerBarProps from "utils/props/video/video-lower-bar-props";
+import videoPlayerProps from "utils/props/video/video-player-props";
+import VideoUpperBarProps from "utils/props/video/video-upper-bar-props";
 
 /**
  * Layout for the video player page.

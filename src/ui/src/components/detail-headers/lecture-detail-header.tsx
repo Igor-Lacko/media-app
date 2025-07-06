@@ -1,7 +1,7 @@
 import Lecture from "@shared/interface/models/lecture";
 import DetailWatchStatus from "components/other/detail-watch-status";
 import { LengthToTimeHeader} from "utils/adapters/length-to-time";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 export default function LectureDetailHeader(props : DetailProps<Lecture>) {
     return (

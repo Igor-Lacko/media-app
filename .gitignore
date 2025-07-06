@@ -140,3 +140,6 @@ mock/
 TODO.txt
 
 *.db
+*storybook.log
+storybook-static
+*.storybook

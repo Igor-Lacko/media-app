@@ -1,7 +1,7 @@
 import Episode from "@shared/interface/models/episode";
 import DetailWatchStatus from "components/other/detail-watch-status";
 import HeaderRating from "components/other/header-rating";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 export default function EpisodeDetailHeader(props: DetailProps<Episode>) {
     return (

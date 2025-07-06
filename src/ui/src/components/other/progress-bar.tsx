@@ -1,4 +1,4 @@
-import ProgressBarProps from "utils/props/progress-bar-props";
+import ProgressBarProps from "utils/props/other/progress-bar-props";
 
 /**
  * Returns a progress bar component.

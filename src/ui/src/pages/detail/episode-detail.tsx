@@ -3,10 +3,10 @@ import DeleteData from "data/crud/delete";
 import { UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import NotFoundPage from "not-found/not-found";
+import NotFoundPage from "components/not-found/page-not-found";
 import { useEffect, useRef, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
-import DetailProps from "utils/props/detail-props";
+import DetailProps from "utils/props/detail/detail-props";
 
 /**
  * Detail page for a episode.

@@ -1,7 +1,7 @@
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import FormProps from "utils/props/form-props";
+import FormProps from "utils/props/other/form-props";
 import InfoModal from "components/modals/info-modal";
 import RoundedButton from "components/buttons/rounded-button";
 

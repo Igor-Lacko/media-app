@@ -1,8 +1,8 @@
 import DetailLayout from "layouts/detail-layout";
 import TvShow from "@shared/interface/models/tv-show";
 import useFetchById from "hooks/use-fetch-by-id";
-import DetailProps from "utils/props/detail-props";
-import NotFoundPage from "not-found/not-found";
+import DetailProps from "utils/props/detail/detail-props";
+import NotFoundPage from "components/not-found/page-not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import DeleteData from "data/crud/delete";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";

@@ -1,7 +1,7 @@
 import RoundedButton from "components/buttons/rounded-button";
 import Slider from "components/controls/slider";
 import { useRef } from "react";
-import ModalProps from "utils/props/modal-props";
+import ModalProps from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 
 /**

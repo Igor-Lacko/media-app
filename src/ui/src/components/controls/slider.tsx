@@ -1,4 +1,4 @@
-import SliderProps from "utils/props/slider-props";
+import SliderProps from "utils/props/control-elements/slider-props";
 import { useState } from "react";
 
 /**

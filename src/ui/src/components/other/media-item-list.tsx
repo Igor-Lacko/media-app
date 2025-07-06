@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
-import ListProps from "utils/props/list-props";
+import ListProps from "utils/props/model-elements/list-props";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import Genre from "@shared/enum/genre";
 import { FaStar } from "react-icons/fa";
 import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
-import ListNotFound from "not-found/list-not-found";
+import ListNotFound from "components/not-found/item-not-found";
 
 /**
  * List of media items with links to their pages.

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { use, useEffect, useState } from "react";
 import { FaPause, FaPlay, FaForward, FaBackward, FaFastForward, FaFastBackward, FaStepForward, FaStepBackward } from "react-icons/fa";
-import VideoLowerBarProps from "utils/props/video-lower-bar-props";
+import VideoLowerBarProps from "utils/props/video/video-lower-bar-props";
 import PlaybackSlider from "./playback-slider";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 import useVideo from "hooks/use-video";
