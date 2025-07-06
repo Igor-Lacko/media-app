@@ -1,6 +1,6 @@
 import Episode from "@shared/interface/models/episode";
 import Season from "@shared/interface/models/season";
-import FormSection from "components/other/form-section";
+import FormSection from "components/sections/form-section";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import InputOption from "components/options/input-option";

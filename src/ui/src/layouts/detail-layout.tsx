@@ -35,6 +35,8 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
     const navigate = useNavigate();
     const [visibleModal, setVisibleModal] = useState(VisibleModal.NONE);
 
+    console.log("DetailLayout rendered with props:", props.model);
+
     // Edit bar props
     const editBarProps : EditBarProps = {
         // Add
@@ -53,6 +55,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Mark as favorite
         onMarkFavorite: props.markFavoriteFunction,
+        isFavorite: props.model.isFavorite,
         
         // Rate
         onRate: () => setVisibleModal(VisibleModal.RATE),

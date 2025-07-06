@@ -33,7 +33,7 @@ export default async function seedData() {
             length: 136 * 60, // Converted to seconds
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,
-            isFavorite: false,
+            isFavorite: true,
         },
         {
             title: "Interstellar",
@@ -45,7 +45,7 @@ export default async function seedData() {
             length: 169 * 60, // Converted to seconds
             watchStatus: WatchStatus.UNWATCHED,
             continueAt: 0,
-            isFavorite: false,
+            isFavorite: true,
         },
     ];
 
@@ -62,6 +62,7 @@ export default async function seedData() {
                 { seasonNumber: 1, episodes: [] },
                 { seasonNumber: 2, episodes: [] },
             ],
+            isFavorite: true,
         },
         {
             title: "Stranger Things",
@@ -75,6 +76,7 @@ export default async function seedData() {
                 { seasonNumber: 1, episodes: [] },
                 { seasonNumber: 2, episodes: [] },
             ],
+            isFavorite: true,
         },
     ];
 

@@ -54,7 +54,7 @@ export default function EditBar(props : EditBarProps) {
             >
                 {props.onMarkFavorite && <MarkFavoriteButton
                     onClick={props.onMarkFavorite}
-                    isFavorite={true}
+                    isFavorite={props.isFavorite!}
                 />}
                 {props.rateTitle && props.onRate && <RoundedButton
                     text={props.rateTitle}

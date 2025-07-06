@@ -6,8 +6,8 @@
 export default function ItemNotFound({ title, message }: { title:string; message: string }) {
     return (
         <div
-            className={"flex flex-col items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-800\
-                text-gray-600 dark:text-gray-400"}
+            className={"flex flex-col items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-700\
+                text-gray-600 dark:text-gray-500"}
         >
             <div
                 className={"flex items-center justify-start mb-4"}

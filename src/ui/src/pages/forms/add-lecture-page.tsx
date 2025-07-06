@@ -1,5 +1,5 @@
 import Lecture from "@shared/interface/models/lecture";
-import FormSection from "components/other/form-section";
+import FormSection from "components/sections/form-section";
 import FileBrowseOption from "components/options/file-browse-option";
 import InputOption from "components/options/input-option";
 import SubmitLecture from "data/submit-handlers/lecture-submit";

@@ -8,6 +8,7 @@ export interface EditBarProps {
     onEdit?: () => void;
     deleteTitle?: string;
     onDelete?: () => void;
+    isFavorite?: boolean;
     onMarkFavorite?: () => void;
     rateTitle?: string;
     playTitle?: string;

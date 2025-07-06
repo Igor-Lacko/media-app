@@ -5,7 +5,7 @@ import { defaultSubject } from "utils/model-defaults";
 import { defaultLecture } from "utils/model-defaults";
 import FormLayout from "layouts/form-layout";
 import SubjectSubmitHandler from "data/submit-handlers/subject-submit";
-import FormSection from "components/other/form-section";
+import FormSection from "components/sections/form-section";
 import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";

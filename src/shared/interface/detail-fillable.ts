@@ -5,6 +5,7 @@ export interface DetailFillable extends CardDisplayable {
     length?: number;
     description?: string;
     continueAt?: number;
+    isFavorite?: boolean;
 }
 
 export default DetailFillable;

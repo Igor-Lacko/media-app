@@ -28,11 +28,11 @@ export default function MediaItemCard(props: CardProps) {
         <div
             className={"flex flex-col flex-shrink items-center justify-start bg-white dark:bg-gray-800\
                 rounded-t-lg shadow-md hover:shadow-2xl transition-shadow duration-200 ease-in-out \
-                max-w-sm border-2 border-black dark:border-gray-700 p- "}
+                border-2 border-black dark:border-gray-700 size-80"}
         >
             {/** Thumbnail */}
             <div
-                className={"w-full h-1/2 p-0 overflow-hidden border-b-3 border-black dark:border-gray-700"}
+                className={"w-full h-1/2 p-0 overflow-hidden rounded-t-lg border-b-2 border-black dark:border-gray-700"}
             >
                 {thumbnailLoaded ? (
                     <img

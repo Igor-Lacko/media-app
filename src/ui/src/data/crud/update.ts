@@ -31,6 +31,7 @@ export default async function UpdateData<T>(url: string, id: number, data: Parti
  */
 export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T): Promise<boolean> {
     try {
+        console.log("Marking as favorite:", !model.isFavorite, model.identifier);
         await UpdateData<T>(url, model.identifier!, { isFavorite: !model.isFavorite } as Partial<T>);
         return true;
     }
