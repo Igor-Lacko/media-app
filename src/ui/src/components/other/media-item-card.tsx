@@ -3,7 +3,7 @@ import { IsValidFile } from "utils/electron-api";
 import { useState, useEffect } from "react";
 import ItemNotFound from "components/not-found/item-not-found";
 import { useNavigate } from "react-router-dom";
-import HeaderRating from "./header-rating";
+import CardRating from "./card-rating";
 
 /**
  * Card element displaying a movie or tv show.
@@ -26,19 +26,19 @@ export default function MediaItemCard(props: CardProps) {
 
     return (
         <div
-            className={"flex flex-col items-center justify-start bg-gray-200 dark:bg-gray-800\
-                rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out \
-                " + (props.extraClassNames || "")}
+            className={"flex flex-col flex-shrink items-center justify-start bg-white dark:bg-gray-800\
+                rounded-t-lg shadow-md hover:shadow-2xl transition-shadow duration-200 ease-in-out \
+                max-w-sm border-2 border-black dark:border-gray-700 p- "}
         >
             {/** Thumbnail */}
             <div
-                className={"w-full h-1/2 rounded-t-lg overflow-hidden"}
+                className={"w-full h-1/2 p-0 overflow-hidden border-b-3 border-black dark:border-gray-700"}
             >
                 {thumbnailLoaded ? (
                     <img
-                        src={props.model.thumbnailUrl}
+                        src={"file://" + props.model.thumbnailUrl}
                         alt={props.model.title}
-                        className={"w-full h-full object-fit"}
+                        className={"w-full h-full object-fill border-gray-400 dark:border-gray-700"}
                     />
                 ) : (
                     <ItemNotFound
@@ -49,36 +49,39 @@ export default function MediaItemCard(props: CardProps) {
             </div>
             {/** Rest of the card */}
             <div
-                className={"flex flex-col items-start justify-start w-full py-2 space-y-2 h-1/2 \
+                className={"flex flex-col items-start justify-start w-full pt-2 h-1/2 \
                         text-black dark:text-gray-400"}
             >
                 {/** Title, rating */}
                 <div
-                    className={"flex items-center justify-between w-full px-2"}
+                    className={"flex items-center justify-between w-full px-4 pb-2 border-b-2 border-black dark:border-gray-700"}
                 >
                     <h2
-                        className={"text-xl font-bold text-center cursor-pointer hover:underline"}
+                        className={"text-xl font-bold text-center cursor-pointer hover:underline font-[Roboto]"}
                         onClick={() => navigate(props.url)}
                     >
                         {props.model.title}
                     </h2>
-                    {props.model.rating && <HeaderRating
+                    {props.model.rating && <CardRating
                         rating={props.model.rating}
-                        
                     />}
                 </div>
-                {/** Short description */}
-                <p
-                    className={"text-md p-2 w-full text-center text-gray-600 dark:text-gray-300"}
+                <div
+                    className={"flex flex-col flex-grow items-start justify-between w-full h-auto space-y-2 px-2 pb-2"}
                 >
-                    {props.model.shortDescription || "No description available."}
-                </p>
-                {/** Type (Movie/Tv show) */}
-                <span
-                    className={"text-sm text-gray-500 dark:text-gray-400 italic"}
-                >
-                    {props.model.submediaString ? "Tv Show" : "Movie"}
-                </span>
+                    {/** Short description */}
+                    <p
+                        className={"text-md p-2 w-full text-gray-600 dark:text-gray-300"}
+                    >
+                        {props.model.shortDescription || "No description available."}
+                    </p>
+                    {/** Type (Movie/Tv show) */}
+                    <span
+                        className={"text-sm text-gray-500 dark:text-gray-400 italic"}
+                    >
+                        {props.model.submediaString ? "Tv Show" : "Movie"}
+                    </span>
+                </div>
             </div>
         </div>
     )
