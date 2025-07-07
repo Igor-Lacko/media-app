@@ -53,7 +53,8 @@ export default function MediaItemList(props: ListProps) {
                         {
                             "bg-gray-200 dark:bg-gray-900": index % 2 === 0,
                             "bg-white dark:bg-gray-800": index % 2 !== 0,
-                            "border-b-2 border-gray-300 dark:border-gray-700": index < props.items.length - 1
+                            "border-b-2 border-gray-300 dark:border-gray-700": index < props.items.length - 1,
+                            "h-32": props.showThumbnail // Else smaller
                         }
                     )}
                 >
@@ -91,11 +92,6 @@ export default function MediaItemList(props: ListProps) {
                                 {item.shortDescription}
                             </p>
                         )}
-                        {item.submediaString && (
-                            <span className="text-sm text-gray-500 dark:text-gray-300">
-                                {item.submediaString}
-                            </span>
-                        )}
                     </div>
                     <div
                         className={"flex h-full w-2/10 items-center justify-center"}
@@ -127,6 +123,15 @@ export default function MediaItemList(props: ListProps) {
                     >
                         {watchStatusAdapter(item.watchStatus)}
                     </span>
+                    <div
+                        className={"flex items-center justify-center w-2/10 h-full text-md"}
+                    >
+                        {item.submediaString && (
+                            <span className={"text-gray-500 dark:text-gray-300"}>
+                                {item.submediaString}
+                            </span>
+                        )}
+                    </div>
                 </NavLink>
             ))}
         </div>

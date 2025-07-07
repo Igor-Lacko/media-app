@@ -8,7 +8,6 @@ import DetailProps from "utils/props/detail/detail-props";
 import { LengthToTimeHeader } from "utils/adapters/length-to-time";
 import { IsValidFile } from "utils/electron-api";
 import { useEffect, useState } from "react";
-import NotFoundPage from "components/not-found/page-not-found";
 import ItemNotFound from "components/not-found/item-not-found";
 
 /**

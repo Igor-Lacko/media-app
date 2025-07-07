@@ -17,6 +17,7 @@ export interface DetailProps<T extends DetailFillable>{
     rating?: number;
     description?: string;
     watchStatus?: WatchStatus;
+    isFavorite?: boolean;
 
     // Ref for video URL, does not need to be state since it's not displayed
     videoUrl?: React.RefObject<string>;
@@ -30,7 +31,6 @@ export interface DetailProps<T extends DetailFillable>{
     // Whether to display the thumbnail and genres (todo remove)
     hasThumbnail: boolean;
     hasGenres: boolean;
-
 
     // Header type, used to determine which header to display
     headerType: DetailHeaders;

@@ -55,7 +55,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
         // Mark as favorite
         onMarkFavorite: props.markFavoriteFunction,
-        isFavorite: props.model.isFavorite,
+        isFavorite: props.isFavorite,
         
         // Rate
         onRate: () => setVisibleModal(VisibleModal.RATE),

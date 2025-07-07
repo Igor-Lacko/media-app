@@ -20,6 +20,7 @@ export default function TvShowDetail() {
     const [description, setDescription] = useState(tvShow?.description);
     const [rating, setRating] = useState(tvShow?.rating);
     const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.UNWATCHED);
+    const [isFavorite, setIsFavorite] = useState(tvShow?.isFavorite || false);
 
     // UseEffect to load the TV show if it doesn't immediately
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function TvShowDetail() {
             setDescription(tvShow.description);
             setRating(tvShow.rating);
             setWatchStatus(tvShow.watchStatus || WatchStatus.UNWATCHED);
+            setIsFavorite(tvShow.isFavorite || false);
         }
     }, [tvShow]);
 
@@ -44,6 +46,7 @@ export default function TvShowDetail() {
         description: description,
         rating: rating,
         watchStatus: watchStatus,
+        isFavorite: isFavorite,
         headerType: DetailHeaders.ENTERTAINMENT,
         listProps: {
             path: "seasons",
@@ -57,7 +60,10 @@ export default function TvShowDetail() {
         editTitle: "Edit TV Show",
         deleteTitle: "Delete TV Show",
         deleteFunction: async () => await DeleteData("/api/shows", tvShow.identifier!),
-        markFavoriteFunction: async () => await MarkAsFavorite<TvShow>("/api/shows", tvShow),
+        markFavoriteFunction: async () => {
+            setIsFavorite(!isFavorite);
+            return await MarkAsFavorite<TvShow>("/api/shows", tvShow);
+        },
         rateTitle: "Rate TV Show",
         rateFunction: async (rating: number) => {
             setRating(rating);

@@ -21,6 +21,7 @@ export default function MovieDetail() {
     const [description, setDescription] = useState(movie?.description);
     const [rating, setRating] = useState(movie?.rating);
     const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
+    const [isFavorite, setIsFavorite] = useState(movie?.isFavorite || false);
 
     // Video url ref
     const videoUrlRef = useRef(movie?.videoUrl || "");
@@ -31,6 +32,7 @@ export default function MovieDetail() {
             setDescription(movie.description || "");
             setRating(movie.rating || -1);
             setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
+            setIsFavorite(movie.isFavorite || false);
             videoUrlRef.current = movie.videoUrl || "";
         }
     }, [movie]);
@@ -47,6 +49,7 @@ export default function MovieDetail() {
         title: movie.title!,
         description: description,
         rating: rating,
+        isFavorite: isFavorite,
         videoUrl: videoUrlRef,
         watchStatus: watchStatus,
         hasThumbnail: true,
@@ -56,7 +59,10 @@ export default function MovieDetail() {
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
-        markFavoriteFunction: async () => await MarkAsFavorite<Movie>("/api/movies", movie),
+        markFavoriteFunction: async () => {
+            setIsFavorite(!isFavorite);
+            return await MarkAsFavorite<Movie>("/api/movies", movie);
+        },
         rateTitle: "Rate Movie",
         setVideoUrlFunction: async (videoUrl: string) => {
             videoUrlRef.current = videoUrl;
