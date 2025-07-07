@@ -17,7 +17,7 @@ export default function FileBrowseButton({initial, onChange, allowed, extraClass
                 + (extraClassnames || "")}
         >
             <button
-                className={"cursor-pointer rounded-lg h-full p-2 items-center justify-center bg-purple-800 dark:bg-purple-600\
+                className={"cursor-pointer rounded-lg h-full p-2 text-sm items-center justify-center bg-purple-800 dark:bg-purple-600\
                     text-gray-200 hover:bg-purple-500 dark:hover:bg-purple-500 transition-all duration-300 ease-in-out"}
                 onClick={async () => {
                     const path = await GetFilePath(allowed);
@@ -27,7 +27,7 @@ export default function FileBrowseButton({initial, onChange, allowed, extraClass
                     }
                 }}
             >
-                Choose file
+                Browse
             </button>
             <span
                 className={"ml-2 text-gray-500 dark:text-gray-300 flex justify-start items-center h-full\

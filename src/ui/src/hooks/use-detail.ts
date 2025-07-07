@@ -3,6 +3,9 @@ import DetailFillable from "@shared/interface/detail-fillable";
 import { title } from "process";
 import DetailProps from "utils/props/detail/detail-props";
 
+
+// TODO???
+
 /**
  * Returns detail props from a model.
  * @param model Model to extract detail props from.
@@ -15,6 +18,5 @@ export default function useDetail<T extends DetailFillable>(model: T, submedia? 
         model: model,
         submedia: submedia,
         title: model.title,
-        hasT
     }
 }

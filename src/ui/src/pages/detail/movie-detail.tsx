@@ -2,12 +2,13 @@ import DetailLayout from "layouts/detail-layout";
 import Movie from "@shared/interface/models/movie";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail/detail-props";
-import NotFoundPage from "components/not-found/page-not-found";
+import NotFoundPage from "pages/other/page-not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import WatchStatus from "@shared/enum/watch-status";
 import DeleteData from "data/crud/delete";
 import { useEffect, useRef, useState } from "react";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Component for displaying movie details.
@@ -15,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
  */
 export default function MovieDetail() {
     // Parse movie id
-    const movie : Movie | undefined = useFetchById<Movie>("/api/movies");
+    const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
 
     // State vars
     const [description, setDescription] = useState(movie?.description);
@@ -29,18 +30,16 @@ export default function MovieDetail() {
     // UseEffect to load the movie if it doesn't immediately, todo refactor loading?
     useEffect(() => {
         if (movie) {
-            setDescription(movie.description || "");
-            setRating(movie.rating || -1);
-            setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
-            setIsFavorite(movie.isFavorite || false);
             videoUrlRef.current = movie.videoUrl || "";
         }
     }, [movie]);
 
-    console.log("MovieDetail", movie);
+    if (isLoading) {
+        return <LoadingPage/>;
+    }
 
     // 404, shouldn't happen?
-    if(!movie) {
+    else if(!movie) {
         return <NotFoundPage message="Movie not found"/>
     }
 

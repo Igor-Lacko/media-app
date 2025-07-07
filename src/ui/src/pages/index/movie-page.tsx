@@ -9,6 +9,7 @@ import { FetchData } from "data/crud/read";
 import MediaItemList from "components/other/media-item-list";
 import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/model-elements/list-props";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * App Movie page.
@@ -19,7 +20,7 @@ export default function MoviePage() {
     const { filter, setFilter, sort, setSort, search, setSearch } = useFilter();
 
     // Fetch Movies
-    const data = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ["Movies", sort, filter],
         queryFn: async () => await FetchData<Movie>("/api/Movies", { sortBy : sort , filter : filter }),
     })
@@ -36,11 +37,15 @@ export default function MoviePage() {
 
     const MovieListProps : ListProps = {
         // Because refreshing the query on every search change is ehhh
-        items: data.data?.filter((Movie) => Movie.title.toLowerCase().includes(search.toLowerCase())) || [],
+        items: data?.filter((movie : Movie) => movie.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: true,
         showThumbnail: true,
         notFoundTitle: "No movies found :((",
         notFoundMessage: "There are no movies that match your search criteria.",
+    }
+
+    if (isLoading) {
+        return <LoadingPage />;
     }
 
     return (

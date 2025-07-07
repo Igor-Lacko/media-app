@@ -6,7 +6,7 @@ import Genre from "@shared/enum/genre";
 import { FaStar } from "react-icons/fa";
 import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
-import ListNotFound from "components/not-found/item-not-found";
+import ListNotFound from "components/other/item-not-found";
 import { useState, useEffect } from "react";
 import { IsValidFile } from "utils/electron-api";
 

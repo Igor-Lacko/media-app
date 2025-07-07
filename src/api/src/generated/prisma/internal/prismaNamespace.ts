@@ -1136,6 +1136,7 @@ export const MovieScalarFieldEnum = {
   lastWatchedAt: 'lastWatchedAt',
   watchStatus: 'watchStatus',
   isFavorite: 'isFavorite',
+  toWatch: 'toWatch',
   continueAt: 'continueAt'
 } as const
 
@@ -1150,6 +1151,7 @@ export const ShowScalarFieldEnum = {
   description: 'description',
   thumbnailUrl: 'thumbnailUrl',
   isFavorite: 'isFavorite',
+  toWatch: 'toWatch',
   watchStatus: 'watchStatus'
 } as const
 
@@ -1197,7 +1199,8 @@ export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeo
 
 export const SubjectScalarFieldEnum = {
   id: 'id',
-  title: 'title'
+  title: 'title',
+  toWatch: 'toWatch'
 } as const
 
 export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeof SubjectScalarFieldEnum]

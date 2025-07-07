@@ -4,27 +4,30 @@ import Notebook from "components/notebook/notebook";
 import { UpdateLength, UpdateNotes, UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
+import LoadingPage from "pages/other/loading-page";
+import NotFoundPage from "pages/other/page-not-found";
 import { useEffect, useRef, useState } from "react";
 
 /**
  * Lecture video player page.
  */
 export default function LectureVideo() {
-    const lecture = useFetchById<Lecture>("/api/lectures", "lectureId")!;
+    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId")!;
 
     // For the notebook
     const [notebookVisible, setNotebookVisible] = useState(false);
-    const [notes, setNotes] = useState(lecture.notes);
+    const [notes, setNotes] = useState(lecture?.notes || []);
     const timestampRef = useRef<number>(0);
 
-    // To sync with the lecture (don't need to set timestamp, done by the video player)
-    useEffect(() => {
-        if (lecture) {
-            setNotes(lecture.notes);
-        }
-    }, [lecture]);
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
-    console.log("Lecture: ", lecture);
+    else if (!lecture) {
+        return <NotFoundPage
+                    message={"Lecture not found"}
+                />;
+    }
 
     return (
         <div

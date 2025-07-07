@@ -1,7 +1,7 @@
 import CardProps from "utils/props/model-elements/card-props";
 import { IsValidFile } from "utils/electron-api";
 import { useState, useEffect } from "react";
-import ItemNotFound from "components/not-found/item-not-found";
+import ItemNotFound from "components/other/item-not-found";
 import { useNavigate } from "react-router-dom";
 import CardRating from "./card-rating";
 

@@ -13,6 +13,7 @@ import useGenreDropdown from "hooks/use-genre-dropdown";
 import useRatingSlider from "hooks/use-rating-slider";
 import SubmitMovie from "data/submit-handlers/movie-submit";
 import useFetchById from "hooks/use-fetch-by-id";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new movie.
@@ -20,19 +21,21 @@ import useFetchById from "hooks/use-fetch-by-id";
  */
 export default function AddMoviePage({ route } : { route?: any }) {
     // Get movie
-    const movie : Movie | undefined = useFetchById<Movie>("/api/movies");
+    const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
     const creating = !movie;
 
     // Constructed object, do not want to render on every change
     const movieRef = useRef<Movie>(movie || defaultMovie);
-
-    console.log("AddMoviePage", movieRef.current);
 
     // Props for genre selection dropdown
     const genreDropdownProps = useGenreDropdown(movieRef);
 
     // Props for movie rating
     const ratingSliderProps = useRatingSlider(movieRef);
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <FormLayout

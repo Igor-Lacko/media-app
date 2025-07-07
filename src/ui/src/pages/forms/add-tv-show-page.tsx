@@ -21,6 +21,7 @@ import FileBrowseOption from "components/options/file-browse-option";
 import { RemoveEpisodeFromShowFilter } from "utils/filters/remove-episode-filter";
 import RemoveSeasonFilter from "utils/filters/remove-season-filter";
 import useFetchById from "hooks/use-fetch-by-id";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new TV show.
@@ -29,7 +30,7 @@ import useFetchById from "hooks/use-fetch-by-id";
  */
 export default function AddTvShowPage({ route } : { route?: any }) {
     // Get TV show or use a blank one
-    const tvshow = useFetchById<TvShow>("/api/shows");
+    const {model: tvshow, isLoading} = useFetchById<TvShow>("/api/shows");
     const creating = !tvshow;
 
     // Constructed TV show
@@ -46,6 +47,10 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     // Props
     const genreDropdownProps = useGenreDropdown(tvShowRef);
     const ratingSliderProps = useRatingSlider(tvShowRef);
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <FormLayout

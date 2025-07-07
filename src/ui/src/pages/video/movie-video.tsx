@@ -2,9 +2,21 @@ import Movie from "@shared/interface/models/movie";
 import { UpdateLength, UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
+import LoadingPage from "pages/other/loading-page";
+import NotFoundPage from "pages/other/page-not-found";
 
 export default function MovieVideo() {
-    const movie = useFetchById<Movie>("/api/movies", "id");
+    const {model: movie, isLoading} = useFetchById<Movie>("/api/movies", "id");
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
+
+    else if (!movie) {
+        return <NotFoundPage
+                    message={"Movie not found"}
+                />;
+    }
 
     return (
         <VideoPlayerLayout

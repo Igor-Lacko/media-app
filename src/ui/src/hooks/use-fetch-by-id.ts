@@ -6,7 +6,8 @@ import { FetchDataWithId } from "data/crud/read";
  * Hook to fetch a single data object by its unique identifier from the given URL.
  * @param url URL of the API route to fetch data from.
  */
-export default function useFetchById<T>(url: string, param: string = "id", deps: any[] = []): T | undefined {
+export default function useFetchById<T>(url: string, param: string = "id", deps: any[] = []): {
+    model?: T | undefined, isLoading: boolean } {
     // Get param id depending on the provided parameter
     const params = useParams<{ id?: string; seasonId?: string; lectureId?: string; episodeId?: string; }>();
     const id = param === "id" ? params.id
@@ -24,5 +25,8 @@ export default function useFetchById<T>(url: string, param: string = "id", deps:
     }) : undefined;
     console.log(`useFetchById: Fetched data:`, data?.data);
 
-    return data?.data || undefined;
+    return {
+        model: data?.data || undefined,
+        isLoading: data?.isLoading ?? false
+    }
 }

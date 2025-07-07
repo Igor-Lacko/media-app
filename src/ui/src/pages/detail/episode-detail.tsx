@@ -3,7 +3,8 @@ import DeleteData from "data/crud/delete";
 import { UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import NotFoundPage from "components/not-found/page-not-found";
+import LoadingPage from "pages/other/loading-page";
+import NotFoundPage from "pages/other/page-not-found";
 import { useEffect, useRef, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
@@ -12,10 +13,10 @@ import DetailProps from "utils/props/detail/detail-props";
  * Detail page for a episode.
  */
 export default function EpisodeDetail() {
-    const episode : Episode | undefined = useFetchById<Episode>("/api/episodes", "episodeId");
+    const {model: episode, isLoading: episodeLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
 
     // Fetch season for title
-    const season : Episode | undefined = useFetchById<Episode>("/api/seasons", "seasonId");
+    const {model: season, isLoading: seasonLoading} = useFetchById<Episode>("/api/seasons", "seasonId");
 
     // State
     const [rating, setRating] = useState(episode?.rating);
@@ -24,17 +25,12 @@ export default function EpisodeDetail() {
     // Ref
     const videoUrlRef = useRef(episode?.videoUrl || "");
 
-    // To load on render
-    useEffect(() => {
-        if (episode) {
-            setRating(episode.rating);
-            setWatchStatus(episode.watchStatus);
-            videoUrlRef.current = episode.videoUrl || "";
-        }
-    }, [episode]);
+    if (episodeLoading || seasonLoading) {
+        return <LoadingPage/>;
+    }
 
     // 404
-    if (!episode) {
+    else if (!episode) {
         return <NotFoundPage message="Episode not found" />;
     }
 

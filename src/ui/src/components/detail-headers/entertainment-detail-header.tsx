@@ -8,7 +8,7 @@ import DetailProps from "utils/props/detail/detail-props";
 import { LengthToTimeHeader } from "utils/adapters/length-to-time";
 import { IsValidFile } from "utils/electron-api";
 import { useEffect, useState } from "react";
-import ItemNotFound from "components/not-found/item-not-found";
+import ItemNotFound from "components/other/item-not-found";
 
 /**
  * Header for a entertainment model's (movie, show) detail page.

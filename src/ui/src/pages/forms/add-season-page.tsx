@@ -15,6 +15,7 @@ import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RemoveEpisodeFromSeasonFilter } from "utils/filters/remove-episode-filter";
 import { defaultEpisode, defaultSeason } from "utils/model-defaults";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new season to a TV show.
@@ -25,7 +26,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
     // Initial data, either get the tv show id as a param or use a default season
     const location = useLocation();
     const showId = location.state.id || 1;
-    const season : Season | undefined = useFetchById<Season>("/api/seasons", "seasonId");
+    const {model: season, isLoading} = useFetchById<Season>("/api/seasons", "seasonId");
     const creating = !season;
 
     // Constructed season
@@ -37,6 +38,10 @@ export default function AddSeasonPage({ route } : { route? : any}) {
 
     // Slider props
     const ratingSliderProps = useRatingSlider(seasonRef);
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <FormLayout

@@ -11,6 +11,7 @@ import FormLayout from "layouts/form-layout";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { defaultEpisode } from "utils/model-defaults";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new episode to a season.
@@ -19,7 +20,7 @@ import { defaultEpisode } from "utils/model-defaults";
 export default function AddEpisodePage() {
     const location = useLocation();
     const seasonId = location.state.id || 1;
-    const episode : Episode | undefined = useFetchById<Episode>("/api/episodes", "episodeId");
+    const {model: episode, isLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
     const creating = !episode;
 
     // Constructed episode
@@ -27,6 +28,10 @@ export default function AddEpisodePage() {
 
     // Slider
     const ratingSliderProps = useRatingSlider(episodeRef);
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     // Form
     return (

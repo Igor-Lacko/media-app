@@ -1,6 +1,6 @@
 import Note from "@shared/interface/models/note"
 import classNames from "classnames";
-import ListNotFound from "components/not-found/item-not-found";
+import ListNotFound from "components/other/item-not-found";
 import { FaCircle, FaTrash } from "react-icons/fa"
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 
@@ -47,7 +47,7 @@ export default function LectureDetailFooter({ notes, updateNotes }: { notes: Not
                             </div>
                             {/** Delete note button */}
                             <div
-                                className={"flex items-center justify-end w-full mb-2"}
+                                className={"flex items-center justify-end w-full mb-2 px-4"}
                             >
                                 <FaTrash
                                     className={"cursor-pointer text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-600"}

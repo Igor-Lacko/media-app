@@ -10,6 +10,7 @@ import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/model-elements/list-props";
 import { Route, Routes } from "react-router-dom";
 import AddSubjectPage from "../forms/add-subject-page";
+import LoadingPage from "pages/other/loading-page";
 
 export default function SubjectPage() {
     // Sort/search
@@ -17,7 +18,7 @@ export default function SubjectPage() {
     const [search, setSearch] = useState("");
 
     // Fetch Subjects
-    const data = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ["Subjects", sort],
         queryFn: async () => await FetchData<Subject>("/api/Subjects", { sortBy: sort }),
     });
@@ -33,11 +34,15 @@ export default function SubjectPage() {
     }
 
     const subjectListProps: ListProps = {
-        items: data.data?.filter((subject) => subject.title.toLowerCase().includes(search.toLowerCase())) || [],
+        items: data?.filter((subject : Subject) => subject.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: false,
         showThumbnail: false,
         notFoundTitle: "No subjects found :((",
         notFoundMessage: "It appears you have no subjects yet. You can add one by clicking the "+" button on this page."
+    }
+
+    if (isLoading) {
+        return <LoadingPage />;
     }
 
     return (

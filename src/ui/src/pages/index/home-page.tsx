@@ -4,16 +4,21 @@ import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
 import { FetchData } from "data/crud/read";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * App home page. Displays a list of favorites, recently watched items and a to-watch list.
  */
 export default function HomePage() {
     // Fetch favorites
-    const favorites : (TvShow | Movie)[] = useQuery({
+    const {data: favorites, isLoading: favoritesLoading} = useQuery({
         queryKey: ["Favorites"],
         queryFn: async () => await FetchData<TvShow | Movie>("/api/favorites", {})
-    }).data || [];
+    });
+
+    if (favoritesLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <div
@@ -27,10 +32,10 @@ export default function HomePage() {
             <HomePageSection
                 title={"Favorites"}
             >
-                <CardGrid
+                {favorites && <CardGrid
                     items={favorites}
                     extraClassNames={"w-full h-full"}
-                />
+                />}
             </HomePageSection>
         </div>
     );

@@ -36,16 +36,19 @@ export type SubjectSumAggregateOutputType = {
 export type SubjectMinAggregateOutputType = {
   id: number | null
   title: string | null
+  toWatch: boolean | null
 }
 
 export type SubjectMaxAggregateOutputType = {
   id: number | null
   title: string | null
+  toWatch: boolean | null
 }
 
 export type SubjectCountAggregateOutputType = {
   id: number
   title: number
+  toWatch: number
   _all: number
 }
 
@@ -61,16 +64,19 @@ export type SubjectSumAggregateInputType = {
 export type SubjectMinAggregateInputType = {
   id?: true
   title?: true
+  toWatch?: true
 }
 
 export type SubjectMaxAggregateInputType = {
   id?: true
   title?: true
+  toWatch?: true
 }
 
 export type SubjectCountAggregateInputType = {
   id?: true
   title?: true
+  toWatch?: true
   _all?: true
 }
 
@@ -163,6 +169,7 @@ export type SubjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type SubjectGroupByOutputType = {
   id: number
   title: string
+  toWatch: boolean
   _count: SubjectCountAggregateOutputType | null
   _avg: SubjectAvgAggregateOutputType | null
   _sum: SubjectSumAggregateOutputType | null
@@ -191,12 +198,14 @@ export type SubjectWhereInput = {
   NOT?: Prisma.SubjectWhereInput | Prisma.SubjectWhereInput[]
   id?: Prisma.IntFilter<"Subject"> | number
   title?: Prisma.StringFilter<"Subject"> | string
+  toWatch?: Prisma.BoolFilter<"Subject"> | boolean
   lectures?: Prisma.LectureListRelationFilter
 }
 
 export type SubjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  toWatch?: Prisma.SortOrder
   lectures?: Prisma.LectureOrderByRelationAggregateInput
 }
 
@@ -206,12 +215,14 @@ export type SubjectWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SubjectWhereInput[]
   NOT?: Prisma.SubjectWhereInput | Prisma.SubjectWhereInput[]
   title?: Prisma.StringFilter<"Subject"> | string
+  toWatch?: Prisma.BoolFilter<"Subject"> | boolean
   lectures?: Prisma.LectureListRelationFilter
 }, "id">
 
 export type SubjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  toWatch?: Prisma.SortOrder
   _count?: Prisma.SubjectCountOrderByAggregateInput
   _avg?: Prisma.SubjectAvgOrderByAggregateInput
   _max?: Prisma.SubjectMaxOrderByAggregateInput
@@ -225,47 +236,56 @@ export type SubjectScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SubjectScalarWhereWithAggregatesInput | Prisma.SubjectScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Subject"> | number
   title?: Prisma.StringWithAggregatesFilter<"Subject"> | string
+  toWatch?: Prisma.BoolWithAggregatesFilter<"Subject"> | boolean
 }
 
 export type SubjectCreateInput = {
   title: string
+  toWatch?: boolean
   lectures?: Prisma.LectureCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUncheckedCreateInput = {
   id?: number
   title: string
+  toWatch?: boolean
   lectures?: Prisma.LectureUncheckedCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectures?: Prisma.LectureUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectures?: Prisma.LectureUncheckedUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectCreateManyInput = {
   id?: number
   title: string
+  toWatch?: boolean
 }
 
 export type SubjectUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubjectUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  toWatch?: Prisma.SortOrder
 }
 
 export type SubjectAvgOrderByAggregateInput = {
@@ -275,11 +295,13 @@ export type SubjectAvgOrderByAggregateInput = {
 export type SubjectMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  toWatch?: Prisma.SortOrder
 }
 
 export type SubjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  toWatch?: Prisma.SortOrder
 }
 
 export type SubjectSumOrderByAggregateInput = {
@@ -307,11 +329,13 @@ export type SubjectUpdateOneRequiredWithoutLecturesNestedInput = {
 
 export type SubjectCreateWithoutLecturesInput = {
   title: string
+  toWatch?: boolean
 }
 
 export type SubjectUncheckedCreateWithoutLecturesInput = {
   id?: number
   title: string
+  toWatch?: boolean
 }
 
 export type SubjectCreateOrConnectWithoutLecturesInput = {
@@ -332,11 +356,13 @@ export type SubjectUpdateToOneWithWhereWithoutLecturesInput = {
 
 export type SubjectUpdateWithoutLecturesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubjectUncheckedUpdateWithoutLecturesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  toWatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -373,6 +399,7 @@ export type SubjectCountOutputTypeCountLecturesArgs<ExtArgs extends runtime.Type
 export type SubjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  toWatch?: boolean
   lectures?: boolean | Prisma.Subject$lecturesArgs<ExtArgs>
   _count?: boolean | Prisma.SubjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subject"]>
@@ -380,19 +407,22 @@ export type SubjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type SubjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  toWatch?: boolean
 }, ExtArgs["result"]["subject"]>
 
 export type SubjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  toWatch?: boolean
 }, ExtArgs["result"]["subject"]>
 
 export type SubjectSelectScalar = {
   id?: boolean
   title?: boolean
+  toWatch?: boolean
 }
 
-export type SubjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title", ExtArgs["result"]["subject"]>
+export type SubjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "toWatch", ExtArgs["result"]["subject"]>
 export type SubjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lectures?: boolean | Prisma.Subject$lecturesArgs<ExtArgs>
   _count?: boolean | Prisma.SubjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -408,6 +438,7 @@ export type $SubjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
+    toWatch: boolean
   }, ExtArgs["result"]["subject"]>
   composites: {}
 }
@@ -834,6 +865,7 @@ export interface Prisma__SubjectClient<T, Null = never, ExtArgs extends runtime.
 export interface SubjectFieldRefs {
   readonly id: Prisma.FieldRef<"Subject", 'Int'>
   readonly title: Prisma.FieldRef<"Subject", 'String'>
+  readonly toWatch: Prisma.FieldRef<"Subject", 'Boolean'>
 }
     
 

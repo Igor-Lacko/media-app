@@ -8,6 +8,7 @@ import FormLayout from "layouts/form-layout";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom"
 import { defaultLecture } from "utils/model-defaults";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new lecture.
@@ -18,11 +19,15 @@ export default function AddLecturePage({ route }: { route?: any }) {
     // Initial data or the subject that the lecture is for
     const location = useLocation();
     const subjectId = location.state.id || -1;
-    const lecture : Lecture | undefined = useFetchById<Lecture>("/api/lectures", "lectureId");
+    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
     const creating = !lecture;
 
     // Constructed lecture
     const lectureRef = useRef<Lecture>(lecture || defaultLecture(-1, subjectId));
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <FormLayout

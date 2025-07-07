@@ -2,19 +2,20 @@ import DetailLayout from "layouts/detail-layout";
 import TvShow from "@shared/interface/models/tv-show";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailProps from "utils/props/detail/detail-props";
-import NotFoundPage from "components/not-found/page-not-found";
+import NotFoundPage from "pages/other/page-not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import DeleteData from "data/crud/delete";
 import { MarkAsFavorite, UpdateDescription, UpdateRating, UpdateWatchStatus } from "data/crud/update";
 import { useEffect, useState } from "react";
 import WatchStatus from "@shared/enum/watch-status";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Component for displaying TV show details.
  * @returns Tv Show detail page.
  */
 export default function TvShowDetail() {
-    const tvShow : TvShow | undefined = useFetchById<TvShow>("/api/shows");
+    const {model: tvShow, isLoading} = useFetchById<TvShow>("/api/shows");
 
     // State vars
     const [description, setDescription] = useState(tvShow?.description);
@@ -22,17 +23,11 @@ export default function TvShowDetail() {
     const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.UNWATCHED);
     const [isFavorite, setIsFavorite] = useState(tvShow?.isFavorite || false);
 
-    // UseEffect to load the TV show if it doesn't immediately
-    useEffect(() => {
-        if (tvShow) {
-            setDescription(tvShow.description);
-            setRating(tvShow.rating);
-            setWatchStatus(tvShow.watchStatus || WatchStatus.UNWATCHED);
-            setIsFavorite(tvShow.isFavorite || false);
-        }
-    }, [tvShow]);
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
-    if(!tvShow) {
+    else if (!tvShow) {
         return <NotFoundPage message="TV Show not found" />
     }
 

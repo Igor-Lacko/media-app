@@ -2,15 +2,20 @@ import Subject from "@shared/interface/models/subject";
 import DeleteData from "data/crud/delete";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import NotFoundPage from "components/not-found/page-not-found";
+import LoadingPage from "pages/other/loading-page";
+import NotFoundPage from "pages/other/page-not-found";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
 
 export default function SubjectDetail() {
     // Subject for which the detail is displayed
-    const subject : Subject | undefined = useFetchById<Subject>("/api/subjects");
+    const {model: subject, isLoading} = useFetchById<Subject>("/api/subjects");
 
-    if (!subject) {
+    if (isLoading) {
+        return <LoadingPage />;
+    }
+
+    else if (!subject) {
         return <NotFoundPage message="Subject not found" />;
     }
 

@@ -5,7 +5,8 @@ import DeleteData from "data/crud/delete";
 import { UpdateNotes, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
-import NotFoundPage from "components/not-found/page-not-found";
+import LoadingPage from "pages/other/loading-page";
+import NotFoundPage from "pages/other/page-not-found";
 import { useEffect, useRef, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
@@ -14,8 +15,7 @@ import DetailProps from "utils/props/detail/detail-props";
  * Detail page for lectures.
  */
 export default function LectureDetail() {
-    const lecture : Lecture | undefined = useFetchById<Lecture>("/api/lectures", "lectureId");
-    console.debug("LectureDetail", lecture);
+    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
 
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
@@ -27,14 +27,16 @@ export default function LectureDetail() {
     // To load on render
     useEffect(() => {
         if (lecture) {
-            setWatchStatus(lecture.watchStatus);
-            setNotes(lecture.notes)
             videoUrlRef.current = lecture.videoUrl || "";
         }
     }, [lecture]);
 
+    if (isLoading) {
+        return <LoadingPage/>;
+    }
+
     // 404
-    if (!lecture) {
+    else if (!lecture) {
         return <NotFoundPage message="Lecture not found" />;
     }
 

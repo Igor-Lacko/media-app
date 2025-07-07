@@ -12,6 +12,7 @@ import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
 import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
 import useFetchById from "hooks/use-fetch-by-id";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * Form page for adding a new subject.
@@ -20,7 +21,7 @@ import useFetchById from "hooks/use-fetch-by-id";
  */
 export default function AddSubjectPage({ route } : { route?: any }) {
     // Get param subject or use a blank one
-    const subject = useFetchById<Subject>("/api/subjects");
+    const {model: subject, isLoading} = useFetchById<Subject>("/api/subjects");
     const creating = !subject;
 
     // Constructed subject
@@ -29,6 +30,10 @@ export default function AddSubjectPage({ route } : { route?: any }) {
     // To re-render on each add
     const [lectures, setLectures] = useState(subjectRef.current.lectures);
     const counterRef = useRef(lectures.length + 1);
+
+    if (isLoading) {
+        return <LoadingPage />;
+    }
 
     return (
         <FormLayout

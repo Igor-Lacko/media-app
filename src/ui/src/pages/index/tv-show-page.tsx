@@ -9,6 +9,7 @@ import { FetchData } from "data/crud/read";
 import MediaItemList from "components/other/media-item-list";
 import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/model-elements/list-props";
+import LoadingPage from "pages/other/loading-page";
 
 /**
  * App TV show page.
@@ -19,7 +20,7 @@ export default function TvShowPage() {
     const { filter, setFilter, sort, setSort, search, setSearch } = useFilter();
 
     // Fetch
-    const data = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ["shows", sort, filter],
         queryFn: async () => await FetchData<TvShow>("/api/shows", { sortBy: sort, filter: filter }),
     });
@@ -35,11 +36,15 @@ export default function TvShowPage() {
     }
 
     const tvShowListProps : ListProps = {
-        items: data.data?.filter((show) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
+        items: data?.filter((show : TvShow) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
         showRating: true,
         showThumbnail: true,
         notFoundTitle: "No TV shows found :((",
         notFoundMessage: "There are no TV shows that match your search criteria.",
+    }
+
+    if (isLoading) {
+        return <LoadingPage />;
     }
 
     return (
