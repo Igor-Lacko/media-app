@@ -1,0 +1,131 @@
+import LastWatched from "@shared/interface/last-watched";
+import prisma from "db/db";
+
+/**
+ * Returns the last watched items.
+ * @param limit How many items to return. If set to -1 (default), returns all items.
+ */
+export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatched [] | null> {
+    try {
+        // Get the last watched movies (simplest part, don't need parent titles)
+        const lastWatchedMovies : LastWatched[] = await prisma.movie.findMany({
+            where: {
+                lastWatchedAt: {
+                    not: null
+                }
+            },
+
+            orderBy: {
+                lastWatchedAt: "desc"
+            },
+
+            include: {
+                genres: true
+            }
+        }).then(movies => {
+            // Can straight map to LastWatched object
+            return movies.map(movie => {
+                return {
+                    title: movie.title,
+                    continueAt: movie.continueAt,
+                    length: movie.length,
+                    thumbnailUrl: movie.thumbnailUrl,
+                    shouldHaveThumbnail: true,
+                    lastWatchedAt: movie.lastWatchedAt,
+                    url: `/movies/${movie.id}/play`,
+                }
+            })
+        });
+
+        // Get the last watched episodes (have to go through tvshows)
+        const lastWatchedEpisodes : LastWatched[] = await prisma.episode.findMany({
+            where: {
+                lastWatchedAt: {
+                    not: null
+                }
+            },
+
+            orderBy: {
+                lastWatchedAt: "desc"
+            },
+
+            // Select season for url, show and title
+            include: {
+                season: {
+                    select: {
+                        id: true,
+                    },
+
+                    // And select show for title/thumbnail url
+                    include: {
+                        show: {
+                            select: {
+                                title: true,
+                                thumbnailUrl: true,
+                                id: true
+                            }
+                        }
+                    }
+                }
+            },
+        }).then(episodes => {
+            // Convert each episode to a LastWatched object
+            return episodes.map(episode => {
+                const {season, ...rest} = episode;
+
+                // Map to LastWatched object
+                return {
+                    title: season.show.title,
+                    subTitle: `S${season.seasonNumber}E${rest.episodeNumber}`,
+                    continueAt: rest.continueAt,
+                    length: rest.length,
+                    thumbnailUrl: season.show.thumbnailUrl,
+                    shouldHaveThumbnail: true,
+                    lastWatchedAt: rest.lastWatchedAt,
+                    url: `/shows/${season.show.id}/${season.id}/${rest.id}/play`,
+                }
+            })
+        });
+
+        // Lectures, have to get to subject for the title and link
+        const lastWatchedLectures : LastWatched[] = await prisma.lecture.findMany({
+            where: {
+                lastWatchedAt: {
+                    not: null
+                }
+            },
+
+            include: {
+                subject: {
+                    select: {
+                        title: true,
+                        id: true
+                    }
+                }
+            }
+        }).then(lectures => {
+            return (lectures.map(lecture => {
+                // Map to LastWatched object
+                return {
+                    title: lecture.subject.title,
+                    subTitle: `Lecture ${lecture.lectureNumber}`,
+                    continueAt: lecture.continueAt,
+                    length: lecture.length,
+                    shouldHaveThumbnail: false,
+                    lastWatchedAt: lecture.lastWatchedAt,
+                    url: `/subjects/${lecture.subject.id}/${lecture.id}/play`,
+                }
+            }))
+        });
+
+        // Combine all items and sort them by last watched date
+        return [...lastWatchedMovies, ...lastWatchedEpisodes, ...lastWatchedLectures]
+        .sort((a,b) => b.lastWatchedAt - a.lastWatchedAt)
+        .slice(0, limit === -1 ? undefined : limit);
+    }
+
+    catch (error) {
+        console.error("Error fetching last watched items:", error);
+        return null;
+    }
+}

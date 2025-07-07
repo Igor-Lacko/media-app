@@ -10,6 +10,7 @@ export interface Lecture extends DetailFillable {
     lectureNumber: number;
     watchStatus: WatchStatus;
     notes: Note[];
+    lastWatchedAt?: number;
 }
 
 export default Lecture;

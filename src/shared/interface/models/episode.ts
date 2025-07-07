@@ -12,6 +12,7 @@ export interface Episode extends CardDisplayable {
     length?: number;
     continueAt?: number;
     watchStatus: WatchStatus;
+    lastWatchedAt?: number;
 }
 
 export default Episode;

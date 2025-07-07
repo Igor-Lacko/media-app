@@ -5,6 +5,7 @@ export interface Movie extends DetailFillable {
     title: string;
     watchStatus: WatchStatus;
     isFavorite: boolean;
+    lastWatchedAt?: number;
 }
 
 export default Movie;
