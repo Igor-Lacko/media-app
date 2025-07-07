@@ -1,6 +1,7 @@
 import axios from 'axios';
 import FetchOptions from 'utils/props/other/fetch-options';
 import Settings from '@shared/interface/models/settings';
+import LastWatched from '@shared/interface/last-watched';
 
 /**
  * Fetches bulk data from the given URL with the provided parameters.
@@ -35,6 +36,17 @@ export async function FetchDataWithId<T>(url: string, id: string): Promise<T | n
     .then(response => response.data)
     .catch(_error => {
         console.error(`Failed to fetch data from ${url} with id: ${id}`);
+        return null;
+    });
+}
+
+export async function FetchLastWatchedItems(limit: number = -1): Promise<LastWatched[] | null> {
+    return await axios.get<LastWatched[]>(`/api/last-watched`, {
+        params: {
+            limit: limit,
+        }
+    }).then(response => response.data)
+    .catch(_error => {
         return null;
     });
 }

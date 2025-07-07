@@ -3,7 +3,7 @@ import TvShow from "@shared/interface/models/tv-show";
 import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
-import { FetchData } from "data/crud/read";
+import { FetchData, FetchLastWatchedItems } from "data/crud/read";
 import LoadingPage from "pages/other/loading-page";
 
 /**
@@ -16,7 +16,13 @@ export default function HomePage() {
         queryFn: async () => await FetchData<TvShow | Movie>("/api/favorites", {})
     });
 
-    if (favoritesLoading) {
+    // Fetch last watched items
+    const {data: lastWatched, isLoading: lastWatchedLoading} = useQuery({
+        queryKey: ["LastWatched"],
+        queryFn: async () => await FetchLastWatchedItems(5)
+    });
+
+    if (favoritesLoading || lastWatchedLoading) {
         return <LoadingPage />;
     }
 
