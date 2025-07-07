@@ -24,9 +24,11 @@ export default function LectureDetail() {
     // Ref
     const videoUrlRef = useRef(lecture?.videoUrl || "");
 
-    // To load on render
+    // Update state on data load
     useEffect(() => {
         if (lecture) {
+            setWatchStatus(lecture.watchStatus);
+            setNotes(lecture.notes || []);
             videoUrlRef.current = lecture.videoUrl || "";
         }
     }, [lecture]);

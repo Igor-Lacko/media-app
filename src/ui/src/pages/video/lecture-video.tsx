@@ -6,7 +6,7 @@ import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
 import NotFoundPage from "pages/other/page-not-found";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 /**
  * Lecture video player page.
@@ -28,6 +28,12 @@ export default function LectureVideo() {
                     message={"Lecture not found"}
                 />;
     }
+
+    // Something something functional components app
+    useEffect(() => {
+        setNotes(lecture.notes || []);
+        timestampRef.current = lecture.continueAt || 0;
+    }, [lecture]);
 
     return (
         <div

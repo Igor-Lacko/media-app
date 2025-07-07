@@ -20,6 +20,15 @@ export default function SeasonDetail() {
     const [description, setDescription] = useState(season?.description);
     const [rating, setRating] = useState(season?.rating);
 
+
+    // Update state on data load
+    useEffect(() => {
+        if (season) {
+            setDescription(season.description);
+            setRating(season.rating);
+        }
+    }, [season]);
+
     if (isLoading) {
         return <LoadingPage/>;
     }

@@ -18,7 +18,7 @@ export default function MovieDetail() {
     // Parse movie id
     const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
 
-    // State vars
+    // State vars and update on fetch
     const [description, setDescription] = useState(movie?.description);
     const [rating, setRating] = useState(movie?.rating);
     const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
@@ -27,9 +27,12 @@ export default function MovieDetail() {
     // Video url ref
     const videoUrlRef = useRef(movie?.videoUrl || "");
 
-    // UseEffect to load the movie if it doesn't immediately, todo refactor loading?
     useEffect(() => {
         if (movie) {
+            setDescription(movie.description);
+            setRating(movie.rating);
+            setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
+            setIsFavorite(movie.isFavorite || false);
             videoUrlRef.current = movie.videoUrl || "";
         }
     }, [movie]);

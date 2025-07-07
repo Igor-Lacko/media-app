@@ -23,6 +23,16 @@ export default function TvShowDetail() {
     const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.UNWATCHED);
     const [isFavorite, setIsFavorite] = useState(tvShow?.isFavorite || false);
 
+    // Update state on data load
+    useEffect(() => {
+        if (tvShow) {
+            setDescription(tvShow.description);
+            setRating(tvShow.rating);
+            setWatchStatus(tvShow.watchStatus || WatchStatus.UNWATCHED);
+            setIsFavorite(tvShow.isFavorite || false);
+        }
+    }, [tvShow]);
+
     if (isLoading) {
         return <LoadingPage />;
     }

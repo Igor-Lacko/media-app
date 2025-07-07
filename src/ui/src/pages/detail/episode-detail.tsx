@@ -25,6 +25,14 @@ export default function EpisodeDetail() {
     // Ref
     const videoUrlRef = useRef(episode?.videoUrl || "");
 
+    // Update on data load
+    useEffect(() => {
+        setRating(episode?.rating);
+        setWatchStatus(episode?.watchStatus);
+        videoUrlRef.current = episode?.videoUrl || "";
+    }, [episode]);
+
+
     if (episodeLoading || seasonLoading) {
         return <LoadingPage/>;
     }
