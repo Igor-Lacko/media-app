@@ -7,6 +7,8 @@ import { FaStar } from "react-icons/fa";
 import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
 import ListNotFound from "components/not-found/item-not-found";
+import { useState, useEffect } from "react";
+import { IsValidFile } from "utils/electron-api";
 
 /**
  * List of media items with links to their pages.
@@ -15,6 +17,23 @@ import ListNotFound from "components/not-found/item-not-found";
 export default function MediaItemList(props: ListProps) {
     // Current URL
     const location = useLocation();
+
+    // For each item
+    const [validThumbnail, setValidThumbnail] = useState<boolean[]>([]);
+    useEffect(() => {
+        const checkThumbnails = async () => {
+            for (let i = 0; i < props.items.length; i++) {
+                if (props.items[i].thumbnailUrl) {
+                    if (await IsValidFile(props.items[i].thumbnailUrl!)) {
+                        const newValidThumbnail = [...validThumbnail];
+                        newValidThumbnail[i] = true;
+                        setValidThumbnail(newValidThumbnail);
+                    }
+                }
+            }
+        }
+        checkThumbnails();
+    }, [props.items]);
 
     if (props.items.length === 0) {
         return <ListNotFound
@@ -38,14 +57,22 @@ export default function MediaItemList(props: ListProps) {
                         }
                     )}
                 >
-                    {props.showThumbnail && item.thumbnailUrl && <img
-                        src={`local://${item.thumbnailUrl}`}
-                        alt={item.title}
-                        className={"w-1/12 max-h-full rounded-lg"}
-                    />}
-                    {props.showThumbnail && !item.thumbnailUrl && <div
-                        className={"w-1/12 max-h-full rounded-lg"}
-                    />}
+                    {props.showThumbnail && (validThumbnail[index] ? (
+                        <img
+                            src={`file://${item.thumbnailUrl}`}
+                            alt={item.title}
+                            className={"w-1/12 h-full rounded-lg"}
+                        />
+                    ) : (
+                        <div
+                            className={"w-1/12 h-full rounded-lg bg-gray-200 dark:bg-gray-700\
+                                    flex items-center justify-center text-xs text-gray-500 dark:text-gray-400\
+                                    border border-gray-300 dark:border-gray-600 shadow-sm"}
+                        >
+                            Thumbnail not found :((
+                        </div>
+                    )
+                    )}
                     <div
                         className={classNames(
                             "flex ml-3 flex-col h-full items-start justify-start",
@@ -55,7 +82,7 @@ export default function MediaItemList(props: ListProps) {
                             }
                         )}
                     >
-                        <h3 
+                        <h3
                             className={"text-lg font-semibold text-gray-900 dark:text-gray-400"}>
                             {item.title}
                         </h3>

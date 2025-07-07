@@ -5,13 +5,29 @@ import HeaderRating from "components/other/header-rating";
 import DetailImage from "components/image/detail-image";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail/detail-props";
-import { LengthToTimeHeader} from "utils/adapters/length-to-time";
+import { LengthToTimeHeader } from "utils/adapters/length-to-time";
+import { IsValidFile } from "utils/electron-api";
+import { useEffect, useState } from "react";
+import NotFoundPage from "components/not-found/page-not-found";
+import ItemNotFound from "components/not-found/item-not-found";
 
 /**
  * Header for a entertainment model's (movie, show) detail page.
  * @param props Detail properties including model, submedia, title, and display options.
  */
 export default function EntertainmentDetailHeader<T extends DetailFillable>(props: DetailProps<T>) {
+    const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+    useEffect(() => {
+        const checkThumbnail = async () => {
+            if (props.model.thumbnailUrl) {
+                if (await IsValidFile(props.model.thumbnailUrl)) {
+                    setThumbnailLoaded(true);
+                }
+            }
+        };
+        checkThumbnail();
+    }, [props.model]);
+
     return (
         <div
             className={"flex items-center justify-start w-full h-1/3 px-5"}
@@ -20,12 +36,19 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
             {props.hasThumbnail && <div
                 className={"flex flex-col items-center justify-center w-3/10 py-5 h-full"}
             >
-                {props.model.thumbnailUrl && <DetailImage
-                    src={props.model.thumbnailUrl}
-                    classNames={"h-full"}
-                />} {!props.model.thumbnailUrl && <div
-                    className={"h-full w-full"}
-                />}
+                {thumbnailLoaded ? (
+                    <DetailImage
+                        src={props.model.thumbnailUrl!}
+                        classNames={"h-full"}
+                    />)
+                    : (
+                        <ItemNotFound
+                            title={"Thumbnail not found :(("}
+                            message={"The thumbnail for this item does not exist or is not a valid file."}
+                            extraClassNames={"rounded-lg shadow-md border border-gray-300 dark:border-gray-600"}
+                        />
+                    )
+                }
             </div>}
             {/*  title, genres, nof seasons/episodes or length */}
             <div
@@ -51,8 +74,8 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                     {props.hasGenres && (
                         <div className="text-lg text-gray-500 dark:text-gray-400 italic">
                             {props.model.genres!
-                            .filter((genre) => genre !== Genre.ALL)
-                            .map((genre) => GenreAdapter(genre).key).join(", ")}
+                                .filter((genre) => genre !== Genre.ALL)
+                                .map((genre) => GenreAdapter(genre).key).join(", ")}
                         </div>
                     )}
                 </div>
@@ -64,7 +87,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                 <p className={"text-md flex h-full w-full text-black wrap-anywhere dark:text-gray-400"}>
                     {props.description || "No description available."}
                 </p>
-                
+
             </div>
             { /* rating, watch status, play button */}
             <div

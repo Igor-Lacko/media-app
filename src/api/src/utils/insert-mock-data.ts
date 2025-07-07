@@ -33,7 +33,7 @@ export default async function seedData() {
             length: 136 * 60, // Converted to seconds
             watchStatus: WatchStatus.WATCHING,
             continueAt: 0,
-            isFavorite: true,
+            isFavorite: false,
         },
         {
             title: "Interstellar",
@@ -157,7 +157,7 @@ export default async function seedData() {
         mockMovies.map(async (movie) => {
             try {
                 const result = await InsertMovie(movie);
-                console.log(`Inserted movie: ${result.title}`);
+                console.log(`Inserted movie: ${movie.title}`);
             } catch (error) {
                 console.error(`Error inserting movie ${movie.title}:`, error);
             }
@@ -171,7 +171,7 @@ export default async function seedData() {
         mockTvShows.map(async (tvShow) => {
             try {
                 const result = await InsertTvShow(tvShow);
-                console.log(`Inserted TV show: ${result.title}`);
+                console.log(`Inserted TV show: ${tvShow.title}`);
             } catch (error) {
                 console.error(`Error inserting TV show ${tvShow.title}:`, error);
             }
@@ -185,7 +185,7 @@ export default async function seedData() {
         mockSubjects.map(async (subject) => {
             try {
                 const result = await InsertSubject(subject);
-                console.log(`Inserted subject: ${result.title}`);
+                console.log(`Inserted subject: ${subject.title}`);
             } catch (error) {
                 console.error(`Error inserting subject ${subject.title}:`, error);
             }

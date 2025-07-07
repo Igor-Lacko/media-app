@@ -6,12 +6,12 @@ import HomepageSectionProps from "utils/props/other/homepage-section-props";
  */
 export default function HomePageSection(props: HomepageSectionProps) {
     return <div
-        className={"flex flex-col items-center justify-center w-full h-auto space-y-10 p-10 " + (props.extraClassNames || "")}
+        className={"flex flex-col items-center justify-start w-full h-auto space-y-10 p-10 " + (props.extraClassNames || "")}
     >
         <div
             className={"flex w-full items-center justify-start px-15"}
         >
-            <h1 className={"text-4xl font-semibold text-black dark:text-gray-400 mt-10 mb-5"}>
+            <h1 className={"text-4xl font-semibold text-black dark:text-gray-400 mb-5"}>
                 {props.title}
             </h1>
         </div>

@@ -12,14 +12,16 @@ import CardRating from "./card-rating";
 export default function MediaItemCard(props: CardProps) {
     // Check if the thumbnail is a valid file
     const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
-    if (props.model.thumbnailUrl) {
-        IsValidFile(props.model.thumbnailUrl)
-            .then((isValid) => {
-                if (isValid) {
+    useEffect(() => {
+        const checkThumbnail = async () => {
+            if (props.model.thumbnailUrl) {
+                if (await IsValidFile(props.model.thumbnailUrl)) {
                     setThumbnailLoaded(true);
                 }
-            });
-    }
+            }
+        };
+        checkThumbnail();
+    }, [props.model])
 
     // To navigate to detail page
     const navigate = useNavigate();
