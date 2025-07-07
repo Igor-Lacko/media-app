@@ -41,8 +41,10 @@ export default function useVideo(
 
             // On pause, store the current time
             ref.current.onpause = async () => {
-                setPlay(false);
-                await playbackStoreFunction(ref.current!.currentTime);
+                if (ref.current) {
+                    setPlay(false);
+                    await playbackStoreFunction(ref.current!.currentTime);
+                }
             }
 
             // Rate change function
@@ -51,12 +53,14 @@ export default function useVideo(
             // Time update, update the timestamp if provided
             if (timestampRef && ref.current) {
                 ref.current.ontimeupdate = () => {
-                    setTime(ref.current!.currentTime);
-                    timestampRef.current = ref.current!.currentTime;
+                    if (ref.current) {
+                        setTime(ref.current!.currentTime);
+                        timestampRef.current = ref.current!.currentTime;
+                    }
                 }
             }
 
-            else {
+            else if (ref.current) {
                 ref.current.ontimeupdate = () => setTime(ref.current!.currentTime);
             }
 
