@@ -25,4 +25,7 @@ export default interface LastWatched {
 
     // Link to video
     url: string;
+
+    // File path to video
+    filePath: string;
 }

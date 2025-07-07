@@ -5,4 +5,5 @@ export default interface HomepageSectionProps {
     title: string;
     children: React.ReactNode;
     extraClassNames?: string;
+    extraChildClassNames?: string;
 }

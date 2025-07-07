@@ -6,7 +6,7 @@ import HomepageSectionProps from "utils/props/other/homepage-section-props";
  */
 export default function HomePageSection(props: HomepageSectionProps) {
     return <div
-        className={"flex flex-col items-center justify-start w-full h-auto space-y-10 p-10 " + (props.extraClassNames || "")}
+        className={"flex flex-col items-center justify-start w-full space-y-10 " + (props.extraClassNames || "")}
     >
         <div
             className={"flex w-full items-center justify-start px-15"}
@@ -15,7 +15,7 @@ export default function HomePageSection(props: HomepageSectionProps) {
                 {props.title}
             </h1>
         </div>
-        <div className={"flex w-full flex-col items-start h-auto justify-between"}>
+        <div className={"flex w-full flex-col items-start h-auto justify-between p-10 space-y-5 " + (props.extraChildClassNames || "")}>
             {props.children}
         </div>
     </div>

@@ -50,7 +50,7 @@ export default function MoviePage() {
 
     return (
         <div
-            className={"flex w-full h-full flex-col items-center justify-center p-0 m-0"}
+            className={"flex w-full h-full flex-col items-center justify-center p-0 m-0 overflow-y-hidden"}
         >
             <ControlBar {...controlBarProps} />
             <div

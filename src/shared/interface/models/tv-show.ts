@@ -10,6 +10,7 @@ export interface TvShow extends DetailFillable {
     seasons: Season[];
     watchStatus: WatchStatus;
     isFavorite: boolean;
+    toWatch: boolean;
 }
 
 export default TvShow;

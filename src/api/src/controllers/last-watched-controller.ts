@@ -33,6 +33,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                     shouldHaveThumbnail: true,
                     lastWatchedAt: movie.lastWatchedAt,
                     url: `/movies/${movie.id}/play`,
+                    filePath: movie.videoUrl,
                 }
             })
         });
@@ -52,10 +53,6 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
             // Select season for url, show and title
             include: {
                 season: {
-                    select: {
-                        id: true,
-                    },
-
                     // And select show for title/thumbnail url
                     include: {
                         show: {
@@ -83,6 +80,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                     shouldHaveThumbnail: true,
                     lastWatchedAt: rest.lastWatchedAt,
                     url: `/shows/${season.show.id}/${season.id}/${rest.id}/play`,
+                    filePath: rest.videoUrl
                 }
             })
         });
@@ -114,6 +112,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                     shouldHaveThumbnail: false,
                     lastWatchedAt: lecture.lastWatchedAt,
                     url: `/subjects/${lecture.subject.id}/${lecture.id}/play`,
+                    filePath: lecture.videoUrl
                 }
             }))
         });

@@ -38,7 +38,7 @@ export default function MainPage() {
         >
             <div
                 className={classNames(
-                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-hidden overflow-x-hidden",
+                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-auto overflow-x-hidden",
                     {
                         "dark" : settings.darkMode,
                         "light" : !settings.darkMode,
@@ -74,12 +74,9 @@ export default function MainPage() {
                     </div>}
                     <div
                         className={classNames(
-                            "flex grow min-w-screen items-start justify-center transition-all duration-500 ease-in-out",
+                            "flex w-full h-auto",
                             {
                                 "blur-sm" : sidebarVisible,
-                                "mt-10": isIndexPage,
-                                "h-24/25": isIndexPage,
-                                "min-h-screen": !isIndexPage
                             }
                         )}
                     >
