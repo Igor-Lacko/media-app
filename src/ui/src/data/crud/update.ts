@@ -130,10 +130,11 @@ export async function UpdateVideoUrl<T extends { videoUrl?: string, continueAt?:
  * @param continueAt New playback position in seconds.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdatePlaybackPosition<T extends { continueAt?: number, identifier?: number }> 
+export async function UpdatePlaybackPosition<T extends { continueAt?: number, lastWatchedAt?: number, identifier?: number }> 
 (url: string, model: T, continueAt: number): Promise<boolean> {
+    const lastWatchedAt = Date.now() / 1000;
     try {
-        await UpdateData<T>(url, model.identifier!, { continueAt } as Partial<T>);
+        await UpdateData<T>(url, model.identifier!, { continueAt, lastWatchedAt } as Partial<T>);
         return true;
     }
 

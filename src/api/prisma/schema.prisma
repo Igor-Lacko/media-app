@@ -18,6 +18,7 @@ model Movie {
     videoUrl     String?
     thumbnailUrl String?
     length       Int?
+    lastWatchedAt Int?
     watchStatus WatchStatus @default(UNWATCHED)
     isFavorite   Boolean @default(false)
     continueAt  Int @default(0)
@@ -66,6 +67,7 @@ model Episode {
     season        Season  @relation(fields: [seasonId], references: [id], onDelete: Cascade)
     videoUrl      String?
     length        Int?
+    lastWatchedAt Int?
     continueAt  Int @default(0)
     watchStatus WatchStatus @default(UNWATCHED)
 }
@@ -86,6 +88,7 @@ model Lecture {
     subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     watchStatus WatchStatus @default(UNWATCHED)
     length    Int?
+    lastWatchedAt Int?
     continueAt  Int @default(0)
 }
 
@@ -128,3 +131,4 @@ model Settings {
     id       Int     @id @default(autoincrement())
     darkMode Boolean @default(false)
 }
+

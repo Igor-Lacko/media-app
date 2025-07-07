@@ -1133,6 +1133,7 @@ export const MovieScalarFieldEnum = {
   videoUrl: 'videoUrl',
   thumbnailUrl: 'thumbnailUrl',
   length: 'length',
+  lastWatchedAt: 'lastWatchedAt',
   watchStatus: 'watchStatus',
   isFavorite: 'isFavorite',
   continueAt: 'continueAt'
@@ -1186,6 +1187,7 @@ export const EpisodeScalarFieldEnum = {
   shortDescription: 'shortDescription',
   videoUrl: 'videoUrl',
   length: 'length',
+  lastWatchedAt: 'lastWatchedAt',
   continueAt: 'continueAt',
   watchStatus: 'watchStatus'
 } as const
@@ -1209,6 +1211,7 @@ export const LectureScalarFieldEnum = {
   subjectId: 'subjectId',
   watchStatus: 'watchStatus',
   length: 'length',
+  lastWatchedAt: 'lastWatchedAt',
   continueAt: 'continueAt'
 } as const
 

@@ -30,6 +30,7 @@ export type LectureAvgAggregateOutputType = {
   lectureNumber: number | null
   subjectId: number | null
   length: number | null
+  lastWatchedAt: number | null
   continueAt: number | null
 }
 
@@ -38,6 +39,7 @@ export type LectureSumAggregateOutputType = {
   lectureNumber: number | null
   subjectId: number | null
   length: number | null
+  lastWatchedAt: number | null
   continueAt: number | null
 }
 
@@ -49,6 +51,7 @@ export type LectureMinAggregateOutputType = {
   subjectId: number | null
   watchStatus: $Enums.WatchStatus | null
   length: number | null
+  lastWatchedAt: number | null
   continueAt: number | null
 }
 
@@ -60,6 +63,7 @@ export type LectureMaxAggregateOutputType = {
   subjectId: number | null
   watchStatus: $Enums.WatchStatus | null
   length: number | null
+  lastWatchedAt: number | null
   continueAt: number | null
 }
 
@@ -71,6 +75,7 @@ export type LectureCountAggregateOutputType = {
   subjectId: number
   watchStatus: number
   length: number
+  lastWatchedAt: number
   continueAt: number
   _all: number
 }
@@ -81,6 +86,7 @@ export type LectureAvgAggregateInputType = {
   lectureNumber?: true
   subjectId?: true
   length?: true
+  lastWatchedAt?: true
   continueAt?: true
 }
 
@@ -89,6 +95,7 @@ export type LectureSumAggregateInputType = {
   lectureNumber?: true
   subjectId?: true
   length?: true
+  lastWatchedAt?: true
   continueAt?: true
 }
 
@@ -100,6 +107,7 @@ export type LectureMinAggregateInputType = {
   subjectId?: true
   watchStatus?: true
   length?: true
+  lastWatchedAt?: true
   continueAt?: true
 }
 
@@ -111,6 +119,7 @@ export type LectureMaxAggregateInputType = {
   subjectId?: true
   watchStatus?: true
   length?: true
+  lastWatchedAt?: true
   continueAt?: true
 }
 
@@ -122,6 +131,7 @@ export type LectureCountAggregateInputType = {
   subjectId?: true
   watchStatus?: true
   length?: true
+  lastWatchedAt?: true
   continueAt?: true
   _all?: true
 }
@@ -220,6 +230,7 @@ export type LectureGroupByOutputType = {
   subjectId: number
   watchStatus: $Enums.WatchStatus
   length: number | null
+  lastWatchedAt: number | null
   continueAt: number
   _count: LectureCountAggregateOutputType | null
   _avg: LectureAvgAggregateOutputType | null
@@ -254,6 +265,7 @@ export type LectureWhereInput = {
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   watchStatus?: Prisma.EnumWatchStatusFilter<"Lecture"> | $Enums.WatchStatus
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  lastWatchedAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
   continueAt?: Prisma.IntFilter<"Lecture"> | number
   notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
@@ -267,6 +279,7 @@ export type LectureOrderByWithRelationInput = {
   subjectId?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   continueAt?: Prisma.SortOrder
   notes?: Prisma.NoteOrderByRelationAggregateInput
   subject?: Prisma.SubjectOrderByWithRelationInput
@@ -283,6 +296,7 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   watchStatus?: Prisma.EnumWatchStatusFilter<"Lecture"> | $Enums.WatchStatus
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  lastWatchedAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
   continueAt?: Prisma.IntFilter<"Lecture"> | number
   notes?: Prisma.NoteListRelationFilter
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
@@ -296,6 +310,7 @@ export type LectureOrderByWithAggregationInput = {
   subjectId?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
   length?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   continueAt?: Prisma.SortOrder
   _count?: Prisma.LectureCountOrderByAggregateInput
   _avg?: Prisma.LectureAvgOrderByAggregateInput
@@ -315,6 +330,7 @@ export type LectureScalarWhereWithAggregatesInput = {
   subjectId?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
   watchStatus?: Prisma.EnumWatchStatusWithAggregatesFilter<"Lecture"> | $Enums.WatchStatus
   length?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
+  lastWatchedAt?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
   continueAt?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
 }
 
@@ -324,6 +340,7 @@ export type LectureCreateInput = {
   videoUrl?: string | null
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
   notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
   subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
@@ -337,6 +354,7 @@ export type LectureUncheckedCreateInput = {
   subjectId: number
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
   notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
@@ -347,6 +365,7 @@ export type LectureUpdateInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
   subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
@@ -360,6 +379,7 @@ export type LectureUncheckedUpdateInput = {
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
@@ -372,6 +392,7 @@ export type LectureCreateManyInput = {
   subjectId: number
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
 }
 
@@ -381,6 +402,7 @@ export type LectureUpdateManyMutationInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -392,6 +414,7 @@ export type LectureUncheckedUpdateManyInput = {
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -413,6 +436,7 @@ export type LectureCountOrderByAggregateInput = {
   subjectId?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
   length?: Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -421,6 +445,7 @@ export type LectureAvgOrderByAggregateInput = {
   lectureNumber?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
   length?: Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -432,6 +457,7 @@ export type LectureMaxOrderByAggregateInput = {
   subjectId?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
   length?: Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -443,6 +469,7 @@ export type LectureMinOrderByAggregateInput = {
   subjectId?: Prisma.SortOrder
   watchStatus?: Prisma.SortOrder
   length?: Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -451,6 +478,7 @@ export type LectureSumOrderByAggregateInput = {
   lectureNumber?: Prisma.SortOrder
   subjectId?: Prisma.SortOrder
   length?: Prisma.SortOrder
+  lastWatchedAt?: Prisma.SortOrder
   continueAt?: Prisma.SortOrder
 }
 
@@ -521,6 +549,7 @@ export type LectureCreateWithoutSubjectInput = {
   videoUrl?: string | null
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
   notes?: Prisma.NoteCreateNestedManyWithoutLectureInput
 }
@@ -532,6 +561,7 @@ export type LectureUncheckedCreateWithoutSubjectInput = {
   videoUrl?: string | null
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
   notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLectureInput
 }
@@ -572,6 +602,7 @@ export type LectureScalarWhereInput = {
   subjectId?: Prisma.IntFilter<"Lecture"> | number
   watchStatus?: Prisma.EnumWatchStatusFilter<"Lecture"> | $Enums.WatchStatus
   length?: Prisma.IntNullableFilter<"Lecture"> | number | null
+  lastWatchedAt?: Prisma.IntNullableFilter<"Lecture"> | number | null
   continueAt?: Prisma.IntFilter<"Lecture"> | number
 }
 
@@ -581,6 +612,7 @@ export type LectureCreateWithoutNotesInput = {
   videoUrl?: string | null
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
   subject: Prisma.SubjectCreateNestedOneWithoutLecturesInput
 }
@@ -593,6 +625,7 @@ export type LectureUncheckedCreateWithoutNotesInput = {
   subjectId: number
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
 }
 
@@ -618,6 +651,7 @@ export type LectureUpdateWithoutNotesInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.SubjectUpdateOneRequiredWithoutLecturesNestedInput
 }
@@ -630,6 +664,7 @@ export type LectureUncheckedUpdateWithoutNotesInput = {
   subjectId?: Prisma.IntFieldUpdateOperationsInput | number
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -640,6 +675,7 @@ export type LectureCreateManySubjectInput = {
   videoUrl?: string | null
   watchStatus?: $Enums.WatchStatus
   length?: number | null
+  lastWatchedAt?: number | null
   continueAt?: number
 }
 
@@ -649,6 +685,7 @@ export type LectureUpdateWithoutSubjectInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUpdateManyWithoutLectureNestedInput
 }
@@ -660,6 +697,7 @@ export type LectureUncheckedUpdateWithoutSubjectInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NoteUncheckedUpdateManyWithoutLectureNestedInput
 }
@@ -671,6 +709,7 @@ export type LectureUncheckedUpdateManyWithoutSubjectInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   watchStatus?: Prisma.EnumWatchStatusFieldUpdateOperationsInput | $Enums.WatchStatus
   length?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastWatchedAt?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   continueAt?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -713,6 +752,7 @@ export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   subjectId?: boolean
   watchStatus?: boolean
   length?: boolean
+  lastWatchedAt?: boolean
   continueAt?: boolean
   notes?: boolean | Prisma.Lecture$notesArgs<ExtArgs>
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
@@ -727,6 +767,7 @@ export type LectureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   subjectId?: boolean
   watchStatus?: boolean
   length?: boolean
+  lastWatchedAt?: boolean
   continueAt?: boolean
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -739,6 +780,7 @@ export type LectureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   subjectId?: boolean
   watchStatus?: boolean
   length?: boolean
+  lastWatchedAt?: boolean
   continueAt?: boolean
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -751,10 +793,11 @@ export type LectureSelectScalar = {
   subjectId?: boolean
   watchStatus?: boolean
   length?: boolean
+  lastWatchedAt?: boolean
   continueAt?: boolean
 }
 
-export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "lectureNumber" | "videoUrl" | "subjectId" | "watchStatus" | "length" | "continueAt", ExtArgs["result"]["lecture"]>
+export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "lectureNumber" | "videoUrl" | "subjectId" | "watchStatus" | "length" | "lastWatchedAt" | "continueAt", ExtArgs["result"]["lecture"]>
 export type LectureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   notes?: boolean | Prisma.Lecture$notesArgs<ExtArgs>
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
@@ -781,6 +824,7 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     subjectId: number
     watchStatus: $Enums.WatchStatus
     length: number | null
+    lastWatchedAt: number | null
     continueAt: number
   }, ExtArgs["result"]["lecture"]>
   composites: {}
@@ -1214,6 +1258,7 @@ export interface LectureFieldRefs {
   readonly subjectId: Prisma.FieldRef<"Lecture", 'Int'>
   readonly watchStatus: Prisma.FieldRef<"Lecture", 'WatchStatus'>
   readonly length: Prisma.FieldRef<"Lecture", 'Int'>
+  readonly lastWatchedAt: Prisma.FieldRef<"Lecture", 'Int'>
   readonly continueAt: Prisma.FieldRef<"Lecture", 'Int'>
 }
     
