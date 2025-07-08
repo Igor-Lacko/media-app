@@ -1,3 +1,4 @@
+import WatchStatus from "@shared/enum/watch-status";
 import Episode from "@shared/interface/models/episode";
 import TvShow from "@shared/interface/models/tv-show";
 import DeleteData from "data/crud/delete";
@@ -51,6 +52,7 @@ export default function EpisodeDetail() {
         rating: rating,
         watchStatus: watchStatus,
         videoUrl: videoUrlRef,
+        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.COMPLETED],
         hasThumbnail: false,
         hasGenres: false,
         playTitle: "Play Episode",

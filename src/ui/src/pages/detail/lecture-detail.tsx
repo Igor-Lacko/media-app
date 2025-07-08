@@ -1,3 +1,4 @@
+import WatchStatus from "@shared/enum/watch-status";
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
 import Subject from "@shared/interface/models/subject";
@@ -55,6 +56,7 @@ export default function LectureDetail() {
         hasGenres: false,
         playTitle: "Play Lecture",
         headerType: DetailHeaders.LECTURE,
+        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.COMPLETED],
         editTitle: "Edit Lecture",
         deleteTitle: "Delete Lecture",
         backUrl: `/subjects/${subject.identifier}`,

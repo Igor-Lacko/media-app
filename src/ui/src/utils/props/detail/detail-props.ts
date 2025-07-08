@@ -18,6 +18,7 @@ export interface DetailProps<T extends DetailFillable>{
     description?: string;
     watchStatus?: WatchStatus;
     isFavorite?: boolean;
+    inWatchlist?: boolean;
 
     // Ref for video URL, does not need to be state since it's not displayed
     videoUrl?: React.RefObject<string>;
@@ -41,6 +42,9 @@ export interface DetailProps<T extends DetailFillable>{
     // Props for the submedia list
     listProps?: ListProps;
 
+    // Possible watch status options
+    watchStatusOptions?: WatchStatus[];
+
     // Button titles
     playTitle?: string;
     addTitle?: string;
@@ -51,6 +55,7 @@ export interface DetailProps<T extends DetailFillable>{
     // Button functions
     deleteFunction?: () => Promise<boolean>;
     markFavoriteFunction?: () => Promise<boolean>;
+    toggleWatchLIstFunction?: () => Promise<boolean>;
     rateFunction?: (rating: number) => Promise<boolean>;
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<boolean>;
     setDescriptionFunction?: (description : string) => Promise<boolean>;

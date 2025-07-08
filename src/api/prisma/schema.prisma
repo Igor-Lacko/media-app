@@ -19,9 +19,8 @@ model Movie {
     thumbnailUrl String?
     length       Int?
     lastWatchedAt Int?
-    watchStatus WatchStatus @default(UNWATCHED)
+    watchStatus WatchStatus @default(NOT_WATCHED)
     isFavorite   Boolean @default(false)
-    toWatch      Boolean @default(false)
     continueAt  Int @default(0)
 }
 
@@ -35,8 +34,7 @@ model Show {
     seasons     Season[]
     thumbnailUrl String?
     isFavorite Boolean @default(false)
-    toWatch Boolean @default(false)
-    watchStatus  WatchStatus @default(UNWATCHED)
+    watchStatus  WatchStatus @default(NOT_WATCHED)
 }
 
 model EntertainmentGenre {
@@ -71,7 +69,7 @@ model Episode {
     length        Int?
     lastWatchedAt Int?
     continueAt  Int @default(0)
-    watchStatus WatchStatus @default(UNWATCHED)
+    watchStatus WatchStatus @default(NOT_WATCHED)
 }
 
 model Subject {
@@ -89,7 +87,7 @@ model Lecture {
     videoUrl  String?
     subjectId Int
     subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-    watchStatus WatchStatus @default(UNWATCHED)
+    watchStatus WatchStatus @default(NOT_WATCHED)
     length    Int?
     lastWatchedAt Int?
     continueAt  Int @default(0)
@@ -125,9 +123,10 @@ enum Genre {
 }
 
 enum WatchStatus {
-    WATCHED
-    UNWATCHED
+    COMPLETED
+    NOT_WATCHED
     WATCHING
+    PLAN_TO_WATCH
 }
 
 model Settings {

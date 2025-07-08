@@ -17,6 +17,7 @@ export interface EditBarProps {
     onSetDescription?: () => void;
     onRate?: () => void;
     onSetWatchStatus?: () => void;
+    onAddToWatchlist?: () => void;
 }
 
 export default EditBarProps;

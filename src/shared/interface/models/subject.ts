@@ -4,9 +4,8 @@ import Lecture from "./lecture";
 /**
  * Interface representing a subject.
  */
-export interface Subject extends DetailFillable {
+export default interface Subject extends DetailFillable {
     title: string;
     lectures: Lecture[];
+    toWatch: boolean;
 }
-
-export default Subject;

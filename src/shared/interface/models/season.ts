@@ -4,9 +4,7 @@ import Episode from "./episode";
 /**
  * Interface for tv show seasons.
  */
-export interface Season extends DetailFillable {
+export default interface Season extends DetailFillable {
     seasonNumber: number;
     episodes: Episode[];
 }
-
-export default Season;

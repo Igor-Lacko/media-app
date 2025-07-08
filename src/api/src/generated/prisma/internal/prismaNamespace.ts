@@ -1136,7 +1136,6 @@ export const MovieScalarFieldEnum = {
   lastWatchedAt: 'lastWatchedAt',
   watchStatus: 'watchStatus',
   isFavorite: 'isFavorite',
-  toWatch: 'toWatch',
   continueAt: 'continueAt'
 } as const
 
@@ -1151,7 +1150,6 @@ export const ShowScalarFieldEnum = {
   description: 'description',
   thumbnailUrl: 'thumbnailUrl',
   isFavorite: 'isFavorite',
-  toWatch: 'toWatch',
   watchStatus: 'watchStatus'
 } as const
 

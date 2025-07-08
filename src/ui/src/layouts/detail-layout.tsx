@@ -145,7 +145,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             {/** 3. Watch status modal */}
             {visibleModal === VisibleModal.WATCH_STATUS && props.watchStatus && <EnumModal
                 title={"Select Watch Status"}
-                selectOptions={Object.values(WatchStatus).map((status) => {
+                selectOptions={props.watchStatusOptions!.map((status) => {
                     return {
                         key: watchStatusAdapter(status),
                         value: status

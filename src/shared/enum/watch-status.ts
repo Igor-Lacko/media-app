@@ -1,7 +1,8 @@
 export enum WatchStatus {
-    WATCHED = "WATCHED",
-    UNWATCHED = "UNWATCHED",
-    WATCHING = "WATCHING"
+    COMPLETED = "COMPLETED",
+    NOT_WATCHED = "NOT_WATCHED",
+    WATCHING = "WATCHING",
+    PLAN_TO_WATCH = "PLAN_TO_WATCH"
 }
 
 export default WatchStatus;

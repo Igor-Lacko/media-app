@@ -9,7 +9,6 @@ import { FaCheckCircle, FaPencilAlt, FaPlus, FaStar, FaTrash } from "react-icons
  * @param props 
  */
 export default function EditBar(props : EditBarProps) {
-    console.log("EditBar rendered with props:", props);
     return (
         <div
             className={"flex items-center w-full h-1/10 border-b-2 border-gray-400 dark:border-gray-600\
@@ -52,6 +51,7 @@ export default function EditBar(props : EditBarProps) {
             <div
                 className={"flex items-center justify-start space-x-5"}
             >
+                {props.onAddToWatchlist && <span>todooooo</span>}
                 {props.onMarkFavorite && <MarkFavoriteButton
                     onClick={props.onMarkFavorite}
                     isFavorite={props.isFavorite!}

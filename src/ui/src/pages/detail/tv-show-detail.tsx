@@ -20,7 +20,7 @@ export default function TvShowDetail() {
     // State vars
     const [description, setDescription] = useState(tvShow?.description);
     const [rating, setRating] = useState(tvShow?.rating);
-    const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.UNWATCHED);
+    const [watchStatus, setWatchStatus] = useState(tvShow?.watchStatus || WatchStatus.NOT_WATCHED);
     const [isFavorite, setIsFavorite] = useState(tvShow?.isFavorite || false);
 
     // Update state on data load
@@ -28,7 +28,7 @@ export default function TvShowDetail() {
         if (tvShow) {
             setDescription(tvShow.description);
             setRating(tvShow.rating);
-            setWatchStatus(tvShow.watchStatus || WatchStatus.UNWATCHED);
+            setWatchStatus(tvShow.watchStatus || WatchStatus.NOT_WATCHED);
             setIsFavorite(tvShow.isFavorite || false);
         }
     }, [tvShow]);
@@ -62,6 +62,7 @@ export default function TvShowDetail() {
             notFoundTitle: "No seasons found",
             notFoundMessage: "This TV show has no seasons yet. You can add one by clicking the 'Add Season' button above, or edit the TV show to add a season.",
         },
+        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.WATCHING, WatchStatus.COMPLETED, WatchStatus.PLAN_TO_WATCH],
         addTitle: "Add Season",
         editTitle: "Edit TV Show",
         deleteTitle: "Delete TV Show",

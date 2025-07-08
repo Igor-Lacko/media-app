@@ -21,7 +21,7 @@ export default function MovieDetail() {
     // State vars and update on fetch
     const [description, setDescription] = useState(movie?.description);
     const [rating, setRating] = useState(movie?.rating);
-    const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.UNWATCHED);
+    const [watchStatus, setWatchStatus] = useState(movie?.watchStatus || WatchStatus.NOT_WATCHED);
     const [isFavorite, setIsFavorite] = useState(movie?.isFavorite || false);
 
     // Video url ref
@@ -31,7 +31,7 @@ export default function MovieDetail() {
         if (movie) {
             setDescription(movie.description);
             setRating(movie.rating);
-            setWatchStatus(movie.watchStatus || WatchStatus.UNWATCHED);
+            setWatchStatus(movie.watchStatus || WatchStatus.NOT_WATCHED);
             setIsFavorite(movie.isFavorite || false);
             videoUrlRef.current = movie.videoUrl || "";
         }
@@ -61,6 +61,7 @@ export default function MovieDetail() {
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
         backUrl: "/movies",
+        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.WATCHING, WatchStatus.COMPLETED, WatchStatus.PLAN_TO_WATCH],
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
         markFavoriteFunction: async () => {
             setIsFavorite(!isFavorite);

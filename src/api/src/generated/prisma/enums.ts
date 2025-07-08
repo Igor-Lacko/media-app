@@ -32,9 +32,10 @@ export type Genre = (typeof Genre)[keyof typeof Genre]
 
 
 export const WatchStatus = {
-  WATCHED: 'WATCHED',
-  UNWATCHED: 'UNWATCHED',
-  WATCHING: 'WATCHING'
+  COMPLETED: 'COMPLETED',
+  NOT_WATCHED: 'NOT_WATCHED',
+  WATCHING: 'WATCHING',
+  PLAN_TO_WATCH: 'PLAN_TO_WATCH'
 } as const
 
 export type WatchStatus = (typeof WatchStatus)[keyof typeof WatchStatus]
