@@ -1,6 +1,6 @@
 import Movie from "@shared/interface/models/movie";
 import TvShow from "@shared/interface/models/tv-show";
-import MediaItemCard from "components/other/media-item-card";
+import MediaItemCard from "components/model-displays/media-item-card";
 
 export default function CardGrid({ items, extraClassNames }: { items: (TvShow | Movie)[], extraClassNames?: string }) {
     return (

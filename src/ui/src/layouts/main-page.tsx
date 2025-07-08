@@ -74,7 +74,7 @@ export default function MainPage() {
                     </div>}
                     <div
                         className={classNames(
-                            "flex w-full h-auto",
+                            "flex w-full flex-grow",
                             {
                                 "blur-sm" : sidebarVisible,
                             }

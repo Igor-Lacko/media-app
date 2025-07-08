@@ -8,6 +8,7 @@ import { IsValidVideo } from "utils/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
+import MediaItemCarousel from "components/model-displays/media-item-carousel";
 
 /**
  * App home page. Displays a list of favorites, recently watched items and a to-watch list.
@@ -42,6 +43,7 @@ export default function HomePage() {
                 }
             }));
 
+            console.log("Valid last watched items:", validItems);
             setValidLastWatched(validItems);
         }
         filterInvalidVideos();
@@ -55,23 +57,17 @@ export default function HomePage() {
         <div
             className={"flex min-w screen min-h-screen flex-col flex-grow items-start overflow-y-auto mt-15 justify-center py-0 m-0"}
         >
-            {validLastWatched.length !== 0 ? (<HomePageSection
-                title={"Continue Watching"}
-            >
-                {validLastWatched.map((item) => (
-                    <div>
-                        {item.title + " " + item.subTitle}
-                    </div>
-                ))}
-            </HomePageSection>) : (
+            {validLastWatched.length > 0 ? (
                 <HomePageSection
                     title={"Continue Watching"}
                 >
-                    <div className="text-gray-500 dark:text-gray-400">
-                        No items to continue watching.
-                    </div>
+                    <MediaItemCarousel
+                        models={validLastWatched}
+                        extraClassNames={"w-full h-full border"}
+                        childExtraClassNames={"flex-shrink w-3/4"}
+                    />
                 </HomePageSection>
-            )}
+            ) : <span>dadasd</span>}
             <HomePageSection
                 title={"Favorites"}
                 extraChildClassNames={"border-y border-gray-300 dark:border-gray-700"}

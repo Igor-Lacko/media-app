@@ -3,7 +3,7 @@ import { IsValidFile } from "utils/electron-api";
 import { useState, useEffect } from "react";
 import ItemNotFound from "components/other/item-not-found";
 import { useNavigate } from "react-router-dom";
-import CardRating from "./card-rating";
+import CardRating from "components/other/card-rating";
 
 /**
  * Card element displaying a movie or tv show.
