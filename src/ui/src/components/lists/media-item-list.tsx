@@ -110,9 +110,10 @@ export default function MediaItemList(props: ListProps) {
                         className={classNames(
                             "flex items-center justify-center w-2/10 h-full text-md",
                             {
-                                "text-green-500": item.watchStatus === WatchStatus.WATCHED,
+                                "text-green-500": item.watchStatus === WatchStatus.COMPLETED,
                                 "text-blue-500": item.watchStatus === WatchStatus.WATCHING,
-                                "text-gray-500": item.watchStatus === WatchStatus.UNWATCHED
+                                "text-gray-500": item.watchStatus === WatchStatus.NOT_WATCHED,
+                                "text-yellow-500": item.watchStatus === WatchStatus.PLAN_TO_WATCH,
                             }
                         )}
                     >

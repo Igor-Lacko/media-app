@@ -1,6 +1,6 @@
 import WatchStatus from "@shared/enum/watch-status";
 
-export default function watchStatusAdapter(watchStatus: WatchStatus): string {
+export default function WatchStatusAdapter(watchStatus: WatchStatus): string {
     switch (watchStatus) {
         case WatchStatus.COMPLETED:
             return "Completed";

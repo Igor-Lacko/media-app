@@ -7,6 +7,7 @@ import { CreateLecture, UpdateLecture } from "./lecture-controller";
 import Lecture from "@shared/interface/models/lecture";
 import { DBSubjectToClient, SanitizeClientSubjectToDB } from "adapters/subjects";
 import { SanitizeClientLectureToDB } from "adapters/lectures";
+import Note from "@shared/interface/models/note";
 
 /**
  * Gets all subjects matching the given parameters.
@@ -91,8 +92,8 @@ export async function InsertSubject(subject: Subject): Promise<boolean> {
                         return {
                             ...sanitizedLecture,
                             notes: {
-                                create: lecture.notes.map((note : string) => ({
-                                    content: note
+                                create: lecture.notes.map((note: Note) => ({
+                                    content: note.content
                                 }))
                             }
                         }

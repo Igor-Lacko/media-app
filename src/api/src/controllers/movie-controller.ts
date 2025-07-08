@@ -1,7 +1,7 @@
 import prisma from "db/db";
 import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
-import { Movie } from "@shared/interface/models/movie";
+import Movie from "@shared/interface/models/movie";
 import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
 
 

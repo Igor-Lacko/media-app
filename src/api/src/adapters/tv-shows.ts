@@ -3,7 +3,7 @@ import { Show, EntertainmentGenre } from "generated/prisma/client";
 import { DBSeason, DBSeasonToClient } from "./seasons";
 import { Genre } from "generated/prisma/enums";
 
-interface DBTvShow extends Show {
+export interface DBTvShow extends Show {
     seasons: DBSeason[];
     genres: EntertainmentGenre[];
 }

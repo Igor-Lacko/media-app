@@ -1,8 +1,8 @@
 import prisma from "db/db";
 import SortKey from "@shared/enum/sort-key";
-import { TvShow } from "@shared/interface/models/tv-show";
+import TvShow from "@shared/interface/models/tv-show";
 import { Genre } from "generated/prisma/enums";
-import { Season } from "@shared/interface/models/season";
+import Season from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
 import GetOrderBy from "utils/order-by";
 import { SortTvShows } from "utils/sort";
@@ -20,7 +20,7 @@ import { SanitizeClientEpisodeToDB } from "adapters/episodes";
  */
 export async function GetTvShows(
     key: SortKey = SortKey.NAME,
-    filter: Genre = Genre.ALL,
+    filter: Genre = Genre.ALL
 ): Promise<TvShow[]> {
     try {
         const tvShows = await prisma.show.findMany({
@@ -46,9 +46,7 @@ export async function GetTvShows(
         });
 
         return SortTvShows(
-            tvShows.map(
-                (show): TvShow => DBTvShowToClient(show)
-            ),
+            tvShows.map((show): TvShow => DBTvShowToClient(show)),
             key
         );
     } catch (error) {
@@ -86,9 +84,7 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
 
         // Construct shared TV show object, map seasons/episodes
         return DBTvShowToClient(tvShow);
-    }
-
-    catch (error){
+    } catch (error) {
         console.error("Error fetching TV show by ID: " + error);
         return null;
     }
@@ -100,7 +96,10 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
  * @param tvShowData Partial object containing fields to update.
  * @returns True if successful, false otherwise.
  */
-export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Promise<boolean> {
+export async function UpdateTvShow(
+    id: number,
+    tvShowData: Partial<TvShow>
+): Promise<boolean> {
     // Remove unwanted fields
     const sanitized = SanitizeTvShowForDB(tvShowData as TvShow);
 
@@ -115,38 +114,41 @@ export async function UpdateTvShow(id: number, tvShowData: Partial<TvShow>): Pro
                 ...sanitized,
 
                 // Delete seasons not present in the update, or ignore if seasons object not passed
-                seasons: sanitized.seasons ? {
-                    deleteMany: {
-                        id: {
-                            notIn: sanitized.seasons
-                            .filter((season: Season) => season.identifier !== undefined)
-                            .map((season: Season) => season.identifier)
-                        }
+                seasons: sanitized.seasons
+                    ? {
+                        deleteMany: {
+                            id: {
+                                notIn: sanitized.seasons
+                                    .filter((season: Season) => season.identifier !== undefined)
+                                    .map((season: Season) => season.identifier),
+                            },
+                        },
                     }
-                } : undefined,
+                    : undefined,
 
                 // Simpler than updating genres separately
-                genres: sanitized.genres ? {
-                    deleteMany: {},
-                    create: sanitized.genres.map((genre : Genre) => ({
+                genres: sanitized.genres
+                    ? {
+                        deleteMany: {},
+                        create: sanitized.genres.map((genre: Genre) => ({
                             genre: genre,
-                    }))
-                } : undefined
-            }
-        })
+                        })),
+                    }
+                    : undefined,
+            },
+        });
 
         // Create/update non-deleted seasons
         if (tvShowData.seasons) {
             for (const season of tvShowData.seasons) {
-                season.identifier ? await UpdateSeason(season.identifier, season) :
-                await CreateSeason(season, id);
+                season.identifier
+                    ? await UpdateSeason(season.identifier, season)
+                    : await CreateSeason(season, id);
             }
         }
 
         return true;
-    }
-
-    catch (error) {
+    } catch (error) {
         console.error("Error updating TV show: " + error);
         return false;
     }
@@ -165,7 +167,7 @@ export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
             },
 
             orderBy: {
-                seasonNumber: 'asc',
+                seasonNumber: "asc",
             },
         });
 
@@ -183,9 +185,7 @@ export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
                 });
             }
         }
-    }
-
-    catch (error) {
+    } catch (error) {
         console.error("Error updating season numbers: " + error);
         return false;
     }
@@ -203,19 +203,21 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
             data: {
                 ...sanitizedTvShow,
                 seasons: {
-                    create: tvShow.seasons.map((season : Season) => {
+                    create: tvShow.seasons.map((season: Season) => {
                         const sanitizedSeason = SanitizeClientSeasonToDB(season);
                         return {
                             ...sanitizedSeason,
                             episodes: {
                                 create: season.episodes.map((episode: Episode) => {
-                                    const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;;
+                                    const sanitizedEpisode = SanitizeClientEpisodeToDB(
+                                        episode
+                                    ) as Episode;
                                     return {
                                         ...sanitizedEpisode,
                                     };
-                                })
-                            }
-                        }
+                                }),
+                            },
+                        };
                     }),
                 },
 
@@ -229,9 +231,7 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
 
         console.log(`Inserted TV show: ${tvShow.title}`);
         return true;
-    } 
-
-    catch (error) {
+    } catch (error) {
         console.error("Error inserting TV show: " + error);
         return false;
     }
@@ -254,9 +254,7 @@ export async function DeleteTvShow(id: number): Promise<boolean> {
         });
 
         return true;
-    } 
-
-    catch (error) {
+    } catch (error) {
         console.error("Error deleting TV show: " + error);
         return false;
     }

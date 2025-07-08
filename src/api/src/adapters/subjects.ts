@@ -2,7 +2,7 @@ import ClientSubject from "@shared/interface/models/subject";
 import { Subject } from "generated/prisma/client";
 import { DBLectureToClient, DBLecture } from "./lectures";
 
-interface DBSubject extends Subject {
+export interface DBSubject extends Subject {
     lectures: DBLecture[];
 }
 
