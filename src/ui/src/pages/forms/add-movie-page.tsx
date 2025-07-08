@@ -56,7 +56,7 @@ export default function AddMoviePage({ route } : { route?: any }) {
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    initial={movieRef.current.shortDescription || ""}
+                    initial={"aaaa"}
                     onChange={(value) => movieRef.current.shortDescription = value}
                 />
             </FormSection>

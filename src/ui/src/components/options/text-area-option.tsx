@@ -22,9 +22,9 @@ export default function TextAreaOption({
                 {title}
             </span>
             <textarea
-                className={"w-full h-4/5 p-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:text-gray-400 \
+                className={"w-full h-4/5 p-2 border border-gray-300 dark:border-gray-600 rounded-lg text-black dark:text-gray-400 \
                 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 ease-in-out\
-                overflow-y-hidden"}
+                "}
                 onChange={(e) => onChange(e.target.value)}
                 defaultValue={initial}
                 placeholder={"..."}

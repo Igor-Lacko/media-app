@@ -18,7 +18,7 @@ export default function TextAreaModal(props: ModalProps) {
                 {props.title}
             </h2>
             <textarea
-                className={"w-full h-40 p-2 border rounded-lg dark:bg-gray-700 dark:text-gray-200\
+                className={"w-full h-40 p-2 border rounded-lg dark:bg-gray-700 dark:text-gray-200 text-black\
                         focus:outline-none focus:ring-2 focus:ring-purple-500 overflow-y-auto"}
                 placeholder={"..."}
                 defaultValue={props.initialText || ""}
