@@ -8,7 +8,7 @@ import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
 import EditBar from "components/controls/edit-bar";
 import DetailFillable from "@shared/interface/detail-fillable";
-import MediaItemList from "components/model-displays/media-item-list";
+import MediaItemList from "components/lists/media-item-list";
 import { useState } from "react";
 import VisibleModal from "utils/enum/visible-modal";
 import { EditBarProps } from "utils/props/control-elements/edit-bar-props";
