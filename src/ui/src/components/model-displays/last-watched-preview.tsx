@@ -30,7 +30,7 @@ export default function LastWatchedPreview(props: CarouselProps) {
 
     return <div
         className={"flex flex-col items-center justify-center bg-white dark:bg-gray-800\
-                            border-2 border-black dark:border-gray-400 " + (props.extraClassNames || "")}
+                            border-2 border-black dark:border-gray-700 " + (props.extraClassNames || "")}
     >
         {/** Thumbnail and play button over it */}
         <div
@@ -92,7 +92,7 @@ export default function LastWatchedPreview(props: CarouselProps) {
                             disabled={index === currentIndex}
                             className={"text-md text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200\
                                         transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-600 cursor-pointer\
-                                        disabled:opacity-50 disabled:cursor-auto"}
+                                        disabled:opacity-50 disabled:cursor-auto size-10"}
                             onClick={() => setCurrentIndex(index)}
                         >
                             {index + 1}

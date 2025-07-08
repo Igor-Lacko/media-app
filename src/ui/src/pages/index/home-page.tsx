@@ -61,11 +61,11 @@ export default function HomePage() {
                 <HomePageSection
                     title={"Continue Watching"}
                     extraClassNames={"w-full h-full"}
-                    extraChildClassNames={"border-t w-full h-[700px] border-gray-300 dark:border-gray-700 justify-center items-center"}
+                    extraChildClassNames={"border-t w-full h-[800px] border-gray-300 dark:border-gray-700 justify-center items-center"}
                 >
                     <LastWatchedPreview
                         models={validLastWatched}
-                        extraClassNames={"w-1/2 h-full"}
+                        extraClassNames={"w-2/3 h-full"}
                     />
                 </HomePageSection>
             ) : <span>dadasd</span>}
@@ -77,6 +77,12 @@ export default function HomePage() {
                     items={favorites}
                     extraClassNames={"w-full h-full"}
                 />}
+            </HomePageSection>
+            <HomePageSection
+                title={"Your To-Watch List"}
+                extraClassNames={"mt-20"}
+            >
+                TODO
             </HomePageSection>
         </div>
     );
