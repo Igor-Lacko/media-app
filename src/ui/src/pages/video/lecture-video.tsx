@@ -19,6 +19,12 @@ export default function LectureVideo() {
     const [notes, setNotes] = useState(lecture?.notes || []);
     const timestampRef = useRef<number>(0);
 
+    // Something something functional components app
+    useEffect(() => {
+        setNotes(lecture?.notes || []);
+        timestampRef.current = lecture?.continueAt || 0;
+    }, [lecture]);
+
     if (isLoading) {
         return <LoadingPage />;
     }
@@ -28,12 +34,6 @@ export default function LectureVideo() {
                     message={"Lecture not found"}
                 />;
     }
-
-    // Something something functional components app
-    useEffect(() => {
-        setNotes(lecture.notes || []);
-        timestampRef.current = lecture.continueAt || 0;
-    }, [lecture]);
 
     return (
         <div

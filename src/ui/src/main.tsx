@@ -28,6 +28,8 @@ import LectureDetail from 'pages/detail/lecture-detail';
 import LectureVideo from 'pages/video/lecture-video';
 import EpisodeVideo from 'pages/video/episode-video';
 import MovieVideo from 'pages/video/movie-video';
+import axios from 'axios';
+import LoadingPage from 'pages/other/loading-page';
 
 // React-query
 const queryClient = new QueryClient();
@@ -78,4 +80,23 @@ const rootContainer: ReactNode = (
     </QueryClientProvider>
 )
 
-root.render(rootContainer);
+// Wait for the server to be ready before rendering
+const start = async () => {
+    await axios.get('/api/check')
+        .then((res) => {
+            if (res.status === 200) {
+                root.render(rootContainer);
+            }
+
+            else {
+                root.render(<LoadingPage />)
+                setTimeout(start, 2000);
+            }
+        })
+        .catch(() => {
+            root.render(<LoadingPage />);
+            setTimeout(start, 2000);
+        });
+}
+
+start();

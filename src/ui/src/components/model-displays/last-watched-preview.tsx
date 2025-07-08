@@ -9,7 +9,7 @@ export default function LastWatchedPreview(props: CarouselProps) {
     // For navigation to the videos
     const navigate = useNavigate();
 
-    // Current item, TODO next buttons
+    // To control the current item
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // To use a placeholder div with a play button instead
