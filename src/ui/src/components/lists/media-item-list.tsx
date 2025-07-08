@@ -22,15 +22,10 @@ export default function MediaItemList(props: ListProps) {
     const [validThumbnail, setValidThumbnail] = useState<boolean[]>([]);
     useEffect(() => {
         const checkThumbnails = async () => {
-            const newValidThumbnail = Array(props.items.length).fill(false);
-            for (let i = 0; i < props.items.length; i++) {
-                if (props.items[i].thumbnailUrl) {
-                    if (await IsValidFile(props.items[i].thumbnailUrl!)) {
-                        newValidThumbnail[i] = true;
-                    }
-                }
-            }
-            setValidThumbnail(newValidThumbnail);
+            const validThumbnails = await Promise.all(props.items.map(async (item) => 
+                item.thumbnailUrl !== undefined && await IsValidFile(item.thumbnailUrl)
+            ));
+            setValidThumbnail(validThumbnails);
         }
         checkThumbnails();
     }, [props.items]);
