@@ -79,7 +79,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                     thumbnailUrl: season.show.thumbnailUrl,
                     shouldHaveThumbnail: true,
                     lastWatchedAt: rest.lastWatchedAt,
-                    url: `/shows/${season.show.id}/${season.id}/${rest.id}/play`,
+                    url: `/tv-shows/${season.show.id}/${season.id}/${rest.id}/play`,
                     filePath: rest.videoUrl
                 }
             })

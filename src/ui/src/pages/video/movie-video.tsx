@@ -22,6 +22,7 @@ export default function MovieVideo() {
         <VideoPlayerLayout
             title={movie!.title || "Movie Video"}
             url={movie!.videoUrl!}
+            backUrl={`/movies/${movie!.identifier}`}
             saveContinueAt={async (time: number) => {
                 await UpdatePlaybackPosition<Movie>("/api/movies", movie!, time);
             }}

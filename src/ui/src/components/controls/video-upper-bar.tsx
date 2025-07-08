@@ -31,7 +31,7 @@ export default function VideoUpperBar(props: VideoUpperBarProps) {
                         if (props.ref.current) {
                             await props.saveContinueAt(props.ref.current.currentTime);
                         }
-                        navigate(-1);
+                        props.backUrl ? navigate(props.backUrl) : navigate(-1);
                     }}
                 />
             </div>
@@ -41,15 +41,19 @@ export default function VideoUpperBar(props: VideoUpperBarProps) {
             >
                 {props.title || "Video Player"}
             </div>
-            {/** Note button */}
-            {props.onNoteClick && <div
+            {/** Note button or spacer */}
+            {props.onNoteClick ? (<div
                 className={"flex items-center justify-end w-1/10 h-full"}
             >
                 <FaStickyNote
                     className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
                     onClick={props.onNoteClick}
                 />
-            </div>}
+            </div>) : (
+                <div
+                    className={"flex items-center justify-end w-1/10 h-full"}
+                />
+            )}
         </div>
     )
 }

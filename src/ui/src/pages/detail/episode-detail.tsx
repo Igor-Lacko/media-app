@@ -1,4 +1,5 @@
 import Episode from "@shared/interface/models/episode";
+import TvShow from "@shared/interface/models/tv-show";
 import DeleteData from "data/crud/delete";
 import { UpdateRating, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
@@ -15,8 +16,9 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function EpisodeDetail() {
     const {model: episode, isLoading: episodeLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
 
-    // Fetch season for title
+    // Fetch season for title and URL and show for URL
     const {model: season, isLoading: seasonLoading} = useFetchById<Episode>("/api/seasons", "seasonId");
+    const {model: show, isLoading: showLoading} = useFetchById<TvShow>("/api/shows");
 
     // State
     const [rating, setRating] = useState(episode?.rating);
@@ -33,12 +35,12 @@ export default function EpisodeDetail() {
     }, [episode]);
 
 
-    if (episodeLoading || seasonLoading) {
+    if (episodeLoading || seasonLoading || showLoading) {
         return <LoadingPage/>;
     }
 
     // 404
-    else if (!episode) {
+    else if (!episode || !season || !show) {
         return <NotFoundPage message="Episode not found" />;
     }
 
@@ -56,6 +58,7 @@ export default function EpisodeDetail() {
         editTitle: "Edit Episode",
         deleteTitle: "Delete Episode",
         rateTitle: "Rate Episode",
+        backUrl: `/tv-shows/${show.identifier}/seasons/${season.identifier}`,
         deleteFunction: async () => await DeleteData("/api/episodes", episode.identifier!),
         rateFunction: async (rating: number) => {
             setRating(rating);

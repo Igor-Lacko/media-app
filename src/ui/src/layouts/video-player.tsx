@@ -3,14 +3,14 @@ import VideoUpperBar from "components/controls/video-upper-bar";
 import InfoModal from "components/modals/info-modal";
 import { useRef, useState } from "react";
 import VideoLowerBarProps from "utils/props/video/video-lower-bar-props";
-import videoPlayerProps from "utils/props/video/video-player-props";
+import VideoPlayerProps from "utils/props/video/video-player-props";
 import VideoUpperBarProps from "utils/props/video/video-upper-bar-props";
 
 /**
  * Layout for the video player page.
  * @param props Title, URL, button handlers.
  */
-export default function VideoPlayerLayout(props : videoPlayerProps) {
+export default function VideoPlayerLayout(props : VideoPlayerProps) {
     // To control lower/upper bars on mouse movement
     const [areBarsVisible, setAreBarsVisible] = useState(true);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -46,6 +46,9 @@ export default function VideoPlayerLayout(props : videoPlayerProps) {
         // Visual
         title: props.title,
         isVisible: areBarsVisible,
+
+        // Back URL
+        backUrl: props.backUrl,
 
         // Notebook
         onNoteClick: props.onNoteClick ? () => props.onNoteClick!(videoRef.current?.currentTime || 0) 

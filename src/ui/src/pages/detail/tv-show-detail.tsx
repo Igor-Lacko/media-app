@@ -52,6 +52,7 @@ export default function TvShowDetail() {
         rating: rating,
         watchStatus: watchStatus,
         isFavorite: isFavorite,
+        backUrl: "/tv-shows",
         headerType: DetailHeaders.ENTERTAINMENT,
         listProps: {
             path: "seasons",

@@ -60,6 +60,7 @@ export default function MovieDetail() {
         headerType: DetailHeaders.ENTERTAINMENT,
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
+        backUrl: "/movies",
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
         markFavoriteFunction: async () => {
             setIsFavorite(!isFavorite);

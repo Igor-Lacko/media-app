@@ -1,5 +1,6 @@
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
+import Subject from "@shared/interface/models/subject";
 import LectureDetailFooter from "components/lists/lecture-detail-footer";
 import DeleteData from "data/crud/delete";
 import { UpdateNotes, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
@@ -15,7 +16,10 @@ import DetailProps from "utils/props/detail/detail-props";
  * Detail page for lectures.
  */
 export default function LectureDetail() {
-    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
+    const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
+
+    // Subject for URL
+    const {model: subject, isLoading: subjectLoading} = useFetchById<Subject>("/api/subjects");
 
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
@@ -33,12 +37,12 @@ export default function LectureDetail() {
         }
     }, [lecture]);
 
-    if (isLoading) {
+    if (lectureLoading || subjectLoading) {
         return <LoadingPage/>;
     }
 
     // 404
-    else if (!lecture) {
+    else if (!lecture || !subject) {
         return <NotFoundPage message="Lecture not found" />;
     }
 
@@ -53,6 +57,7 @@ export default function LectureDetail() {
         headerType: DetailHeaders.LECTURE,
         editTitle: "Edit Lecture",
         deleteTitle: "Delete Lecture",
+        backUrl: `/subjects/${subject.identifier}`,
         deleteFunction: async () => await DeleteData("/api/lectures", lecture.identifier!),
         setVideoUrlFunction: async (videoUrl: string) => {
             videoUrlRef.current = videoUrl;

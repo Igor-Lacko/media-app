@@ -1,4 +1,5 @@
 import Season from "@shared/interface/models/season";
+import TvShow from "@shared/interface/models/tv-show";
 import DeleteData from "data/crud/delete";
 import { UpdateDescription, UpdateRating } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
@@ -14,7 +15,10 @@ import DetailProps from "utils/props/detail/detail-props";
  * @returns Season detail page.
  */
 export default function SeasonDetail() {
-    const {model: season, isLoading} = useFetchById<Season>("/api/seasons", "seasonId");
+    const {model: season, isLoading: seasonLoading} = useFetchById<Season>("/api/seasons", "seasonId");
+
+    // Tv show for url
+    const {model: tvShow, isLoading: tvShowLoading} = useFetchById<TvShow>("/api/shows");
 
     // State vars
     const [description, setDescription] = useState(season?.description);
@@ -29,11 +33,11 @@ export default function SeasonDetail() {
         }
     }, [season]);
 
-    if (isLoading) {
+    if (seasonLoading || tvShowLoading) {
         return <LoadingPage/>;
     }
 
-    else if (!season) {
+    else if (!season || !tvShow) {
         return <NotFoundPage message={"Season not found."} />;
     }
 
@@ -47,6 +51,7 @@ export default function SeasonDetail() {
         hasThumbnail: false,
         hasGenres: false,
         headerType: DetailHeaders.SEASON,
+        backUrl: `/tv-shows/${tvShow.identifier}`,
         listProps: {
             path: "episodes",
             items: season.episodes,

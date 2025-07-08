@@ -65,7 +65,6 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         deleteTitle: props.deleteTitle,
         onDelete: () => setVisibleModal(VisibleModal.DELETE),
 
-        // Play (will navigate to "/play" later)
         playTitle: props.playTitle,
         onPlay: props.playTitle ? async () => {
             if (!props.videoUrl?.current) {
@@ -102,7 +101,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             >
                 <FaArrowLeft
                     className={"text-gray-500 text-2xl cursor-pointer"}
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate(props.backUrl)}
                 />
             </div>
             {props.headerType === DetailHeaders.ENTERTAINMENT && <EntertainmentDetailHeader{...props} />}

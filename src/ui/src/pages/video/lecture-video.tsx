@@ -42,6 +42,7 @@ export default function LectureVideo() {
             <VideoPlayerLayout
                 title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
                 url={lecture.videoUrl || ""}
+                backUrl={`/lectures/${lecture.identifier}`}
                 saveContinueAt={async (time: number) => {
                     await UpdatePlaybackPosition<Lecture>("/api/lectures", lecture, time);
                 }}

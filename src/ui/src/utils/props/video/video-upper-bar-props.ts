@@ -13,6 +13,9 @@ export interface VideoUpperBarProps {
     ref: React.RefObject<HTMLVideoElement | null>;
     saveContinueAt: (time: number) => Promise<void>;
 
+    // Where to navigate back
+    backUrl: string;
+
     // Styling, unused (so far)
     extraClassNames?: string;
 }

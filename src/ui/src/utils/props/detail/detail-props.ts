@@ -22,6 +22,9 @@ export interface DetailProps<T extends DetailFillable>{
     // Ref for video URL, does not need to be state since it's not displayed
     videoUrl?: React.RefObject<string>;
 
+    // URL to navigate back
+    backUrl: string;
+
     // Sub media for the list below the header
     submedia?: CardDisplayable[];
 
