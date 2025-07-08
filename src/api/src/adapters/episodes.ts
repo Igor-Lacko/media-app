@@ -13,11 +13,11 @@ export function SanitizeClientEpisodeToDB (episode : ClientEpisode): Partial<Cli
     return sanitizedEpisode;
 }
 
-export function DBEpisodeToClient(episode: Episode): ClientEpisode {
+export function DBEpisodeToClient(episode: Episode, seasonNumber: number = -1): ClientEpisode {
     const { id, seasonId, ...data } = episode;
     return {
         ...data,
         identifier: id,
-        seasonNumber: -1 // Placeholder, maybe todo?
+        seasonNumber: seasonNumber // Placeholder, maybe todo?
     };
 }

@@ -17,10 +17,6 @@ export default function MainPage() {
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
 
-    const isIndexPage = ["/", "/movies", "/tv-shows", "/subjects", "/settings"].some(
-        (path) => location.pathname.endsWith(path) 
-    );
-
     useEffect(() => {
         const fetchSettings = async () => {
             const loadedSettings = await LoadSettings();
@@ -28,6 +24,10 @@ export default function MainPage() {
         };
         fetchSettings();
     }, []);
+
+    const isIndexPage = ["/", "/movies", "/tv-shows", "/subjects", "/settings"].some(
+        (path) => location.pathname.endsWith(path) 
+    );
 
     return (
         <SettingsContext

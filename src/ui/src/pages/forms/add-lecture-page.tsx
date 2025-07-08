@@ -5,7 +5,7 @@ import InputOption from "components/options/input-option";
 import SubmitLecture from "data/submit-handlers/lecture-submit";
 import useFetchById from "hooks/use-fetch-by-id";
 import FormLayout from "layouts/form-layout";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom"
 import { defaultLecture } from "utils/model-defaults";
 import LoadingPage from "pages/other/loading-page";
@@ -20,10 +20,25 @@ export default function AddLecturePage({ route }: { route?: any }) {
     const location = useLocation();
     const subjectId = location.state.id || -1;
     const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
-    const creating = !lecture;
+
+    // State for initial data and creating status
+    const [initial, setInitial] = useState(lecture || {...defaultLecture(-1, subjectId)});
+    const [creating, setCreating] = useState(!lecture);
 
     // Constructed lecture
     const lectureRef = useRef<Lecture>(lecture || defaultLecture(-1, subjectId));
+
+    useEffect(() => {
+        if (!lecture) {
+            setCreating(true);
+            lectureRef.current = {...defaultLecture(-1, subjectId)}
+            setInitial({...defaultLecture(-1, subjectId)});
+        } else {
+            setCreating(false);
+            lectureRef.current = lecture;
+            setInitial(lecture);
+        }
+    })
 
     if (isLoading) {
         return <LoadingPage />;

@@ -41,6 +41,8 @@ export default async function TvShowSubmitHandler(
         };
     });
 
+    console.log("Submitting seasons:", tvShow.seasons);
+
     console.log("Submitting TV show:", tvShow);
 
     // Submit

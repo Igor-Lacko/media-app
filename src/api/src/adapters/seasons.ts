@@ -29,6 +29,6 @@ export function DBSeasonToClient (season: DBSeason): ClientSeason {
         identifier: id,
         title: `Season ${season.seasonNumber}`,
         submediaString: `${season.episodes.length} episodes`,
-        episodes: season.episodes.map(episode => DBEpisodeToClient(episode)),
+        episodes: season.episodes.map(episode => DBEpisodeToClient(episode, data.seasonNumber)),
     };
 }

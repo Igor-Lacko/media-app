@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Movie from "@shared/interface/models/movie";
 import InputOption from "components/options/input-option";
@@ -22,16 +22,31 @@ import LoadingPage from "pages/other/loading-page";
 export default function AddMoviePage({ route } : { route?: any }) {
     // Get movie
     const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
-    const creating = !movie;
 
-    // Constructed object, do not want to render on every change
-    const movieRef = useRef<Movie>(movie || defaultMovie);
+    const [initial, setInitial] = useState<Movie>(movie || defaultMovie);
+    const [creating, setCreating] = useState<boolean>(!movie);
+
+    // Constructed object, do not want to render on every change (copy defaultMovie)
+    const movieRef = useRef<Movie>(movie ? movie : {...defaultMovie});
+
+    useEffect(() => {
+        // If the movie is not found, we are creating a new one
+        if (!movie) {
+            setCreating(true);
+            movieRef.current = {...defaultMovie};
+            setInitial(defaultMovie);
+        } else {
+            setCreating(false);
+            movieRef.current = movie;
+            setInitial(movie);
+        }
+    }, [movie, isLoading]);
 
     // Props for genre selection dropdown
-    const genreDropdownProps = useGenreDropdown(movieRef);
+    const genreDropdownProps = useGenreDropdown(movieRef, initial.genres || []);
 
     // Props for movie rating
-    const ratingSliderProps = useRatingSlider(movieRef);
+    const ratingSliderProps = useRatingSlider(movieRef, initial.rating || 0);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -41,7 +56,7 @@ export default function AddMoviePage({ route } : { route?: any }) {
         <FormLayout
             title={!creating ? "Edit Movie" : "Add Movie"}
             ref={movieRef}
-            submitFunction={!creating ?  async (ref: Movie) => await SubmitMovie(ref, true, movie.identifier!)
+            submitFunction={!creating ?  async (ref: Movie) => await SubmitMovie(ref, true, movie!.identifier!)
                 : async (ref: Movie) => await SubmitMovie(ref, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={!creating ? "Movie updated successfully." : "Movie added successfully."}
@@ -51,12 +66,12 @@ export default function AddMoviePage({ route } : { route?: any }) {
             >
                 <InputOption
                     title={"Title *"}
-                    initial={movieRef.current.title!}
+                    initial={initial.title!}
                     onChange={(value) => movieRef.current.title = value}
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    initial={"aaaa"}
+                    initial={initial.shortDescription || ""}
                     onChange={(value) => movieRef.current.shortDescription = value}
                 />
             </FormSection>

@@ -8,7 +8,7 @@ import SortKey from "@shared/enum/sort-key";
  * Defines a hook for managing a genre dropdown component.
  * @param ref Reference to the constructed component.
  */
-export default function useGenreDropdown<T extends { genres?: Genre[] }>(ref : React.RefObject<T>) : DropdownProps {
+export default function useGenreDropdown<T extends { genres?: Genre[] }>(ref : React.RefObject<T>, initial: Genre[]) : DropdownProps {
     const props : DropdownProps = {
         // Genre selection
         prefix: "Select",

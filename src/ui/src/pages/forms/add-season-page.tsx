@@ -11,7 +11,7 @@ import SubmitSeason from "data/submit-handlers/season-submit";
 import useFetchById from "hooks/use-fetch-by-id";
 import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RemoveEpisodeFromSeasonFilter } from "utils/filters/remove-episode-filter";
 import { defaultEpisode, defaultSeason } from "utils/model-defaults";
@@ -27,17 +27,38 @@ export default function AddSeasonPage({ route } : { route? : any}) {
     const location = useLocation();
     const showId = location.state.id || 1;
     const {model: season, isLoading} = useFetchById<Season>("/api/seasons", "seasonId");
-    const creating = !season;
+
+    // State for initial data and creating status
+    const [initial, setInitial] = useState(season || {...defaultSeason(-1, showId)});
+    const [creating, setCreating] = useState(!season);
 
     // Constructed season
     const seasonRef = useRef<Season>(season || defaultSeason(-1, showId));
 
     // State episodes to re-render on each add
-    const [episodes, setEpisodes] = useState<Episode[]>(seasonRef.current.episodes);
+    const [episodes, setEpisodes] = useState<Episode[]>(initial.episodes || []);
     const counterRef = useRef(episodes.length + 1);
 
+    useEffect(() => {
+        if (!season) {
+            setCreating(true);
+            seasonRef.current = {...defaultSeason(-1, showId)};
+            counterRef.current = 1;
+            setEpisodes([]);
+            setInitial({...defaultSeason(-1, showId)});
+        } 
+
+        else {
+            setCreating(false);
+            seasonRef.current = season;
+            counterRef.current = season.episodes.length + 1;
+            setEpisodes(season.episodes || []);
+            setInitial(season);
+        }
+    })
+
     // Slider props
-    const ratingSliderProps = useRatingSlider(seasonRef);
+    const ratingSliderProps = useRatingSlider(seasonRef, initial.rating || 0);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -59,7 +80,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             >
                 <TextAreaOption
                     title={"Short Description"}
-                    initial={seasonRef.current.shortDescription || ""}
+                    initial={initial.shortDescription || ""}
                     onChange={(value) => seasonRef.current.shortDescription = value}
                 />
                 <SliderOption

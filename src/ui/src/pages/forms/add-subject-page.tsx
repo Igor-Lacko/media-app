@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Subject from "@shared/interface/models/subject";
 import { defaultSubject } from "utils/model-defaults";
@@ -22,14 +22,33 @@ import LoadingPage from "pages/other/loading-page";
 export default function AddSubjectPage({ route } : { route?: any }) {
     // Get param subject or use a blank one
     const {model: subject, isLoading} = useFetchById<Subject>("/api/subjects");
-    const creating = !subject;
+
+    // State for initial data and creating status
+    const [initial, setInitial] = useState(subject || {...defaultSubject});
+    const [creating, setCreating] = useState(!subject);
 
     // Constructed subject
     const subjectRef = useRef<Subject>(subject || defaultSubject);
 
     // To re-render on each add
     const [lectures, setLectures] = useState(subjectRef.current.lectures);
-    const counterRef = useRef(lectures.length + 1);
+    const counterRef = useRef(lectures.length + 1); 
+
+    useEffect(() => {
+        if (!subject) {
+            setCreating(true);
+            subjectRef.current = {...defaultSubject};
+            counterRef.current = 1;
+            setLectures([]);
+            setInitial({...defaultSubject});
+        } else {
+            setCreating(false);
+            subjectRef.current = subject;
+            counterRef.current = subject.lectures.length + 1;
+            setLectures(subject.lectures || []);
+            setInitial(subject);
+        }
+    })
 
     if (isLoading) {
         return <LoadingPage />;
@@ -49,7 +68,7 @@ export default function AddSubjectPage({ route } : { route?: any }) {
             >
                 <InputOption
                     title={"Subject name*"}
-                    initial={subjectRef.current.title!}
+                    initial={initial.title!}
                     onChange={(value) => subjectRef.current.title = value}
                 />
             </FormSection>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import TvShow from "@shared/interface/models/tv-show";
 import Season from "@shared/interface/models/season";
@@ -31,7 +31,10 @@ import LoadingPage from "pages/other/loading-page";
 export default function AddTvShowPage({ route } : { route?: any }) {
     // Get TV show or use a blank one
     const {model: tvshow, isLoading} = useFetchById<TvShow>("/api/shows");
-    const creating = !tvshow;
+
+    // State for initial data and creating status
+    const [initial, setInitial] = useState(tvshow || {...defaultTvShow});
+    const [creating, setCreating] = useState(!tvshow);
 
     // Constructed TV show
     const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
@@ -44,9 +47,32 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     const episodeCounterRef = useRef(episodes.length + 1);
     const seasonCounterRef = useRef(seasons.length + 1);
 
+    // Still haven't found a better way to do this :((
+    useEffect(() => {
+        if (!tvshow) {
+            setCreating(true);
+            tvShowRef.current = {...defaultTvShow};
+            episodeCounterRef.current = 1;
+            seasonCounterRef.current = 1;
+            setSeasons([]);
+            setEpisodes([]);
+            setInitial({...defaultTvShow});
+        } else {
+            console.log("Setting TV show:", tvshow);
+            setCreating(false);
+            tvShowRef.current = tvshow;
+            episodeCounterRef.current = tvshow.seasons.flatMap(season => season.episodes).length + 1;
+            seasonCounterRef.current = tvshow.seasons.length + 1;
+            setSeasons(tvshow.seasons || []);
+            console.log("Setting episodes:", tvshow.seasons.flatMap(season => season.episodes));
+            setEpisodes(tvshow.seasons.flatMap(season => season.episodes) || []);
+            setInitial(tvshow);
+        }
+    }, [tvshow, isLoading]);
+
     // Props
-    const genreDropdownProps = useGenreDropdown(tvShowRef);
-    const ratingSliderProps = useRatingSlider(tvShowRef);
+    const genreDropdownProps = useGenreDropdown(tvShowRef, initial.genres || []);
+    const ratingSliderProps = useRatingSlider(tvShowRef, initial.rating || 0);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -56,7 +82,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
         <FormLayout
             title={!creating ? "Edit TV Show" : "Add TV Show"}
             ref={tvShowRef}
-            submitFunction={!creating ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, true, tvshow.identifier!)
+            submitFunction={!creating ? async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, true, initial.identifier!)
                 : async (tvShow: TvShow) => await TvShowSubmitHandler(tvShow, seasons, episodes, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={!creating ? "TV Show updated successfully." : "TV Show added successfully."}
@@ -66,12 +92,12 @@ export default function AddTvShowPage({ route } : { route?: any }) {
             >
                 <InputOption
                     title={"TV Show Title*"}
-                    initial={tvShowRef.current.title!}
+                    initial={initial.title!}
                     onChange={(value) => tvShowRef.current.title = value}
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    initial={tvShowRef.current.shortDescription || ""}
+                    initial={initial.shortDescription || ""}
                     onChange={(value) => tvShowRef.current.shortDescription = value}
                 />
             </FormSection>

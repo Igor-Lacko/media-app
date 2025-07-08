@@ -8,7 +8,7 @@ import SubmitEpisode from "data/submit-handlers/episode-submit";
 import useFetchById from "hooks/use-fetch-by-id";
 import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { defaultEpisode } from "utils/model-defaults";
 import LoadingPage from "pages/other/loading-page";
@@ -21,13 +21,30 @@ export default function AddEpisodePage() {
     const location = useLocation();
     const seasonId = location.state.id || 1;
     const {model: episode, isLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
-    const creating = !episode;
+
+    // Initial data
+    const [initial, setInitial] = useState<Episode>(episode || {...defaultEpisode(-1)});
+    const [creating, setCreating] = useState(!episode);
 
     // Constructed episode
-    const episodeRef = useRef<Episode>(episode || defaultEpisode(-1));
+    const episodeRef = useRef<Episode>(episode || {...defaultEpisode(-1)});
+
+    useEffect(() => {
+        if (!episode) {
+            setCreating(true);
+            episodeRef.current = {...defaultEpisode(-1)};
+            setInitial({...defaultEpisode(-1)});
+        }
+
+        else {
+            setCreating(false);
+            episodeRef.current = episode;
+            setInitial(episode);
+        }
+    }, [episode, isLoading]);
 
     // Slider
-    const ratingSliderProps = useRatingSlider(episodeRef);
+    const ratingSliderProps = useRatingSlider(episodeRef, initial.rating || 0);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -48,12 +65,12 @@ export default function AddEpisodePage() {
             >
                 <InputOption
                     title={"Title *"}
-                    initial={episodeRef.current.title}
+                    initial={initial.title}
                     onChange={(value) => episodeRef.current.title = value}
                 />
                 <TextAreaOption
                     title={"Short Description"}
-                    initial={episodeRef.current.shortDescription || ""}
+                    initial={initial.shortDescription || ""}
                     onChange={(value) => episodeRef.current.shortDescription = value}
                 />
                 <SliderOption
@@ -67,7 +84,7 @@ export default function AddEpisodePage() {
                 <FileBrowseOption
                     title={"Video File"}
                     allowed={"video"}
-                    initial={episodeRef.current.videoUrl || ""}
+                    initial={initial.videoUrl || ""}
                     onChange={(value) => episodeRef.current.videoUrl = value}
                 />
             </FormSection>
