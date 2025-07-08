@@ -15,7 +15,7 @@ export default function HomePageSection(props: HomepageSectionProps) {
                 {props.title}
             </h1>
         </div>
-        <div className={"flex w-full flex-col items-start h-auto justify-between p-10 space-y-5 " + (props.extraChildClassNames || "")}>
+        <div className={"flex flex-col p-10 space-y-5 " + (props.extraChildClassNames || "")}>
             {props.children}
         </div>
     </div>

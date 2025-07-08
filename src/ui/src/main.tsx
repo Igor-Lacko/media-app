@@ -7,7 +7,7 @@ import '@fontsource/roboto';
 
 import './index.css';
 import 'data/axios-config';
-import MainPage from 'layouts/main-page';
+import MainPage from 'layouts/main-page-layout';
 import HomePage from 'pages/index/home-page';
 import MoviePage from 'pages/index/movie-page';
 import TvShowPage from 'pages/index/tv-show-page';

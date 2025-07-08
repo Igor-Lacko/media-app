@@ -73,7 +73,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                 // Map to LastWatched object
                 return {
                     title: season.show.title,
-                    subTitle: `S${season.seasonNumber}E${rest.episodeNumber}`,
+                    subTitle: `S${season.seasonNumber}E${rest.episodeNumber}: ${rest.title}`,
                     continueAt: rest.continueAt,
                     length: rest.length,
                     thumbnailUrl: season.show.thumbnailUrl,
@@ -106,7 +106,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
                 // Map to LastWatched object
                 return {
                     title: lecture.subject.title,
-                    subTitle: `Lecture ${lecture.lectureNumber}`,
+                    subTitle: `Lecture ${lecture.lectureNumber}: ${lecture.title}`,
                     continueAt: lecture.continueAt,
                     length: lecture.length,
                     shouldHaveThumbnail: false,

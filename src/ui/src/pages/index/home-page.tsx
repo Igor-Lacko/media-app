@@ -8,7 +8,7 @@ import { IsValidVideo } from "utils/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
-import MediaItemCarousel from "components/model-displays/media-item-carousel";
+import LastWatchedPreview from "components/model-displays/last-watched-preview";
 
 /**
  * App home page. Displays a list of favorites, recently watched items and a to-watch list.
@@ -60,17 +60,18 @@ export default function HomePage() {
             {validLastWatched.length > 0 ? (
                 <HomePageSection
                     title={"Continue Watching"}
+                    extraClassNames={"w-full h-full"}
+                    extraChildClassNames={"border-t w-full h-[700px] border-gray-300 dark:border-gray-700 justify-center items-center"}
                 >
-                    <MediaItemCarousel
+                    <LastWatchedPreview
                         models={validLastWatched}
-                        extraClassNames={"w-full h-full border"}
-                        childExtraClassNames={"flex-shrink w-3/4"}
+                        extraClassNames={"w-1/2 h-full"}
                     />
                 </HomePageSection>
             ) : <span>dadasd</span>}
             <HomePageSection
                 title={"Favorites"}
-                extraChildClassNames={"border-y border-gray-300 dark:border-gray-700"}
+                extraChildClassNames={"w-full h-full border-y border-gray-300 dark:border-gray-700"}
             >
                 {favorites && <CardGrid
                     items={favorites}

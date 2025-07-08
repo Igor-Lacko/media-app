@@ -38,7 +38,7 @@ export default function MainPage() {
         >
             <div
                 className={classNames(
-                    "flex bg-white dark:bg-gray-800 h-screen w-screen overflow-y-auto overflow-x-hidden",
+                    "flex bg-white flex-grow dark:bg-gray-800 h-screen w-full overflow-y-auto overflow-x-hidden",
                     {
                         "dark" : settings.darkMode,
                         "light" : !settings.darkMode,
@@ -50,13 +50,7 @@ export default function MainPage() {
                     onToggle={() => setSidebarVisible(!sidebarVisible)}
                 />}
                 <div
-                    className={classNames(
-                        "flex flex-col flex-grow h-full m-0 items-start justify-start space-y-2",
-                        {
-                            "w-6/7": isIndexPage,
-                            "w-full": !isIndexPage
-                        }
-                    )}
+                    className={"flex flex-col flex-grow h-full m-0 items-start justify-start space-y-2 w-full"}
                 >
                     {isIndexPage && <div
                         className="flex w-full h-1/25 sm:h-1/20 items-center justify-end pt-4 pr-4"
