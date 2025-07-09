@@ -10,9 +10,11 @@ export interface ControlBarProps {
     sortOptions: SortKey[];
     initialSort: SortKey;
     initialFilter?: Genre;
+    initialSortOrder: boolean;
     onSortChange: (sortKey: SortKey) => void;
     onFilterChange: (filterKey: Genre) => void;
     onSearchChange: (searchTerm: string) => void;
+    onSortOrderChange: (asc: boolean) => void;
     path: string;
 }
 

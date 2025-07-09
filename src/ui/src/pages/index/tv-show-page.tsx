@@ -18,7 +18,7 @@ import { SortMedia } from "utils/other/sort-media";
  */
 export default function TvShowPage() {
     // Filtering
-    const { filter, setFilter, sort, setSort, search, setSearch } = useFilter();
+    const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
 
     // Fetch
     const {data, isLoading} = useQuery({
@@ -33,14 +33,16 @@ export default function TvShowPage() {
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         initialSort: sort,
         initialFilter: filter,
+        initialSortOrder: ascending,
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
+        onSortOrderChange: (asc: boolean) => { setAscending(asc); },
         path: "/tv-shows"
     }
 
     const tvShowListProps : ListProps = {
         // Sorted, filtered, and searched tv shows.
-        items: SortMedia<TvShow>(data || [], sort)
+        items: SortMedia<TvShow>(data || [], sort, ascending)
         .filter((tvShow: TvShow) => tvShow.title.toLowerCase().includes(search.toLowerCase()) && 
         tvShow.genres!.includes(filter)) 
         || [],

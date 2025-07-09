@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * Toggle component that can be used to switch between two states.
+ * @param checked Initial state of the toggle.
+ * @param onChange Called when the toggle is changed.
+ * @note From https://flowbite.com/docs/forms/toggle/
+ */
 export default function Toggle({ checked, onChange } : { checked: boolean, onChange: (checked: boolean) => void }) {
     const [isChecked, setIsChecked] = useState(checked);
     const onToggle = () => {
@@ -7,7 +13,6 @@ export default function Toggle({ checked, onChange } : { checked: boolean, onCha
         onChange(!isChecked);
     }
 
-    // From https://flowbite.com/docs/forms/toggle/
     return (
         <label
             className={"inline-flex items-center cursor-pointer"}

@@ -17,6 +17,7 @@ export default function CoursePage() {
     // Sort/search
     const [sort, setSort] = useState(SortKey.NAME);
     const [search, setSearch] = useState("");
+    const [ascending, setAscending] = useState(true);
 
     // Fetch courses
     const {data, isLoading} = useQuery({
@@ -28,16 +29,18 @@ export default function CoursePage() {
         title: "Your Courses",
         filter: false,
         sortOptions: [SortKey.NAME, SortKey.NOF_LECTURES],
+        initialSort: sort,
+        initialSortOrder: ascending,
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: () => {},
-        initialSort: sort,
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
+        onSortOrderChange: (asc: boolean) => { setAscending(asc); },
         path: "/courses"
     }
 
     const CourseListProps: ListProps = {
         // Sorted and searched courses
-        items: SortMedia<Course>(data || [], sort)
+        items: SortMedia<Course>(data || [], sort, ascending)
         .filter((course: Course) => course.title.toLowerCase().includes(search.toLowerCase())) || [],
 
         showRating: false,

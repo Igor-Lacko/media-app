@@ -15,28 +15,33 @@ export function SortMedia<T extends {
     length?: number;            // Movies
     seasons?: Season[];         // TV shows
     lectures?: Lecture[];       // Courses
-}> (models: T[], sortBy: SortKey): T[] {
+}> (models: T[], sortBy: SortKey, asc: boolean): T[] {
     switch (sortBy) {
         case SortKey.NAME:
-            return models.sort((a, b) => a.title.localeCompare(b.title));
+            return asc ? models.sort((a, b) => a.title.localeCompare(b.title)) :
+            models.sort((a, b) => b.title.localeCompare(a.title));
 
         case SortKey.RATING:
-            return models.sort((a, b) => b.rating! - a.rating!);
+            return asc ? models.sort((a, b) => a.rating! - b.rating!) :
+            models.sort((a, b) => b.rating! - a.rating!);
 
         case SortKey.LENGTH:
-            return models.sort((a, b) => a.length! - b.length!);
+            return asc ? models.sort((a, b) => a.length! - b.length!) :
+            models.sort((a, b) => b.length! - a.length!);
 
         case SortKey.NOF_SEASONS:
-            return models.sort((a,b) => a.seasons!.length - b.seasons!.length);
+            return asc ? models.sort((a,b) => a.seasons!.length - b.seasons!.length) :
+            models.sort((a,b) => b.seasons!.length - a.seasons!.length);
 
         case SortKey.NOF_EPISODES:
             return models.sort((a,b) => {
                 const nofEpisodesA = a.seasons!.reduce((current, season) => current + season.episodes.length, 0);
                 const nofEpisodesB = b.seasons!.reduce((current, season) => current + season.episodes.length, 0);
-                return nofEpisodesA - nofEpisodesB
+                return asc ? nofEpisodesA - nofEpisodesB : nofEpisodesB - nofEpisodesA;
             });
 
         case SortKey.NOF_LECTURES:
-            return models.sort((a,b) => a.lectures!.length - b.lectures!.length);
+            return asc ? models.sort((a,b) => a.lectures!.length - b.lectures!.length) :
+            models.sort((a,b) => b.lectures!.length - a.lectures!.length);
     }
 }

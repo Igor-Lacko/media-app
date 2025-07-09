@@ -9,6 +9,7 @@ import SortKeyAdapter from "utils/adapters/sort-key-adapter";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DropdownProps from "utils/props/control-elements/dropdown-props";
 import { NavLink } from "react-router-dom";
+import Toggle from "components/buttons/toggle";
 
 /**
  * Control bar for filtering/sorting the list of media.
@@ -57,6 +58,20 @@ export default function ControlBar(props : ControlBarProps) {
                         dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 ease-in-out"}
                     onChange={(e) => props.onSearchChange(e.target.value)}
                 />
+                {/** Sorting dropdown, toggle for asc/desc and text */}
+                <div
+                    className={"flex flex-col space-x-2 items-center justify-center h-full w-auto ml-10"}
+                >
+                    <span
+                        className={"text-gray-500 font-light text-sm mb-1"}
+                    >
+                        {props.initialSortOrder ? "Ascending" : "Descending"}
+                    </span>
+                    <Toggle
+                        checked={props.initialSortOrder}
+                        onChange={props.onSortOrderChange}
+                    />
+                </div>
                 <DropdownMenu
                     {...sortProps}
                 />

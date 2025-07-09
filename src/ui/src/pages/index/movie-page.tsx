@@ -18,7 +18,7 @@ import { SortMedia } from "utils/other/sort-media";
  */
 export default function MoviePage() {
     // Sort/filter/search
-    const { filter, setFilter, sort, setSort, search, setSearch } = useFilter();
+    const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
 
     // Fetch Movies
     const {data, isLoading} = useQuery({
@@ -35,12 +35,14 @@ export default function MoviePage() {
         onSearchChange: (searchTerm: string) => {setSearch(searchTerm)},
         initialSort: sort,
         initialFilter: filter,
+        initialSortOrder: ascending,
+        onSortOrderChange: (asc: boolean) => {setAscending(asc)},
         path: "/movies"
     };
 
     const MovieListProps : ListProps = {
         // Probably won;'t be a lot of items, so sorting in FE makes sense
-        items: SortMedia<Movie>(data || [], sort)
+        items: SortMedia<Movie>(data || [], sort, ascending)
         .filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase()) &&
         movie.genres!.includes(filter)) || [],
 

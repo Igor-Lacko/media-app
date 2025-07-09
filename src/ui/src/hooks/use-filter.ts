@@ -9,5 +9,6 @@ export default function useFilter() {
     const [filter, setFilter] = useState(Genre.ALL);
     const [sort, setSort] = useState(SortKey.NAME);
     const [search, setSearch] = useState("");
-    return { filter, setFilter, sort, setSort, search, setSearch };
+    const [ascending, setAscending] = useState(true);
+    return { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending };
 }
