@@ -19,7 +19,8 @@ export default function EnumModal(props : ModalProps) {
             {props.selectOptions && props.selectOptions.map((option) => (
                 <button
                     key={option.value}
-                    className={"flex items-center p-2 w-full text-left rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"}
+                    className={"flex items-center p-2 w-full text-left rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700\
+                            transition-colors duration-300 text-black dark:text-gray-400"}
                     onClick={() => {setSelected(option.value!);}}
                 >
                     <span className={"flex-1"}>

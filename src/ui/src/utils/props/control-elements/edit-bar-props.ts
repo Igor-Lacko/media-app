@@ -10,6 +10,8 @@ export interface EditBarProps {
     onDelete?: () => void;
     isFavorite?: boolean;
     onMarkFavorite?: () => void;
+    isInWatchlist?: boolean;
+    onToggleWatchlist?: () => void;
     rateTitle?: string;
     playTitle?: string;
     onPlay?: () => void;
@@ -17,7 +19,6 @@ export interface EditBarProps {
     onSetDescription?: () => void;
     onRate?: () => void;
     onSetWatchStatus?: () => void;
-    onAddToWatchlist?: () => void;
 }
 
 export default EditBarProps;

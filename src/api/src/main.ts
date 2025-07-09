@@ -10,6 +10,7 @@ import EpisodesRouter from "routes/episodes";
 import LecturesRouter from "routes/lectures";
 import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
+import WatchlistRouter from "routes/to-watch";
 import CheckRouter from "routes/check";
 import { NukeDatabase } from "controllers/settings-controller";
 import seedData from "utils/insert-mock-data";
@@ -35,6 +36,7 @@ const addRouters = () => {
         viteNodeApp.use("/api/lectures", LecturesRouter);
         viteNodeApp.use("/api/favorites", FavoritesRouter);
         viteNodeApp.use("/api/last-watched", LastWatchedRouter);
+        viteNodeApp.use("/api/watchlist", WatchlistRouter);
         viteNodeApp.use("/api/check", CheckRouter);
 }
 

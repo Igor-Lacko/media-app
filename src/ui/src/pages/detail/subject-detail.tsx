@@ -1,10 +1,11 @@
 import Subject from "@shared/interface/models/subject";
 import DeleteData from "data/crud/delete";
+import { ToggleSubjectWatchlist } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import LoadingPage from "pages/other/loading-page";
 import NotFoundPage from "pages/other/page-not-found";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
 
@@ -14,6 +15,11 @@ export default function SubjectDetail() {
 
     // The only state!
     const [inWatchlist, setInWatchlist] = useState(subject?.toWatch || false);
+    useEffect(() => {
+        if (subject) {
+            setInWatchlist(subject.toWatch || false);
+        }
+    }, [subject, isLoading]);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -41,6 +47,10 @@ export default function SubjectDetail() {
             notFoundMessage: "This subject has no lectures yet. You can add one by clicking the 'Add Lecture' button above, or edit the subject to add a lecture.",
         },
         inWatchlist: inWatchlist,
+        toggleWatchListFunction: async () => {
+            setInWatchlist(!inWatchlist);
+            return await ToggleSubjectWatchlist(subject);
+        },
         addTitle: "Add Lecture",
         editTitle: "Edit Subject",
         deleteTitle: "Delete Subject",

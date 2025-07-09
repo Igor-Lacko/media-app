@@ -3,6 +3,7 @@ import MarkFavoriteButton from "../buttons/mark-favorite-button";
 import RoundedButton from "../buttons/rounded-button";
 import { FaPlay } from "react-icons/fa";
 import { FaCheckCircle, FaPencilAlt, FaPlus, FaStar, FaTrash } from "react-icons/fa";
+import ToggleWatchlistButton from "components/buttons/toggle-watchlist-button";
 
 /**
  * Edit bar component
@@ -51,7 +52,10 @@ export default function EditBar(props : EditBarProps) {
             <div
                 className={"flex items-center justify-start space-x-5"}
             >
-                {props.onAddToWatchlist && <span>todooooo</span>}
+                {props.onToggleWatchlist && <ToggleWatchlistButton
+                    onClick={props.onToggleWatchlist}
+                    isInWatchlist={props.isInWatchlist!}
+                />}
                 {props.onMarkFavorite && <MarkFavoriteButton
                     onClick={props.onMarkFavorite}
                     isFavorite={props.isFavorite!}

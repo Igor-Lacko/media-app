@@ -21,7 +21,7 @@ export default async function seedData() {
                 "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...",
             thumbnailUrl: "/home/igor_lacko/Desktop/media-player/mock/inception.png",
             length: 148 * 60, // Converted to seconds
-            watchStatus: WatchStatus.WATCHED,
+            watchStatus: WatchStatus.COMPLETED,
             continueAt: 0,
             isFavorite: true,
             lastWatchedAt: 100,
@@ -54,7 +54,7 @@ export default async function seedData() {
             thumbnailUrl:
                 "/home/igor_lacko/Desktop/media-player/mock/interstellar.jpg",
             length: 169 * 60, // Converted to seconds
-            watchStatus: WatchStatus.UNWATCHED,
+            watchStatus: WatchStatus.PLAN_TO_WATCH,
             continueAt: 0,
             isFavorite: true,
             lastWatchedAt: 0,
@@ -73,13 +73,12 @@ export default async function seedData() {
             thumbnailUrl:
                 "/home/igor_lacko/Desktop/media-player/mock/breaking-bad.jpg",
             rating: 9.5,
-            watchStatus: WatchStatus.UNWATCHED,
+            watchStatus: WatchStatus.NOT_WATCHED,
             seasons: [
                 { seasonNumber: 1, episodes: [] },
                 { seasonNumber: 2, episodes: [] },
             ],
             isFavorite: true,
-            toWatch: true,
         },
         {
             title: "Stranger Things",
@@ -91,7 +90,7 @@ export default async function seedData() {
             thumbnailUrl:
                 "/home/igor_lacko/Desktop/media-player/mock/stranger-things.jpg",
             rating: 8.9,
-            watchStatus: WatchStatus.WATCHED,
+            watchStatus: WatchStatus.COMPLETED,
             seasons: [
                 {
                     seasonNumber: 1,
@@ -100,7 +99,7 @@ export default async function seedData() {
                             title: "Chapter One: The Vanishing of Will Byers",
                             length: 47,
                             continueAt: 0,
-                            watchStatus: WatchStatus.WATCHED,
+                            watchStatus: WatchStatus.COMPLETED,
                             episodeNumber: 1,
                             seasonNumber: 1,
                             lastWatchedAt: 30,
@@ -111,7 +110,7 @@ export default async function seedData() {
                             title: "Chapter Two: The Weirdo on Maple Street",
                             length: 50,
                             continueAt: 0,
-                            watchStatus: WatchStatus.UNWATCHED,
+                            watchStatus: WatchStatus.NOT_WATCHED,
                             episodeNumber: 2,
                             seasonNumber: 1,
                         },
@@ -120,7 +119,6 @@ export default async function seedData() {
                 { seasonNumber: 2, episodes: [] },
             ],
             isFavorite: true,
-            toWatch: false,
         },
     ];
 
@@ -135,7 +133,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 1,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                 },
                 {
                     title: "Control Structures",
@@ -145,9 +143,10 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 2,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                 },
             ],
+            toWatch: false
         },
         {
             title: "Data Structures and Algorithms",
@@ -159,7 +158,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 1,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                     lastWatchedAt: 7,
                 },
                 {
@@ -169,9 +168,10 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 2,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                 },
             ],
+            toWatch: false
         },
         {
             title: "Operating Systems",
@@ -184,7 +184,7 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 1,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                 },
                 {
                     title: "Memory Management",
@@ -194,9 +194,10 @@ export default async function seedData() {
                     continueAt: 0,
                     notes: [],
                     lectureNumber: 2,
-                    watchStatus: WatchStatus.UNWATCHED,
+                    watchStatus: WatchStatus.NOT_WATCHED,
                 },
             ],
+            toWatch: true
         },
     ];
 

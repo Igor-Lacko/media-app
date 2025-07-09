@@ -61,7 +61,8 @@ export default function MovieDetail() {
         editTitle: "Edit Movie",
         deleteTitle: "Delete Movie",
         backUrl: "/movies",
-        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.WATCHING, WatchStatus.COMPLETED, WatchStatus.PLAN_TO_WATCH],
+        // A currently watching status wouldn't make muych sense for a movie
+        watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.COMPLETED, WatchStatus.PLAN_TO_WATCH],
         deleteFunction: async () => await DeleteData("/api/movies", movie.identifier!),
         markFavoriteFunction: async () => {
             setIsFavorite(!isFavorite);

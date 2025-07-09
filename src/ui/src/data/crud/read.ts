@@ -2,6 +2,7 @@ import axios from 'axios';
 import FetchOptions from 'utils/props/other/fetch-options';
 import Settings from '@shared/interface/models/settings';
 import LastWatched from '@shared/interface/last-watched';
+import WatchListItem from '@shared/interface/watchlist-item';
 
 /**
  * Fetches bulk data from the given URL with the provided parameters.
@@ -40,6 +41,11 @@ export async function FetchDataWithId<T>(url: string, id: string): Promise<T | n
     });
 }
 
+/**
+ * Fetches the last watched items from the server.
+ * @param limit Maximum number of items to fetch, -1 for no limit.
+ * @returns Promise with the last watched items or null if an error occurs.
+ */
 export async function FetchLastWatchedItems(limit: number = -1): Promise<LastWatched[] | null> {
     return await axios.get<LastWatched[]>(`/api/last-watched`, {
         params: {
@@ -47,6 +53,19 @@ export async function FetchLastWatchedItems(limit: number = -1): Promise<LastWat
         }
     }).then(response => response.data)
     .catch(_error => {
+        return null;
+    });
+}
+
+/**
+ * Fetches items that are planned to be watched, including movies, TV shows, and subjects.
+ * @returns An object containing arrays of entertainment items and subjects, or null if an error occurs.
+ */
+export async function FetchToWatchItems(): Promise<{entertainment: WatchListItem[], subjects: WatchListItem[]} | null> {
+    return await axios.get<{entertainment: WatchListItem[], subjects: WatchListItem[]}>("/api/watchlist")
+    .then(response => response.data)
+    .catch(_error => {
+        console.error("Failed to fetch to-watch items.");
         return null;
     });
 }

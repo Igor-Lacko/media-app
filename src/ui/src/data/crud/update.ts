@@ -1,6 +1,7 @@
 import Lecture from "@shared/interface/models/lecture";
 import Movie from "@shared/interface/models/movie";
 import Note from "@shared/interface/models/note";
+import Subject from "@shared/interface/models/subject";
 import TvShow from "@shared/interface/models/tv-show";
 import axios from "axios";
 
@@ -179,6 +180,23 @@ export async function UpdateLength<T extends { length?: number, identifier?: num
 
     catch (error) {
         console.error("Error updating length:", error);
+        return false;
+    }
+}
+
+/**
+ * Adds/removes a subject from a to-watch list.
+ * @param model Subject model to toggle watchlist status for.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function ToggleSubjectWatchlist(model: Subject): Promise<boolean> {
+    try {
+        await UpdateData<Subject>("/api/subjects", model.identifier!, { toWatch: !model.toWatch });
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error toggling subject watchlist status:", error);
         return false;
     }
 }

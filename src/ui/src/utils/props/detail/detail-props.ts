@@ -55,7 +55,7 @@ export interface DetailProps<T extends DetailFillable>{
     // Button functions
     deleteFunction?: () => Promise<boolean>;
     markFavoriteFunction?: () => Promise<boolean>;
-    toggleWatchLIstFunction?: () => Promise<boolean>;
+    toggleWatchListFunction?: () => Promise<boolean>;
     rateFunction?: (rating: number) => Promise<boolean>;
     watchStatusFunction?: (watchStatus: WatchStatus) => Promise<boolean>;
     setDescriptionFunction?: (description : string) => Promise<boolean>;

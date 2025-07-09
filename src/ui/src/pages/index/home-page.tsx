@@ -3,12 +3,13 @@ import TvShow from "@shared/interface/models/tv-show";
 import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
-import { FetchData, FetchLastWatchedItems } from "data/crud/read";
+import { FetchData, FetchLastWatchedItems, FetchToWatchItems } from "data/crud/read";
 import { IsValidVideo } from "utils/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
 import LastWatchedPreview from "components/model-displays/last-watched-preview";
+import WatchListItem from "@shared/interface/watchlist-item";
 
 /**
  * App home page. Displays a list of favorites, recently watched items and a to-watch list.
@@ -26,6 +27,13 @@ export default function HomePage() {
         queryFn: async () => await FetchLastWatchedItems(5)
     });
 
+    // Fetch to-watch items
+    const { data: toWatch, isLoading: toWatchLoading } = useQuery({
+        queryKey: ["ToWatch"],
+        queryFn: async () => await FetchToWatchItems()
+    });
+
+    // Items which have valid video files set in item.videoUrl (wouldn't make much sense to display other items since it links to the video)
     const [validLastWatched, setValidLastWatched] = useState<LastWatched[]>(lastWatched || []);
 
     // Filter out invalid videos from last watched
@@ -49,7 +57,7 @@ export default function HomePage() {
         filterInvalidVideos();
     }, [lastWatched]);
 
-    if (favoritesLoading || lastWatchedLoading) {
+    if (favoritesLoading || lastWatchedLoading || toWatchLoading) {
         return <LoadingPage />;
     }
 
@@ -79,10 +87,30 @@ export default function HomePage() {
                 />}
             </HomePageSection>
             <HomePageSection
-                title={"Your To-Watch List"}
+                title={"Your plan-to-watch list"}
                 extraClassNames={"mt-20"}
             >
-                TODO
+                {toWatch && toWatch.entertainment.length > 0 && toWatch.entertainment.map((item, index) => (
+                    <span
+                        key={index}
+                        className={"text-gray-700 dark:text-gray-300 text-lg font-semibold p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"}
+                    >
+                        {`this is a placeholder for ${item.title} (${item.progress || ""})`}
+                    </span>
+                ))}
+            </HomePageSection>
+            <HomePageSection
+                title={"Your subjects to watch"}
+                extraClassNames={"mt-20"}
+            >
+                {toWatch && toWatch.subjects.length > 0 && toWatch.subjects.map((item, index) => (
+                    <span
+                        key={index}
+                        className={"text-gray-700 dark:text-gray-300 text-lg font-semibold p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"}
+                    >
+                        {`this is a placeholder for ${item.title} (${item.progress})`}
+                    </span>
+                ))}
             </HomePageSection>
         </div>
     );

@@ -60,7 +60,7 @@ export default function EpisodeDetail() {
         editTitle: "Edit Episode",
         deleteTitle: "Delete Episode",
         rateTitle: "Rate Episode",
-        backUrl: `/tv-shows/${show.identifier}/seasons/${season.identifier}`,
+        backUrl: `/tv-shows/${show.identifier}/${season.identifier}`,
         deleteFunction: async () => await DeleteData("/api/episodes", episode.identifier!),
         rateFunction: async (rating: number) => {
             setRating(rating);

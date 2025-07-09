@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 /**
