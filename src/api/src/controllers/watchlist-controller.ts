@@ -10,7 +10,8 @@ import { DBSubject } from "adapters/subjects";
  * @returns True if all episodes in the season have watchStatus === COMPLETED, false otherwise.
  */
 function IsSeasonCompleted(season: DBSeason): boolean {
-    return season.episodes.every(episode => episode.watchStatus === WatchStatus.COMPLETED);
+    return season.episodes.every(episode => episode.watchStatus === WatchStatus.COMPLETED) &&
+            season.episodes.length > 0;
 }
 
 /**

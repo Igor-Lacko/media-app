@@ -73,13 +73,14 @@ export default function HomePage() {
                 >
                     <LastWatchedPreview
                         models={validLastWatched}
-                        extraClassNames={"w-2/3 h-full"}
+                        extraClassNames={"w-4/7 h-full"}
                     />
                 </HomePageSection>
             ) : <span>dadasd</span>}
             <HomePageSection
                 title={"Favorites"}
-                extraChildClassNames={"w-full h-full border-y border-gray-300 dark:border-gray-700"}
+                extraClassNames={"mt-50"}
+                extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
                 {favorites && <CardGrid
                     items={favorites}
@@ -88,7 +89,8 @@ export default function HomePage() {
             </HomePageSection>
             <HomePageSection
                 title={"Your plan-to-watch list"}
-                extraClassNames={"mt-20"}
+                extraClassNames={"mt-50"}
+                extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
                 {toWatch && toWatch.entertainment.length > 0 && toWatch.entertainment.map((item, index) => (
                     <span
@@ -101,7 +103,8 @@ export default function HomePage() {
             </HomePageSection>
             <HomePageSection
                 title={"Your subjects to watch"}
-                extraClassNames={"mt-20"}
+                extraClassNames={"mt-50"}
+                extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
                 {toWatch && toWatch.subjects.length > 0 && toWatch.subjects.map((item, index) => (
                     <span

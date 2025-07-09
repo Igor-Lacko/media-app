@@ -44,7 +44,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
                         <ItemNotFound
                             title={"Thumbnail not found :(("}
                             message={"The thumbnail for this item does not exist or is not a valid file."}
-                            extraClassNames={"rounded-lg shadow-md border border-gray-300 dark:border-gray-600"}
+                            extraClassNames={"rounded-lg shadow-md ml-10 border-2 border-black dark:border-gray-700"}
                         />
                     )
                 }
