@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-import Subject from "@shared/interface/models/subject";
-import { defaultSubject } from "utils/model-defaults";
+import Course from "@shared/interface/models/course";
+import { defaultCourse } from "utils/model-defaults";
 import { defaultLecture } from "utils/model-defaults";
 import FormLayout from "layouts/form-layout";
-import SubjectSubmitHandler from "data/submit-handlers/subject-submit";
+import CourseSubmitHandler from "data/submit-handlers/course-submit";
 import FormSection from "components/sections/form-section";
 import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
@@ -15,38 +15,38 @@ import useFetchById from "hooks/use-fetch-by-id";
 import LoadingPage from "pages/other/loading-page";
 
 /**
- * Form page for adding a new subject.
- * Can also be used to edit an existing subject, this is done by passing a `subject` prop.
- * @param subject Optional subject object to pre-fill the form.
+ * Form page for adding a new course.
+ * Can also be used to edit an existing course, this is done by passing a `course` prop.
+ * @param Course Optional course object to pre-fill the form.
  */
-export default function AddSubjectPage({ route } : { route?: any }) {
-    // Get param subject or use a blank one
-    const {model: subject, isLoading} = useFetchById<Subject>("/api/subjects");
+export default function AddCoursePage({ route } : { route?: any }) {
+    // Get param course or use a blank one
+    const {model: course, isLoading} = useFetchById<Course>("/api/courses");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(subject || {...defaultSubject});
-    const [creating, setCreating] = useState(!subject);
+    const [initial, setInitial] = useState(course || {...defaultCourse});
+    const [creating, setCreating] = useState(!course);
 
-    // Constructed subject
-    const subjectRef = useRef<Subject>(subject || defaultSubject);
+    // Constructed course
+    const courseRef = useRef<Course>(course || defaultCourse);
 
     // To re-render on each add
-    const [lectures, setLectures] = useState(subjectRef.current.lectures);
+    const [lectures, setLectures] = useState(courseRef.current.lectures);
     const counterRef = useRef(lectures.length + 1); 
 
     useEffect(() => {
-        if (!subject) {
+        if (!course) {
             setCreating(true);
-            subjectRef.current = {...defaultSubject};
+            courseRef.current = {...defaultCourse};
             counterRef.current = 1;
             setLectures([]);
-            setInitial({...defaultSubject});
+            setInitial({...defaultCourse});
         } else {
             setCreating(false);
-            subjectRef.current = subject;
-            counterRef.current = subject.lectures.length + 1;
-            setLectures(subject.lectures || []);
-            setInitial(subject);
+            courseRef.current = course;
+            counterRef.current = course.lectures.length + 1;
+            setLectures(course.lectures || []);
+            setInitial(course);
         }
     })
 
@@ -56,20 +56,20 @@ export default function AddSubjectPage({ route } : { route?: any }) {
 
     return (
         <FormLayout
-            title={!creating ? "Edit Subject" : "Add Subject"}
-            ref={subjectRef}
-            submitFunction={!creating ? async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, true, subject.identifier!)
-                : async (subject: Subject) => await SubjectSubmitHandler(subject, lectures, false)}
+            title={!creating ? "Edit Course" : "Add Course"}
+            ref={courseRef}
+            submitFunction={!creating ? async (course: Course) => await CourseSubmitHandler(course, lectures, true, course.identifier!)
+                : async (course: Course) => await CourseSubmitHandler(course, lectures, false)}
             errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={!creating ? "Subject updated successfully." : "Subject added successfully."}
+            successModalMessage={!creating ? "Course updated successfully." : "Course added successfully."}
         >
             <FormSection
                 title={"Basic Information"}
             >
                 <InputOption
-                    title={"Subject name*"}
+                    title={"Course name*"}
                     initial={initial.title!}
-                    onChange={(value) => subjectRef.current.title = value}
+                    onChange={(value) => courseRef.current.title = value}
                 />
             </FormSection>
             <FormSection

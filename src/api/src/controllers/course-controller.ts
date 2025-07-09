@@ -1,22 +1,22 @@
 import prisma from "db/db";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 import SortKey from "@shared/enum/sort-key";
-import { SortSubjects } from "utils/sort";
+import { SortCourses } from "utils/sort";
 import GetOrderBy from "utils/order-by";
 import { CreateLecture, UpdateLecture } from "./lecture-controller";
 import Lecture from "@shared/interface/models/lecture";
-import { DBSubjectToClient, SanitizeClientSubjectToDB } from "adapters/subjects";
+import { DBCourseToClient, SanitizeClientCourseToDB } from "adapters/courses";
 import { SanitizeClientLectureToDB } from "adapters/lectures";
 import Note from "@shared/interface/models/note";
 
 /**
- * Gets all subjects matching the given parameters.
+ * Gets all courses matching the given parameters.
  * @param key To sort by, defaults to SortKey.NAME
- * @returns List of subjects matching the parameters.
+ * @returns List of courses matching the parameters.
  */
-export async function GetSubjects(key: SortKey) : Promise<Subject[]> {
+export async function GetCourses(key: SortKey) : Promise<Course[]> {
     try {
-        const subjects = await prisma.subject.findMany({
+        const courses = await prisma.course.findMany({
             orderBy: GetOrderBy(key),
 
             include: {
@@ -28,26 +28,26 @@ export async function GetSubjects(key: SortKey) : Promise<Subject[]> {
             }
         });
 
-        return SortSubjects(
-            subjects.map(subject => DBSubjectToClient(subject)),
+        return SortCourses(
+            courses.map(Course => DBCourseToClient(Course)),
             key
         );
     }
 
     catch (error) {
-        console.error("Error fetching subjects: " + error);
+        console.error("Error fetching Courses: " + error);
         return [];
     }
 }
 
 /**
- * Returns a subject by its ID.
- * @param id Unique identifier of the subject.
- * @returns Subject object if found, null otherwise.
+ * Returns a course by its ID.
+ * @param id Unique identifier of the course.
+ * @returns Course object if found, null otherwise.
  */
-export async function GetSubjectById(id: number): Promise<Subject | null> {
+export async function GetCourseById(id: number): Promise<Course | null> {
     try {
-        const subject = await prisma.subject.findUnique({
+        const course = await prisma.course.findUnique({
             where: {
                 id: id
             },
@@ -61,33 +61,33 @@ export async function GetSubjectById(id: number): Promise<Subject | null> {
             }
         });
 
-        if (!subject) {
+        if (!course) {
             return null;
         }
 
         // Map lectures and notes
-        return DBSubjectToClient(subject);
+        return DBCourseToClient(course);
     }
 
     catch (error) {
-        console.error("Error fetching subject by ID: " + error);
+        console.error("Error fetching Course by ID: " + error);
         return null;
     }
 }
 
 /**
- * Inserts a subject into the database.
- * @param subject Subject to insert.
- * @returns Subject object if successful, null otherwise.
+ * Inserts a course into the database.
+ * @param Course course to insert.
+ * @returns course object if successful, null otherwise.
  */
-export async function InsertSubject(subject: Subject): Promise<boolean> {
-    const sanitizedSubject = SanitizeClientSubjectToDB(subject);
+export async function InsertCourse(course: Course): Promise<boolean> {
+    const sanitizedCourse = SanitizeClientCourseToDB(course);
     try {
-        await prisma.subject.create({
+        await prisma.course.create({
             data: {
-                ...sanitizedSubject,
+                ...sanitizedCourse,
                 lectures: {
-                    create: subject.lectures.map((lecture : Lecture) => {
+                    create: course.lectures.map((lecture : Lecture) => {
                         const sanitizedLecture = SanitizeClientLectureToDB(lecture);
                         return {
                             ...sanitizedLecture,
@@ -102,49 +102,49 @@ export async function InsertSubject(subject: Subject): Promise<boolean> {
             }
         });
 
-        console.log(`Inserted subject: ${subject.title}`);
+        console.log(`Inserted Course: ${course.title}`);
         return true;
     }
 
     catch (error) {
-        console.error("Error inserting subject: " + error);
+        console.error("Error inserting Course: " + error);
         return false;
     }
 }
 
 /**
- * Updates a subject by its ID.
- * @param id Identifier of the subject to update.
- * @param subjectData Partial object containing fields to update.
+ * Updates a course by its ID.
+ * @param id Identifier of the course to update.
+ * @param CourseData Partial object containing fields to update.
  * @returns True if the update was successful, false otherwise.
  */
-export async function UpdateSubject(id: number, subjectData: Partial<Subject>): Promise<boolean>  {
-    const sanitizedSubject = SanitizeClientSubjectToDB(subjectData as Subject);
-    console.log("Updating subject with ID:", id);
+export async function UpdateCourse(id: number, CourseData: Partial<Course>): Promise<boolean>  {
+    const sanitizedCourse = SanitizeClientCourseToDB(CourseData as Course);
+    console.log("Updating Course with ID:", id);
 
     // Update lectures first (if provided)
-    if(sanitizedSubject.lectures) {
-        for (const lecture of sanitizedSubject.lectures) {
+    if(sanitizedCourse.lectures) {
+        for (const lecture of sanitizedCourse.lectures) {
             lecture.identifier ? await UpdateLecture(lecture.identifier, lecture) :
             await CreateLecture(lecture, id);
         }
     }
 
-    // Update the subject itself
+    // Update the Course itself
     try {
-        await prisma.subject.update({
+        await prisma.course.update({
             where: {
                 id: id
             },
 
             data: {
-                ...sanitizedSubject,
+                ...sanitizedCourse,
 
                 // Delete lectures not present in the update, or ignore if lectures object not passed
-                lectures: sanitizedSubject.lectures ? {
+                lectures: sanitizedCourse.lectures ? {
                     deleteMany: {
                         id: {
-                            notIn: sanitizedSubject.lectures
+                            notIn: sanitizedCourse.lectures
                             .filter((lecture: Lecture) => lecture.identifier !== undefined)
                             .map((lecture : Lecture) => lecture.identifier)
                         }
@@ -157,22 +157,22 @@ export async function UpdateSubject(id: number, subjectData: Partial<Subject>): 
     }
 
     catch (error) {
-        console.error("Error updating subject: " + error);
+        console.error("Error updating Course: " + error);
         return false;
     }
 }
 
 /**
- * Deletes a subject by its ID.
- * @param id Identifier of the subject to delete.
+ * Deletes a course by its ID.
+ * @param id Identifier of the course to delete.
  * @returns True if the deletion was successful, false otherwise.
  */
-export async function DeleteSubject(id: number): Promise<boolean> {
-    console.log("Deleting subject with ID:", id);
+export async function DeleteCourse(id: number): Promise<boolean> {
+    console.log("Deleting Course with ID:", id);
 
     // Lectures deleted by cascade
     try {
-        await prisma.subject.delete({
+        await prisma.course.delete({
             where: {
                 id: id
             }
@@ -182,7 +182,7 @@ export async function DeleteSubject(id: number): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error deleting subject: " + error);
+        console.error("Error deleting Course: " + error);
         return false;
     }
 } 

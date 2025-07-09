@@ -25,7 +25,7 @@ export default function MainPage() {
         fetchSettings();
     }, []);
 
-    const isIndexPage = ["/", "/movies", "/tv-shows", "/subjects", "/settings"].some(
+    const isIndexPage = ["/", "/movies", "/tv-shows", "/courses", "/settings"].some(
         (path) => location.pathname.endsWith(path) 
     );
 

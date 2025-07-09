@@ -11,14 +11,14 @@ import MainPage from 'layouts/main-page-layout';
 import HomePage from 'pages/index/home-page';
 import MoviePage from 'pages/index/movie-page';
 import TvShowPage from 'pages/index/tv-show-page';
-import SubjectPage from 'pages/index/subject-page';
+import CoursePage from 'pages/index/course-page';
 import SettingsPage from 'pages/index/settings-page';
 import AddMoviePage from 'pages/forms/add-movie-page';
 import AddTvShowPage from 'pages/forms/add-tv-show-page';
-import AddSubjectPage from 'pages/forms/add-subject-page';
+import AddCoursePage from 'pages/forms/add-course-page';
 import MovieDetail from 'pages/detail/movie-detail';
 import TvShowDetail from 'pages/detail/tv-show-detail';
-import SubjectDetail from 'pages/detail/subject-detail';
+import CourseDetail from 'pages/detail/course-detail';
 import AddSeasonPage from 'pages/forms/add-season-page';
 import AddLecturePage from 'pages/forms/add-lecture-page';
 import SeasonDetail from 'pages/detail/season-detail';
@@ -63,11 +63,11 @@ const rootContainer: ReactNode = (
                         <Route path=":id/:seasonId/:episodeId/edit" element={<AddEpisodePage />} />
                         <Route path=":id/:seasonId/:episodeId/play" element={<EpisodeVideo />} />
                     </Route>
-                    <Route path="subjects/*">
-                        <Route index element={<SubjectPage />} />
-                        <Route path="add" element={<AddSubjectPage />} />
-                        <Route path=":id" element={<SubjectDetail />} />
-                        <Route path=":id/edit" element={<AddSubjectPage />} />
+                    <Route path="courses/*">
+                        <Route index element={<CoursePage />} />
+                        <Route path="add" element={<AddCoursePage />} />
+                        <Route path=":id" element={<CourseDetail />} />
+                        <Route path=":id/edit" element={<AddCoursePage />} />
                         <Route path=":id/add" element={<AddLecturePage />} />
                         <Route path=":id/:lectureId" element={<LectureDetail />} />
                         <Route path=":id/:lectureId/edit" element={<AddLecturePage />} />

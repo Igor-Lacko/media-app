@@ -1,8 +1,8 @@
 import WatchStatus from "@shared/enum/watch-status";
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
-import Subject from "@shared/interface/models/subject";
-import LectureDetailFooter from "components/lists/lecture-detail-footer";
+import Course from "@shared/interface/models/course";
+import NotesList from "components/lists/notes-list";
 import DeleteData from "data/crud/delete";
 import { UpdateNotes, UpdateVideoUrl, UpdateWatchStatus } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
@@ -19,8 +19,8 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function LectureDetail() {
     const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
 
-    // Subject for URL
-    const {model: subject, isLoading: subjectLoading} = useFetchById<Subject>("/api/subjects");
+    // Course for URL
+    const {model: course, isLoading: courseLoading} = useFetchById<Course>("/api/courses");
 
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
@@ -38,12 +38,12 @@ export default function LectureDetail() {
         }
     }, [lecture]);
 
-    if (lectureLoading || subjectLoading) {
+    if (lectureLoading || courseLoading) {
         return <LoadingPage/>;
     }
 
     // 404
-    else if (!lecture || !subject) {
+    else if (!lecture || !course) {
         return <NotFoundPage message="Lecture not found" />;
     }
 
@@ -59,7 +59,7 @@ export default function LectureDetail() {
         watchStatusOptions: [WatchStatus.NOT_WATCHED, WatchStatus.COMPLETED],
         editTitle: "Edit Lecture",
         deleteTitle: "Delete Lecture",
-        backUrl: `/subjects/${subject.identifier}`,
+        backUrl: `/courses/${course.identifier}`,
         deleteFunction: async () => await DeleteData("/api/lectures", lecture.identifier!),
         setVideoUrlFunction: async (videoUrl: string) => {
             videoUrlRef.current = videoUrl;
@@ -80,7 +80,7 @@ export default function LectureDetail() {
         <DetailLayout<Lecture>
             {...props}
         >
-            <LectureDetailFooter
+            <NotesList
                 notes={notes}
                 updateNotes={async (notes) => {
                     setNotes(notes);

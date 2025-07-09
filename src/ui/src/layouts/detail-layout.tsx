@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import EntertainmentDetailHeader from "components/detail-headers/entertainment-detail-header";
 import LectureDetailHeader from "components/detail-headers/lecture-detail-header";
-import SubjectDetailHeader from "components/detail-headers/subject-detail-header";
+import CourseDetailHeader from "components/detail-headers/course-detail-header";
 import DetailHeaders from "utils/enum/detail-headers";
 import DetailProps from "utils/props/detail/detail-props";
 import EditBar from "components/controls/edit-bar";
@@ -14,7 +14,7 @@ import VisibleModal from "utils/enum/visible-modal";
 import { EditBarProps } from "utils/props/control-elements/edit-bar-props";
 import ConfirmModal from "components/modals/confirm-modal";
 import Lecture from "@shared/interface/models/lecture";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 import SliderModal from "components/modals/slider-modal";
 import EnumModal from "components/modals/enum-modal";
 import WatchStatus from "@shared/enum/watch-status";
@@ -108,7 +108,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
             </div>
             {props.headerType === DetailHeaders.ENTERTAINMENT && <EntertainmentDetailHeader{...props} />}
             {props.headerType === DetailHeaders.LECTURE && <LectureDetailHeader {...props} model={props.model as unknown as Lecture} />}
-            {props.headerType === DetailHeaders.SUBJECT && <SubjectDetailHeader {...props} model={props.model as unknown as Subject} />}
+            {props.headerType === DetailHeaders.COURSE && <CourseDetailHeader {...props} model={props.model as unknown as Course} />}
             {props.headerType === DetailHeaders.SEASON && <SeasonDetailHeader {...props} model={props.model as unknown as Season} />}
             {props.headerType === DetailHeaders.EPISODE && <EpisodeDetailHeader {...props} model={props.model as unknown as Episode} />}
             <EditBar

@@ -1,10 +1,10 @@
 import { Genre, WatchStatus } from "generated/prisma/enums";
 import { InsertMovie } from "controllers/movie-controller";
 import { InsertTvShow } from "controllers/tv-show-controller";
-import { InsertSubject } from "controllers/subject-controller";
+import { InsertCourse } from "controllers/course-controller";
 import TvShow from "@shared/interface/models/tv-show";
 import Movie from "@shared/interface/models/movie";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 
 /**
  * Seeds mock data into the database.
@@ -122,7 +122,7 @@ export default async function seedData() {
         },
     ];
 
-    const mockSubjects: Subject[] = [
+    const mockCourses: Course[] = [
         {
             title: "Introduction to Programming",
             lectures: [
@@ -205,7 +205,7 @@ export default async function seedData() {
     await Promise.all(
         mockMovies.map(async (movie) => {
             try {
-                const result = await InsertMovie(movie);
+                await InsertMovie(movie);
                 console.log(`Inserted movie: ${movie.title}`);
             } catch (error) {
                 console.error(`Error inserting movie ${movie.title}:`, error);
@@ -219,7 +219,7 @@ export default async function seedData() {
     await Promise.all(
         mockTvShows.map(async (tvShow) => {
             try {
-                const result = await InsertTvShow(tvShow);
+                await InsertTvShow(tvShow);
                 console.log(`Inserted TV show: ${tvShow.title}`);
             } catch (error) {
                 console.error(`Error inserting TV show ${tvShow.title}:`, error);
@@ -229,17 +229,17 @@ export default async function seedData() {
 
     console.log("Mock TV shows inserted successfully.");
 
-    // Insert mock subjects
+    // Insert mock Courses
     await Promise.all(
-        mockSubjects.map(async (subject) => {
+        mockCourses.map(async (Course) => {
             try {
-                const result = await InsertSubject(subject);
-                console.log(`Inserted subject: ${subject.title}`);
+                await InsertCourse(Course);
+                console.log(`Inserted Course: ${Course.title}`);
             } catch (error) {
-                console.error(`Error inserting subject ${subject.title}:`, error);
+                console.error(`Error inserting Course ${Course.title}:`, error);
             }
         })
     );
 
-    console.log("Mock subjects inserted successfully.");
+    console.log("Mock Courses inserted successfully.");
 }

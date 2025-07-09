@@ -3,7 +3,7 @@
  */
 export enum DetailHeaders {
     ENTERTAINMENT = "Entertainment",
-    SUBJECT = "Subject",
+    COURSE = "Course",
     LECTURE = "Lecture",
     SEASON = "Season",
     EPISODE = "Episode",

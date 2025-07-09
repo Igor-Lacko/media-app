@@ -67,10 +67,10 @@ export type Season = Prisma.SeasonModel
  */
 export type Episode = Prisma.EpisodeModel
 /**
- * Model Subject
+ * Model Course
  * 
  */
-export type Subject = Prisma.SubjectModel
+export type Course = Prisma.CourseModel
 /**
  * Model Lecture
  * 

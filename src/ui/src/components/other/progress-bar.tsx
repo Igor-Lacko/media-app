@@ -7,8 +7,6 @@ import ProgressBarProps from "utils/props/other/progress-bar-props";
  */
 export default function ProgressBar(props: ProgressBarProps) {
     const width = props.percentage ? props.percentage : props.max === 0 ? 0 : (props.value! / props.max!) * 100;
-    console.log("props: ", props);
-    console.log("width: ", width);
     return (
         <div
             className={

@@ -97,11 +97,11 @@ export default function HomePage() {
                 />}
             </HomePageSection>
             <HomePageSection
-                title={"Your subjects to watch"}
+                title={"Your courses to watch"}
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {toWatch && toWatch.subjects.length > 0 && toWatch.subjects.map((item, index) => (
+                {toWatch && toWatch.courses.length > 0 && toWatch.courses.map((item, index) => (
                     <span
                         key={index}
                         className={"text-gray-700 dark:text-gray-300 text-lg font-semibold p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"}

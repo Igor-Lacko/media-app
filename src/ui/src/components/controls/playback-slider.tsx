@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import PlaybackSliderProps from "utils/props/control-elements/playback-slider-props";
 
 /**

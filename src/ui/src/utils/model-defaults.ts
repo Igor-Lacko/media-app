@@ -1,6 +1,6 @@
 import Movie from "@shared/interface/models/movie";
 import TvShow from "@shared/interface/models/tv-show";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 import Season from "@shared/interface/models/season";
 import Episode from "@shared/interface/models/episode";
 import Lecture from "@shared/interface/models/lecture";
@@ -14,7 +14,7 @@ import { WatchStatus } from "@shared/enum/watch-status";
 export const defaultMovie: Movie = {
     title: "",
     genres: [Genre.ALL],
-    watchStatus: WatchStatus.UNWATCHED,
+    watchStatus: WatchStatus.NOT_WATCHED,
     isFavorite: false,
 };
 
@@ -22,13 +22,14 @@ export const defaultTvShow: TvShow = {
     title: "",
     genres: [Genre.ALL],
     seasons: [],
-    watchStatus: WatchStatus.UNWATCHED,
+    watchStatus: WatchStatus.NOT_WATCHED,
     isFavorite: false,
 }
 
-export const defaultSubject: Subject = {
+export const defaultCourse: Course = {
     title: "",
     lectures: [],
+    toWatch: false,
 }
 
 export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : Season {
@@ -43,15 +44,15 @@ export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number 
         episodeNumber: episodeNumber,
         seasonNumber: seasonNumber,
         title: "",
-        watchStatus: WatchStatus.UNWATCHED,
+        watchStatus: WatchStatus.NOT_WATCHED,
     };
 }
 
-export function defaultLecture(lectureNumber: number = 1, subjectId: number = 0) : Lecture{
+export function defaultLecture(lectureNumber: number = 1, CourseId: number = 0) : Lecture{
     return {
         lectureNumber: lectureNumber,
         title: "",
         notes: [],
-        watchStatus: WatchStatus.UNWATCHED
+        watchStatus: WatchStatus.NOT_WATCHED
     };
 }

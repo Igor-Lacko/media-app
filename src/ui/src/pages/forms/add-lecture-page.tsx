@@ -16,23 +16,23 @@ import LoadingPage from "pages/other/loading-page";
  * @param route Optional route parameter containing the lecture data to pre-fill the form.
  */
 export default function AddLecturePage({ route }: { route?: any }) {
-    // Initial data or the subject that the lecture is for
+    // Initial data or the course that the lecture is for
     const location = useLocation();
-    const subjectId = location.state.id || -1;
+    const courseId = location.state.id || -1;
     const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(lecture || {...defaultLecture(-1, subjectId)});
+    const [initial, setInitial] = useState(lecture || {...defaultLecture(-1, courseId)});
     const [creating, setCreating] = useState(!lecture);
 
     // Constructed lecture
-    const lectureRef = useRef<Lecture>(lecture || defaultLecture(-1, subjectId));
+    const lectureRef = useRef<Lecture>(lecture || defaultLecture(-1, courseId));
 
     useEffect(() => {
         if (!lecture) {
             setCreating(true);
-            lectureRef.current = {...defaultLecture(-1, subjectId)}
-            setInitial({...defaultLecture(-1, subjectId)});
+            lectureRef.current = {...defaultLecture(-1, courseId)}
+            setInitial({...defaultLecture(-1, courseId)});
         } else {
             setCreating(false);
             lectureRef.current = lecture;
@@ -50,7 +50,7 @@ export default function AddLecturePage({ route }: { route?: any }) {
             ref={lectureRef}
             submitFunction={
                 !creating ? async (lecture: Lecture) => await SubmitLecture(lecture, true)
-                    : async (lecture: Lecture) => await SubmitLecture(lecture, false, subjectId)
+                    : async (lecture: Lecture) => await SubmitLecture(lecture, false, courseId)
             }
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={!creating ? "Lecture updated successfully." : "Lecture added successfully."}

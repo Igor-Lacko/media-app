@@ -33,12 +33,12 @@ export async function GetLectureById(id: number): Promise<Lecture | null> {
 }
 
 /**
- * Create a new lecture for a specific subject.
+ * Create a new lecture for a specific course.
  * @param lecture Lecture object containing details about the lecture.
- * @param subjectId Identifier of the subject to which the lecture belongs.
+ * @param courseId Identifier of the course to which the lecture belongs.
  * @returns True if the creation was successful, false otherwise.
  */
-export async function CreateLecture(lecture: Lecture, subjectId: number): Promise<boolean> {
+export async function CreateLecture(lecture: Lecture, courseId: number): Promise<boolean> {
     console.log("Creating new lecture:", lecture);
     const sanitizedLecture = SanitizeClientLectureToDB(lecture);
 
@@ -48,13 +48,13 @@ export async function CreateLecture(lecture: Lecture, subjectId: number): Promis
                 ...sanitizedLecture,
                 lectureNumber: lecture.lectureNumber === -1 ? await prisma.lecture.count({
                     where: {
-                        subjectId: subjectId
+                        courseId: courseId
                     }
                 }) + 1 : lecture.lectureNumber,
 
-                subject: {
+                course: {
                     connect: {
-                        id: subjectId
+                        id: courseId
                     }
                 },
 

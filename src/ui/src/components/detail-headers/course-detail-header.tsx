@@ -1,13 +1,13 @@
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 import ProgressBar from "components/other/progress-bar";
 import useProgressBar from "hooks/use-progress-bar";
 import DetailProps from "utils/props/detail/detail-props";
 
 /**
- * Header for a subject model's detail page.
+ * Header for a course model's detail page.
  * @param props Detail properties including model, submedia, title, and display options.
  */
-export default function SubjectDetailHeader(props: DetailProps<Subject>) {
+export default function CourseDetailHeader(props: DetailProps<Course>) {
     const progressBarProps = useProgressBar(props.model.lectures, "Lectures");
 
     return (

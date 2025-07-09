@@ -1,7 +1,7 @@
 import Lecture from "@shared/interface/models/lecture";
 import Movie from "@shared/interface/models/movie";
 import Note from "@shared/interface/models/note";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 import TvShow from "@shared/interface/models/tv-show";
 import axios from "axios";
 
@@ -86,7 +86,7 @@ export async function UpdateWatchStatus<T extends { watchStatus: string, identif
 /**
  * Updates the description of a movie/tv show/season
  * @param url URL to send the request to.
- * @param model Movie/tv show/subject model to update.
+ * @param model Movie/tv show/Course model to update.
  * @param description New description value.
  * @return Promise resolving to void if the operation was successful, throws an error otherwise.
  */
@@ -185,18 +185,18 @@ export async function UpdateLength<T extends { length?: number, identifier?: num
 }
 
 /**
- * Adds/removes a subject from a to-watch list.
- * @param model Subject model to toggle watchlist status for.
+ * Adds/removes a course from a to-watch list.
+ * @param model course model to toggle watchlist status for.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function ToggleSubjectWatchlist(model: Subject): Promise<boolean> {
+export async function ToggleCourseWatchlist(model: Course): Promise<boolean> {
     try {
-        await UpdateData<Subject>("/api/subjects", model.identifier!, { toWatch: !model.toWatch });
+        await UpdateData<Course>("/api/courses", model.identifier!, { toWatch: !model.toWatch });
         return true;
     }
 
     catch (error) {
-        console.error("Error toggling subject watchlist status:", error);
+        console.error("Error toggling course watchlist status:", error);
         return false;
     }
 }

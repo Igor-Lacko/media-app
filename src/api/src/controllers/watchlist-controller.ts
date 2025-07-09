@@ -3,7 +3,7 @@ import prisma from "db/db";
 import { WatchStatus } from "generated/prisma/enums";
 import { DBTvShow } from "adapters/tv-shows";
 import { DBSeason } from "adapters/seasons";
-import { DBSubject } from "adapters/subjects";
+import { DBCourse } from "adapters/courses";
 /**
  * Utility function to calculate whether a season has been entirely completed.
  * @param season Season to check.   
@@ -46,14 +46,14 @@ function CalculateTvShowProgress(tvShow: DBTvShow): { progress: string, progress
 }
 
 /**
- * Calculates the progress of a subject based on its lectures.
- * @param subject Subject to calculate progress for.
+ * Calculates the progress of a course based on its lectures.
+ * @param course course to calculate progress for.
  * @returns An object containing the progress string and percentage.
- * @note I should really rename subject to course...
+ * @note I should really rename course to course...
  */
-function CalculateSubjectProgress(subject: DBSubject): { progress: string, progressPercentage: number } {
-    const totalLectures = subject.lectures.length;
-    const completedLectures = subject.lectures.filter(lecture => lecture.watchStatus === WatchStatus.COMPLETED).length;
+function CalculateCourseProgress(course: DBCourse): { progress: string, progressPercentage: number } {
+    const totalLectures = course.lectures.length;
+    const completedLectures = course.lectures.filter(lecture => lecture.watchStatus === WatchStatus.COMPLETED).length;
 
     const progressPercentage = totalLectures > 0 ? (completedLectures / totalLectures) * 100 : 0;
 
@@ -65,9 +65,9 @@ function CalculateSubjectProgress(subject: DBSubject): { progress: string, progr
 
 /**
  * Fetch function for retrieving items to watch.
- * @returns All movies and tvshows that have watchStatus === PLAN_TO_WATCH and all subjects that have toWatch === true.
+ * @returns All movies and tvshows that have watchStatus === PLAN_TO_WATCH and all courses that have toWatch === true.
  */
-export default async function GetToWatchItems(): Promise<{entertainment: WatchListItem[], subjects: WatchListItem[]} | null> {
+export default async function GetToWatchItems(): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
     try {
         // Fetch all movies first
         const moviesToWatch : WatchListItem[] = await prisma.movie.findMany({
@@ -110,8 +110,8 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
             ...CalculateTvShowProgress(show)
         })));
 
-        // Finally fetch the subjects
-        const subjectsToWatch : WatchListItem[] = await prisma.subject.findMany({
+        // Finally fetch the courses
+        const coursesToWatch : WatchListItem[] = await prisma.course.findMany({
             where: {
                 toWatch: true,
             },
@@ -124,11 +124,11 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
                     }
                 }
             }
-        }).then(subjects => subjects.map((subject) : WatchListItem => ({
-            title: subject.title,
+        }).then(courses => courses.map((course) : WatchListItem => ({
+            title: course.title,
             shouldHaveThumbnail: false,
-            url: `/subjects/${subject.id}`,
-            ...CalculateSubjectProgress(subject)
+            url: `/courses/${course.id}`,
+            ...CalculateCourseProgress(course)
         })));
 
         return {
@@ -137,7 +137,7 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
                 ...tvShowsToWatch
             ],
 
-            subjects: subjectsToWatch
+            courses: coursesToWatch
         }
     }
 

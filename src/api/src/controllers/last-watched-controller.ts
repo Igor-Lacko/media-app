@@ -85,7 +85,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
             })
         });
 
-        // Lectures, have to get to subject for the title and link
+        // Lectures, have to get to course for the title and link
         const lastWatchedLectures : LastWatched[] = await prisma.lecture.findMany({
             where: {
                 lastWatchedAt: {
@@ -94,7 +94,7 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
             },
 
             include: {
-                subject: {
+                course: {
                     select: {
                         title: true,
                         id: true
@@ -105,13 +105,13 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
             return (lectures.map(lecture => {
                 // Map to LastWatched object
                 return {
-                    title: lecture.subject.title,
+                    title: lecture.course.title,
                     subTitle: `Lecture ${lecture.lectureNumber}: ${lecture.title}`,
                     continueAt: lecture.continueAt,
                     length: lecture.length,
                     shouldHaveThumbnail: false,
                     lastWatchedAt: lecture.lastWatchedAt,
-                    url: `/subjects/${lecture.subject.id}/${lecture.id}/play`,
+                    url: `/courses/${lecture.course.id}/${lecture.id}/play`,
                     filePath: lecture.videoUrl
                 }
             }))

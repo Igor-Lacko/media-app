@@ -58,11 +58,11 @@ export async function FetchLastWatchedItems(limit: number = -1): Promise<LastWat
 }
 
 /**
- * Fetches items that are planned to be watched, including movies, TV shows, and subjects.
- * @returns An object containing arrays of entertainment items and subjects, or null if an error occurs.
+ * Fetches items that are planned to be watched, including movies, TV shows, and courses.
+ * @returns An object containing arrays of entertainment items and courses, or null if an error occurs.
  */
-export async function FetchToWatchItems(): Promise<{entertainment: WatchListItem[], subjects: WatchListItem[]} | null> {
-    return await axios.get<{entertainment: WatchListItem[], subjects: WatchListItem[]}>("/api/watchlist")
+export async function FetchToWatchItems(): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
+    return await axios.get<{entertainment: WatchListItem[], courses: WatchListItem[]}>("/api/watchlist")
     .then(response => response.data)
     .catch(_error => {
         console.error("Failed to fetch to-watch items.");

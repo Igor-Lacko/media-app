@@ -6,7 +6,7 @@ import UpdateData from "data/crud/update";
  * Validates and submits a lecture to the server.
  * @param lecture Lecture object to be submitted.
  * @param updating If true, the lecture is being updated; if false, a new lecture is being created.
- * @param id Id of the subject to which the lecture belongs, if creating.
+ * @param id Id of the course to which the lecture belongs, if creating.
  */
 export default async function SubmitLecture(lecture : Lecture, updating : boolean, id : number = 0) : Promise<boolean> {
     // Basically only mandatory field
@@ -21,7 +21,7 @@ export default async function SubmitLecture(lecture : Lecture, updating : boolea
         }
 
         else {
-            console.log("Creating lecture for subject with id:", id);
+            console.log("Creating lecture for course with id:", id);
             await CreateData<Lecture>(`api/lectures/${id}`, lecture);
         }
 

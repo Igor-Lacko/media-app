@@ -7,7 +7,7 @@ import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 /**
  * Detail footer for lecture pages. Basically displays a list of notes.
  */
-export default function LectureDetailFooter({ notes, updateNotes }: { notes: Note[], updateNotes: (notes: Note[]) => Promise<void> }) {
+export default function NotesList({ notes, updateNotes }: { notes: Note[], updateNotes: (notes: Note[]) => Promise<void> }) {
     if (notes.length === 0) {
         return <ListNotFound
                     title={"No notes here yet :(("}

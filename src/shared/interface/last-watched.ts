@@ -2,7 +2,7 @@
  * Common interface for types that can be displayed in the last watched list.
  */
 export default interface LastWatched {
-    // Belongs to the show/movie/subject
+    // Belongs to the show/movie/course
     title: string;
 
     // E.g. S1E7: episode title

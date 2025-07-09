@@ -1,6 +1,6 @@
 import SortKey from "@shared/enum/sort-key";
 import TvShow from "@shared/interface/models/tv-show";
-import Subject from "@shared/interface/models/subject";
+import Course from "@shared/interface/models/course";
 
 /**
  * Sorts an array of TV shows based on the specified key, if not done already.
@@ -27,17 +27,17 @@ export function SortTvShows(tvShows: TvShow[], key: SortKey) {
 }
 
 /**
- * Sorts an array of subjects based on the specified key, if not done already.
- * @param subjects Subjects to sort.
+ * Sorts an array of courses based on the specified key, if not done already.
+ * @param courses Courses to sort.
  * @param key Key to sort by.
- * @returns Sorted subjects based on the key.
+ * @returns Sorted courses based on the key.
  */
-export function SortSubjects(subjects: Subject[], key: SortKey) {
+export function SortCourses(courses: Course[], key: SortKey) {
     switch (key) {
         case SortKey.NOF_LECTURES:
-            return subjects.sort((a, b) => b.lectures.length - a.lectures.length);
+            return courses.sort((a, b) => b.lectures.length - a.lectures.length);
 
         default:
-            return subjects;
+            return courses;
     }
 }
