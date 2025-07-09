@@ -60,13 +60,13 @@ export default function AddLecturePage({ route }: { route?: any }) {
             >
                 <InputOption
                     title={"Lecture Title*"}
-                    initial={lectureRef.current.title}
+                    initial={initial.title}
                     onChange={(value) => lectureRef.current.title = value}
                 />
                 <FileBrowseOption
                     title={"Lecture video"}
                     allowed={"video"}
-                    initial={lectureRef.current.videoUrl || ""}
+                    initial={initial.videoUrl || ""}
                     onChange={(value) => lectureRef.current.videoUrl = value}
                 />
             </FormSection>

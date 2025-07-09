@@ -19,22 +19,24 @@ import LoadingPage from "pages/other/loading-page";
  * Form page for adding a new movie.
  * @param movie Optional movie object to pre-fill the form.
  */
-export default function AddMoviePage({ route } : { route?: any }) {
+export default function AddMoviePage({ route }: { route?: any }) {
     // Get movie
-    const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
+    const { model: movie, isLoading } = useFetchById<Movie>("/api/movies");
 
-    const [initial, setInitial] = useState<Movie>(movie || defaultMovie);
+    const [initial, setInitial] = useState<Movie>(movie || structuredClone(defaultMovie));
     const [creating, setCreating] = useState<boolean>(!movie);
 
     // Constructed object, do not want to render on every change (copy defaultMovie)
-    const movieRef = useRef<Movie>(movie ? movie : {...defaultMovie});
+    const movieRef = useRef<Movie>(movie ? movie : structuredClone(defaultMovie));
 
     useEffect(() => {
         // If the movie is not found, we are creating a new one
         if (!movie) {
             setCreating(true);
-            movieRef.current = {...defaultMovie};
-            setInitial(defaultMovie);
+            movieRef.current = structuredClone(defaultMovie);
+            console.log("Creating new movie, initial:", movieRef.current);
+            setInitial(structuredClone(defaultMovie));
+            console.log("Initial movie set to default:", defaultMovie);
         } else {
             setCreating(false);
             movieRef.current = movie;
@@ -56,7 +58,7 @@ export default function AddMoviePage({ route } : { route?: any }) {
         <FormLayout
             title={!creating ? "Edit Movie" : "Add Movie"}
             ref={movieRef}
-            submitFunction={!creating ?  async (ref: Movie) => await SubmitMovie(ref, true, movie!.identifier!)
+            submitFunction={!creating ? async (ref: Movie) => await SubmitMovie(ref, true, movie!.identifier!)
                 : async (ref: Movie) => await SubmitMovie(ref, false)}
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={!creating ? "Movie updated successfully." : "Movie added successfully."}

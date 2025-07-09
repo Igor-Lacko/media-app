@@ -33,11 +33,11 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     const {model: tvshow, isLoading} = useFetchById<TvShow>("/api/shows");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(tvshow || {...defaultTvShow});
+    const [initial, setInitial] = useState(tvshow || structuredClone(defaultTvShow));
     const [creating, setCreating] = useState(!tvshow);
 
     // Constructed TV show
-    const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
+    const tvShowRef = useRef<TvShow>(tvshow || structuredClone(defaultTvShow));
 
     // To re-render on each add
     const [seasons, setSeasons] = useState<Season[]>(initial.seasons);
@@ -51,12 +51,12 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     useEffect(() => {
         if (!tvshow) {
             setCreating(true);
-            tvShowRef.current = {...defaultTvShow};
+            tvShowRef.current = structuredClone(defaultTvShow);
             episodeCounterRef.current = 1;
             seasonCounterRef.current = 1;
             setSeasons([]);
             setEpisodes([]);
-            setInitial({...defaultTvShow});
+            setInitial(structuredClone(defaultTvShow));
         } else {
             console.log("Setting TV show:", tvshow);
             setCreating(false);

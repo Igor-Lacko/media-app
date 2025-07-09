@@ -24,11 +24,11 @@ export default function AddCoursePage({ route } : { route?: any }) {
     const {model: course, isLoading} = useFetchById<Course>("/api/courses");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(course || {...defaultCourse});
+    const [initial, setInitial] = useState(course || structuredClone(defaultCourse));
     const [creating, setCreating] = useState(!course);
 
     // Constructed course
-    const courseRef = useRef<Course>(course || defaultCourse);
+    const courseRef = useRef<Course>(course || structuredClone(defaultCourse));
 
     // To re-render on each add
     const [lectures, setLectures] = useState(initial.lectures);
@@ -37,10 +37,10 @@ export default function AddCoursePage({ route } : { route?: any }) {
     useEffect(() => {
         if (!course) {
             setCreating(true);
-            courseRef.current = {...defaultCourse};
+            courseRef.current = structuredClone(defaultCourse);
             counterRef.current = 1;
             setLectures([]);
-            setInitial({...defaultCourse});
+            setInitial(structuredClone(defaultCourse));
         } else {
             setCreating(false);
             courseRef.current = course;
