@@ -29,6 +29,7 @@ export default function CoursePage() {
         sortOptions: [SortKey.NAME, SortKey.NOF_LECTURES],
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
         onFilterChange: () => {},
+        initialSort: sort,
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         path: "/courses"
     }

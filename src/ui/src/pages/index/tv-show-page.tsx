@@ -30,6 +30,8 @@ export default function TvShowPage() {
         filter: true,
         sortOptions: [SortKey.NAME, SortKey.NOF_EPISODES, SortKey.NOF_SEASONS, SortKey.RATING],
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
+        initialSort: sort,
+        initialFilter: filter,
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         path: "/tv-shows"

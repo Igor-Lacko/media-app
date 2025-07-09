@@ -4,8 +4,6 @@ import classNames from "classnames";
 
 export default function DropdownMenu(props : DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selection, setSelection] = useState(props.initialValue);
-    const [selectionText, setSelectionText] = useState(props.initialText)
 
     return (
         <div 
@@ -21,8 +19,8 @@ export default function DropdownMenu(props : DropdownProps) {
                             transition-all duration-300 ease-in-out"}
                         onClick={() => setIsOpen(!isOpen)}
                     >
-                        {props.prefix ? `${props.prefix} ${selectionText}` :
-                            selectionText}
+                        {props.prefix ? `${props.prefix} ${props.initialText}` :
+                            props.initialText}
                         {props.icon}
                     </div>
                 </span>
@@ -46,12 +44,10 @@ export default function DropdownMenu(props : DropdownProps) {
                             className={classNames(
                                 "p-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500 text-hray-500",
                                 {
-                                    "bg-gray-300 dark:bg-gray-200": selection === option.value,
+                                    "bg-gray-300 dark:bg-gray-200": props.initialValue === option.value,
                                 }
                             )}
                             onClick={() => {
-                                setSelection(option.value);
-                                setSelectionText(option.key);
                                 props.onChange(option.value);
                                 setIsOpen(false);
                             }}

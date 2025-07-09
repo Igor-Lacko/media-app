@@ -32,6 +32,8 @@ export default function MoviePage() {
         onSortChange: (sortKey: SortKey) => {setSort(sortKey)},
         onFilterChange: (filterKey: Genre) => {setFilter(filterKey)},
         onSearchChange: (searchTerm: string) => {setSearch(searchTerm)},
+        initialSort: sort,
+        initialFilter: filter,
         path: "/movies"
     };
 

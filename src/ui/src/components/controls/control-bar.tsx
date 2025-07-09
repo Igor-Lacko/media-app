@@ -25,8 +25,8 @@ export default function ControlBar(props : ControlBarProps) {
         icon: <FaSort className={"text-gray-500 h-4 w-4"} />,
         options: props.sortOptions.map((key : SortKey) => {return SortKeyAdapter(key)}),
         onChange: props.onSortChange as (value: SortKey | Genre) => void,
-        initialValue: SortKey.NAME,
-        initialText: "name"
+        initialValue: props.initialSort,
+        initialText: SortKeyAdapter(props.initialSort).key
     }
 
     const filterProps : DropdownProps = {
@@ -34,8 +34,8 @@ export default function ControlBar(props : ControlBarProps) {
         icon: <FaSort className={"text-gray-500 h-4 w-4"} />,
         options: Object.values(Genre).map((value) => {return GenreAdapter(value)}),
         onChange: props.onFilterChange as (value: SortKey | Genre) => void,
-        initialValue: Genre.ALL,
-        initialText: "All"
+        initialValue: props.initialFilter || Genre.ALL,
+        initialText: GenreAdapter(props.initialFilter || Genre.ALL).key,
     }
 
     return (

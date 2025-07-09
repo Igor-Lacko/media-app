@@ -8,6 +8,8 @@ export interface ControlBarProps {
     title: string;
     filter: boolean;
     sortOptions: SortKey[];
+    initialSort: SortKey;
+    initialFilter?: Genre;
     onSortChange: (sortKey: SortKey) => void;
     onFilterChange: (filterKey: Genre) => void;
     onSearchChange: (searchTerm: string) => void;
