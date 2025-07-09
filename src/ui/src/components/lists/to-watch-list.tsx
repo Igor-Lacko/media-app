@@ -33,7 +33,7 @@ export default function ToWatchList(props: WatchlistProps) {
                     className={classNames(
                         "flex w-full rounded-lg items-center transition-colors duration-200 ease-in-out relative p-0 border-2 border-gray-300 dark:border-gray-700",
                         {
-                            "bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700": index % 2 === 0,
+                            "bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-700": index % 2 === 0,
                             "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900": index % 2 !== 0,
                             "border-b-0": index < props.items.length - 1,
                         }
@@ -62,7 +62,7 @@ export default function ToWatchList(props: WatchlistProps) {
                     )}
                     {/** Title */}
                     <h2
-                        className={"text-gray-800 dark:text-gray-200 text-lg font-semibold font-[Roboto] hover:underline cursor-pointer"}
+                        className={"text-gray-800 dark:text-gray-400 text-lg font-semibold font-[Roboto] hover:underline cursor-pointer"}
                         onClick={() => navigate(item.url)}
                     >
                         {item.title}

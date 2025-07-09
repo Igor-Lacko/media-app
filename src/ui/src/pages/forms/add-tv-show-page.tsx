@@ -40,8 +40,8 @@ export default function AddTvShowPage({ route } : { route?: any }) {
     const tvShowRef = useRef<TvShow>(tvshow || defaultTvShow);
 
     // To re-render on each add
-    const [seasons, setSeasons] = useState<Season[]>(tvShowRef.current.seasons);
-    const [episodes, setEpisodes] = useState<Episode[]>(tvShowRef.current.seasons
+    const [seasons, setSeasons] = useState<Season[]>(initial.seasons);
+    const [episodes, setEpisodes] = useState<Episode[]>(initial.seasons
         .flatMap(season => season.episodes)
     );
     const episodeCounterRef = useRef(episodes.length + 1);

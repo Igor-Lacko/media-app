@@ -31,7 +31,7 @@ export default function AddCoursePage({ route } : { route?: any }) {
     const courseRef = useRef<Course>(course || defaultCourse);
 
     // To re-render on each add
-    const [lectures, setLectures] = useState(courseRef.current.lectures);
+    const [lectures, setLectures] = useState(initial.lectures);
     const counterRef = useRef(lectures.length + 1); 
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export default function AddCoursePage({ route } : { route?: any }) {
             setLectures(course.lectures || []);
             setInitial(course);
         }
-    })
+    }, [course, isLoading]);
 
     if (isLoading) {
         return <LoadingPage />;

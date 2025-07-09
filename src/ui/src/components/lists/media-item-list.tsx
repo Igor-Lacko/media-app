@@ -34,7 +34,7 @@ export default function MediaItemList(props: ListProps) {
                     key={item.identifier}
                     to={`${location.pathname}/${item.identifier}`}
                     className={classNames(
-                        "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200",
+                        "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200",
                         {
                             "bg-gray-200 dark:bg-gray-900": index % 2 === 0,
                             "bg-white dark:bg-gray-800": index % 2 !== 0,

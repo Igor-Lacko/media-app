@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
 import LastWatchedPreview from "components/model-displays/last-watched-preview";
 import ToWatchList from "components/lists/to-watch-list";
+import CourseWatchlist from "components/lists/course-watchlist";
 
 /**
  * App home page. Displays a list of favorites, recently watched items and a to-watch list.
@@ -92,7 +93,7 @@ export default function HomePage() {
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {toWatch && toWatch.entertainment.length > 0 && <ToWatchList
+                {toWatch && toWatch.entertainment.length >= 0 && <ToWatchList
                     items={toWatch.entertainment}
                 />}
             </HomePageSection>
@@ -101,14 +102,9 @@ export default function HomePage() {
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {toWatch && toWatch.courses.length > 0 && toWatch.courses.map((item, index) => (
-                    <span
-                        key={index}
-                        className={"text-gray-700 dark:text-gray-300 text-lg font-semibold p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"}
-                    >
-                        {`this is a placeholder for ${item.title} (${item.progress})`}
-                    </span>
-                ))}
+                {toWatch && toWatch.courses.length >= 0 && <CourseWatchlist
+                    items={toWatch.courses}
+                />}
             </HomePageSection>
         </div>
     );
