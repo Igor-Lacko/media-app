@@ -23,7 +23,7 @@ export default function SubjectDetailHeader(props: DetailProps<Subject>) {
                 <ProgressBar
                     {...{
                         ...progressBarProps,
-                        extraClassNames: "h-15"
+                        extraClassNames: "h-30"
                     }}
                 />
             </div>

@@ -25,22 +25,23 @@ function CalculateTvShowProgress(tvShow: DBTvShow): { progress: string, progress
     const completedEpisodes = tvShow.seasons.reduce((total, season) => 
         total + season.episodes.filter(episode => episode.watchStatus === WatchStatus.COMPLETED).length, 0);
 
-    const progressPercentage = totalEpisodes > 0 ? (completedEpisodes / totalEpisodes) * 100 : 0;
+    const progressPercentageEpisodes = (completedEpisodes / Math.max(totalEpisodes, 1)) * 100;
 
     // Return completedEpisodes / totalEpisodes if the show has only one season, otherwise calculate per season
     if (tvShow.seasons.length === 1) {
         return {
             progress: `${completedEpisodes} / ${totalEpisodes} episodes`,
-            progressPercentage: progressPercentage,
+            progressPercentage: progressPercentageEpisodes,
         };
     }
 
     const totalSeasons = tvShow.seasons.length; 
     const completedSeasons = tvShow.seasons.filter(IsSeasonCompleted).length;
+    const progressPercentageSeasons = (completedSeasons / Math.max(totalSeasons, 1)) * 100;
 
     return {
-        progress: `${completedSeasons} / ${totalSeasons} seasons`,
-        progressPercentage: progressPercentage,
+        progress: `${completedSeasons} / ${totalSeasons} seasons completed`,
+        progressPercentage: progressPercentageSeasons,
     };
 }
 
@@ -57,7 +58,7 @@ function CalculateSubjectProgress(subject: DBSubject): { progress: string, progr
     const progressPercentage = totalLectures > 0 ? (completedLectures / totalLectures) * 100 : 0;
 
     return {
-        progress: `${completedLectures} / ${totalLectures} lectures`,
+        progress: `${completedLectures} / ${totalLectures} lectures completed`,
         progressPercentage: progressPercentage,
     };
 }
@@ -77,7 +78,8 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
                 // Does not have progress, wouldn't make much sense
                 title: movie.title,
                 shouldHaveThumbnail: true,
-                thumbnail: movie.thumbnailUrl,
+                shortDescription: movie.shortDescription,
+                thumbnailUrl: movie.thumbnailUrl,
                 url: `/movies/${movie.id}`,
         })));
 
@@ -101,7 +103,7 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
         }).then(tvShows => tvShows.map((show) : WatchListItem => ({
             title: show.title,
             shouldHaveThumbnail: true,
-            thumbnail: show.thumbnailUrl,
+            thumbnailUrl: show.thumbnailUrl,
             shortDescription: show.shortDescription,
             url: `/tv-shows/${show.id}`,
             // Get the rest from the utils

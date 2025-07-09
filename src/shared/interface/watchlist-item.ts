@@ -13,7 +13,7 @@ export default interface WatchlistItem {
 
     // Thumbnail (and if it should have one)
     shouldHaveThumbnail: boolean;
-    thumbnail?: string;
+    thumbnailUrl?: string;
 
     // Short description
     shortDescription?: string;

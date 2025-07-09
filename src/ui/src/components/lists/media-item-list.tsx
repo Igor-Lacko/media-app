@@ -1,14 +1,13 @@
 import { NavLink, useLocation } from "react-router-dom";
-import ListProps from "utils/props/model-elements/list-props";
+import ListProps from "utils/props/lists/list-props";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import watchStatusAdapter from "utils/adapters/watch-status-adapter";
 import Genre from "@shared/enum/genre";
 import { FaStar } from "react-icons/fa";
 import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
-import ListNotFound from "components/other/item-not-found";
-import { useState, useEffect } from "react";
-import { IsValidFile } from "utils/electron-api";
+import ItemNotFound from "components/other/item-not-found";
+import useThumbnail from "hooks/use-thumbnail";
 
 /**
  * List of media items with links to their pages.
@@ -18,20 +17,11 @@ export default function MediaItemList(props: ListProps) {
     // Current URL
     const location = useLocation();
 
-    // For each item
-    const [validThumbnail, setValidThumbnail] = useState<boolean[]>([]);
-    useEffect(() => {
-        const checkThumbnails = async () => {
-            const validThumbnails = await Promise.all(props.items.map(async (item) => 
-                item.thumbnailUrl !== undefined && await IsValidFile(item.thumbnailUrl)
-            ));
-            setValidThumbnail(validThumbnails);
-        }
-        checkThumbnails();
-    }, [props.items]);
+    // Get valid thumbnails
+    const validThumbnails = useThumbnail(props.items);
 
     if (props.items.length === 0) {
-        return <ListNotFound
+        return <ItemNotFound
             title={props.notFoundTitle || "No items found"}
             message={props.notFoundMessage || "There are no items to display."}
         />
@@ -53,7 +43,7 @@ export default function MediaItemList(props: ListProps) {
                         }
                     )}
                 >
-                    {props.showThumbnail && (validThumbnail[index] ? (
+                    {props.showThumbnail && (validThumbnails[index] ? (
                         <img
                             src={`file://${item.thumbnailUrl}`}
                             alt={item.title}
