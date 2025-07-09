@@ -1,11 +1,8 @@
 import prisma from "db/db";
-import SortKey from "@shared/enum/sort-key";
 import TvShow from "@shared/interface/models/tv-show";
 import { Genre } from "generated/prisma/enums";
 import Season from "@shared/interface/models/season";
 import { Episode } from "@shared/interface/models/episode";
-import GetOrderBy from "utils/order-by";
-import { SortTvShows } from "utils/sort";
 import { CreateSeason, UpdateSeason } from "./season-controller";
 import { DBTvShowToClient, SanitizeTvShowForDB } from "adapters/tv-shows";
 import { SanitizeClientSeasonToDB } from "adapters/seasons";
@@ -13,27 +10,11 @@ import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 
 /**
  * Gets all TV shows matching the given parameters.
- * @param key To sort by, defaults to SortKey.NAME
- * @param filter To filter by, defaults to Genre.ALL
- * @param search To search (if the show title contains the string).
  * @returns List of TV shows matching the parameters.
  */
-export async function GetTvShows(
-    key: SortKey = SortKey.NAME,
-    filter: Genre = Genre.ALL
-): Promise<TvShow[]> {
+export async function GetTvShows(): Promise<TvShow[]> {
     try {
         const tvShows = await prisma.show.findMany({
-            orderBy: GetOrderBy(key),
-
-            where: {
-                genres: {
-                    some: {
-                        genre: filter,
-                    },
-                },
-            },
-
             include: {
                 seasons: {
                     include: {
@@ -45,10 +26,7 @@ export async function GetTvShows(
             },
         });
 
-        return SortTvShows(
-            tvShows.map((show): TvShow => DBTvShowToClient(show)),
-            key
-        );
+        return tvShows;
     } catch (error) {
         console.error("Error fetching TV shows: " + error);
         return [];

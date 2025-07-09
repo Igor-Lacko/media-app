@@ -13,8 +13,8 @@ import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { RemoveEpisodeFromSeasonFilter } from "utils/filters/remove-episode-filter";
-import { defaultEpisode, defaultSeason } from "utils/model-defaults";
+import { RemoveEpisodeFromSeasonFilter } from "utils/form-remove-functions/remove-episode-filter";
+import { defaultEpisode, defaultSeason } from "utils/other/model-defaults";
 import LoadingPage from "pages/other/loading-page";
 
 /**

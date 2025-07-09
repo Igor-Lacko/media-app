@@ -10,6 +10,7 @@ import MediaItemList from "components/lists/media-item-list";
 import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/lists/list-props";
 import LoadingPage from "pages/other/loading-page";
+import { SortMedia } from "utils/other/sort-media";
 
 /**
  * App Movie page.
@@ -21,8 +22,8 @@ export default function MoviePage() {
 
     // Fetch Movies
     const {data, isLoading} = useQuery({
-        queryKey: ["Movies", sort, filter],
-        queryFn: async () => await FetchData<Movie>("/api/Movies", { sortBy : sort , filter : filter }),
+        queryKey: ["Movies"],
+        queryFn: async () => await FetchData<Movie>("/api/Movies"),
     })
 
     const controlBarProps : ControlBarProps = {
@@ -38,8 +39,11 @@ export default function MoviePage() {
     };
 
     const MovieListProps : ListProps = {
-        // Because refreshing the query on every search change is ehhh
-        items: data?.filter((movie : Movie) => movie.title.toLowerCase().includes(search.toLowerCase())) || [],
+        // Probably won;'t be a lot of items, so sorting in FE makes sense
+        items: SortMedia<Movie>(data || [], sort)
+        .filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase()) &&
+        movie.genres!.includes(filter)) || [],
+
         showRating: true,
         showThumbnail: true,
         notFoundTitle: "No movies found :((",

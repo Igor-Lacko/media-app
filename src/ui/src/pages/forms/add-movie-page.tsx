@@ -6,7 +6,7 @@ import TextAreaOption from "components/options/text-area-option";
 import DropdownCheckboxOption from "components/options/dropdown-checkbox-option";
 import SliderOption from "components/options/slider-option";
 import FileBrowseOption from "components/options/file-browse-option";
-import { defaultMovie } from "utils/model-defaults";
+import { defaultMovie } from "utils/other/model-defaults";
 import FormSection from "components/sections/form-section";
 import FormLayout from "layouts/form-layout";
 import useGenreDropdown from "hooks/use-genre-dropdown";

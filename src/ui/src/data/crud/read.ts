@@ -1,5 +1,4 @@
 import axios from 'axios';
-import FetchOptions from 'utils/props/other/fetch-options';
 import Settings from '@shared/interface/models/settings';
 import LastWatched from '@shared/interface/last-watched';
 import WatchListItem from '@shared/interface/watchlist-item';
@@ -7,17 +6,10 @@ import WatchListItem from '@shared/interface/watchlist-item';
 /**
  * Fetches bulk data from the given URL with the provided parameters.
  * @param url API route to fetch data from.
- * @param params Additional params (Sort, filter, search, etc.) to be sent with the request.
  * @returns Promise with the data object.
  */
-export async function FetchData<T>(url: string, params : FetchOptions): Promise<T[] | null> {
-    console.log(`Fetching data from ${url} with params:`, params);
-
-    return await axios.get<T[]>(url, {
-        params: {
-            ...params
-        }
-    })
+export async function FetchData<T>(url: string): Promise<T[] | null> {
+    return await axios.get<T[]>(url)
     .then(response => response.data)
     .catch(_error => {
         return null;

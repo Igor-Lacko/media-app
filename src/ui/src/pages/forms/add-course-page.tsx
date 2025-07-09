@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import Course from "@shared/interface/models/course";
-import { defaultCourse } from "utils/model-defaults";
-import { defaultLecture } from "utils/model-defaults";
+import { defaultCourse } from "utils/other/model-defaults";
+import { defaultLecture } from "utils/other/model-defaults";
 import FormLayout from "layouts/form-layout";
 import CourseSubmitHandler from "data/submit-handlers/course-submit";
 import FormSection from "components/sections/form-section";
@@ -10,7 +10,7 @@ import InputOption from "components/options/input-option";
 import AddOption from "components/options/add-option";
 import FileBrowseOption from "components/options/file-browse-option";
 import RemoveOption from "components/options/remove-option";
-import RemoveLectureFilter from "utils/filters/remove-lecture-filter";
+import RemoveLectureFilter from "utils/form-remove-functions/remove-lecture-filter";
 import useFetchById from "hooks/use-fetch-by-id";
 import LoadingPage from "pages/other/loading-page";
 

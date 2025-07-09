@@ -1,5 +1,4 @@
 import prisma from "db/db";
-import SortKey from "@shared/enum/sort-key";
 import { Genre } from "generated/prisma/enums";
 import Movie from "@shared/interface/models/movie";
 import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
@@ -7,29 +6,11 @@ import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
 
 /**
  * Gets all movies matching the given parameters.
- * @param key To sort by, defaults to SortKey.NAME
- * @param filter To filter by, defaults to Genre.ALL
- * @param search To search (if the movie title contains the string).
  * @returns List of movies matching the parameters.
  */
-export async function GetMovies(
-    key: SortKey = SortKey.NAME,
-    filter: Genre = Genre.ALL,
-): Promise<Movie[]> {
+export async function GetMovies(): Promise<Movie[]> {
     try {
         const movies = await prisma.movie.findMany({
-            orderBy: {
-                [key]: "desc",
-            },
-
-            where: {
-                genres: {
-                    some: {
-                        genre: filter,
-                    },
-                },
-            },
-
             include: {
                 genres: true,
             },

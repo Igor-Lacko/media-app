@@ -10,6 +10,7 @@ import MediaItemList from "components/lists/media-item-list";
 import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/lists/list-props";
 import LoadingPage from "pages/other/loading-page";
+import { SortMedia } from "utils/other/sort-media";
 
 /**
  * App TV show page.
@@ -22,7 +23,7 @@ export default function TvShowPage() {
     // Fetch
     const {data, isLoading} = useQuery({
         queryKey: ["shows", sort, filter],
-        queryFn: async () => await FetchData<TvShow>("/api/shows", { sortBy: sort, filter: filter }),
+        queryFn: async () => await FetchData<TvShow>("/api/shows"),
     });
 
     const controlBarProps : ControlBarProps = {
@@ -38,7 +39,12 @@ export default function TvShowPage() {
     }
 
     const tvShowListProps : ListProps = {
-        items: data?.filter((show : TvShow) => show.title.toLowerCase().includes(search.toLowerCase())) || [],
+        // Sorted, filtered, and searched tv shows.
+        items: SortMedia<TvShow>(data || [], sort)
+        .filter((tvShow: TvShow) => tvShow.title.toLowerCase().includes(search.toLowerCase()) && 
+        tvShow.genres!.includes(filter)) 
+        || [],
+
         showRating: true,
         showThumbnail: true,
         notFoundTitle: "No TV shows found :((",

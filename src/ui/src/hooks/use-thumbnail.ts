@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IsValidFile } from "utils/electron-api";
+import { IsValidFile } from "utils/other/electron-api";
 
 /**
  * Hook that returns a boolean array indicating whether each item has a valid thumbnail.

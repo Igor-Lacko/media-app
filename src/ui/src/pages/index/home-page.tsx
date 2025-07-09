@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
 import { FetchData, FetchLastWatchedItems, FetchToWatchItems } from "data/crud/read";
-import { IsValidVideo } from "utils/electron-api";
+import { IsValidVideo } from "utils/other/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
@@ -19,7 +19,7 @@ export default function HomePage() {
     // Fetch favorites
     const { data: favorites, isLoading: favoritesLoading } = useQuery({
         queryKey: ["Favorites"],
-        queryFn: async () => await FetchData<TvShow | Movie>("/api/favorites", {})
+        queryFn: async () => await FetchData<TvShow | Movie>("/api/favorites")
     });
 
     // Fetch last watched items

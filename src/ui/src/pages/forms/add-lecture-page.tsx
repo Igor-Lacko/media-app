@@ -7,7 +7,7 @@ import useFetchById from "hooks/use-fetch-by-id";
 import FormLayout from "layouts/form-layout";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom"
-import { defaultLecture } from "utils/model-defaults";
+import { defaultLecture } from "utils/other/model-defaults";
 import LoadingPage from "pages/other/loading-page";
 
 /**

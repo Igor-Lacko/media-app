@@ -1,8 +1,5 @@
 import prisma from "db/db";
 import Course from "@shared/interface/models/course";
-import SortKey from "@shared/enum/sort-key";
-import { SortCourses } from "utils/sort";
-import GetOrderBy from "utils/order-by";
 import { CreateLecture, UpdateLecture } from "./lecture-controller";
 import Lecture from "@shared/interface/models/lecture";
 import { DBCourseToClient, SanitizeClientCourseToDB } from "adapters/courses";
@@ -11,14 +8,11 @@ import Note from "@shared/interface/models/note";
 
 /**
  * Gets all courses matching the given parameters.
- * @param key To sort by, defaults to SortKey.NAME
  * @returns List of courses matching the parameters.
  */
-export async function GetCourses(key: SortKey) : Promise<Course[]> {
+export async function GetCourses() : Promise<Course[]> {
     try {
         const courses = await prisma.course.findMany({
-            orderBy: GetOrderBy(key),
-
             include: {
                 lectures: {
                     include: {
@@ -28,10 +22,7 @@ export async function GetCourses(key: SortKey) : Promise<Course[]> {
             }
         });
 
-        return SortCourses(
-            courses.map(Course => DBCourseToClient(Course)),
-            key
-        );
+        return courses;
     }
 
     catch (error) {

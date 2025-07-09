@@ -10,7 +10,7 @@ import useRatingSlider from "hooks/use-rating-slider";
 import FormLayout from "layouts/form-layout";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { defaultEpisode } from "utils/model-defaults";
+import { defaultEpisode } from "utils/other/model-defaults";
 import LoadingPage from "pages/other/loading-page";
 
 /**

@@ -11,6 +11,7 @@ import ListProps from "utils/props/lists/list-props";
 import { Route, Routes } from "react-router-dom";
 import AddCoursePage from "../forms/add-course-page";
 import LoadingPage from "pages/other/loading-page";
+import { SortMedia } from "utils/other/sort-media";
 
 export default function CoursePage() {
     // Sort/search
@@ -20,7 +21,7 @@ export default function CoursePage() {
     // Fetch courses
     const {data, isLoading} = useQuery({
         queryKey: ["Courses", sort],
-        queryFn: async () => await FetchData<Course>("/api/courses", { sortBy: sort }),
+        queryFn: async () => await FetchData<Course>("/api/courses"),
     });
 
     const controlBarProps: ControlBarProps = {
@@ -35,7 +36,10 @@ export default function CoursePage() {
     }
 
     const CourseListProps: ListProps = {
-        items: data?.filter((course : Course) => course.title.toLowerCase().includes(search.toLowerCase())) || [],
+        // Sorted and searched courses
+        items: SortMedia<Course>(data || [], sort)
+        .filter((course: Course) => course.title.toLowerCase().includes(search.toLowerCase())) || [],
+
         showRating: false,
         showThumbnail: false,
         notFoundTitle: "No courses found :((",
