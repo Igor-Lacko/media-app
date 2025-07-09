@@ -8,22 +8,26 @@ import SettingsContext from "context/settings-context";
 import Sidebar from "components/other/sidebar";
 import Settings from "@shared/interface/models/settings";
 import { LoadSettings } from "data/crud/read";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * App layout component (sidebar and toggle, invisible in non-index pages).
  */
-export default function MainPage() {
+export default function AppLayout() {
     const [settings, setSettings] = useState<Settings>({darkMode: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
 
+    const { data: initialSettings, isLoading } = useQuery({
+        queryKey: ["Settings"],
+        queryFn: async () => await LoadSettings(),
+    })
+
     useEffect(() => {
-        const fetchSettings = async () => {
-            const loadedSettings = await LoadSettings();
-            setSettings(loadedSettings);
-        };
-        fetchSettings();
-    }, []);
+        if (initialSettings) {
+            setSettings(initialSettings);
+        }
+    }, [initialSettings, isLoading]);
 
     const isIndexPage = ["/", "/movies", "/tv-shows", "/courses", "/settings"].some(
         (path) => location.pathname.endsWith(path) 

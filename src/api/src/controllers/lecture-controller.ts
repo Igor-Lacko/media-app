@@ -1,6 +1,7 @@
 import Lecture from "@shared/interface/models/lecture";
 import { DBLectureToClient, SanitizeClientLectureToDB } from "adapters/lectures";
 import prisma from "db/db";
+import { WatchStatus } from "generated/prisma/enums";
 
 /**
  * Fetches a lecture by its ID.
@@ -46,6 +47,11 @@ export async function CreateLecture(lecture: Lecture, courseId: number): Promise
         await prisma.lecture.create({
             data: {
                 ...sanitizedLecture,
+
+                watchStatus: sanitizedLecture.continueAt === sanitizedLecture.length && 
+                sanitizedLecture.length && sanitizedLecture.length !== 0 ? 
+                WatchStatus.COMPLETED : sanitizedLecture.watchStatus,
+
                 lectureNumber: lecture.lectureNumber === -1 ? await prisma.lecture.count({
                     where: {
                         courseId: courseId
@@ -120,8 +126,6 @@ export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Prom
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteLecture(id: number): Promise<boolean> {
-    console.log("Deleting lecture with ID:", id);
-
     try {
         await prisma.lecture.delete({
             where: {

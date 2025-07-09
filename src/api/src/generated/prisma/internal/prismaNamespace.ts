@@ -1231,7 +1231,8 @@ export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof Note
 
 export const SettingsScalarFieldEnum = {
   id: 'id',
-  darkMode: 'darkMode'
+  darkMode: 'darkMode',
+  imdbApiKey: 'imdbApiKey'
 } as const
 
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]

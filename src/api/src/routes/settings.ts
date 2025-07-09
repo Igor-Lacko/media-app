@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { NukeDatabase } from "controllers/settings-controller";
+import { NukeDatabase, UpdateDarkMode, UpdateIMDBKey } from "controllers/settings-controller";
 import { GetSettings } from "controllers/settings-controller";
 
 const router = Router();
@@ -25,5 +25,31 @@ router.get("/", async (_req, res) => {
         res.status(500).json({ error: "Failed to fetch settings" });
     }
 });
+
+// Toggles dark mode
+router.patch("/dark-mode", async (req, res) => {
+    const { darkMode } = req.body;
+    if (await UpdateDarkMode(darkMode)) {
+        res.status(200).json({ message: "Dark mode updated successfully." });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to update dark mode" });
+    }
+});
+
+// Updates IMDB api key
+router.patch("/imdb-key", async (req, res) => {
+    const { imdbKey } = req.body;
+    const response = await UpdateIMDBKey(imdbKey);
+
+    if (response.success) {
+        res.status(200).json({ message: "IMDB key updated successfully." });
+    }
+
+    else {
+        res.status(500).json({ error: response.errorMessage || "Failed to update IMDB key" });
+    }
+})
 
 export default router;

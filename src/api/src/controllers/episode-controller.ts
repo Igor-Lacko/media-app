@@ -2,6 +2,7 @@ import Episode from "@shared/interface/models/episode";
 import { DBEpisodeToClient, SanitizeClientEpisodeToDB } from "adapters/episodes";
 import prisma from "db/db";
 import { UpdateEpisodeNumbers } from "./season-controller";
+import { WatchStatus } from "generated/prisma/enums";
 
 /**
  * Fetches a episode by its ID.
@@ -82,7 +83,10 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
 
             // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
             data: {
-                ...sanitizedEpisode
+                ...sanitizedEpisode,
+                watchStatus: sanitizedEpisode.continueAt === sanitizedEpisode.length 
+                && sanitizedEpisode.length && sanitizedEpisode.length !== 0 ?
+                WatchStatus.COMPLETED : sanitizedEpisode.watchStatus
             }
         });
 

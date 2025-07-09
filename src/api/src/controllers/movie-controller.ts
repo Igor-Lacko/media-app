@@ -1,5 +1,5 @@
 import prisma from "db/db";
-import { Genre } from "generated/prisma/enums";
+import { Genre, WatchStatus } from "generated/prisma/enums";
 import Movie from "@shared/interface/models/movie";
 import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
 
@@ -75,6 +75,12 @@ export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<bo
             // If genres are to be updated delete all existing genres and create new ones
             data: {
                 ...sanitizedMovie,
+
+                // Set watch status to finished if continueAt === length and length actually is set
+                watchStatus: sanitizedMovie.continueAt === sanitizedMovie.length && 
+                sanitizedMovie.length && sanitizedMovie.length !== 0
+                ? WatchStatus.COMPLETED : sanitizedMovie.watchStatus,
+
                 genres: movie.genres ? {
                     deleteMany: {},
                     create: movie.genres.map((genre: Genre) => ({
