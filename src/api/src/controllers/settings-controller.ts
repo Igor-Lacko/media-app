@@ -1,16 +1,24 @@
 import prisma from "db/db";
 import Settings from "@shared/interface/models/settings";
 
-export async function NukeDatabase(): Promise<void> {
+/**
+ * Deletes the entire database.
+ * @returns A promise that resolves to true if the database was successfully deleted, false otherwise.
+ */
+export async function NukeDatabase(): Promise<boolean> {
     try {
         await prisma.$transaction([
             prisma.movie.deleteMany(),
             prisma.show.deleteMany(),
             prisma.course.deleteMany(),
+            prisma.settings.deleteMany(),
         ]);
-        console.log("Database nuked successfully.");
-    } catch (error) {
-        console.error("Error nuking database:", error);
+
+        return true;
+    } 
+
+    catch (error) {
+        return false;
     }
 }
 

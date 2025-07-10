@@ -6,7 +6,7 @@ import classNames from "classnames";
 import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
-import { DeleteAPIKey } from "data/crud/delete";
+import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
 import { UpdateOMDBKey } from "data/crud/update";
 
 export default function SettingsPage() {
@@ -19,6 +19,9 @@ export default function SettingsPage() {
     // Delete API key confirm modal
     const [deleteKeyModalVisible, setDeleteKeyModalVisible] = useState(false);
 
+    // Delete DB confirm modal
+    const [deleteDBModalVisible, setDeleteDBModalVisible] = useState(false);
+
     // Deletion status message
     const [deletionStatusMessage, setDeletionStatusMessage] = useState("");
 
@@ -27,7 +30,7 @@ export default function SettingsPage() {
 
     // Used for all divs here
     const divClasses = "flex w-full items-center justify-between space-x-7 p-4 h-20\
-    shadow-sm border-t border-x border-gray-200 dark:border-gray-700";
+    shadow-sm border-t border-x border-gray-200 dark:border-gray-700 ";
 
     // The little gray text
     const apiKeyMessage = settings.hasApiKey ? "Your api key is set!" :
@@ -152,6 +155,21 @@ export default function SettingsPage() {
                     </div>
                 )}
             </div>
+            {/** Reset DB button */}
+            <div
+                className={divClasses + "border-b"}
+            >
+                <h2
+                    className={"text-lg font-semibold dark:text-gray-400"}
+                >
+                    Reset the DB
+                </h2>
+                <RoundedButton
+                    onClick={() => setDeleteDBModalVisible(true)}
+                    extraClassNames={"bg-red-500"}
+                    text={"Reset database"}
+                />
+            </div>
             {/** Delete key confirm modal */}
             {deleteKeyModalVisible && <ConfirmModal
                 title={"Delete API key"}
@@ -182,6 +200,16 @@ export default function SettingsPage() {
                 title={"API Key Submission Status"}
                 message={keySubmissionStatusMessage}
                 onClose={() => setKeySubmissionStatusMessage("")}
+            />}
+            {/** Clear DB popup */}
+            {deleteDBModalVisible && <ConfirmModal
+                title={"Reset Database"}
+                message={"Are you sure you want to reset the database? This cannot be undone."}
+                onClose={() => setDeleteDBModalVisible(false)}
+                onConfirm={async () => {
+                    await ResetDatabase();
+                    setDeleteDBModalVisible(false);
+                }}
             />}
         </div>
     );

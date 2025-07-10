@@ -39,3 +39,16 @@ export async function DeleteAPIKey(): Promise<{ success: boolean, errorMessage?:
         return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
     }
 }
+
+
+export async function ResetDatabase(): Promise<boolean> {
+    try {
+        const response = await axios.delete("/api/settings");
+        return response.status === 200;
+    }
+
+    catch (error) {
+        console.error("Error resetting database:", error);
+        return false;
+    }
+}

@@ -4,16 +4,16 @@ import { GetSettings } from "controllers/settings-controller";
 
 const router = Router();
 
-// Route to nuke the database
-router.post("/nuke", async (req, res) => {
-    try {
-        await NukeDatabase();
-        res.status(200).json({ message: "Database nuked successfully." });
-    } catch (error) {
-        console.error("Error nuking database:", error);
-        res.status(500).json({ error: "Failed to nuke database" });
+// Route to reset the database
+router.delete("/", async (_req, res) => {
+    if (await NukeDatabase()) {
+        res.status(200).json({ message: "Database reset successfully." });
     }
-});
+
+    else {
+        res.status(500).json({ error: "Failed to reset database" });
+    }
+})
 
 // Settings getter
 router.get("/", async (_req, res) => {
@@ -61,6 +61,6 @@ router.delete("/omdb-key", async (req, res) => {
     else {
         res.status(500).json({ error: "Failed to delete OMDB key" });
     }
-})
+});
 
 export default router;
