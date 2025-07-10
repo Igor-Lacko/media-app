@@ -22,7 +22,9 @@ export async function GetCourses() : Promise<Course[]> {
             }
         });
 
-        return courses;
+        return courses.map(
+            (course): Course => DBCourseToClient(course)
+        )
     }
 
     catch (error) {

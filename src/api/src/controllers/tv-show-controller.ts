@@ -26,7 +26,9 @@ export async function GetTvShows(): Promise<TvShow[]> {
             },
         });
 
-        return tvShows;
+        return tvShows.map(
+            (tvShow): TvShow => DBTvShowToClient(tvShow)
+        )
     } catch (error) {
         console.error("Error fetching TV shows: " + error);
         return [];

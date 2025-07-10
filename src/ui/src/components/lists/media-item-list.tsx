@@ -27,6 +27,8 @@ export default function MediaItemList(props: ListProps) {
         />
     }
 
+    console.log("MediaItemList items", props.items);
+
     return (
         <div className={"flex flex-col items-center w-full overflow-y-auto"}>
             {props.items.map((item, index) => (

@@ -29,7 +29,7 @@ export default function EpisodeDetailHeader(props: DetailProps<Episode>) {
                 <p
                     className={"text-md flex h-full w-full text-black wrap-anywhere dark:text-gray-400"}
                 >
-                    {props.model.shortDescription || "No description seems to be here yet. You can add one by clicking on the button below :))."}
+                    {props.model.shortDescription || "No description seems to be here yet. You can add one in the edit episode form."}
                 </p>
             </div>
             {/** Watch status, play button */}
