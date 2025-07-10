@@ -160,7 +160,7 @@ export default function SettingsPage() {
                 className={divClasses + "border-b"}
             >
                 <h2
-                    className={"text-lg font-semibold dark:text-gray-400"}
+                    className={"text-lg font-semibold dark:text-gray-400 text-gray-800"}
                 >
                     Reset the DB
                 </h2>

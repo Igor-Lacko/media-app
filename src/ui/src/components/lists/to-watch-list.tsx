@@ -20,6 +20,7 @@ export default function ToWatchList(props: WatchlistProps) {
         return <ItemNotFound
             title={"Watchlist is empty :(("}
             message={"You have no movies or shows to watch. Add some by setting their watch status to 'Plan to watch'"}
+            extraClassNames={"min-h-70"}
         />
     }
 

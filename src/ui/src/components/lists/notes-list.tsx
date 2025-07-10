@@ -14,6 +14,8 @@ export default function NotesList({ notes, updateNotes }: { notes: Note[], updat
                     message={"You can add notes by clicking the notebook icon in the video player or the yellow button on this page."}
                 />
     }
+
+    console.log("Notes list", notes);
     return (
             <div
                 className={"flex flex-col overflow-x-hidden overflow-y-auto w-full h-full bg-white dark:bg-gray-800"}
@@ -30,8 +32,8 @@ export default function NotesList({ notes, updateNotes }: { notes: Note[], updat
                                 }
                             )}
                         >
-                            {note.timestamp && (
-                                <div className={"flex items-center justify-start w-full mb-2 px-4"}>
+                            {note.timestamp !== undefined && (
+                                <div className={"flex items-center justify-start w-full mb-2 px-4 text-black"}>
                                     <FaCircle className={"text-purple-500 mr-2"} />
                                     {`Timestamp: ${LengthToTimeVideo(note.timestamp)}`}
                                 </div>

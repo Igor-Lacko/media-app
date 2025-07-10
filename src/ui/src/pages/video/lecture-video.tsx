@@ -1,3 +1,4 @@
+import Course from "@shared/interface/models/course";
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
 import Notebook from "components/notebook/notebook";
@@ -6,13 +7,14 @@ import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
 import NotFoundPage from "pages/other/page-not-found";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Lecture video player page.
  */
 export default function LectureVideo() {
-    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId")!;
+    const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId")!;
+    const {model: course, isLoading: courseLoading} = useFetchById<Course>("/api/courses")!;
 
     // For the notebook
     const [notebookVisible, setNotebookVisible] = useState(false);
@@ -25,7 +27,7 @@ export default function LectureVideo() {
         timestampRef.current = lecture?.continueAt || 0;
     }, [lecture]);
 
-    if (isLoading) {
+    if (lectureLoading || courseLoading) {
         return <LoadingPage />;
     }
 
@@ -42,7 +44,7 @@ export default function LectureVideo() {
             <VideoPlayerLayout
                 title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
                 url={lecture.videoUrl || ""}
-                backUrl={`/lectures/${lecture.identifier}`}
+                backUrl={`/courses/${course?.identifier}/${lecture.identifier}`}
                 saveContinueAt={async (time: number) => {
                     await UpdatePlaybackPosition<Lecture>("/api/lectures", lecture, time);
                 }}
