@@ -71,7 +71,7 @@ export async function LoadSettings() : Promise<Settings> {
     .then(response => response.data)
     .catch(_error => {
         console.error("Failed to load settings, returning default settings.");
-        return { darkMode: true };
+        return { darkMode: true, hasApiKey: false };
     });
 }
 

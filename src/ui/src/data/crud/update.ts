@@ -200,3 +200,43 @@ export async function ToggleCourseWatchlist(model: Course): Promise<boolean> {
         return false;
     }
 }
+
+/**
+ * Toggles dark mode setting.
+ * @param darkMode New dark mode value.
+ * @return Promise resolving to true if the operation was successful, false otherwise.
+ */
+export async function ToggleDarkMode(darkMode: boolean): Promise<boolean> {
+    try {
+        const response = await axios.patch("/api/settings/dark-mode", { darkMode });
+        return response.status === 200;
+    }
+
+    catch (error) {
+        console.error("Error toggling dark mode:", error);
+        return false;
+    }
+}
+
+/**
+ * Updates the OMDB API key in the settings.
+ * @param omdbKey New OMDB API key.
+ * @return Promise resolving to an object indicating success or failure, with an optional error message.
+ */
+export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean, errorMessage?: string }> {
+    try {
+        const response = await axios.patch("/api/settings/omdb-key", { omdbKey });
+        if (response.status === 200) {
+            return { success: true };
+        }
+
+        else {
+            return { success: false, errorMessage: response.statusText || "Failed to update OMDB key" };
+        }
+    }
+
+    catch (error) {
+        console.error("Error updating OMDB key:", error);
+        return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
+    }
+}

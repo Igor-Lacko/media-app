@@ -17,3 +17,25 @@ export default async function DeleteData(url : string, id : number) : Promise<bo
         return false;
     }
 }
+
+/**
+ * Deletes the OMDB API key from the settings.
+ * @returns An object indicating success or failure, with an optional error message.
+ */
+export async function DeleteAPIKey(): Promise<{ success: boolean, errorMessage?: string }> {
+    try {
+        const response = await axios.delete("/api/settings/omdb-key");
+        if (response.status === 200) {
+            return { success: true };
+        }
+
+        else {            
+            return { success: false, errorMessage: response.statusText || "Failed to delete OMDB key" };
+        }
+    }
+
+    catch (error) {
+        console.error("Error deleting OMDB key:", error);
+        return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
+    }
+}

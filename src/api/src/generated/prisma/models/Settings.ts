@@ -36,19 +36,19 @@ export type SettingsSumAggregateOutputType = {
 export type SettingsMinAggregateOutputType = {
   id: number | null
   darkMode: boolean | null
-  imdbApiKey: string | null
+  omdbApiKey: string | null
 }
 
 export type SettingsMaxAggregateOutputType = {
   id: number | null
   darkMode: boolean | null
-  imdbApiKey: string | null
+  omdbApiKey: string | null
 }
 
 export type SettingsCountAggregateOutputType = {
   id: number
   darkMode: number
-  imdbApiKey: number
+  omdbApiKey: number
   _all: number
 }
 
@@ -64,19 +64,19 @@ export type SettingsSumAggregateInputType = {
 export type SettingsMinAggregateInputType = {
   id?: true
   darkMode?: true
-  imdbApiKey?: true
+  omdbApiKey?: true
 }
 
 export type SettingsMaxAggregateInputType = {
   id?: true
   darkMode?: true
-  imdbApiKey?: true
+  omdbApiKey?: true
 }
 
 export type SettingsCountAggregateInputType = {
   id?: true
   darkMode?: true
-  imdbApiKey?: true
+  omdbApiKey?: true
   _all?: true
 }
 
@@ -169,7 +169,7 @@ export type SettingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type SettingsGroupByOutputType = {
   id: number
   darkMode: boolean
-  imdbApiKey: string | null
+  omdbApiKey: string | null
   _count: SettingsCountAggregateOutputType | null
   _avg: SettingsAvgAggregateOutputType | null
   _sum: SettingsSumAggregateOutputType | null
@@ -198,13 +198,13 @@ export type SettingsWhereInput = {
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   id?: Prisma.IntFilter<"Settings"> | number
   darkMode?: Prisma.BoolFilter<"Settings"> | boolean
-  imdbApiKey?: Prisma.StringNullableFilter<"Settings"> | string | null
+  omdbApiKey?: Prisma.StringNullableFilter<"Settings"> | string | null
 }
 
 export type SettingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   darkMode?: Prisma.SortOrder
-  imdbApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  omdbApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type SettingsWhereUniqueInput = Prisma.AtLeast<{
@@ -213,13 +213,13 @@ export type SettingsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SettingsWhereInput[]
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   darkMode?: Prisma.BoolFilter<"Settings"> | boolean
-  imdbApiKey?: Prisma.StringNullableFilter<"Settings"> | string | null
+  omdbApiKey?: Prisma.StringNullableFilter<"Settings"> | string | null
 }, "id">
 
 export type SettingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   darkMode?: Prisma.SortOrder
-  imdbApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  omdbApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SettingsCountOrderByAggregateInput
   _avg?: Prisma.SettingsAvgOrderByAggregateInput
   _max?: Prisma.SettingsMaxOrderByAggregateInput
@@ -233,52 +233,52 @@ export type SettingsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SettingsScalarWhereWithAggregatesInput | Prisma.SettingsScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Settings"> | number
   darkMode?: Prisma.BoolWithAggregatesFilter<"Settings"> | boolean
-  imdbApiKey?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null
+  omdbApiKey?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null
 }
 
 export type SettingsCreateInput = {
   darkMode?: boolean
-  imdbApiKey?: string | null
+  omdbApiKey?: string | null
 }
 
 export type SettingsUncheckedCreateInput = {
   id?: number
   darkMode?: boolean
-  imdbApiKey?: string | null
+  omdbApiKey?: string | null
 }
 
 export type SettingsUpdateInput = {
   darkMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  imdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  omdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SettingsUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   darkMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  imdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  omdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SettingsCreateManyInput = {
   id?: number
   darkMode?: boolean
-  imdbApiKey?: string | null
+  omdbApiKey?: string | null
 }
 
 export type SettingsUpdateManyMutationInput = {
   darkMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  imdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  omdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SettingsUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   darkMode?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  imdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  omdbApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SettingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darkMode?: Prisma.SortOrder
-  imdbApiKey?: Prisma.SortOrder
+  omdbApiKey?: Prisma.SortOrder
 }
 
 export type SettingsAvgOrderByAggregateInput = {
@@ -288,13 +288,13 @@ export type SettingsAvgOrderByAggregateInput = {
 export type SettingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darkMode?: Prisma.SortOrder
-  imdbApiKey?: Prisma.SortOrder
+  omdbApiKey?: Prisma.SortOrder
 }
 
 export type SettingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darkMode?: Prisma.SortOrder
-  imdbApiKey?: Prisma.SortOrder
+  omdbApiKey?: Prisma.SortOrder
 }
 
 export type SettingsSumOrderByAggregateInput = {
@@ -306,28 +306,28 @@ export type SettingsSumOrderByAggregateInput = {
 export type SettingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   darkMode?: boolean
-  imdbApiKey?: boolean
+  omdbApiKey?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   darkMode?: boolean
-  imdbApiKey?: boolean
+  omdbApiKey?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   darkMode?: boolean
-  imdbApiKey?: boolean
+  omdbApiKey?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectScalar = {
   id?: boolean
   darkMode?: boolean
-  imdbApiKey?: boolean
+  omdbApiKey?: boolean
 }
 
-export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darkMode" | "imdbApiKey", ExtArgs["result"]["settings"]>
+export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darkMode" | "omdbApiKey", ExtArgs["result"]["settings"]>
 
 export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Settings"
@@ -335,7 +335,7 @@ export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     darkMode: boolean
-    imdbApiKey: string | null
+    omdbApiKey: string | null
   }, ExtArgs["result"]["settings"]>
   composites: {}
 }
@@ -761,7 +761,7 @@ export interface Prisma__SettingsClient<T, Null = never, ExtArgs extends runtime
 export interface SettingsFieldRefs {
   readonly id: Prisma.FieldRef<"Settings", 'Int'>
   readonly darkMode: Prisma.FieldRef<"Settings", 'Boolean'>
-  readonly imdbApiKey: Prisma.FieldRef<"Settings", 'String'>
+  readonly omdbApiKey: Prisma.FieldRef<"Settings", 'String'>
 }
     
 

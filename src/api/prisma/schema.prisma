@@ -132,6 +132,6 @@ enum WatchStatus {
 model Settings {
     id       Int     @id @default(autoincrement())
     darkMode Boolean @default(false)
-    imdbApiKey String?
+    omdbApiKey String?
 }
 

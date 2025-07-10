@@ -21,17 +21,24 @@ export async function GetSettings() : Promise<Settings> {
     try {
         const settings = await prisma.settings.findFirst();
         if (settings) {
-            return settings;
+            return {
+                darkMode: settings.darkMode,
+                hasApiKey: settings.omdbApiKey !== null && settings.omdbApiKey !== undefined
+            }
         }
 
         // Create default
-        const defaults = await prisma.settings.create({
+        await prisma.settings.create({
             data: {
                 darkMode: false,
+                omdbApiKey: null
             },
         });
 
-        return defaults;
+        return {
+            darkMode: false,
+            hasApiKey: false
+        };
     }
 
     catch (error) {
@@ -63,16 +70,16 @@ export async function UpdateDarkMode(darkMode: boolean): Promise<boolean> {
 }
 
 /**
- * Updates the IMDB key in the database and validates it with the IMDB API.
- * @param imdbKey Key to be set in the database.
+ * Updates the OMDB key in the database and validates it with the OMDB API.
+ * @param omdbKey Key to be set in the database.
  * @returns An object indicating success or failure, with an optional error message (api key invalid, internet connection error, etc).
  */
-export async function UpdateIMDBKey(imdbKey: string): Promise<{ success: boolean, errorMessage?: string }> {
-    // todo imdb api
+export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean, errorMessage?: string }> {
+    // todo omdb api
     try {
         await prisma.settings.updateMany({
             data: {
-                imdbApiKey: imdbKey
+                omdbApiKey: omdbKey
             }
         });
 
@@ -81,5 +88,26 @@ export async function UpdateIMDBKey(imdbKey: string): Promise<{ success: boolean
 
     catch (error) {
         return { success: false, errorMessage: error }
+    }
+}
+
+/**
+ * Deletes the OMDB key from the database.
+ * @returns True if the deletion was successful, false otherwise.
+ */
+export async function DeleteOMDBKey(): Promise<boolean> {
+    try {
+        await prisma.settings.updateMany({
+            data: {
+                omdbApiKey: null
+            }
+        });
+
+        return true;
+    }
+
+    catch (error) {
+        console.error("Error deleting OMDB key:", error);
+        return false;
     }
 }

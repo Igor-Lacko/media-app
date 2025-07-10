@@ -1,13 +1,29 @@
 import SettingsContext from "context/settings-context";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import Toggle from "components/buttons/toggle";
 import Settings from "@shared/interface/models/settings";
 import classNames from "classnames";
 import RoundedButton from "components/buttons/rounded-button";
+import InfoModal from "components/modals/info-modal";
+import ConfirmModal from "components/modals/confirm-modal";
+import { DeleteAPIKey } from "data/crud/delete";
+import { UpdateOMDBKey } from "data/crud/update";
 
 export default function SettingsPage() {
     // Current settings
     const { settings, setSettings } = useContext(SettingsContext);
+
+    // For red ring around the input field
+    const [error, setError] = useState(false);
+
+    // Delete API key confirm modal
+    const [deleteKeyModalVisible, setDeleteKeyModalVisible] = useState(false);
+
+    // Deletion status message
+    const [deletionStatusMessage, setDeletionStatusMessage] = useState("");
+
+    // Key submission status message
+    const [keySubmissionStatusMessage, setKeySubmissionStatusMessage] = useState("");
 
     // Used for all divs here
     const divClasses = "flex w-full items-center justify-between space-x-7 p-4 h-20\
@@ -15,7 +31,7 @@ export default function SettingsPage() {
 
     // The little gray text
     const apiKeyMessage = settings.hasApiKey ? "Your api key is set!" :
-    "Will enable you to fill movie/show data automatically using the IMDP API."
+        "Will enable you to fill movie data automatically using the OMDB API."
 
     // Ref to control the input field (is unused if the key is set already)
     const keyRef = useRef("");
@@ -43,14 +59,14 @@ export default function SettingsPage() {
                     onChange={(checked: boolean) => setSettings({ ...settings, darkMode: checked })}
                 />
             </div>
-            {/** IMDB API key */}
+            {/** OMDB API key */}
             <div
                 className={divClasses}
             >
                 <h2
                     className={"text-lg font-semibold text-gray-800 dark:text-gray-400"}
                 >
-                    IMDB API Key
+                    OMDB API Key
                 </h2>
                 <span
                     className={classNames(
@@ -64,37 +80,70 @@ export default function SettingsPage() {
                     {apiKeyMessage}
                 </span>
                 {settings.hasApiKey ? (
-                    // Todo add modal for confirm here at least
                     <RoundedButton
-                    text={"Remove API key"}
-                    onClick={() => setSettings({ ...settings, hasApiKey: false })}
-                    extraClassNames={"bg-red-500 text-white hover:bg-red-400 dark:hover:bg-red-600 transition-all duration-300 ease-in-out"}
+                        text={"Remove API key"}
+                        onClick={() => setDeleteKeyModalVisible(true)}
+                        extraClassNames={"bg-red-500 text-white hover:bg-red-400 dark:hover:bg-red-600 transition-all duration-300 ease-in-out"}
                     />
                 ) : (
                     <div
                         className={"flex items-center justify-start h-full"}
                     >
-                        <input
-                        type={"text"}
-                        placeholder={"Enter your IMDB API key..."}
-                        defaultValue={settings.hasApiKey || ""}
-                        onChange={(event) => keyRef.current = event.target.value}
-                        className={"w-70 h-10 p-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700\
-                            dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400\
-                            transition-all duration-300 ease-in-out"}
-                        />
+                        <div
+                            className={classNames(
+                                "flex items-center h-full w-9/10",
+                                {
+                                    // Center the input
+                                    "justify-start": !error,
+
+                                    // Error text
+                                    "justify-end": error,
+                                }
+                            )}
+                        >
+                            {error && (
+                                // TODO add DB error here
+                                <span
+                                    className={"text-red-500 dark:text-red-400 text-xs mr-5"}
+                                >
+                                    Please enter a valid OMDB API key.
+                                </span>
+                            )}
+                            <input
+                                type={"text"}
+                                placeholder={"Enter your OMDB API key..."}
+                                defaultValue={settings.hasApiKey || ""}
+                                onChange={(event) => keyRef.current = event.target.value}
+                                onClick={() => setError(false)}
+                                className={classNames(
+                                    "w-70 h-10 p-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700",
+                                    "dark:text-gray-200 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none focus:ring-2",
+                                    "transition-all duration-300 ease-in-out",
+                                    {
+                                        "ring-2 ring-red-500 dark:ring-red-400 outline-none": error,
+                                    }
+                                )}
+                            />
+                        </div>
                         <RoundedButton
                             text={"Submit"}
                             onClick={async () => {
                                 const key = keyRef.current.trim();
                                 if (key && key !== "") {
-                                    setSettings({ ...settings, hasApiKey: true });
-                                    await Promise.resolve(); // todo add update here
+                                    setError(false);
+                                    const response = await UpdateOMDBKey(key);
+                                    if (response.success) {
+                                        setKeySubmissionStatusMessage("API key updated successfully.");
+                                        setSettings({ ...settings, hasApiKey: true });
+                                    }
+
+                                    else {
+                                        setKeySubmissionStatusMessage("Failed to update API key: " + response.errorMessage);
+                                    }
                                 }
 
-                                // Todo redden the input field here
                                 else {
-                                    alert("Please enter a valid API key.");
+                                    setError(true);
                                 }
                             }}
                             extraClassNames={"bg-blue-500 text-white hover:bg-blue-400 dark:hover:bg-blue-600\
@@ -103,6 +152,37 @@ export default function SettingsPage() {
                     </div>
                 )}
             </div>
+            {/** Delete key confirm modal */}
+            {deleteKeyModalVisible && <ConfirmModal
+                title={"Delete API key"}
+                message={"Are you sure you want to delete your API key? This action cannot be undone."}
+                onClose={() => setDeleteKeyModalVisible(false)}
+                onConfirm={async () => {
+                    keyRef.current = "";
+                    setDeleteKeyModalVisible(false);
+                    const response = await DeleteAPIKey();
+                    if (response.success) {
+                        setSettings({ ...settings, hasApiKey: false });
+                        setDeletionStatusMessage("API key deleted successfully.");
+                    }
+
+                    else {
+                        setDeletionStatusMessage("Failed to delete API key: " + response.errorMessage);
+                    }
+                }}
+            />}
+            {/** Deletion status message */}
+            {deletionStatusMessage !== "" && <InfoModal
+                title={"API Key Deletion Status"}
+                message={deletionStatusMessage}
+                onClose={() => setDeletionStatusMessage("")}
+            />}
+            {/** Key submission status message */}
+            {keySubmissionStatusMessage !== "" && <InfoModal
+                title={"API Key Submission Status"}
+                message={keySubmissionStatusMessage}
+                onClose={() => setKeySubmissionStatusMessage("")}
+            />}
         </div>
     );
 }

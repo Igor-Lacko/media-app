@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { NukeDatabase, UpdateDarkMode, UpdateIMDBKey } from "controllers/settings-controller";
+import { DeleteOMDBKey, NukeDatabase, UpdateDarkMode, UpdateOMDBKey } from "controllers/settings-controller";
 import { GetSettings } from "controllers/settings-controller";
 
 const router = Router();
@@ -38,17 +38,28 @@ router.patch("/dark-mode", async (req, res) => {
     }
 });
 
-// Updates IMDB api key
-router.patch("/imdb-key", async (req, res) => {
-    const { imdbKey } = req.body;
-    const response = await UpdateIMDBKey(imdbKey);
+// Updates OMDB api key
+router.patch("/omdb-key", async (req, res) => {
+    const { omdbKey } = req.body;
+    const response = await UpdateOMDBKey(omdbKey);
 
     if (response.success) {
-        res.status(200).json({ message: "IMDB key updated successfully." });
+        res.status(200).json({ message: "OMDB key updated successfully." });
     }
 
     else {
-        res.status(500).json({ error: response.errorMessage || "Failed to update IMDB key" });
+        res.status(500).json({ error: response.errorMessage || "Failed to update OMDB key" });
+    }
+});
+
+// Deletes OMDB api key
+router.delete("/omdb-key", async (req, res) => {
+    if (await DeleteOMDBKey()) {
+        res.status(200).json({ message: "OMDB key deleted successfully." });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to delete OMDB key" });
     }
 })
 
