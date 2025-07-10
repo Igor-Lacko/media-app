@@ -95,7 +95,7 @@ export default function MediaItemList(props: ListProps) {
                         className={"flex flex-col h-full w-2/10 items-center justify-center"}
                     >
                         {props.showRating && <span className={"text-lg text-yellow-500"}>
-                            {item.rating ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
+                            {item.rating !== null && item.rating !== undefined ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
                         </span>}
                     </div>
                     <span

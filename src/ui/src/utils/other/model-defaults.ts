@@ -16,6 +16,7 @@ export const defaultMovie: Movie = {
     genres: [Genre.ALL],
     watchStatus: WatchStatus.NOT_WATCHED,
     isFavorite: false,
+    rating: 0,
 };
 
 export const defaultTvShow: TvShow = {
@@ -24,6 +25,7 @@ export const defaultTvShow: TvShow = {
     seasons: [],
     watchStatus: WatchStatus.NOT_WATCHED,
     isFavorite: false,
+    rating: 0,
 }
 
 export const defaultCourse: Course = {
@@ -36,6 +38,7 @@ export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : S
     return {
         seasonNumber: seasonNumber,
         episodes: [],
+        rating: 0,
     };
 }
 
@@ -45,6 +48,7 @@ export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number 
         seasonNumber: seasonNumber,
         title: "",
         watchStatus: WatchStatus.NOT_WATCHED,
+        rating: 0,
     };
 }
 
