@@ -86,7 +86,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         onSetWatchStatus: props.watchStatus ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
 
         // Set description
-        onSetDescription: props.description !== null && props.description !== undefined ? () => setVisibleModal(VisibleModal.DESCRIPTION) 
+        onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION) 
         : undefined,
 
         // Open notes modal
@@ -164,7 +164,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 4. Set description modal */}
-            {visibleModal === VisibleModal.DESCRIPTION && props.description !== null && props.description !== undefined && <TextAreaModal
+            {visibleModal === VisibleModal.DESCRIPTION && <TextAreaModal
                 title={"Set Description"}
                 initialText={props.description}
                 onSetText={async (description: string) => {

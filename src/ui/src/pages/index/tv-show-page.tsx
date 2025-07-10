@@ -42,16 +42,16 @@ export default function TvShowPage() {
 
     const tvShowListProps : ListProps = {
         // Sorted, filtered, and searched tv shows.
-        items: SortMedia<TvShow>(data || [], sort, ascending),
+        items: SortMedia<TvShow>(data || [], sort, ascending)
+        .filter((tvShow: TvShow) => tvShow.title.toLowerCase().includes(search.toLowerCase()) && 
+        tvShow.genres!.includes(filter)) 
+        || [],
 
         showRating: true,
         showThumbnail: true,
         notFoundTitle: "No TV shows found :((",
         notFoundMessage: "There are no TV shows that match your search criteria.",
     }
-
-    console.log("filter", filter, "sort", sort, "search", search, "ascending", ascending);
-    console.log("filtered items", tvShowListProps.items);
 
     if (isLoading) {
         return <LoadingPage />;
