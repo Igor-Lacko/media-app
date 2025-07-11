@@ -2,6 +2,9 @@ import prisma from "db/db";
 import { Genre, WatchStatus } from "generated/prisma/enums";
 import Movie from "@shared/interface/models/movie";
 import { DBMovieToClient, SanitizeClientMovieToDB } from "adapters/movies";
+import axios from "axios";
+import OMDbMovie from "3rdparty/omdb/movie";
+import { OMDbGenresToDB, OMDbRatingsToDB, OMDbRuntimeToDB } from "3rdparty/omdb/to-db";
 
 
 /**
@@ -58,6 +61,101 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
     }
 }
 
+/**
+ * Makes a second OMDb request with the plot param set to "full" and returns the plot.
+ * @note Pretty inefficient, but the API doesn't return both at once and idk of a other way to do it.
+ * @param apiKey API key for the OMDb API.
+ * @param title Movie title to search for. 
+ * @returns Full plot description if found, null otherwise.
+ */
+async function GetFullDescriptionFromOMDb(apiKey: string, title: string): Promise<string | undefined> {
+    return await axios.get<OMDbMovie>(
+        `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
+    )
+    .then((response) => {
+        if (response.data.Response !== "True") {
+            return undefined;
+        }
+
+        // Return full description
+        return response.data.Plot || undefined;
+    })
+    .catch((_error) => {
+        return undefined;
+    });
+} 
+
+/**
+ * Inserts a movie into the database from OMDb API.
+ * @param title Title of the movie to fetch.
+ * @returns An object indicating success or failure, with an optional error message.
+ */
+export async function InsertMovieFromOMDb(title: string): Promise<{ success: boolean; errorMessage?: string }> {
+    try {
+        // Fetch api key first
+        const apiKey = await prisma.settings.findFirst({
+            select: {
+                omdbApiKey: true,
+            },
+        }).then((settings) => settings?.omdbApiKey);
+
+        // Shouldn't ever happen (this request should be allowed by the FE only if hasApiKey === true), but just in case
+        if (!apiKey) {
+            return { success: false, errorMessage: "OMDB API key not set." };
+        }
+
+        // OMDb request
+        try {
+            const response = await axios.get<OMDbMovie>(
+                `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
+            );
+
+            if (response.data.Response === "False") {
+                return { success: false, errorMessage: response.data.Error || "Movie not found." };
+            }
+
+            // Covert genre1, genre2, ... to array of Genre objects
+            const genreArray = OMDbGenresToDB(response.data.Genre!);
+
+            // Full description
+            const longDescription = await GetFullDescriptionFromOMDb(apiKey, title);
+
+            await prisma.movie.create({
+                data: {
+                    title: response.data.Title || "",
+                    length: OMDbRuntimeToDB(response.data.Runtime!),
+                    shortDescription: response.data.Plot || "",
+                    description: longDescription || "",
+                    genres: {
+                        create: genreArray.map((genre: Genre) => ({
+                            genre: genre
+                        }))
+                    },
+                    rating: OMDbRatingsToDB(response.data.Ratings || []),
+                }
+            });
+        }
+
+        // Fetch error
+        catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorResponse = error.response?.data as { Error?: string };
+                return {
+                    success: false,
+                    errorMessage: errorResponse.Error || "Unexpected error while fetching movie from OMDb",
+                };
+            }
+        }
+    }
+
+    // Other errors (prisma, ... etc.)
+    catch (error) {
+        return {
+            success: false,
+            errorMessage: error instanceof Error ? error.message : "An unexpected error occurred while inserting movie from OMDb",
+        };
+    }
+}
 /**
  * Updates a movie in the database.
  * @param id Unique identifier of the movie to update.

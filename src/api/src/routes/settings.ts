@@ -20,7 +20,9 @@ router.get("/", async (_req, res) => {
     try {
         const settings = await GetSettings();
         res.status(200).json(settings);
-    } catch (error) {
+    } 
+
+    catch (error) {
         console.error("Error fetching settings:", error);
         res.status(500).json({ error: "Failed to fetch settings" });
     }
@@ -48,7 +50,7 @@ router.patch("/omdb-key", async (req, res) => {
     }
 
     else {
-        res.status(500).json({ error: response.errorMessage || "Failed to update OMDB key" });
+        res.status(500).json({ error: response.errorMessage! });
     }
 });
 

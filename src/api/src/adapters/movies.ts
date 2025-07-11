@@ -2,6 +2,10 @@ import ClientMovie from "@shared/interface/models/movie";
 import { EntertainmentGenre, Movie } from "generated/prisma/client";
 import { Genre } from "generated/prisma/enums";
 
+export interface DBMovie extends Movie {
+    genres: EntertainmentGenre[];
+}
+
 export function SanitizeClientMovieToDB (movie: ClientMovie): ClientMovie {
     // Remove fields that should not be stored in the database
     const { identifier, submediaString, ...sanitizedMovie } = movie;
@@ -11,9 +15,7 @@ export function SanitizeClientMovieToDB (movie: ClientMovie): ClientMovie {
 }
 
 
-export function DBMovieToClient(movie: Movie & {
-    genres: EntertainmentGenre[];
-}) : ClientMovie {
+export function DBMovieToClient(movie: DBMovie) : ClientMovie {
     const { id, ...data} = movie;
     return {
         ...data,

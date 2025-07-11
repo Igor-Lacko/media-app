@@ -231,12 +231,15 @@ export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean
         }
 
         else {
-            return { success: false, errorMessage: response.statusText || "Failed to update OMDB key" };
+            return { success: false, errorMessage: response.data.error || "Failed to update OMDB key" };
         }
     }
 
     catch (error) {
-        console.error("Error updating OMDB key:", error);
+        if (axios.isAxiosError(error)) {
+            const errorResponse = error.response?.data as { error?: string };
+            return { success: false, errorMessage: errorResponse?.error || "Unknown error when updating api key" };
+        }
         return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
     }
 }

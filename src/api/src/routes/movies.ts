@@ -1,18 +1,12 @@
 import { Router } from "express";
 import { DeleteMovie, GetMovieById, GetMovies, InsertMovie, UpdateMovie } from "controllers/movie-controller";
-import SortKey from "@shared/enum/sort-key";
-import { Genre } from "generated/prisma/enums";
 
 const router = Router();
 
 // Getter for all movies
 router.get("/", async (req, res) => {
-    // Sort/filter/search
-    const { sortBy, filter } = req.query;
-    console.log("Fetching movies...");
-
     // Fetch and return
-    const movies = await GetMovies(sortBy as SortKey, filter as Genre);
+    const movies = await GetMovies();
     if(movies !== null) {
         res.json(movies);
     }
