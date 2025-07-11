@@ -8,7 +8,6 @@ import Genre from "@shared/enum/genre";
 import SortKeyAdapter from "utils/adapters/sort-key-adapter";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DropdownProps from "utils/props/control-elements/dropdown-props";
-import { NavLink } from "react-router-dom";
 import Toggle from "components/buttons/toggle";
 
 /**
@@ -78,8 +77,8 @@ export default function ControlBar(props : ControlBarProps) {
                 {props.filter && <DropdownMenu
                     {...filterProps}
                 />}
-                <NavLink
-                    to={props.path + "/add"}
+                <div
+                    onClick={props.onAddClick}
                 >
                     <span
                         className={spanClasses}
@@ -88,7 +87,7 @@ export default function ControlBar(props : ControlBarProps) {
                             className={"text-gray-500 font-light h-4 w-4"}
                         />
                     </span>
-                </NavLink>
+                </div>
             </div>
         </div>
     )

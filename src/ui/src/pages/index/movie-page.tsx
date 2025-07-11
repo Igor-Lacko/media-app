@@ -11,6 +11,9 @@ import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/lists/list-props";
 import LoadingPage from "pages/other/loading-page";
 import { SortMedia } from "utils/other/sort-media";
+import SettingsContext from "context/settings-context";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * App Movie page.
@@ -19,6 +22,15 @@ import { SortMedia } from "utils/other/sort-media";
 export default function MoviePage() {
     // Sort/filter/search
     const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
+
+    // Settings (for hasApiKey)
+    const { settings } = useContext(SettingsContext);
+
+    // Modal to add normally or from API
+    const [addModalVisible, setAddModalVisible] = useState(false);
+
+    // To navigate
+    const navigate = useNavigate();
 
     // Fetch Movies
     const { data, isLoading } = useQuery({
@@ -37,7 +49,7 @@ export default function MoviePage() {
         initialFilter: filter,
         initialSortOrder: ascending,
         onSortOrderChange: (asc: boolean) => { setAscending(asc) },
-        path: "/movies"
+        onAddClick: settings.hasApiKey ? () => setAddModalVisible(true) : () => navigate("/movies/add"),
     };
 
     const MovieListProps: ListProps = {

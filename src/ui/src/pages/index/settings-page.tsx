@@ -1,7 +1,6 @@
 import SettingsContext from "context/settings-context";
 import { useContext, useRef, useState } from "react";
 import Toggle from "components/buttons/toggle";
-import Settings from "@shared/interface/models/settings";
 import classNames from "classnames";
 import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";

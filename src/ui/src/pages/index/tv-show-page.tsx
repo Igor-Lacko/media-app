@@ -11,6 +11,9 @@ import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/lists/list-props";
 import LoadingPage from "pages/other/loading-page";
 import { SortMedia } from "utils/other/sort-media";
+import { useContext, useState } from "react";
+import SettingsContext from "context/settings-context";
+import { useNavigate } from "react-router-dom";
 
 /**
  * App TV show page.
@@ -19,6 +22,15 @@ import { SortMedia } from "utils/other/sort-media";
 export default function TvShowPage() {
     // Filtering
     const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
+
+    // Settings (for hasApiKey)
+    const { settings } = useContext(SettingsContext);
+
+    // Modal to add normally or from API
+    const [addModalVisible, setAddModalVisible] = useState(false);
+
+    // To navigate
+    const navigate = useNavigate();
 
     // Fetch
     const {data, isLoading} = useQuery({
@@ -37,7 +49,7 @@ export default function TvShowPage() {
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         onSortOrderChange: (asc: boolean) => { setAscending(asc); },
-        path: "/tv-shows"
+        onAddClick: settings.hasApiKey ? () => setAddModalVisible(true) : () => navigate("/tv-shows/add"),
     }
 
     const tvShowListProps : ListProps = {
