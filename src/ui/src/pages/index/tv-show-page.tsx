@@ -24,9 +24,6 @@ export default function TvShowPage() {
     // Filtering
     const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
 
-    // Settings (for hasApiKey)
-    const { settings } = useContext(SettingsContext);
-
     // Modal to add normally or from API
     const [addModalVisible, setAddModalVisible] = useState(false);
 
@@ -50,7 +47,7 @@ export default function TvShowPage() {
         onFilterChange: (filterKey: Genre) => { setFilter(filterKey); },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         onSortOrderChange: (asc: boolean) => { setAscending(asc); },
-        onAddClick: settings.hasApiKey ? () => setAddModalVisible(true) : () => navigate("/tv-shows/add"),
+        onAddClick: () => setAddModalVisible(true),
     }
 
     const tvShowListProps : ListProps = {
