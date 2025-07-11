@@ -14,6 +14,7 @@ import { SortMedia } from "utils/other/sort-media";
 import SettingsContext from "context/settings-context";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TwoButtonsModal from "components/modals/navigate-modal";
 
 /**
  * App Movie page.
@@ -80,6 +81,20 @@ export default function MoviePage() {
                     {...MovieListProps}
                 />
             </div>
+            {addModalVisible && settings.hasApiKey && <TwoButtonsModal
+                title={"Add Movie"}
+                options={[
+                    {
+                        title: "Add from API",
+                        onClick: () => navigate("/movies/from-api")
+                    },
+                    {
+                        title: "Add manually",
+                        onClick: () => navigate("/movies/add")
+                    }
+                ]}
+                onClose={() => setAddModalVisible(false)}
+            />}
         </div>
     );
 }

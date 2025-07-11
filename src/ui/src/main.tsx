@@ -30,6 +30,8 @@ import EpisodeVideo from 'pages/video/episode-video';
 import MovieVideo from 'pages/video/movie-video';
 import axios from 'axios';
 import LoadingPage from 'pages/other/loading-page';
+import TvMazeShowForm from 'pages/forms/from-api/tv-shows';
+import OMDbMovieForm from 'pages/forms/from-api/movies';
 
 // React-query
 const queryClient = new QueryClient();
@@ -46,6 +48,7 @@ const rootContainer: ReactNode = (
                     <Route path="movies/*">
                         <Route index element={<MoviePage />} />
                         <Route path="add" element={<AddMoviePage />} />
+                        <Route path="from-api" element={<OMDbMovieForm />} />
                         <Route path=":id" element={<MovieDetail />} />
                         <Route path=":id/edit" element={<AddMoviePage />} />
                         <Route path=":id/play" element={<MovieVideo />} />
@@ -53,6 +56,7 @@ const rootContainer: ReactNode = (
                     <Route path="tv-shows/*">
                         <Route index element={<TvShowPage />} />
                         <Route path="add" element={<AddTvShowPage />} />
+                        <Route path="from-api" element={<TvMazeShowForm />} />
                         <Route path=":id" element={<TvShowDetail />} />
                         <Route path=":id/edit" element={<AddTvShowPage />} />
                         <Route path=":id/add" element={<AddSeasonPage />} />

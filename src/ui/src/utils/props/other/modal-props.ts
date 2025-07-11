@@ -29,6 +29,9 @@ export interface ModalProps {
     // Strictly for file browse modals
     allowed?: string;
 
+    // For navigate modals
+    options?: { title: string; onClick: () => void }[];
+
     // Each one also has this
     onClose: () => void;
 

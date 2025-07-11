@@ -14,6 +14,7 @@ import { SortMedia } from "utils/other/sort-media";
 import { useContext, useState } from "react";
 import SettingsContext from "context/settings-context";
 import { useNavigate } from "react-router-dom";
+import TwoButtonsModal from "components/modals/navigate-modal";
 
 /**
  * App TV show page.
@@ -81,6 +82,22 @@ export default function TvShowPage() {
                     {...tvShowListProps}
                 />
             </div>
+            {addModalVisible && (
+                <TwoButtonsModal
+                    title={"Add TV Show"}
+                    options={[
+                        {
+                            title: "Add from API",
+                            onClick: () => navigate("/tv-shows/from-api"),
+                        },
+                        {
+                            title: "Add manually",
+                            onClick: () => navigate("/tv-shows/add"),
+                        },
+                    ]}
+                    onClose={() => setAddModalVisible(false)}
+                />
+            )}
         </div>
     );
 }

@@ -60,6 +60,7 @@ export default defineConfig({
             'generated': path.resolve(__dirname, './src/generated'),
             'utils': path.resolve(__dirname, './src/utils'),
             'adapters': path.resolve(__dirname, './src/adapters'),
+            '3rdparty': path.resolve(__dirname, './src/3rdparty'),
             '@shared': path.resolve(__dirname, '../shared')
         }
     }

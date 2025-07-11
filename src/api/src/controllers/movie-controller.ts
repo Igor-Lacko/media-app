@@ -231,8 +231,6 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
  * @returns True if successful, false otherwise.
  */
 export async function DeleteMovie(id: number): Promise<boolean> {
-    console.log("Deleting movie with ID:", id);
-
     try {
         await prisma.movie.delete({
             where: {
