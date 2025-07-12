@@ -11,6 +11,9 @@ export default interface TvMazeEpisode {
     // Episode number
     number: number;
 
+    // Length in minutes
+    runtime: number;
+
     // Rating
     rating: { average: number };
 

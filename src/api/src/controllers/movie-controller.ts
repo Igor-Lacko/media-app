@@ -110,11 +110,11 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
                 `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
             );
 
-            console.log(`OMDb API response for movie: ${title}`, response.data);
-
             if (response.data.Response !== "True") {
-                console.error(`OMDb API error: ${response.data.Error}`);
-                return { success: false, errorMessage: response.data.Error || "Movie not found." }
+                return { 
+                    success: false, 
+                    errorMessage: response.data.Error || "Movie not found." 
+                };
             }
 
             // Covert genre1, genre2, ... to array of Genre objects

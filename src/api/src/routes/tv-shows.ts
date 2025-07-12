@@ -1,20 +1,12 @@
 import { Router } from "express";
-import SortKey from "@shared/enum/sort-key";
-import { Genre } from "generated/prisma/enums";
-import { DeleteTvShow, GetTvShowById, GetTvShows, InsertTvShow, UpdateTvShow } from "controllers/tv-show-controller";
+import { DeleteTvShow, GetTvShowById, GetTvShows, InsertTvMazeShow, InsertTvShow, UpdateTvShow } from "controllers/tv-show-controller";
 
 const router = Router();
 
 // Getter for all TV shows
 router.get("/", async (req, res) => {
-    // Sort/filter/search
-    const { sortBy, filter } = req.query;
-    console.log("Fetching TV shows...");
     try {
-        const tvShows = await GetTvShows(
-            sortBy as SortKey,
-            filter as Genre
-        );
+        const tvShows = await GetTvShows();
         res.json(tvShows);
     }
 
@@ -45,6 +37,26 @@ router.post("/", async (req, res) => {
     else {
         res.status(500).json({ error: "Failed to insert TV show" });
     }
+});
+
+// Insert TV show from TV Maze API
+router.post("/tv-maze", async (req, res) => {
+    const { title, imdbId } = req.body;
+    if (!title && !imdbId) {
+        res.status(400).json({ error: "Title or IMDb ID is required" });
+        return;
+    }
+
+    await InsertTvMazeShow(title, imdbId)
+    .then((result) => {
+        if (result.success) {
+            res.status(201).json({ message: "TV show inserted successfully" });
+        }
+
+        else {
+            res.status(500).json({ error: result.errorMessage || "Failed to insert TV show from TV Maze" });
+        }
+    });
 });
 
 // TV show updates

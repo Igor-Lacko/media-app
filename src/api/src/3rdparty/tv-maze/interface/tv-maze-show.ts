@@ -1,3 +1,5 @@
+import TvMazeEpisode from "./tv-maze-episode";
+
 /**
  * Interface for a response from the TV Maze shows API.
  */
@@ -13,4 +15,9 @@ export default interface TvMazeShow {
 
     // Includes <p> and <b> tags for some reason, have to filter them out
     summary: string;
+
+    // Append to response
+    _embedded: {
+        episodes: TvMazeEpisode[];
+    }
 }

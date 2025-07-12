@@ -7,6 +7,9 @@ import { CreateSeason, UpdateSeason } from "./season-controller";
 import { DBTvShowToClient, SanitizeTvShowForDB } from "adapters/tv-shows";
 import { SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
+import axios from "axios";
+import TvMazeShow from "3rdparty/tv-maze/interface/tv-maze-show";
+import { TvMazeEpisodesToSeasons, TvMazeGenresToDB, TvMazeSummaryToDB } from "3rdparty/tv-maze/to-db";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -214,6 +217,94 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
     } catch (error) {
         console.error("Error inserting TV show: " + error);
         return false;
+    }
+}
+
+/**
+ * Inserts a TV show from the TV Maze API.
+ * @param title If searching by title.
+ * @param imdbId If searching by IMDb ID. If both are provided, IMDb ID is used.
+ * @note At least one of title or imdbId must be provided.
+ * @returns Object containing success status and optional error message.
+ */
+export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise<{ success: boolean; errorMessage?: string }> {
+    try {
+        // Should never happen
+        if (!title && !imdbId) {
+            return {
+                success: false,
+                errorMessage: "Either title or IMDb ID must be provided."
+            };
+        }
+
+        // Get the url
+        const url = imdbId ? `https://api.tvmaze.com/lookup/shows?imdb=${imdbId}&embed=episodes` :
+        `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(title)}&embed=episodes`;
+
+        // Fetch from api
+        const response = await axios.get<TvMazeShow>(url)
+        .then((res) => res.data);
+
+        // Map genre strings ==> Genre enums
+        const genreArray = TvMazeGenresToDB(response.genres);
+
+        // Map episodes ==> seasons
+        const tvMazeSeasons = TvMazeEpisodesToSeasons(response._embedded.episodes);
+
+        // Insert into the DB
+        await prisma.show.create({
+            data: {
+                title: response.name,
+
+                genres: {
+                    create: genreArray.map((genre: Genre) => ({
+                        genre: genre,
+                    })),
+                },
+
+                rating: response.rating.average,
+
+                // Use the same description for both (shortDescription is clipped in ui)
+                shortDescription: TvMazeSummaryToDB(response.summary),
+                description: TvMazeSummaryToDB(response.summary),
+
+                // Create seasons by mapping episodes
+                seasons: {
+                    create: tvMazeSeasons.map((season) => ({
+                        seasonNumber: season.seasonNumber,
+
+                        // Avg of all episodes
+                        rating: season.rating,
+
+                        episodes: {
+                            create: season.episodes.map((episode) => ({
+                                episodeNumber: episode.number,
+                                title: episode.name,
+                                rating: episode.rating.average,
+                                shortDescription: episode.summary,
+                                length: episode.runtime,
+                            }))
+                        }
+                    }))
+                }
+            }
+        });
+
+        return { success: true };
+    }
+
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                success: false,
+                errorMessage: error.response?.statusText || "Error fetching TV show from TV Maze API"
+            }
+        }
+
+        return {
+            success: false,
+            errorMessage: error instanceof Error ? error.message : "An unexpected error occurred while inserting TV show from TV Maze API"
+        };
     }
 }
 
