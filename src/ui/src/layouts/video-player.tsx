@@ -18,14 +18,10 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
     // Error modal if the next episode does not exist
     const [errorModalVisible, setErrorModalVisible] = useState(false);
 
-    // Video ref
-    const videoRef = useRef<HTMLVideoElement>(null);
-
-
     // Lower bar props
     const lowerBarProps : VideoLowerBarProps = {
         // Seeking
-        ref: videoRef,
+        ref: props.ref,
 
         // Visual
         isVisible: areBarsVisible,
@@ -51,14 +47,14 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
         backUrl: props.backUrl,
 
         // Notebook
-        onNoteClick: props.onNoteClick ? () => props.onNoteClick!(videoRef.current?.currentTime || 0) 
+        onNoteClick: props.onNoteClick ? () => props.onNoteClick!(props.ref.current?.currentTime || 0) 
                     : undefined,
 
         // Time handler and ref
         saveContinueAt: async (time: number) => {
             await props.saveContinueAt(time);
         },
-        ref: videoRef
+        ref: props.ref
     }
 
     return (
@@ -84,10 +80,14 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
             <video
                 src={`file://${props.url}`}
                 className={"w-full h-full object-fill"}
-                ref={videoRef}
+                ref={props.ref}
                 onClick={() => {
-                    if(videoRef.current) {
-                        videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause();
+                    if(props.ref.current) {
+                        props.ref.current.paused ? props.ref.current.play() : props.ref.current.pause();
+                    }
+
+                    if (props.onVideoClick) {
+                        props.onVideoClick();
                     }
                 }}
             />

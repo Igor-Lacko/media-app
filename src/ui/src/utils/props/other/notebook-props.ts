@@ -17,6 +17,9 @@ export default interface NotebookProps {
     onUpdateNotes(notes: Note[]): Promise<void>;
     onAddNote(note: Note): Promise<void>;
 
+    // Function to handle clicking on a note (sets the video current time to the note's timestamp)
+    onNoteClick(timestamp: number): void;
+
     // To close
     onClose(): void;
 }

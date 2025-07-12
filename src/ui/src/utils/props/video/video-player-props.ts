@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * Props for the video player page layout.
  */
@@ -7,6 +5,9 @@ export interface VideoPlayerProps {
     // Video title and file URL
     title: string;
     url: string;
+
+    // Video ref (created in the parent because otherwise it wouldn't be possible for the notebook to access it)
+    ref: React.RefObject<HTMLVideoElement | null>;
 
     // DB updates
     initialPlaybackTime?: number;
@@ -21,6 +22,9 @@ export interface VideoPlayerProps {
 
     // If this is defined, a notebook button appears (for lectures)
     onNoteClick?(currentTime: number): void;
+
+    // To hide the notebook on video click, if the notebook is present
+    onVideoClick?(): void;
 }
 
 export default VideoPlayerProps;

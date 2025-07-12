@@ -297,7 +297,7 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
         if (axios.isAxiosError(error)) {
             return {
                 success: false,
-                errorMessage: error.response?.statusText || "Error fetching TV show from TV Maze API"
+                errorMessage: error.response ? error.response.data.error : error.message
             }
         }
 

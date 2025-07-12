@@ -71,7 +71,7 @@ export default function MediaItemList(props: ListProps) {
                             {item.title}
                         </h3>
                         {item.shortDescription && (
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 h-16 line-clamp-3 max-w-8/9">
                                 {item.shortDescription}
                             </p>
                         )}

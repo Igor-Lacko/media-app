@@ -4,7 +4,7 @@ import { DeleteTvShow, GetTvShowById, GetTvShows, InsertTvMazeShow, InsertTvShow
 const router = Router();
 
 // Getter for all TV shows
-router.get("/", async (req, res) => {
+router.get("/", async (_req, res) => {
     try {
         const tvShows = await GetTvShows();
         res.json(tvShows);

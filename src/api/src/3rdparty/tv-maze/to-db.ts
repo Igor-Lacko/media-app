@@ -8,14 +8,10 @@ import TvMazeEpisode from "./interface/tv-maze-episode";
  * @returns That same summary as plain text.
  */
 export function TvMazeSummaryToDB(summary: string): string {
-    console.debug("Cleaning TV Maze summary:", summary);
     // Remove HTML
-    const replaced = summary.replace(/<[^>]*>/gi, "")
+    return summary.replace(/<[^>]*>/gi, "")
     // Remove hex characters (from https://gist.github.com/daxburatto/307e8365c41fd5401f9ac315676490bf)
     .replace(/#?([a-f0-9]{6}|[a-f0-9]{3})/gi, "");
-
-    console.debug("Cleaned TV Maze summary:", replaced);
-    return replaced;
 }
 
 /**

@@ -16,6 +16,9 @@ export default function LectureVideo() {
     const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId")!;
     const {model: course, isLoading: courseLoading} = useFetchById<Course>("/api/courses")!;
 
+    // Video ref
+    const videoRef = useRef<HTMLVideoElement>(null);
+
     // For the notebook
     const [notebookVisible, setNotebookVisible] = useState(false);
     const [notes, setNotes] = useState(lecture?.notes || []);
@@ -42,6 +45,7 @@ export default function LectureVideo() {
             className={"relative overflow-hidden"}
         >
             <VideoPlayerLayout
+                ref={videoRef}
                 title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
                 url={lecture.videoUrl || ""}
                 backUrl={`/courses/${course?.identifier}/${lecture.identifier}`}
@@ -53,6 +57,11 @@ export default function LectureVideo() {
                 }}
                 onNoteClick={() => {
                     setNotebookVisible(!notebookVisible);
+                }}
+                onVideoClick={() => {
+                    if (notebookVisible) {
+                        setNotebookVisible(false);
+                    }
                 }}
                 initialPlaybackTime={lecture.continueAt || 0}
                 timestampRef={timestampRef}
@@ -73,6 +82,11 @@ export default function LectureVideo() {
                     const newNotes = [...notes, note];
                     if (await UpdateNotes("/api/lectures", lecture, newNotes)) {
                         setNotes(newNotes);
+                    }
+                }}
+                onNoteClick={(timestamp: number) => {
+                    if (videoRef.current) {
+                        videoRef.current.currentTime = timestamp;
                     }
                 }}
             />

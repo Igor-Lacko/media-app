@@ -145,13 +145,13 @@ export async function InsertMovieFromOMDb(title?: string, imdbId?: string): Prom
                 const errorResponse = error.response?.data as { Error?: string };
                 return {
                     success: false,
-                    errorMessage: errorResponse.Error || "Unexpected error while fetching movie from OMDb",
+                    errorMessage: errorResponse.Error || error.message || "An error occurred while fetching movie from OMDb",
                 };
             }
 
             return {
                 success: false,
-                errorMessage: "An unexpected error occurred while fetching movie from OMDb",
+                errorMessage: error instanceof Error ? error.message : "An unexpected error occurred while fetching movie from OMDb",
             };
         }
     }

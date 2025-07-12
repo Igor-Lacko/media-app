@@ -7,8 +7,8 @@ import { LengthToTimeVideo } from "utils/adapters/length-to-time";
  * Part oif the notebook used for displaying notes.
  * @param param0 Notes to display and additional class names.
  */
-export default function NotebookNoteList({notes, updateNotes, extraClassNames} :
-    {notes: Note[], extraClassNames?: string, updateNotes: (notes: Note[]) => Promise<void>}) {
+export default function NotebookNoteList({notes, updateNotes, onNoteClick, extraClassNames} :
+    {notes: Note[], extraClassNames?: string, onNoteClick: (timestamp: number) => void, updateNotes: (notes: Note[]) => Promise<void>}) {
         return (
             <div
                 className={"flex flex-col w-full h-full overflow-y-auto overlfow-x-hidden space-y-3 p-5 " + (extraClassNames || "")}
@@ -22,14 +22,15 @@ export default function NotebookNoteList({notes, updateNotes, extraClassNames} :
                                 bg-white dark:bg-gray-900 py-3 rounded-lg",
                             )}
                         >
-                            {note.timestamp && <div
+                            {note.timestamp !== undefined && <div
                                 className={"flex items-center justify-start w-full p-3 h-auto text-black dark:text-gray-400"}
                             >
                                 <FaCircle
                                     className={"text-purple-500 mr-2 text-sm"}
                                 />
                                 <span
-                                    className={"text-sm md:text-base lg:text-lg mr-2"}
+                                    className={"text-sm md:text-base lg:text-lg mr-2 hover:underline cursor-pointer"}
+                                    onClick={() => onNoteClick(note.timestamp!)}
                                 >
                                     {`Timestamp: ${LengthToTimeVideo(note.timestamp || 0)}`}
                                 </span>

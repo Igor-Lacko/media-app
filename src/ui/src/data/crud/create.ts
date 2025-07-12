@@ -103,7 +103,8 @@ export async function CreateTvShowFromTvMaze(title?: string, imdbId?: string): P
 
         return {            
             success: false,
-            errorMessage: "An unexpected error occurred while creating TV show from TV Maze"
+            errorMessage: error instanceof Error ? error.message : 
+            "An unknown error has ocurred when trying to create a show."
         };        
     });
 }

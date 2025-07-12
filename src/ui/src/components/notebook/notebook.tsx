@@ -1,6 +1,6 @@
 import NotebookProps from "utils/props/other/notebook-props";
 import classNames from "classnames";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import NotebookHeader from "./notebook-header";
 import NotebookNoteList from "./notebook-note-list";
 import NotebookAddNote from "./notebook-add-note";
@@ -34,6 +34,7 @@ export default function Notebook (props: NotebookProps) {
             {noteListDisplayed ? (
                 <NotebookNoteList
                     notes={props.notes}
+                    onNoteClick={props.onNoteClick}
                     updateNotes={props.onUpdateNotes}
                 />
             ) : (
