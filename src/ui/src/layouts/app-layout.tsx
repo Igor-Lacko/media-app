@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
  * App layout component (sidebar and toggle, invisible in non-index pages).
  */
 export default function AppLayout() {
-    const [settings, setSettings] = useState<Settings>({darkMode: false});
+    const [settings, setSettings] = useState<Settings>({darkMode: false, hasApiKey: false});
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
 

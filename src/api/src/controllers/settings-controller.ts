@@ -15,6 +15,14 @@ export async function NukeDatabase(): Promise<boolean> {
             prisma.settings.deleteMany(),
         ]);
 
+        // Create default settings
+        await prisma.settings.create({
+            data: {
+                darkMode: false,
+                omdbApiKey: null,
+            },
+        });
+
         return true;
     } catch (error) {
         return false;
@@ -45,7 +53,7 @@ async function VerifyApiKey(
             const errorResponse = error.response?.data as { Error?: string };
             return {
                 success: false,
-                errorMessage: errorResponse.Error || "Network error or invalid API key",
+                errorMessage: (errorResponse && errorResponse.Error) || error.message
             };
         }
 
@@ -83,8 +91,9 @@ export async function GetSettings(): Promise<Settings> {
             darkMode: false,
             hasApiKey: false,
         };
-    } catch (error) {
-        console.error("Error fetching settings:", error);
+    } 
+
+    catch (error) {
         throw new Error("Could not fetch settings");
     }
 }
@@ -120,10 +129,6 @@ export async function UpdateOMDBKey(
     // Verify the key first
     const keyVerifyStatus = await VerifyApiKey(omdbKey);
     if (!keyVerifyStatus.success) {
-        console.error(
-            "OMDB API key verification failed:",
-            keyVerifyStatus.errorMessage
-        );
         return { success: false, errorMessage: keyVerifyStatus.errorMessage };
     }
 

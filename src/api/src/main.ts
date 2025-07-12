@@ -41,7 +41,7 @@ const addRouters = () => {
 // TODO remove data seeding
 const startServer = async () => {
     try {
-        await NukeDatabase();
+        //await NukeDatabase();
         await seedData();
         addRouters();
         const PORT = process.env.PORT || 3000;

@@ -90,11 +90,18 @@ async function GetFullDescriptionFromOMDb(url: string): Promise<string | undefin
 export async function InsertMovieFromOMDb(title?: string, imdbId?: string): Promise<{ success: boolean; errorMessage?: string }> {
     try {
         // Fetch api key first
-        const apiKey = await prisma.settings.findFirst({
+        const settings = await prisma.settings.findFirst({
+            where: {
+                omdbApiKey: {
+                    not: null,
+                },
+            },
             select: {
                 omdbApiKey: true,
-            },
-        }).then((settings) => settings?.omdbApiKey);
+            }
+        });
+
+        const apiKey = settings?.omdbApiKey;
 
         // Shouldn't ever happen (this request should be allowed by the FE only if hasApiKey === true), but just in case
         if (!apiKey) {
