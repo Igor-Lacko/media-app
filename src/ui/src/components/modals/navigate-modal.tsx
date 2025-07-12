@@ -33,11 +33,15 @@ export default function TwoButtonsModal(props: ModalProps) {
                     />
                 ))}
             </div>
-            <RoundedButton
-                text={"Close"}
-                extraClassNames={"bg-gray-500 dark:bg-gray-600 hover:bg-gray-600"}
-                onClick={props.onClose}
-            />
+            <div
+                className={"flex items-center justify-center mb-4 w-full"}
+            >
+                <RoundedButton
+                    text={"Close"}
+                    extraClassNames={"bg-gray-700 dark:bg-gray-600 hover:bg-gray-600 w-1/2"}
+                    onClick={props.onClose}
+                />
+            </div>
         </AbstractModal>
     )
 }

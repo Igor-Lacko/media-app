@@ -75,7 +75,7 @@ export default function ApiFormLayout(props: ApiFormProps) {
                         className={"flex flex-col items-center justify-start w-full mb-1"}
                     >
                         <span className={"text-red-500 text-sm min-h-6"}>
-                            {error ? "At least one of title or imdb id must be provided." : ""}
+                            {error ? "At least one of Title or IMDb Id must be provided." : ""}
                         </span>
                         {/** Title */}
                         <input

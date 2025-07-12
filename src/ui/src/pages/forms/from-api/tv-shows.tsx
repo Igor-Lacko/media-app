@@ -6,7 +6,7 @@ import ApiFormLayout from "layouts/api-form-layout";
  */
 export default function TvMazeShowForm() {
     return <ApiFormLayout
-        title={"Add TV Show from TVmaze"}
+        title={"Add TV Show from TV Maze API"}
         onSubmit={CreateTvShowFromTvMaze}
         placeholders={{ title: "TV Show Title", imdbId: "IMDb ID" }}
         successModalTitle={"TV Show added successfully"}
