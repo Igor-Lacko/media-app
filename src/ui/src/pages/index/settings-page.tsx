@@ -104,7 +104,6 @@ export default function SettingsPage() {
                             )}
                         >
                             {error && (
-                                // TODO add DB error here
                                 <span
                                     className={"text-red-500 dark:text-red-400 text-xs mr-5"}
                                 >
@@ -207,6 +206,10 @@ export default function SettingsPage() {
                 onClose={() => setDeleteDBModalVisible(false)}
                 onConfirm={async () => {
                     await ResetDatabase();
+                    setSettings({
+                        darkMode: settings.darkMode,
+                        hasApiKey: false
+                    })
                     setDeleteDBModalVisible(false);
                 }}
             />}
