@@ -1,6 +1,5 @@
 /**
  * Just for convenience (despite the weirdeness of this)
- * Since VsCode does not recognize window.electron
  */
 declare global {
     interface Window {
@@ -8,6 +7,7 @@ declare global {
             getFilePath: (allowed: string) => Promise<string | null>;
             isValidFile: (filePath: string) => Promise<boolean>;
             isValidVideo: (filePath: string) => Promise<boolean>;
+            openExternal: (url: string) => Promise<void>;
         };
     }
 }
@@ -18,7 +18,6 @@ declare global {
  * @returns File path as a string or null if no file was selected.
  */
 export async function GetFilePath(allowed: string): Promise<string | null> {
-    console.log("Requesting file path with extensions: ", allowed);
     if (!window.electron || !window.electron.getFilePath) {
         return null;
     }
@@ -61,4 +60,17 @@ export async function IsValidVideo(path?: string): Promise<boolean> {
     }
 
     return false;
+}
+
+/**
+ * Opens an external URL in the user's default browser.
+ * @param url URL to open.
+ */
+export async function OpenExternal(url: string): Promise<void> {
+    if (!window.electron || !window.electron.openExternal) {
+        console.log("Electron API not available for opening external URLs.");
+        return;
+    }
+
+    await window.electron.openExternal(url);
 }

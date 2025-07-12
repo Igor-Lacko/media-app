@@ -1,4 +1,4 @@
-import { app, BrowserWindow, protocol, net, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, protocol, net, ipcMain, dialog, shell } from 'electron';
 import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -60,6 +60,11 @@ ipcMain.handle('is-valid-video', async (event, filePath) => {
     const validExtensions = ['.mp4', '.mkv', '.avi', '.mov'];
     return validExtensions.some(ext => filePath.endsWith(ext));
 })
+
+// Opens a external browser
+ipcMain.handle('open-external', async (event, url) => {
+    shell.openExternal(url);
+});
 
 app.whenReady().then(() => {
     // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { GetFilePath } from "utils/other/electron-api";
+import { GetFilePath } from "electron/electron-api";
 
 export default function FileBrowseButton({initial, onChange, allowed, extraClassnames} : {
     initial: string,

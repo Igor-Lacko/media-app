@@ -1,5 +1,5 @@
 import CardProps from "utils/props/model-elements/card-props";
-import { IsValidFile } from "utils/other/electron-api";
+import { IsValidFile } from "electron/electron-api";
 import { useState, useEffect } from "react";
 import ItemNotFound from "components/other/item-not-found";
 import { useNavigate } from "react-router-dom";

@@ -14,5 +14,9 @@ contextBridge.exposeInMainWorld('electron', {
 
     isValidVideo: async (filePath) => {
         return await ipcRenderer.invoke('is-valid-video', filePath);
+    },
+
+    openExternal: async (url) => {
+        await ipcRenderer.invoke('open-external', url);
     }
 });

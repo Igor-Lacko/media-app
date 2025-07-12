@@ -7,6 +7,7 @@ import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
 import { UpdateOMDBKey } from "data/crud/update";
+import { OpenExternal } from "electron/electron-api";
 
 export default function SettingsPage() {
     // Current settings
@@ -33,7 +34,7 @@ export default function SettingsPage() {
 
     // The little gray text
     const apiKeyMessage = settings.hasApiKey ? "Your api key is set!" :
-        "Will enable you to fill movie data automatically using the OMDB API."
+        "Will enable you to fill movie data automatically using the OMDB API. Avaliable at"
 
     // Ref to control the input field (is unused if the key is set already)
     const keyRef = useRef("");
@@ -80,6 +81,12 @@ export default function SettingsPage() {
                     )}
                 >
                     {apiKeyMessage}
+                    {!settings.hasApiKey && <button
+                        className={"text-blue-500 dark:text-blue-400 hover:underline ml-1 cursor-pointer"}
+                        onClick={async () => await OpenExternal("https://www.omdbapi.com")}
+                    >
+                        https://www.omdbapi.com
+                    </button>}
                 </span>
                 {settings.hasApiKey ? (
                     <RoundedButton

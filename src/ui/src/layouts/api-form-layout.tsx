@@ -57,7 +57,8 @@ export default function ApiFormLayout(props: ApiFormProps) {
                     onClick={() => navigate(-1)}
                 />
             </div>
-            {/** Form component */}
+            {/** Attribution and the form component */}
+            {props.attributionComponent}
             <div
                 className={"flex items-center justify-center w-full h-24/25"}
             >

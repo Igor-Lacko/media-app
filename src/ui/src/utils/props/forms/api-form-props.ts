@@ -10,4 +10,7 @@ export default interface ApiFormProps {
     successModalTitle: string;
     successModalMessage: string;
     errorModalTitle: string;
+
+    // Attribution
+    attributionComponent: React.ReactNode;
 }
