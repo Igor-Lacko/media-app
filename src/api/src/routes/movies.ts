@@ -51,14 +51,11 @@ router.post("/omdb", async (req, res) => {
         return;
     }
 
-    const result = await InsertMovieFromOMDb(title);
-    if (result.success) {
-        res.status(201).json({ message: "Movie inserted successfully from OMDb" });
-    }
-
-    else {
-        res.status(500).json({ error: result.errorMessage || "Failed to insert movie from OMDb" });
-    }
+    await InsertMovieFromOMDb(title)
+    .then((result) => {
+        result.success ? res.status(201).json({ message: "Movie created successfully" }) :
+        res.status(500).json({ error: result.errorMessage || "Failed to create movie from OMDb" });
+    })
 });
 
 // Movie updates

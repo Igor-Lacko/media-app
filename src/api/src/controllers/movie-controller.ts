@@ -70,7 +70,7 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
  */
 async function GetFullDescriptionFromOMDb(apiKey: string, title: string): Promise<string | undefined> {
     return await axios.get<OMDbMovie>(
-        `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
+        `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}&plot=full`
     )
     .then((response) => {
         if (response.data.Response !== "True") {
@@ -110,8 +110,11 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
                 `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
             );
 
-            if (response.data.Response === "False") {
-                return { success: false, errorMessage: response.data.Error || "Movie not found." };
+            console.log(`OMDb API response for movie: ${title}`, response.data);
+
+            if (response.data.Response !== "True") {
+                console.error(`OMDb API error: ${response.data.Error}`);
+                return { success: false, errorMessage: response.data.Error || "Movie not found." }
             }
 
             // Covert genre1, genre2, ... to array of Genre objects
@@ -131,13 +134,16 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
                             genre: genre
                         }))
                     },
-                    rating: OMDbRatingsToDB(response.data.Ratings || []),
+                    rating: OMDbRatingsToDB(response.data.Metascore!, response.data.imdbRating!),
                 }
             });
+
+            return { success: true };
         }
 
         // Fetch error
         catch (error) {
+            console.error("Error fetching movie from OMDb: " + error);
             if (axios.isAxiosError(error)) {
                 const errorResponse = error.response?.data as { Error?: string };
                 return {
@@ -145,11 +151,17 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
                     errorMessage: errorResponse.Error || "Unexpected error while fetching movie from OMDb",
                 };
             }
+
+            return {
+                success: false,
+                errorMessage: "An unexpected error occurred while fetching movie from OMDb",
+            };
         }
     }
 
     // Other errors (prisma, ... etc.)
     catch (error) {
+        console.error("Error inserting movie from OMDb: " + error);
         return {
             success: false,
             errorMessage: error instanceof Error ? error.message : "An unexpected error occurred while inserting movie from OMDb",
@@ -215,8 +227,6 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
                 },
             },
         });
-
-        console.log(`Inserted movie: ${movie.title}`);
 
         return true;
     } catch (error) {

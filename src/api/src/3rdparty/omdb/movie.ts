@@ -15,7 +15,8 @@ export default interface OMDbMovie {
     Plot?: string;
 
     // Ratings
-    Ratings?: { Source: string; Value: string }[];
+    Metascore?: string;
+    imdbRating?: string;
 
     // Status ("True"/"False")
     Response: string;

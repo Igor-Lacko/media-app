@@ -36,7 +36,7 @@ export default function MediaItemList(props: ListProps) {
                     key={item.identifier}
                     to={`${location.pathname}/${item.identifier}`}
                     className={classNames(
-                        "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200",
+                        "flex w-full p-4 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 justify-between items-center",
                         {
                             "bg-gray-200 dark:bg-gray-900": index % 2 === 0,
                             "bg-white dark:bg-gray-800": index % 2 !== 0,
@@ -63,11 +63,7 @@ export default function MediaItemList(props: ListProps) {
                     )}
                     <div
                         className={classNames(
-                            "flex ml-3 flex-col h-full items-start justify-start",
-                            {
-                                "w-1/9": props.showThumbnail,
-                                "w-3/9": !props.showThumbnail
-                            }
+                            "flex ml-3 flex-col h-full items-start justify-start w-3/9",
                         )}
                     >
                         <h3
@@ -81,7 +77,7 @@ export default function MediaItemList(props: ListProps) {
                         )}
                     </div>
                     <div
-                        className={"flex h-full w-2/10 items-center justify-center"}
+                        className={"flex h-full w-1/10 items-center justify-center"}
                     >
                         {item.genres && (
                             <span
@@ -92,7 +88,7 @@ export default function MediaItemList(props: ListProps) {
                         )}
                     </div>
                     <div
-                        className={"flex flex-col h-full w-2/10 items-center justify-center"}
+                        className={"flex flex-col h-full w-1/10 items-center justify-center"}
                     >
                         {props.showRating && <span className={"text-lg text-yellow-500"}>
                             {item.rating !== null && item.rating !== undefined ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />

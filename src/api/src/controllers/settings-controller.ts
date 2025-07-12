@@ -134,6 +134,8 @@ export async function UpdateOMDBKey(
             },
         });
 
+        console.log("OMDB API key updated successfully.");
+
         return { success: true };
     } catch (error) {
         return { success: false, errorMessage: error };

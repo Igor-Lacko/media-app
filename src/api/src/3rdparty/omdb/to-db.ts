@@ -1,12 +1,12 @@
 import { Genre } from "generated/prisma/enums";
 
 /**
- * Converts a runtime string from the OMDb API to a number representing minutes.
+ * Converts a runtime string from the OMDb API to a number representing seconds.
  * @param runtime A string representing the runtime, e.g., "120 min".
- * @returns The runtime in minutes as a number.
+ * @returns The runtime in seconds as a number.
  */
 export function OMDbRuntimeToDB(runtime?: string): number {
-    return parseInt(runtime.replace(' min', ''), 10);
+    return parseInt(runtime.replace(' min', ''), 10) * 60 || 0;
 }
 
 /**
@@ -35,19 +35,27 @@ export function OMDbGenresToDB(genres: string): Genre[] {
 }
 
 /**
- * Converts an array of ratings from the OMDb API to a number (average rating).
- * @param ratings An array of rating objects from the OMDb API.
+ * Averages the Metascore and IMDB ratings from the OMDb API.
+ * @param metascore The Metascore from the OMDb API.
+ * @param imdbRating The IMDB rating from the OMDb API.
  * @returns The average rating as a number.
  */
-export function OMDbRatingsToDB(ratings: { Source: string; Value: string }[]): number {
-    // Avoid zero division
-    if (ratings.length === 0) {
+export function OMDbRatingsToDB(metascore: string, imdbRating: string): number {
+    const metascoreValue = parseFloat(metascore);
+    const imdbRatingValue = parseFloat(imdbRating);
+
+    if (isNaN(metascoreValue) && isNaN(imdbRatingValue)) {
         return 0;
     }
 
-    // Sum(ratings.Value) / |ratings|
-    return ratings.reduce((sum, rating) => {
-        const value = parseFloat(rating.Value);
-        return isNaN(value) ? sum : sum + value;
-    }, 0) / ratings.length;
+    else if (isNaN(metascoreValue)) {
+        return imdbRatingValue;
+    }
+
+    else if (isNaN(imdbRatingValue)) {
+        return metascoreValue;
+    }
+
+    // Metascore is /100, imdb is /10
+    return ((metascoreValue / 10) + imdbRatingValue) / 2;
 }
