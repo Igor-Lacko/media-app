@@ -40,11 +40,12 @@ export async function CreateDataWithId<T>(url: string, data: T, id: number): Pro
 /**
  * Creates a movie from OMDb by title.
  * @param title Title of the movie to create.
+ * @param imdbId Optional IMDb ID of the movie to create. Has precedence.
  * @return Promise resolving to an object indicating success or failure, with an optional error message.
  */
-export async function CreateMovieFromOMDb(title: string): Promise<{ success: boolean, errorMessage?: string }> {
+export async function CreateMovieFromOMDb(title?: string, imdbId?: string): Promise<{ success: boolean, errorMessage?: string }> {
     try {
-        const response = await axios.post(`/api/movies/omdb`, { title });
+        const response = await axios.post(`/api/movies/omdb`, { title, imdbId });
         if (response.status === 201) {
             return { success: true };
         }
@@ -69,4 +70,40 @@ export async function CreateMovieFromOMDb(title: string): Promise<{ success: boo
             errorMessage: "An unexpected error occurred while creating movie from OMDb"
         };        
     }
+}
+
+/**
+ * Creates a TV show from TV Maze by title or IMDb ID.
+ * @param title Title of the TV show to create.
+ * @param imdbId IMDb ID of the TV show to create. Has precedence.
+ * @note At least one of title or imdbId must be provided.
+ * @return Promise resolving to an object indicating success or failure, with an optional error message.
+ */
+export async function CreateTvShowFromTvMaze(title?: string, imdbId?: string): Promise<{ success: boolean, errorMessage?: string }> {
+    return await axios.post(`/api/shows/tv-maze`, { title, imdbId })
+    .then((response) => {
+        if (response.status === 201) {
+            return { success: true };
+        }
+
+        return {
+            success: false,
+            errorMessage: response.data.error || "Failed to create TV show from TV Maze"
+        };
+    })
+    .catch((error) => {
+        if (axios.isAxiosError(error)) {
+            console.error("Error creating TV show from TV Maze:", error);
+            const errorResponse = error.response?.data as { error: string };
+            return {
+                success: false,
+                errorMessage: errorResponse?.error || "Failed to create TV show from TV Maze"
+            };
+        }
+
+        return {            
+            success: false,
+            errorMessage: "An unexpected error occurred while creating TV show from TV Maze"
+        };        
+    });
 }

@@ -48,6 +48,7 @@ const rootContainer: ReactNode = (
                     <Route path="movies/*">
                         <Route index element={<MoviePage />} />
                         <Route path="add" element={<AddMoviePage />} />
+                        {/** TODO this should be avaliable only if api key is set */}
                         <Route path="from-api" element={<OMDbMovieForm />} />
                         <Route path=":id" element={<MovieDetail />} />
                         <Route path=":id/edit" element={<AddMoviePage />} />

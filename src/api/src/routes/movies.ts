@@ -43,10 +43,10 @@ router.post("/", async (req, res) => {
 
 // Setter for inserting a movie from OMDb
 router.post("/omdb", async (req, res) => {
-    const title = req.body.title;
+    const { title, imdbId } = req.body;
 
     // Should never happen
-    if (!title) {
+    if (!title && !imdbId) {
         res.status(400).json({ error: "Movie title is required" });
         return;
     }

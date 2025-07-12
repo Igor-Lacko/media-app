@@ -64,14 +64,11 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
 /**
  * Makes a second OMDb request with the plot param set to "full" and returns the plot.
  * @note Pretty inefficient, but the API doesn't return both at once and idk of a other way to do it.
- * @param apiKey API key for the OMDb API.
- * @param title Movie title to search for. 
+ * @param url URL to the OMDb API with the movie title or IMDb ID.
  * @returns Full plot description if found, null otherwise.
  */
-async function GetFullDescriptionFromOMDb(apiKey: string, title: string): Promise<string | undefined> {
-    return await axios.get<OMDbMovie>(
-        `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}&plot=full`
-    )
+async function GetFullDescriptionFromOMDb(url: string): Promise<string | undefined> {
+    return await axios.get<OMDbMovie>(url + "&plot=full")
     .then((response) => {
         if (response.data.Response !== "True") {
             return undefined;
@@ -90,7 +87,7 @@ async function GetFullDescriptionFromOMDb(apiKey: string, title: string): Promis
  * @param title Title of the movie to fetch.
  * @returns An object indicating success or failure, with an optional error message.
  */
-export async function InsertMovieFromOMDb(title: string): Promise<{ success: boolean; errorMessage?: string }> {
+export async function InsertMovieFromOMDb(title?: string, imdbId?: string): Promise<{ success: boolean; errorMessage?: string }> {
     try {
         // Fetch api key first
         const apiKey = await prisma.settings.findFirst({
@@ -106,9 +103,9 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
 
         // OMDb request
         try {
-            const response = await axios.get<OMDbMovie>(
-                `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`
-            );
+            const url = imdbId ? `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}` :
+            `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
+            const response = await axios.get<OMDbMovie>(url);
 
             if (response.data.Response !== "True") {
                 return { 
@@ -121,7 +118,7 @@ export async function InsertMovieFromOMDb(title: string): Promise<{ success: boo
             const genreArray = OMDbGenresToDB(response.data.Genre!);
 
             // Full description
-            const longDescription = await GetFullDescriptionFromOMDb(apiKey, title);
+            const longDescription = await GetFullDescriptionFromOMDb(url);
 
             await prisma.movie.create({
                 data: {
