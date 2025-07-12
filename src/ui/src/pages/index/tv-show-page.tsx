@@ -12,7 +12,6 @@ import ListProps from "utils/props/lists/list-props";
 import LoadingPage from "pages/other/loading-page";
 import { SortMedia } from "utils/other/sort-media";
 import { useContext, useState } from "react";
-import SettingsContext from "context/settings-context";
 import { useNavigate } from "react-router-dom";
 import TwoButtonsModal from "components/modals/navigate-modal";
 

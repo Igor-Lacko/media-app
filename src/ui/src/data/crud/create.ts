@@ -36,3 +36,37 @@ export async function CreateDataWithId<T>(url: string, data: T, id: number): Pro
         return false;
     }
 }
+
+/**
+ * Creates a movie from OMDb by title.
+ * @param title Title of the movie to create.
+ * @return Promise resolving to an object indicating success or failure, with an optional error message.
+ */
+export async function CreateMovieFromOMDb(title: string): Promise<{ success: boolean, errorMessage?: string }> {
+    try {
+        const response = await axios.post(`/api/movies/omdb`, { title });
+        if (response.status === 201) {
+            return { success: true };
+        }
+
+        return {
+            success: false,
+            errorMessage: response.data.error || "Failed to create movie from OMDb"
+        };
+    }
+
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            const errorResponse = error.response?.data as { error: string };
+            return {
+                success: false,
+                errorMessage: errorResponse?.error || "Failed to create movie from OMDb"
+            };
+        }
+
+        return {            
+            success: false,
+            errorMessage: "An unexpected error occurred while creating movie from OMDb"
+        };        
+    }
+}

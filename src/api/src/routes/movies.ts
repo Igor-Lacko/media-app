@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { DeleteMovie, GetMovieById, GetMovies, InsertMovie, UpdateMovie } from "controllers/movie-controller";
+import { DeleteMovie, GetMovieById, GetMovies, InsertMovie, InsertMovieFromOMDb, UpdateMovie } from "controllers/movie-controller";
 
 const router = Router();
 
@@ -38,6 +38,26 @@ router.post("/", async (req, res) => {
 
     else {
         res.status(500).json({ error: "Failed to insert movie" });
+    }
+});
+
+// Setter for inserting a movie from OMDb
+router.post("/omdb", async (req, res) => {
+    const title = req.body.title;
+
+    // Should never happen
+    if (!title) {
+        res.status(400).json({ error: "Movie title is required" });
+        return;
+    }
+
+    const result = await InsertMovieFromOMDb(title);
+    if (result.success) {
+        res.status(201).json({ message: "Movie inserted successfully from OMDb" });
+    }
+
+    else {
+        res.status(500).json({ error: result.errorMessage || "Failed to insert movie from OMDb" });
     }
 });
 
