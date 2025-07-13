@@ -12,7 +12,6 @@ import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
 import WatchlistRouter from "routes/to-watch";
 import CheckRouter from "routes/check";
-
 export const viteNodeApp = express();
 
 console.log("Starting Express server...");

@@ -11,6 +11,6 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=file:/app/db/database.db
       - PRISMA_CLIENT_OUTPUT=/app/api/src/generated/prisma
-    command: npm run dev
+    command: sh -c "npx prisma db push --schema=/app/api/prisma/schema.prisma && npm run dev"
 volumes:
   db:

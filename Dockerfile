@@ -21,7 +21,7 @@ COPY src/shared ./shared
 WORKDIR /app/api
 
 # Generate Prisma client
-RUN npx prisma generate --schema=./prisma/schema.prisma
+RUN npx prisma generate
 
 # Port 3000 ig
 EXPOSE 3000
