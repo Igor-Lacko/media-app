@@ -7,7 +7,7 @@ import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
 import { UpdateOMDBKey } from "data/crud/update";
-import { OpenExternal } from "electron/electron-api";
+import { OpenExternal } from "utils/other/electron-api";
 
 export default function SettingsPage() {
     // Current settings

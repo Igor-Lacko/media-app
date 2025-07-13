@@ -1,7 +1,7 @@
 import CarouselProps from "utils/props/model-elements/last-watched-props";
 import { FaPlay } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { IsValidFile } from "electron/electron-api";
+import { IsValidFile } from "utils/other/electron-api";
 import { useNavigate } from "react-router-dom";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 

@@ -1,6 +1,7 @@
 packages:
   - src/api
   - src/ui
+  - src/electron
   - src/shared
 
 onlyBuiltDependencies:

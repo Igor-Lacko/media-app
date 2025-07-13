@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
 import { FetchData, FetchLastWatchedItems, FetchToWatchItems } from "data/crud/read";
-import { IsValidVideo } from "electron/electron-api";
+import { IsValidVideo } from "utils/other/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";

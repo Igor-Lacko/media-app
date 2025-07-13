@@ -1,0 +1,16 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "electron.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron --gtk-version=3 ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^37.2.1"
+  }
+}

@@ -4,9 +4,7 @@
   "main": "main.ts",
   "type": "commonjs",
   "scripts": {
-    "dev": "vite --host 127.0.1",
-    "build": "vite build",
-    "start": "node dist/main.js"
+    "dev": "vite --host 127.0.1"
   },
   "keywords": [],
   "author": "",

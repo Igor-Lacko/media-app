@@ -3,14 +3,8 @@ import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-const DEV_SERVER_URL = 'http://localhost:5173/';
+const SERVER_URL = 'http://localhost:5173/';
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DIST_PATH = `file://${join(__dirname, '../dist/index.html')}`
-
-protocol.registerSchemesAsPrivileged([
-    { scheme: 'local', privileges: { stream: true, bypassCSP: true, } }
-]);
-
 
 function createWindow() {
     const isDev = !app.isPackaged;
@@ -19,18 +13,17 @@ function createWindow() {
         height: 600,
         width: 800,
         webPreferences: {
-            preload: join(__dirname, 'electron/preload.js'),
+            preload: join(__dirname, '/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            devTools: false,
 
             // Local file access
             webSecurity: false
         },
     });
 
-    const startUrl = isDev ? DEV_SERVER_URL : DIST_PATH;
-
-    mainWindow.loadURL(startUrl);
+    mainWindow.loadURL(SERVER_URL);
 }
 
 // Gets a absolute file path, allows only files ending with "extensions" to be selected

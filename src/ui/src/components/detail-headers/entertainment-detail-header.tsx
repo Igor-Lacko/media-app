@@ -6,7 +6,7 @@ import DetailImage from "components/image/detail-image";
 import GenreAdapter from "utils/adapters/genre-adapter";
 import DetailProps from "utils/props/detail/detail-props";
 import { LengthToTimeHeader } from "utils/adapters/length-to-time";
-import { IsValidFile } from "electron/electron-api";
+import { IsValidFile } from "utils/other/electron-api";
 import { useEffect, useState } from "react";
 import ItemNotFound from "components/other/item-not-found";
 
