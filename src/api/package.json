@@ -2,15 +2,18 @@
   "name": "api",
   "version": "1.0.0",
   "main": "main.ts",
+  "type": "commonjs",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
-    "@prisma/client": "^6.10.1",
+    "@prisma/client": "6.11.1",
     "axios": "^1.10.0",
     "cors": "^2.8.5",
     "express": "^5.1.0"
@@ -18,12 +21,12 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
-    "prisma": "^6.10.1",
+    "prisma": "^6.11.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vite-plugin-node": "^5.0.1"
+    "vite": "7.0.4",
+    "vite-plugin-node": "7.0.0"
   },
   "description": ""
 }

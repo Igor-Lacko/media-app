@@ -135,11 +135,14 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Mock data
 mock/
 
+# TODO file
 TODO.txt
 
+# DB
 *.db
-*storybook.log
-storybook-static
-*.storybook
+
+# Prisma generated files
+src/api/src/generated/

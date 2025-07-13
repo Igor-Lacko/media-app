@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { VitePluginNode } from "vite-plugin-node";
-const path = require("path");
+import * as path from "path";
 
 export default defineConfig({
     // ...vite configures
@@ -51,6 +51,13 @@ export default defineConfig({
             swcOptions: {},
         }),
     ],
+    build: {
+        target: "node22",
+        outDir: "dist",
+        rollupOptions: {
+            external: ["process", "path", "url", "node:process", "node:path", "node:url"]
+        }
+    },
     resolve: {
         alias: {
             // This works for some reason

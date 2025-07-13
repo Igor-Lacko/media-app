@@ -65,7 +65,7 @@ export default function HomePage() {
         <div
             className={"flex min-w screen min-h-screen flex-col flex-grow items-start overflow-y-auto mt-15 justify-center py-0 m-0"}
         >
-            {validLastWatched.length > 0 ? (
+            {validLastWatched.length > 0 && (
                 <HomePageSection
                     title={"Continue Watching"}
                     extraClassNames={"w-full h-full"}
@@ -76,7 +76,7 @@ export default function HomePage() {
                         extraClassNames={"w-4/7 h-full"}
                     />
                 </HomePageSection>
-            ) : <span>dadasd</span>}
+            )}
             <HomePageSection
                 title={"Favorites"}
                 extraClassNames={"mt-50"}

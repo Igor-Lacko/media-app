@@ -1,5 +1,5 @@
-import Genre from "shared/enum/genre";
-import WatchStatus from "shared/enum/watch-status";
+import Genre from "../enum/genre";
+import WatchStatus from "../enum/watch-status";
 /**
  * Common interface for movies/shows/lectures that can be displayed in a card.
  */

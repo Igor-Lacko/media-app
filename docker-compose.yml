@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - "db:/app/db"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:/app/db/database.db
+      - PRISMA_CLIENT_OUTPUT=/app/api/src/generated/prisma
+    command: npm run dev
+volumes:
+  db:

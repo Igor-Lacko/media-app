@@ -12,8 +12,6 @@ import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
 import WatchlistRouter from "routes/to-watch";
 import CheckRouter from "routes/check";
-import { NukeDatabase } from "controllers/settings-controller";
-import seedData from "utils/insert-mock-data";
 
 export const viteNodeApp = express();
 
@@ -38,13 +36,10 @@ const addRouters = () => {
         viteNodeApp.use("/api/check", CheckRouter);
 }
 
-// TODO remove data seeding
 const startServer = async () => {
     try {
-        await NukeDatabase();
-        await seedData();
         addRouters();
-        const PORT = process.env.PORT || 3000;
+        const PORT = 3000;
         viteNodeApp.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
