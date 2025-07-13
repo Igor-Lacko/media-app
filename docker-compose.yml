@@ -2,7 +2,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: src/api/Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -12,5 +12,12 @@ services:
       - DATABASE_URL=file:/app/db/database.db
       - PRISMA_CLIENT_OUTPUT=/app/api/src/generated/prisma
     command: sh -c "npx prisma db push --schema=/app/api/prisma/schema.prisma && npm run dev"
+  ui:
+    build:
+      context: .
+      dockerfile: src/ui/Dockerfile
+    ports:
+      - "5367:5367"
+    command: npm run dev
 volumes:
   db:

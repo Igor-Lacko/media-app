@@ -3,11 +3,6 @@ import { VitePluginNode } from "vite-plugin-node";
 import * as path from "path";
 
 export default defineConfig({
-    // ...vite configures
-    server: {
-        // vite server configs, for details see [vite doc](https://vitejs.dev/config/#server-host)
-        port: 3000,
-    },
     plugins: [
         ...VitePluginNode({
             // Nodejs native Request adapter
@@ -51,6 +46,11 @@ export default defineConfig({
             swcOptions: {},
         }),
     ],
+    // Localhost
+    server: {
+        host: "127.0.0.1",
+        port: 3000
+    },
     build: {
         target: "node22",
         outDir: "dist",

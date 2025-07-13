@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/main.tsx",
   "scripts": {
-    "dev": "vite --host 127.0.1"
+    "dev": "vite --host"
   },
   "type": "module",
   "keywords": [],
@@ -28,6 +28,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
-    "typeface-lobster": "^1.1.13"
+    "typeface-lobster": "^1.1.13",
+    "react-router-dom": "7.6.3"
   }
 }
