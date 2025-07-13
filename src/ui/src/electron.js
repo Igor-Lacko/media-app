@@ -22,7 +22,9 @@ function createWindow() {
             preload: join(__dirname, 'electron/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
-            webSecurity: !isDev
+
+            // Local file access
+            webSecurity: false
         },
     });
 
@@ -36,7 +38,6 @@ ipcMain.handle('get-file', async (event, allowed) => {
     const extensions = allowed === "video" ? ['mp4', 'mkv', 'avi', 'mov'] :
                         allowed === "image" ? ['jpg', 'jpeg', 'png', 'gif'] :
                         ["*"];
-    console.log(`Opening file dialog with extcxcxzensions: ${extensions}`);
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
         filters: [
@@ -51,7 +52,6 @@ ipcMain.handle('get-file', async (event, allowed) => {
 
 // Checks if a file exists
 ipcMain.handle('check-file-exists', async (event, filePath) => {
-    console.log(`Checking if file exists: ${filePath}`);
     return existsSync(filePath);
 });
 
@@ -67,11 +67,6 @@ ipcMain.handle('open-external', async (event, url) => {
 });
 
 app.whenReady().then(() => {
-    // To access local files (from https://stackoverflow.com/questions/50272451/electron-js-images-from-local-file-system)
-    protocol.handle('local', function(request) {
-        return net.fetch('file://' + request.url.slice('local://'.length));
-    });
-
     createWindow();
 
     app.on('activate', () => {

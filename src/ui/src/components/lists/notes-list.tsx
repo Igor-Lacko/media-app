@@ -15,7 +15,6 @@ export default function NotesList({ notes, updateNotes }: { notes: Note[], updat
                 />
     }
 
-    console.log("Notes list", notes);
     return (
             <div
                 className={"flex flex-col overflow-x-hidden overflow-y-auto w-full h-full bg-white dark:bg-gray-800"}

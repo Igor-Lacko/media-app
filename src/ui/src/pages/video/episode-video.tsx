@@ -6,6 +6,7 @@ import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
 import NotFoundPage from "pages/other/page-not-found";
+import { useRef } from "react";
 
 /**
  * Episode video player page.
@@ -16,6 +17,9 @@ export default function EpisodeVideo() {
     // Fetch season and show for title
     const {model: season, isLoading: seasonLoading} = useFetchById<Season>("/api/seasons", "seasonId");
     const {model: show, isLoading: showLoading} = useFetchById<TvShow>("/api/shows");
+
+    // Video ref
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     if (episodeLoading || seasonLoading || showLoading) {
         return <LoadingPage />;
@@ -40,6 +44,7 @@ export default function EpisodeVideo() {
                 await UpdateLength<Episode>("/api/episodes", episode, length);
             }}
             initialPlaybackTime={episode.continueAt || 0}
+            ref={videoRef}
         />
     )
 }

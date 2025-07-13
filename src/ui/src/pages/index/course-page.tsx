@@ -8,7 +8,7 @@ import { FetchData } from "data/crud/read";
 import MediaItemList from "components/lists/media-item-list";
 import ControlBarProps from "utils/props/control-elements/control-bar-props";
 import ListProps from "utils/props/lists/list-props";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AddCoursePage from "../forms/add-course-page";
 import LoadingPage from "pages/other/loading-page";
 import { SortMedia } from "utils/other/sort-media";
@@ -18,6 +18,9 @@ export default function CoursePage() {
     const [sort, setSort] = useState(SortKey.NAME);
     const [search, setSearch] = useState("");
     const [ascending, setAscending] = useState(true);
+
+    // To navigate to the add course page
+    const navigate = useNavigate();
 
     // Fetch courses
     const {data, isLoading} = useQuery({
@@ -35,7 +38,7 @@ export default function CoursePage() {
         onFilterChange: () => {},
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         onSortOrderChange: (asc: boolean) => { setAscending(asc); },
-        path: "/courses"
+        onAddClick: () => navigate("/courses/add"),
     }
 
     const CourseListProps: ListProps = {

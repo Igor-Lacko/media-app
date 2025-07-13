@@ -52,7 +52,6 @@ export default function HomePage() {
                 }
             }));
 
-            console.log("Valid last watched items:", validItems);
             setValidLastWatched(validItems);
         }
         filterInvalidVideos();

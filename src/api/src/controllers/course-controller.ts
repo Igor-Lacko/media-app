@@ -28,7 +28,6 @@ export async function GetCourses() : Promise<Course[]> {
     }
 
     catch (error) {
-        console.error("Error fetching Courses: " + error);
         return [];
     }
 }
@@ -63,7 +62,6 @@ export async function GetCourseById(id: number): Promise<Course | null> {
     }
 
     catch (error) {
-        console.error("Error fetching Course by ID: " + error);
         return null;
     }
 }
@@ -95,12 +93,10 @@ export async function InsertCourse(course: Course): Promise<boolean> {
             }
         });
 
-        console.log(`Inserted Course: ${course.title}`);
         return true;
     }
 
     catch (error) {
-        console.error("Error inserting Course: " + error);
         return false;
     }
 }
@@ -113,7 +109,6 @@ export async function InsertCourse(course: Course): Promise<boolean> {
  */
 export async function UpdateCourse(id: number, CourseData: Partial<Course>): Promise<boolean>  {
     const sanitizedCourse = SanitizeClientCourseToDB(CourseData as Course);
-    console.log("Updating Course with ID:", id);
 
     // Update lectures first (if provided)
     if(sanitizedCourse.lectures) {
@@ -150,7 +145,6 @@ export async function UpdateCourse(id: number, CourseData: Partial<Course>): Pro
     }
 
     catch (error) {
-        console.error("Error updating Course: " + error);
         return false;
     }
 }
@@ -161,8 +155,6 @@ export async function UpdateCourse(id: number, CourseData: Partial<Course>): Pro
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteCourse(id: number): Promise<boolean> {
-    console.log("Deleting Course with ID:", id);
-
     // Lectures deleted by cascade
     try {
         await prisma.course.delete({
@@ -175,7 +167,6 @@ export async function DeleteCourse(id: number): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error deleting Course: " + error);
         return false;
     }
 } 

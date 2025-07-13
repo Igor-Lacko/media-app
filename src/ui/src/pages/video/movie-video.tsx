@@ -4,9 +4,13 @@ import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
 import NotFoundPage from "pages/other/page-not-found";
+import { useRef } from "react";
 
 export default function MovieVideo() {
     const {model: movie, isLoading} = useFetchById<Movie>("/api/movies", "id");
+
+    // Video ref
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     if (isLoading) {
         return <LoadingPage />;
@@ -30,6 +34,7 @@ export default function MovieVideo() {
                 await UpdateLength<Movie>("/api/movies", movie!, length);
             }}
             initialPlaybackTime={movie!.continueAt || 0}
+            ref={videoRef}
         />
     );
 }

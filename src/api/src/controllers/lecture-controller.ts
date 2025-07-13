@@ -20,7 +20,6 @@ export async function GetLectureById(id: number): Promise<Lecture | null> {
             }
         });
         if (!lecture) {
-            console.error(`Lecture with ID ${id} not found.`);
             return null;
         }
 
@@ -28,7 +27,6 @@ export async function GetLectureById(id: number): Promise<Lecture | null> {
     }
 
     catch (error) {
-        console.error("Error fetching lecture by ID: " + error);
         return null;
     }
 }
@@ -40,7 +38,6 @@ export async function GetLectureById(id: number): Promise<Lecture | null> {
  * @returns True if the creation was successful, false otherwise.
  */
 export async function CreateLecture(lecture: Lecture, courseId: number): Promise<boolean> {
-    console.log("Creating new lecture:", lecture);
     const sanitizedLecture = SanitizeClientLectureToDB(lecture);
 
     try {
@@ -76,7 +73,6 @@ export async function CreateLecture(lecture: Lecture, courseId: number): Promise
     }
 
     catch (error) {
-        console.error("Error creating lecture: " + error);
         return false;
     }
 }
@@ -89,7 +85,6 @@ export async function CreateLecture(lecture: Lecture, courseId: number): Promise
  */
 export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Promise<boolean> {
     const sanitizedLecture = SanitizeClientLectureToDB(lecture as Lecture);
-    console.log("Updating lecture with ID:", id);
 
     try {
         await prisma.lecture.update({
@@ -115,7 +110,6 @@ export async function UpdateLecture(id: number, lecture: Partial<Lecture>): Prom
     }
 
     catch (error) {
-        console.error("Error updating lecture: " + error);
         return false;
     }
 }
@@ -137,7 +131,6 @@ export async function DeleteLecture(id: number): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error deleting lecture: " + error);
         return false;
     }
 }

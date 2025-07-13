@@ -40,7 +40,6 @@ export default async function SubmitSeason(
     }
 
     catch (error) {
-        console.error("Error submitting season:", error);
         return false;
     }
 }

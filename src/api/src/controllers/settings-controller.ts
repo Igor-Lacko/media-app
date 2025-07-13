@@ -138,9 +138,6 @@ export async function UpdateOMDBKey(
                 omdbApiKey: omdbKey,
             },
         });
-
-        console.log("OMDB API key updated successfully.");
-
         return { success: true };
     } catch (error) {
         return { success: false, errorMessage: error };
@@ -160,8 +157,9 @@ export async function DeleteOMDBKey(): Promise<boolean> {
         });
 
         return true;
-    } catch (error) {
-        console.error("Error deleting OMDB key:", error);
+    } 
+
+    catch (error) {
         return false;
     }
 }

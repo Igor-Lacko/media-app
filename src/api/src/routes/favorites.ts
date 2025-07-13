@@ -10,7 +10,6 @@ router.get("/", async (_req, res) => {
     }
 
     catch (error) {
-        console.error("Error fetching favorites: ", error);
         res.status(500).json({ error: "Failed to fetch favorites" });
     }
 });

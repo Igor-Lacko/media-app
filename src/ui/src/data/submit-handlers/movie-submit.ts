@@ -29,7 +29,6 @@ export default async function SubmitMovie(movie: Movie, updating: boolean, id: n
     }
 
     catch (error) {
-        console.error("Error submitting movie:", error);
         return false;
     }
 }

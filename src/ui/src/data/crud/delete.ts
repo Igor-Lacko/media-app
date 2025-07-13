@@ -13,7 +13,6 @@ export default async function DeleteData(url : string, id : number) : Promise<bo
     }
 
     catch (error) {
-        console.error("Error deleting data:", error);
         return false;
     }
 }
@@ -35,7 +34,6 @@ export async function DeleteAPIKey(): Promise<{ success: boolean, errorMessage?:
     }
 
     catch (error) {
-        console.error("Error deleting OMDB key:", error);
         return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
     }
 }
@@ -48,7 +46,6 @@ export async function ResetDatabase(): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error resetting database:", error);
         return false;
     }
 }

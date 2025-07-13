@@ -32,7 +32,6 @@ export async function GetFilePath(allowed: string): Promise<string | null> {
  */
 export async function IsValidFile(path: string): Promise<boolean> {
     if(!window.electron || !window.electron.isValidFile) {
-        console.log("Electron API not available for file validation.");
         return false;
     }
 
@@ -46,7 +45,6 @@ export async function IsValidFile(path: string): Promise<boolean> {
  */
 export async function IsValidVideo(path?: string): Promise<boolean> {
     if(!window.electron || !window.electron.isValidVideo) {
-        console.log("Electron API not available for video validation.");
         return false;
     }
 
@@ -68,7 +66,6 @@ export async function IsValidVideo(path?: string): Promise<boolean> {
  */
 export async function OpenExternal(url: string): Promise<void> {
     if (!window.electron || !window.electron.openExternal) {
-        console.log("Electron API not available for opening external URLs.");
         return;
     }
 

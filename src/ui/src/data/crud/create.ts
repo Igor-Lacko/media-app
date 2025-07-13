@@ -13,7 +13,6 @@ export async function CreateData<T>(url: string, data: T): Promise<boolean> {
     } 
 
     catch (error) {
-        console.error("Error creating data:", error);
         return false;
     }
 }
@@ -32,7 +31,6 @@ export async function CreateDataWithId<T>(url: string, data: T, id: number): Pro
     } 
 
     catch (error) {
-        console.error("Error creating data with ID:", error);
         return false;
     }
 }
@@ -93,7 +91,6 @@ export async function CreateTvShowFromTvMaze(title?: string, imdbId?: string): P
     })
     .catch((error) => {
         if (axios.isAxiosError(error)) {
-            console.error("Error creating TV show from TV Maze:", error);
             const errorResponse = error.response?.data as { error: string };
             return {
                 success: false,

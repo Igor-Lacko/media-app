@@ -34,10 +34,10 @@ export default function AddMoviePage({ route }: { route?: any }) {
         if (!movie) {
             setCreating(true);
             movieRef.current = structuredClone(defaultMovie);
-            console.log("Creating new movie, initial:", movieRef.current);
             setInitial(structuredClone(defaultMovie));
-            console.log("Initial movie set to default:", defaultMovie);
-        } else {
+        } 
+
+        else {
             setCreating(false);
             movieRef.current = movie;
             setInitial(movie);

@@ -9,7 +9,6 @@ import SortKey from "@shared/enum/sort-key";
  * @param ref Reference to the constructed component.
  */
 export default function useGenreDropdown<T extends { genres?: Genre[] }>(ref : React.RefObject<T>, initial: Genre[]) : DropdownProps {
-    console.log("initial genres:", initial);
     const props : DropdownProps = {
         // Genre selection
         prefix: "Select",

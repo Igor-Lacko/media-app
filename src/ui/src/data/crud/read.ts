@@ -23,12 +23,9 @@ export async function FetchData<T>(url: string): Promise<T[] | null> {
  * @returns Promise with the data object if found, null otherwise.
  */
 export async function FetchDataWithId<T>(url: string, id: string): Promise<T | null> {
-    console.log(`Fetching data from ${url} with id:`, id);
-
     return await axios.get<T>(`${url}/${id}`)
     .then(response => response.data)
     .catch(_error => {
-        console.error(`Failed to fetch data from ${url} with id: ${id}`);
         return null;
     });
 }
@@ -57,7 +54,6 @@ export async function FetchToWatchItems(): Promise<{entertainment: WatchListItem
     return await axios.get<{entertainment: WatchListItem[], courses: WatchListItem[]}>("/api/watchlist")
     .then(response => response.data)
     .catch(_error => {
-        console.error("Failed to fetch to-watch items.");
         return null;
     });
 }
@@ -70,7 +66,6 @@ export async function LoadSettings() : Promise<Settings> {
     return await axios.get<Settings>("/api/settings")
     .then(response => response.data)
     .catch(_error => {
-        console.error("Failed to load settings, returning default settings.");
         return { darkMode: true, hasApiKey: false };
     });
 }

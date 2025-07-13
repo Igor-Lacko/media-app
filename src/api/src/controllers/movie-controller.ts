@@ -24,7 +24,6 @@ export async function GetMovies(): Promise<Movie[]> {
             (movie): Movie => DBMovieToClient(movie)
         );
     } catch (error) {
-        console.error("Error fetching movies: " + error);
         return [];
     }
 }
@@ -47,7 +46,6 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
         });
 
         if (!movie) {
-            console.error(`Movie with ID ${id} not found.`);
             return null;
         }
 
@@ -56,7 +54,6 @@ export async function GetMovieById(id: number): Promise<Movie | null> {
     }
 
     catch (error) {
-        console.error("Error fetching movie by ID: " + error);
         return null;
     }
 }
@@ -147,7 +144,6 @@ export async function InsertMovieFromOMDb(title?: string, imdbId?: string): Prom
 
         // Fetch error
         catch (error) {
-            console.error("Error fetching movie from OMDb: " + error);
             if (axios.isAxiosError(error)) {
                 const errorResponse = error.response?.data as { Error?: string };
                 return {
@@ -165,7 +161,6 @@ export async function InsertMovieFromOMDb(title?: string, imdbId?: string): Prom
 
     // Other errors (prisma, ... etc.)
     catch (error) {
-        console.error("Error inserting movie from OMDb: " + error);
         return {
             success: false,
             errorMessage: error instanceof Error ? error.message : "An unexpected error occurred while inserting movie from OMDb",
@@ -208,7 +203,6 @@ export async function UpdateMovie(id: number, movie: Partial<Movie>): Promise<bo
     }
 
     catch (error) {
-        console.error("Error updating movie: " + error);
         return false;
     }
 }
@@ -234,7 +228,6 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
 
         return true;
     } catch (error) {
-        console.error("Error inserting movie: " + error);
         return false;
     }
 }
@@ -256,7 +249,6 @@ export async function DeleteMovie(id: number): Promise<boolean> {
     } 
 
     catch (error) {
-        console.error("Error deleting movie: " + error);
         return false;
     }
 }

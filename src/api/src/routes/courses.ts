@@ -6,11 +6,8 @@ const router = Router();
 
 // Getter for all courses
 router.get('/', async (req, res) => {
-    // Sort key
-    const { sortBy } = req.query;
-    console.log('Fetching Courses...');
     try {
-        const courses = await GetCourses(sortBy as SortKey);
+        const courses = await GetCourses();
         res.json(courses);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch Courses' });

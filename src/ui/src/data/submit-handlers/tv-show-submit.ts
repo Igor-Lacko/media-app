@@ -41,10 +41,6 @@ export default async function TvShowSubmitHandler(
         };
     });
 
-    console.log("Submitting seasons:", tvShow.seasons);
-
-    console.log("Submitting TV show:", tvShow);
-
     // Submit
     try {
         // Updating, don't create a new one
@@ -61,7 +57,6 @@ export default async function TvShowSubmitHandler(
     } 
 
     catch (error) {
-        console.error("Error submitting TV show:", error);
         return false;
     }
 }

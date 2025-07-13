@@ -18,7 +18,6 @@ export async function GetEpisodeById(id: number): Promise<Episode | null> {
         });
 
         if (!episode) {
-            console.error(`Episode with ID ${id} not found.`);
             return null;
         }
 
@@ -26,7 +25,6 @@ export async function GetEpisodeById(id: number): Promise<Episode | null> {
     }
 
     catch (error) {
-        console.error("Error fetching episode by ID: " + error);
         return null;
     }
 }
@@ -60,7 +58,6 @@ export async function CreateEpisode(episode: Episode, seasonId: number): Promise
     }
 
     catch (error) {
-        console.error("Error creating episode: " + error);
         return false;
     }
 }
@@ -73,8 +70,6 @@ export async function CreateEpisode(episode: Episode, seasonId: number): Promise
  */
 export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): Promise<boolean> {
     const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
-    // Debug todo remove
-    console.log("Updating episode with ID:", id);
     try {
         await prisma.episode.update({
             where: {
@@ -94,7 +89,6 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
     }
 
     catch (error) {
-        console.error("Error updating episode: " + error);
         return false;
     }
 }
@@ -108,8 +102,6 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
  */
 export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Episode>, seasonId?: number): Promise<boolean> {
     const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
-    // Debug todo remove
-    console.log("Updating episode with ID:", id);
     try {
         await prisma.episode.upsert({
             where: {
@@ -135,7 +127,6 @@ export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Epi
     }
 
     catch (error) {
-        console.error("Error updating episode: " + error);
         return false;
     }
 }
@@ -146,8 +137,6 @@ export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Epi
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteEpisode(id: number): Promise<boolean> {
-    console.log("Deleting episode with ID:", id);
-
     try {
         // Get the season ID first
         const seasonID = await prisma.episode.findUnique({
@@ -171,7 +160,6 @@ export async function DeleteEpisode(id: number): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error deleting episode: " + error);
         return false;
     }
 }

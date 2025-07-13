@@ -16,14 +16,11 @@ export default function useFetchById<T>(url: string, param: string = "id", deps:
         : param === "episodeId" ? params.episodeId
             : (() => { throw new Error(`Invalid parameter: ${param}`) })();
 
-    console.log(`useFetchById: Fetching data from ${url} with id: ${id}`);
-
     // Fetch
     const data = id ? useQuery({
         queryKey: [url, id, ...deps],
         queryFn: async () => await FetchDataWithId<T>(url, id),
     }) : undefined;
-    console.log(`useFetchById: Fetched data:`, data?.data);
 
     return {
         model: data?.data || undefined,

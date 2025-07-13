@@ -44,7 +44,6 @@ export async function GetFavorites(): Promise<(Movie | TvShow)[]> {
     }
 
     catch (error) {
-        console.error("Error fetching favorites: " + error);
         throw error;
     }
 }

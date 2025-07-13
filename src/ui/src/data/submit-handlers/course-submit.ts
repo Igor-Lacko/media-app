@@ -44,7 +44,6 @@ export default async function CourseSubmitHandler(
     } 
 
     catch (error) {
-        console.error("Error submitting course:", error);
         return false;
     }
 }

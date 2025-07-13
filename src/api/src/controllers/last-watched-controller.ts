@@ -124,7 +124,6 @@ export async function GetLastWatchedItems(limit: number = -1) : Promise<LastWatc
     }
 
     catch (error) {
-        console.error("Error fetching last watched items:", error);
         return null;
     }
 }

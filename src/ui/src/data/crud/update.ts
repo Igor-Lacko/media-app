@@ -19,7 +19,6 @@ export default async function UpdateData<T>(url: string, id: number, data: Parti
     }
 
     catch (error) {
-        console.error("Error updating data:", error);
         return false;
     }
 }
@@ -32,13 +31,11 @@ export default async function UpdateData<T>(url: string, id: number, data: Parti
  */
 export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T): Promise<boolean> {
     try {
-        console.log("Marking as favorite:", !model.isFavorite, model.identifier);
         await UpdateData<T>(url, model.identifier!, { isFavorite: !model.isFavorite } as Partial<T>);
         return true;
     }
 
     catch (error) {
-        console.error("Error marking as favorite:", error);
         return false;
     }
 }
@@ -58,7 +55,6 @@ export async function UpdateRating<T extends { rating?: number, identifier?: num
     }
 
     catch (error) {
-        console.error("Error updating rating:", error);
         return false;
     }
 }
@@ -78,7 +74,6 @@ export async function UpdateWatchStatus<T extends { watchStatus: string, identif
     }
 
     catch (error) {
-        console.error("Error setting watch status:", error);
         return false;
     }
 }
@@ -98,7 +93,6 @@ export async function UpdateDescription<T extends { description?: string, identi
     }
 
     catch (error) {
-        console.error("Error updating description:", error);
         return false;
     }
 }
@@ -119,7 +113,6 @@ export async function UpdateVideoUrl<T extends { videoUrl?: string, continueAt?:
     }
 
     catch (error) {
-        console.error("Error updating video URL:", error);
         return false;
     }
 }
@@ -140,7 +133,6 @@ export async function UpdatePlaybackPosition<T extends { continueAt?: number, la
     }
 
     catch (error) {
-        console.error("Error updating playback position:", error);
         return false;
     }
 }
@@ -159,7 +151,6 @@ export async function UpdateNotes(url: string, model: Lecture, notes: Note[]): P
     }
 
     catch (error) {
-        console.error("Error updating notes:", error);
         return false;
     }
 }
@@ -179,7 +170,6 @@ export async function UpdateLength<T extends { length?: number, identifier?: num
     }
 
     catch (error) {
-        console.error("Error updating length:", error);
         return false;
     }
 }
@@ -196,7 +186,6 @@ export async function ToggleCourseWatchlist(model: Course): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error toggling course watchlist status:", error);
         return false;
     }
 }
@@ -213,7 +202,6 @@ export async function ToggleDarkMode(darkMode: boolean): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error toggling dark mode:", error);
         return false;
     }
 }

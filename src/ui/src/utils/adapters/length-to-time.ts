@@ -4,7 +4,6 @@
  * @returns Formatted time string.
  */
 export function LengthToTimeHeader(length: number): string {
-    console.debug(`Converting length ${length} to time header.`);
     if (length <= 0) {
         return "Unknown length";
     }

@@ -58,13 +58,11 @@ export default function AddTvShowPage({ route } : { route?: any }) {
             setEpisodes([]);
             setInitial(structuredClone(defaultTvShow));
         } else {
-            console.log("Setting TV show:", tvshow);
             setCreating(false);
             tvShowRef.current = tvshow;
             episodeCounterRef.current = tvshow.seasons.flatMap(season => season.episodes).length + 1;
             seasonCounterRef.current = tvshow.seasons.length + 1;
             setSeasons(tvshow.seasons || []);
-            console.log("Setting episodes:", tvshow.seasons.flatMap(season => season.episodes));
             setEpisodes(tvshow.seasons.flatMap(season => season.episodes) || []);
             setInitial(tvshow);
         }

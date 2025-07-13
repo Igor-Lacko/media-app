@@ -142,7 +142,6 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
     }
 
     catch (error) {
-        console.error("Error fetching watchlist items: " + error);
         return null;
     }
 }

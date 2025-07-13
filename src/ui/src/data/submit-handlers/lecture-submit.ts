@@ -21,7 +21,6 @@ export default async function SubmitLecture(lecture : Lecture, updating : boolea
         }
 
         else {
-            console.log("Creating lecture for course with id:", id);
             await CreateData<Lecture>(`api/lectures/${id}`, lecture);
         }
 
@@ -29,7 +28,6 @@ export default async function SubmitLecture(lecture : Lecture, updating : boolea
     }
 
     catch (error) {
-        console.error("Error submitting lecture:", error);
         return false;
     }
 }

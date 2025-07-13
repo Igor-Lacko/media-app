@@ -24,7 +24,6 @@ export async function GetSeasonById(id: number): Promise<Season | null> {
         });
 
         if (!season) {
-            console.error(`Season with ID ${id} not found.`);
             return null;
         }
 
@@ -32,7 +31,6 @@ export async function GetSeasonById(id: number): Promise<Season | null> {
     }
 
     catch (error) {
-        console.error("Error fetching season by ID: " + error);
         return null;
     }
 }
@@ -45,9 +43,6 @@ export async function GetSeasonById(id: number): Promise<Season | null> {
  */
 export async function CreateSeason(season: Season, showId: number): Promise<boolean> {
     const sanitizedSeason = SanitizeClientSeasonToDB(season);
-    console.log("Creating new season:", season);
-    console.log("Show ID:", showId);
-
     try {
         await prisma.season.create({
             data: {
@@ -73,12 +68,10 @@ export async function CreateSeason(season: Season, showId: number): Promise<bool
             }
         })
 
-        console.log(`Created season: ${season.title} for show ID: ${showId}`);
         return true;
     }
 
     catch (error) {
-        console.error("Error creating season: " + error);
         return false;
     }
 }
@@ -126,7 +119,6 @@ export async function UpdateSeason(id: number, seasonData: Partial<Season>): Pro
     }
 
     catch (error) {
-        console.error("Error updating season: " + error);
         return false;
     }
 }
@@ -166,7 +158,6 @@ export async function UpdateEpisodeNumbers(seasonId: number) : Promise<boolean> 
     }
 
     catch (error) {
-        console.error("Error updating episode numbers: " + error);
         return false;
     }
 }
@@ -177,8 +168,6 @@ export async function UpdateEpisodeNumbers(seasonId: number) : Promise<boolean> 
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteSeason(id: number): Promise<boolean> {
-    console.log("Deleting season with ID:", id);
-
     // Episodes deleted by cascade
     try {
         // Get the show ID first
@@ -204,7 +193,6 @@ export async function DeleteSeason(id: number): Promise<boolean> {
     }
 
     catch (error) {
-        console.error("Error deleting season: " + error);
         return false;
     }
 }

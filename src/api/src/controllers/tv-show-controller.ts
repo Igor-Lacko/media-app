@@ -33,7 +33,6 @@ export async function GetTvShows(): Promise<TvShow[]> {
             (tvShow): TvShow => DBTvShowToClient(tvShow)
         )
     } catch (error) {
-        console.error("Error fetching TV shows: " + error);
         return [];
     }
 }
@@ -68,7 +67,6 @@ export async function GetTvShowById(id: number): Promise<TvShow | null> {
         // Construct shared TV show object, map seasons/episodes
         return DBTvShowToClient(tvShow);
     } catch (error) {
-        console.error("Error fetching TV show by ID: " + error);
         return null;
     }
 }
@@ -132,7 +130,6 @@ export async function UpdateTvShow(
 
         return true;
     } catch (error) {
-        console.error("Error updating TV show: " + error);
         return false;
     }
 }
@@ -169,7 +166,6 @@ export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
             }
         }
     } catch (error) {
-        console.error("Error updating season numbers: " + error);
         return false;
     }
 }
@@ -212,10 +208,8 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
             },
         });
 
-        console.log(`Inserted TV show: ${tvShow.title}`);
         return true;
     } catch (error) {
-        console.error("Error inserting TV show: " + error);
         return false;
     }
 }
@@ -314,8 +308,6 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
  * @returns True if successful, false otherwise.
  */
 export async function DeleteTvShow(id: number): Promise<boolean> {
-    console.log("Deleting TV show with ID:", id);
-
     // Seasons and episodes deleted by cascade
     try {
         await prisma.show.delete({
@@ -326,7 +318,6 @@ export async function DeleteTvShow(id: number): Promise<boolean> {
 
         return true;
     } catch (error) {
-        console.error("Error deleting TV show: " + error);
         return false;
     }
 }
