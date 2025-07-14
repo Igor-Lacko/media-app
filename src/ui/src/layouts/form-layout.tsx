@@ -23,7 +23,7 @@ export default function FormLayout<T>(props: FormProps<T>) {
     return (
         <div
             className={"flex flex-col w-full h-full items-center justify-start\
-                    overflow-x-hidden overflow-y-hidden bg-white dark:bg-gray-800"}
+                    overflow-x-hidden overflow-y-auto bg-white dark:bg-gray-800"}
         >
             <div
                 className={"flex items-center justify-start ml-10 mt-5 w-full h-auto sm:h-1/20"}

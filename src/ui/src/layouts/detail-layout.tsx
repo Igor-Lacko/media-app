@@ -95,7 +95,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
 
     return (
         <div
-            className={"flex flex-col w-full h-full items-center justify-start overflow-x-hidden\
+            className={"flex flex-col w-full max-h-screen items-center justify-start overflow-x-hidden\
                     overflow-y-hidden bg-white dark:bg-gray-800"}
         >
             <div
