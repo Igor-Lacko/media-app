@@ -6,7 +6,7 @@
   "scripts": {
     "dev:ui": "pnpm --filter ./src/ui dev",
     "dev:api": "cd src/api && npm run dev",
-    "dev:electron": "cd src/electron && wait-on http://localhost:5173 && npm run dev",
+    "dev:electron": "cd src/electron && npm run dev",
     "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:api\"",
     "dev:app": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\" \"pnpm dev:api\""
   },
@@ -15,7 +15,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
-    "concurrently": "^9.1.2",
-    "wait-on": "^8.0.3"
+    "concurrently": "^9.1.2"
   }
 }

@@ -51,7 +51,7 @@ router.post("/omdb", async (req, res) => {
         return;
     }
 
-    await InsertMovieFromOMDb(title)
+    await InsertMovieFromOMDb(title, imdbId)
     .then((result) => {
         result.success ? res.status(201).json({ message: "Movie created successfully" }) :
         res.status(500).json({ error: result.errorMessage || "Failed to create movie from OMDb" });

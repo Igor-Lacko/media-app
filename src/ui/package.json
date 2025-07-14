@@ -1,7 +1,4 @@
 {
-  "name": "ui",
-  "version": "1.0.0",
-  "description": "",
   "main": "./src/main.tsx",
   "scripts": {
     "dev": "vite --host"

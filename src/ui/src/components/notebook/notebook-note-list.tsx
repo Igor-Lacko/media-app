@@ -22,7 +22,7 @@ export default function NotebookNoteList({notes, updateNotes, onNoteClick, extra
                                 bg-white dark:bg-gray-900 py-3 rounded-lg",
                             )}
                         >
-                            {note.timestamp !== undefined && <div
+                            {note.timestamp !== undefined && note.timestamp !== null && <div
                                 className={"flex items-center justify-start w-full p-3 h-auto text-black dark:text-gray-400"}
                             >
                                 <FaCircle

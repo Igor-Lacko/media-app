@@ -130,7 +130,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onConfirm={async () => {
                     props.deleteFunction && await props.deleteFunction();
                     setVisibleModal(VisibleModal.NONE);
-                    navigate(-1);
+                    navigate(props.backUrl);
                 }}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}

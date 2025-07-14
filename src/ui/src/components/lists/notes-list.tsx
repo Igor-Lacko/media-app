@@ -31,8 +31,10 @@ export default function NotesList({ notes, updateNotes }: { notes: Note[], updat
                                 }
                             )}
                         >
-                            {note.timestamp !== undefined && (
-                                <div className={"flex items-center justify-start w-full mb-2 px-4 text-black"}>
+                            {note.timestamp !== undefined && note.timestamp !== null && (
+                                <div 
+                                    className={"flex items-center justify-start w-full mb-2 px-4 text-black dark:text-gray-400"}
+                                >
                                     <FaCircle className={"text-purple-500 mr-2"} />
                                     {`Timestamp: ${LengthToTimeVideo(note.timestamp)}`}
                                 </div>

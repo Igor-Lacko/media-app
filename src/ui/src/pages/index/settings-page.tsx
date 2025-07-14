@@ -6,7 +6,7 @@ import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
-import { UpdateOMDBKey } from "data/crud/update";
+import { ToggleDarkMode, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
 
 export default function SettingsPage() {
@@ -59,7 +59,15 @@ export default function SettingsPage() {
                 </h2>
                 <Toggle
                     checked={settings.darkMode}
-                    onChange={(checked: boolean) => setSettings({ ...settings, darkMode: checked })}
+                    onChange={async (checked: boolean) => {
+                        const response = await ToggleDarkMode(checked);
+                        if (response) {
+                            setSettings({ ...settings, darkMode: checked });
+                        }
+                        else {
+                            alert("Failed to update dark mode setting.");
+                        }
+                    }}
                 />
             </div>
             {/** OMDB API key */}

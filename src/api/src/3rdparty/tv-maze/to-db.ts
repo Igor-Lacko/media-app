@@ -3,15 +3,12 @@ import TvMazeSeason from "./interface/tv-maze-season";
 import TvMazeEpisode from "./interface/tv-maze-episode";
 
 /**
- * "Cleans" the tv show summary returned by the TV Maze API (can contain hex characters ot HTML tags).
+ * "Cleans" the tv show summary returned by the TV Maze API (can contain HTML tags).
  * @param summary The summary returned by the TV Maze API.
  * @returns That same summary as plain text.
  */
 export function TvMazeSummaryToDB(summary: string): string {
-    // Remove HTML
-    return summary.replace(/<[^>]*>/gi, "")
-    // Remove hex characters (from https://gist.github.com/daxburatto/307e8365c41fd5401f9ac315676490bf)
-    .replace(/#?([a-f0-9]{6}|[a-f0-9]{3})/gi, "");
+    return summary.replace(/<[^>]*>/gi, "");
 }
 
 /**
