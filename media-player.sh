@@ -12,7 +12,7 @@ OnAppFinish() {
 trap 'OnAppFinish' INT
 
 # Run frontend and backend
-cd ../.. && docker compose up --build -d
+docker-compose up -d
 
 # Run electron
 echo "Running electron..."

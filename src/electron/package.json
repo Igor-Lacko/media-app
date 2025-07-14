@@ -2,7 +2,7 @@
   "main": "electron.js",
   "type": "module",
   "scripts": {
-    "dev": "wait-on http://localhost:5173 && electron --gtk-version=3 ."
+    "dev": "wait-on http://localhost:5173 && electron --gtk-version=3 --no-sandbox ."
   },
   "keywords": [],
   "author": "",
