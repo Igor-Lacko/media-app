@@ -8,28 +8,11 @@ OnAppFinish() {
     echo "Application stopped."
 }
 
-# Checks if a package is installed
-IsPackageInstalled() {
-    if dpkg -l | grep -q "$1"; then
-        return 0
-    else
-        return 1
-    fi
-}
-
 # Trap Ctrl+C to compose down
 trap 'OnAppFinish' INT
 
-# Install electron if not installed
-cd src/electron || (echo "Failed to change directory to src/electron" && exit 1)
-if ! (npm list | grep -e 'electron@[0-9]+' | grep -qe 'wait-on@[0-9]+'); then
-    echo "Installing electron and wait-on..."
-    npm install
-    echo "Electron installed."
-fi
-
 # Run frontend and backend
-cd ../.. && docker compose up -d
+cd ../.. && docker compose up --build -d
 
 # Run electron
 echo "Running electron..."
