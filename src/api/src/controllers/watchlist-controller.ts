@@ -79,25 +79,30 @@ function TvShowToWatchListItem(tvShow: DBTvShow, calculateProgress: boolean): Wa
 
 /**
  * Fetch function for retrieving items for a watchlist (so items that are being currently watched or planned to be watched).
+ * If returning items that are currently being watched, returns only tv shows with status WATCHING.
  * @param currentlyWatched If true, fetches items that are currently being watched, otherwise fetches items that are planned to be watched.
  * @returns An object containing an array of the requested items or null in case of an error.
  */
 export default async function GetWatchlistItems(currentlyWatched: boolean): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
     const watchStatus = currentlyWatched ? WatchStatus.WATCHING : WatchStatus.PLAN_TO_WATCH;
     try {
-        // Fetch all movies first
-        const moviesToWatch : WatchListItem[] = await prisma.movie.findMany({
-            where: {
-                watchStatus: watchStatus,
-            }
-        }).then(movies => movies.map((movie) : WatchListItem => ({
-                // Does not have progress, wouldn't make much sense
-                title: movie.title,
-                shouldHaveThumbnail: true,
-                shortDescription: movie.shortDescription,
-                thumbnailUrl: movie.thumbnailUrl,
-                url: `/movies/${movie.id}`,
-        })));
+        // Fetch all movies first (if requested)
+        let moviesToWatch : WatchListItem[] = [];
+
+        if (watchStatus === WatchStatus.PLAN_TO_WATCH) {
+            moviesToWatch = await prisma.movie.findMany({
+                where: {
+                    watchStatus: WatchStatus.PLAN_TO_WATCH,
+                }
+            }).then(movies => movies.map((movie) : WatchListItem => ({
+                    // Does not have progress, wouldn't make much sense
+                    title: movie.title,
+                    shouldHaveThumbnail: true,
+                    shortDescription: movie.shortDescription,
+                    thumbnailUrl: movie.thumbnailUrl,
+                    url: `/movies/${movie.id}`,
+            })));
+        }
 
         // Tv shows
         const tvShowsToWatch : WatchListItem[] = await prisma.show.findMany({

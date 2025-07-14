@@ -17,13 +17,13 @@ export default function Watchlist(props: WatchlistProps) {
 
     return (
         <div
-            className={"flex flex-col w-full h-auto overflow-y-auto rounded-lg " + (props.extraClassNames || "")}
+            className={"flex flex-col w-full h-auto overflow-y-auto " + (props.extraClassNames || "")}
         >
             {props.items.map((item, index) => (
                 <div
                     key={index}
                     className={classNames(
-                        "flex w-full rounded-lg items-center transition-colors duration-200 ease-in-out relative p-0 border-2 border-gray-300 dark:border-gray-700",
+                        "flex w-full items-center transition-colors duration-200 ease-in-out relative p-0 border-2 border-gray-300 dark:border-gray-700",
                         {
                             "bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-700": index % 2 === 0,
                             "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900": index % 2 !== 0,
@@ -36,17 +36,11 @@ export default function Watchlist(props: WatchlistProps) {
                         <img
                             src={`file://${item.thumbnailUrl}`}
                             alt={item.title}
-                            className={classNames(
-                                "w-1/10 h-25 mr-4",
-                                {
-                                    "rounded-tl-lg": index === 0,
-                                    "rounded-bl-lg": index === props.items.length - 1,
-                                }
-                            )}
+                            className={"w-1/10 h-25 mr-4"}
                         />
                     ) : (
                         <div
-                            className={"w-1/12 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 flex\
+                            className={"w-1/12 h-20 bg-gray-200 dark:bg-gray-700 flex\
                                 items-center justify-center text-xs text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 shadow-sm mr-4"}
                         >
                             Thumbnail not found :((

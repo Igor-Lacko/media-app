@@ -7,9 +7,9 @@ export default function CardGrid({ items, extraClassNames }: { items: (TvShow | 
         <div
             className={"grid grid-flow-row grid-rows-[auto] grid-cols-4 gap-20 p-4 " + (extraClassNames || "")}
         >
-            {items.map((item) => (
+            {items.map((item, index) => (
                 <MediaItemCard
-                    key={item.identifier}
+                    key={index}
                     model={item}
                     url={item.submediaString ? `/tv-shows/${item.identifier}` : `/movies/${item.identifier}`}
                 />
