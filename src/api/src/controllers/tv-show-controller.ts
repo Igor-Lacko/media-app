@@ -253,8 +253,6 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
         const response = await axios.get<TvMazeShow>(url)
         .then((res) => res.data);
 
-        console.log("Fetched TV show from TV Maze API:", JSON.stringify(response, null, 2));
-
         // Fetch episodes if needed
         if (!response._embedded) {
             response._embedded = {
