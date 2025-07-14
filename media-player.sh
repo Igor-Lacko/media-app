@@ -22,8 +22,8 @@ trap 'OnAppFinish' INT
 
 # Install electron if not installed
 cd src/electron || (echo "Failed to change directory to src/electron" && exit 1)
-if ! (npm list electron | grep -q 'electron@'); then
-    echo "Installing electron..."
+if ! (npm list | grep -e 'electron@[0-9]+' | grep -qe 'wait-on@[0-9]+'); then
+    echo "Installing electron and wait-on..."
     npm install
     echo "Electron installed."
 fi
