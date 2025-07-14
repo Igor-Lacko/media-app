@@ -12,11 +12,11 @@ export default interface TvMazeEpisode {
     number: number;
 
     // Length in minutes
-    runtime: number;
+    runtime?: number;
 
     // Rating
-    rating: { average: number };
+    rating: { average?: number };
 
     // Includes some weird hex characters, todo filter
-    summary: string;
+    summary?: string;
 }

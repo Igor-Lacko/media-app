@@ -253,6 +253,8 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
         const response = await axios.get<TvMazeShow>(url)
         .then((res) => res.data);
 
+        console.log("Fetched TV show from TV Maze API:", JSON.stringify(response, null, 2));
+
         // Fetch episodes if needed
         if (!response._embedded) {
             response._embedded = {
@@ -296,9 +298,9 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
                             create: season.episodes.map((episode) => ({
                                 episodeNumber: episode.number,
                                 title: episode.name,
-                                rating: episode.rating.average,
-                                shortDescription: TvMazeSummaryToDB(episode.summary),
-                                length: episode.runtime,
+                                rating: episode.rating.average || undefined,
+                                shortDescription: episode.summary ? TvMazeSummaryToDB(episode.summary) : undefined,
+                                length: episode.runtime || undefined,
                             }))
                         }
                     }))
