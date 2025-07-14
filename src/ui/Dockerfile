@@ -10,5 +10,5 @@ COPY src/ui ./ui
 COPY src/shared ./shared
 
 WORKDIR /app/ui
-EXPOSE 5367
+EXPOSE 5173
 CMD ["npm", "run", "dev"]

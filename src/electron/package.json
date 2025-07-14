@@ -1,16 +1,14 @@
 {
-  "name": "electron",
-  "version": "1.0.0",
-  "description": "",
   "main": "electron.js",
   "type": "module",
   "scripts": {
-    "dev": "electron --gtk-version=3 ."
+    "dev": "wait-on http://localhost:5173 && electron --gtk-version=3 ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^37.2.1"
+    "electron": "^37.2.1",
+    "wait-on": "8.0.3"
   }
 }

@@ -1,5 +1,5 @@
 import { CreateMovieFromOMDb } from "data/crud/create";
-import { OpenExternal } from "utils/other/electron-api";
+import { OpenExternal } from "electron/electron-api";
 import ApiFormLayout from "layouts/api-form-layout";
 
 /**
