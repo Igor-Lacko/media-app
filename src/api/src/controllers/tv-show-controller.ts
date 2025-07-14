@@ -10,6 +10,7 @@ import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 import axios from "axios";
 import TvMazeShow from "3rdparty/tv-maze/interface/tv-maze-show";
 import { TvMazeEpisodesToSeasons, TvMazeGenresToDB, TvMazeSummaryToDB } from "3rdparty/tv-maze/to-db";
+import TvMazeEpisode from "3rdparty/tv-maze/interface/tv-maze-episode";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -215,6 +216,19 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
 }
 
 /**
+ * Fetches episodes from the TV Maze API by show ID.
+ * @param id TV Maze id.
+ * @returns The list of episodes for the given show, or null in case of an error.
+ */
+async function GetEpisodesFromTvMaze(id: number): Promise<TvMazeEpisode[] | null> {
+    return await axios.get<TvMazeEpisode[]>(`https://api.tvmaze.com/shows/${id}/episodes`)
+        .then((response) => response.data)
+        .catch((_error) => {
+            return null;
+        });
+}
+
+/**
  * Inserts a TV show from the TV Maze API.
  * @param title If searching by title.
  * @param imdbId If searching by IMDb ID. If both are provided, IMDb ID is used.
@@ -232,18 +246,26 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
         }
 
         // Get the url
-        const url = imdbId ? `https://api.tvmaze.com/lookup/shows?imdb=${imdbId}&embed=episodes` :
+        const url = imdbId ? `https://api.tvmaze.com/lookup/shows?imdb=${imdbId}` :
         `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(title)}&embed=episodes`;
 
         // Fetch from api
         const response = await axios.get<TvMazeShow>(url)
         .then((res) => res.data);
 
+        // Fetch episodes if needed
+        if (!response._embedded) {
+            response._embedded = {
+                episodes: await GetEpisodesFromTvMaze(response.id)
+            }
+        }
+
         // Map genre strings ==> Genre enums
         const genreArray = TvMazeGenresToDB(response.genres);
 
-        // Map episodes ==> seasons
-        const tvMazeSeasons = TvMazeEpisodesToSeasons(response._embedded.episodes);
+        // Map episodes ==> seasons (if the data is present)
+        const tvMazeSeasons = response._embedded?.episodes ? TvMazeEpisodesToSeasons(response._embedded.episodes)
+        : undefined;
 
         // Insert into the DB
         await prisma.show.create({
@@ -263,7 +285,7 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
                 description: TvMazeSummaryToDB(response.summary),
 
                 // Create seasons by mapping episodes
-                seasons: {
+                seasons: tvMazeSeasons ? {
                     create: tvMazeSeasons.map((season) => ({
                         seasonNumber: season.seasonNumber,
 
@@ -275,12 +297,12 @@ export async function InsertTvMazeShow(title?: string, imdbId?: string): Promise
                                 episodeNumber: episode.number,
                                 title: episode.name,
                                 rating: episode.rating.average,
-                                shortDescription: episode.summary,
+                                shortDescription: TvMazeSummaryToDB(episode.summary),
                                 length: episode.runtime,
                             }))
                         }
                     }))
-                }
+                } : undefined,
             }
         });
 
