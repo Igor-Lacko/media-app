@@ -55,7 +55,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             setEpisodes(season.episodes || []);
             setInitial(season);
         }
-    })
+    }, [season, isLoading]);
 
     // Slider props
     const ratingSliderProps = useRatingSlider(seasonRef, initial.rating || 0);

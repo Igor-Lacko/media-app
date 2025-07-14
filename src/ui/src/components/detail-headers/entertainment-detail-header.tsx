@@ -29,11 +29,11 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
 
     return (
         <div
-            className={"flex items-center justify-start w-full h-1/3 px-5"}
+            className={"flex items-center justify-start w-full h-auto max-h-80 px-5"}
         >
             {/*  thumbnail */}
             {props.hasThumbnail && <div
-                className={"flex flex-col items-center justify-center w-3/10 py-5 h-full"}
+                className={"flex flex-col items-center justify-center w-3/10 pb-5 h-full"}
             >
                 {thumbnailLoaded ? (
                     <DetailImage

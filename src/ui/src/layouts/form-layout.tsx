@@ -26,7 +26,7 @@ export default function FormLayout<T>(props: FormProps<T>) {
                     overflow-x-hidden overflow-y-hidden bg-white dark:bg-gray-800"}
         >
             <div
-                className={"flex items-center justify-start ml-10 mt-5 w-full h-1/25 sm:h-1/20"}
+                className={"flex items-center justify-start ml-10 mt-5 w-full h-auto sm:h-1/20"}
             >
                 <FaArrowLeft
                     className={"text-gray-500 text-2xl cursor-pointer"}
@@ -34,14 +34,14 @@ export default function FormLayout<T>(props: FormProps<T>) {
                 />
             </div>
             <div
-                className={"flex items-center justify-center w-full h-1/25 mt-10 mb-5 p-2"}
+                className={"flex items-center justify-center w-full h-auto mt-10 mb-5 p-2"}
             >
                 <h1 className={"text-4xl font-bold text-gray-800 dark:text-gray-400"}>
                     {props.title}
                 </h1>
             </div>
             <div
-                className={"flex flex-col w-full h-24/25 items-center justify-start space-y-10"}
+                className={"flex flex-col w-full h-auto items-center justify-start space-y-10"}
             >
                 <div
                     className={"flex-grow w-full"}

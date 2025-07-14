@@ -6,11 +6,11 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function LectureDetailHeader(props : DetailProps<Lecture>) {
     return (
         <div
-            className={"flex items-center justify-between w-full h-1/7 px-5"}
+            className={"flex items-center justify-between w-full h-auto max-h-80 px-5"}
         >
             {/** Title, length */}
             <div
-                className={"flex flex-col w-5/10 h-full items-start justify-start py-3 space-y-2"}
+                className={"flex flex-col w-5/10 h-full items-start justify-start pb-3 space-y-2"}
             >
                 <h1 className={"text-4xl font-extrabold text-black dark:text-gray-400 tracking-wide font-[Roboto]"}>
                     {props.title}

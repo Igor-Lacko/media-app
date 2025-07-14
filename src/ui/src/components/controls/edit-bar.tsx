@@ -12,7 +12,7 @@ import ToggleWatchlistButton from "components/buttons/toggle-watchlist-button";
 export default function EditBar(props : EditBarProps) {
     return (
         <div
-            className={"flex items-center w-full h-1/10 border-b-2 border-gray-400 dark:border-gray-600\
+            className={"flex items-center w-full h- border-b-2 border-gray-400 dark:border-gray-600\
                     px-5 justify-between pt-5 pb-10"}
         >
             <div

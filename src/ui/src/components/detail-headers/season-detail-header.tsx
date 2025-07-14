@@ -9,11 +9,11 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function SeasonDetailHeader(props: DetailProps<Season>) {
     return (
         <div
-            className={"flex items-center justify-start w-full h-1/3 px-10"}
+            className={"flex items-center justify-start w-full h-auto max-h-80 px-10"}
         >
             {/** Title, nofepisodes */}
             <div
-                className={"flex flex-col py-5 w-3/10 items-start justify-between h-full text-black dark:text-gray-400"}
+                className={"flex flex-col pb-5 w-3/10 items-start justify-between h-full text-black dark:text-gray-400"}
             >
                 <div>
                     <h1 className={"text-4xl font-extrabold text-black dark:text-gray-400 tracking-wide font-[Roboto]"}>
@@ -25,7 +25,7 @@ export default function SeasonDetailHeader(props: DetailProps<Season>) {
                         {props.model.submediaString!}
                     </span>
                 </div>
-                {/** Rating, todo placeholder */}
+                {/** Rating */}
                 {props.rating !== null && props.rating !== undefined && props.rating !== -1 && <HeaderRating
                     rating={props.rating}
                 />}
