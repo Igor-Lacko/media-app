@@ -92,7 +92,7 @@ export default function MediaItemList(props: ListProps) {
                             {item.rating !== null && item.rating !== undefined ? item.rating.toFixed(1) : "N/A"} <FaStar className="inline" />
                         </span>}
                     </div>
-                    <span
+                    {item.watchStatus && <span
                         className={classNames(
                             "flex items-center justify-center w-2/10 h-full text-md",
                             {
@@ -104,7 +104,7 @@ export default function MediaItemList(props: ListProps) {
                         )}
                     >
                         {watchStatusAdapter(item.watchStatus)}
-                    </span>
+                    </span>}
                     <div
                         className={"flex items-center justify-center w-2/10 h-full text-md"}
                     >

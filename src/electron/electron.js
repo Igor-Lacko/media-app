@@ -1,5 +1,5 @@
 import { app, BrowserWindow, protocol, net, ipcMain, dialog, shell } from 'electron';
-import { existsSync } from 'fs';
+import { existsSync, statSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -7,7 +7,6 @@ const SERVER_URL = 'http://localhost:5173/';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function createWindow() {
-    const isDev = !app.isPackaged;
     const mainWindow = new BrowserWindow({
         titleBarStyle: 'hidden',
         height: 600,
@@ -16,9 +15,8 @@ function createWindow() {
             preload: join(__dirname, '/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
-            devTools: false,
 
-            // Local file access
+            // Local files
             webSecurity: false
         },
     });

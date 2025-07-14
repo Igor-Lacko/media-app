@@ -4,6 +4,9 @@ import TvMazeEpisode from "./tv-maze-episode";
  * Interface for a response from the TV Maze shows API.
  */
 export default interface TvMazeShow {
+    // Used when fetching by IMDB ID (which doesn't embed episodes) to make a second query
+    id: number;
+
     // Self explanatory
     name: string;
 
@@ -17,7 +20,7 @@ export default interface TvMazeShow {
     summary: string;
 
     // Append to response
-    _embedded: {
-        episodes: TvMazeEpisode[];
+    _embedded?: {
+        episodes?: TvMazeEpisode[];
     }
 }

@@ -146,3 +146,6 @@ TODO.txt
 
 # Prisma generated files
 src/api/src/generated/
+
+# Scripttts
+run-dev.sh

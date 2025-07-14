@@ -12,15 +12,6 @@ export default function CourseWatchlist (props: WatchlistProps) {
     // Link to detail
     const navigate = useNavigate();
 
-    // Items 404
-    if (props.items.length === 0) {
-        return <ItemNotFound
-            title={"Watchlist is empty :(("}
-            message={"You have no courses to watch. Add some by setting their watch status to 'Plan to watch'"}
-            extraClassNames={"min-h-70"}
-        />
-    }
-
     return (
         <div
             className={"flex flex-col w-full h-auto overflow-y-auto " + (props.extraClassNames || "")}

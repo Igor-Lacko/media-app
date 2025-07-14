@@ -8,13 +8,22 @@ OnAppFinish() {
     echo "Application stopped."
 }
 
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    echo "Usage: media-app.sh [--no-sandbox]"
+    echo "Starts the media application. Use --no-sandbox to run Electron without sandboxing."
+    exit 0
+fi
+
 # Trap Ctrl+C to compose down
-trap 'OnAppFinish' INT
+trap 'OnAppFinish' EXIT
 
 # Run frontend and backend
 docker-compose up -d
 
 # Run electron
-echo "Running electron..."
 cd src/electron || (echo "Failed to change directory to src/electron" && exit 1)
-npm run dev
+if [ "$1" == "--no-sandbox" ]; then 
+    npm run no-sandbox
+else
+    npm run dev
+fi

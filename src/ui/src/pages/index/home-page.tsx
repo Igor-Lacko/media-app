@@ -79,31 +79,76 @@ export default function HomePage() {
             )}
             <HomePageSection
                 title={"Favorites"}
-                extraClassNames={"mt-50"}
+                extraClassNames={validLastWatched.length > 0 ? "mt-50" : "mt-20"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {favorites && <CardGrid
+                {(favorites && favorites.length > 0) ? (<CardGrid
                     items={favorites}
                     extraClassNames={"w-full h-full"}
-                />}
+                />) : (
+                    <div
+                        className={"flex flex-col justify-center items-center w-full h-120"}
+                    >
+                        <span
+                            className={"text-black dark:text-gray-400 text-4xl font-semibold px-50"}
+                        >
+                            You don't have any favorite items yet.
+                        </span>
+                        <span
+                            className={"text-black dark:text-gray-400 text-lg font-normal px-50 mt-10"}
+                        >
+                            You can add movies or tv shows here by clicking the star button on their page.
+                        </span>
+                    </div>
+                )}
             </HomePageSection>
             <HomePageSection
                 title={"Your plan-to-watch list"}
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {toWatch && toWatch.entertainment.length >= 0 && <ToWatchList
+                {(toWatch && toWatch.entertainment.length > 0) ? (<ToWatchList
                     items={toWatch.entertainment}
-                />}
+                />) : (
+                    <div
+                        className={"w-full h-120 flex flex-col justify-center items-center"}
+                    >
+                        <span
+                            className={"text-black dark:text-gray-400 text-4xl font-semibold px-50"}
+                        >
+                            You don't have anything on your watchlist yet.
+                        </span>
+                        <span
+                            className={"text-black dark:text-gray-400 text-lg font-normal px-50 mt-10"}
+                        >
+                            You can add movies or tv shows here on their respective pages.
+                        </span>
+                    </div>
+                )}
             </HomePageSection>
             <HomePageSection
                 title={"Your courses to watch"}
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {toWatch && toWatch.courses.length >= 0 && <CourseWatchlist
+                {(toWatch && toWatch.courses.length > 0) ? (<CourseWatchlist
                     items={toWatch.courses}
-                />}
+                />) : (
+                    <div
+                        className={"w-full h-120 flex flex-col justify-center items-center"}
+                    >
+                        <span
+                            className={"text-black dark:text-gray-400 text-4xl font-semibold px-50"}
+                        >
+                            You don't have any courses to watch yet.
+                        </span>
+                        <span
+                            className={"text-black dark:text-gray-400 text-lg font-normal px-50 mt-10"}
+                        >
+                            You can add courses here on their respective pages.
+                        </span>
+                    </div>
+                )}
             </HomePageSection>
         </div>
     );

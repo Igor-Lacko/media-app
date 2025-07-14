@@ -15,15 +15,6 @@ export default function ToWatchList(props: WatchlistProps) {
     // To determine which item has a valid thumbnail (unfortunate naming here)
     const validThumbnails = useThumbnail(props.items);
 
-    // Items 404
-    if (props.items.length === 0) {
-        return <ItemNotFound
-            title={"Watchlist is empty :(("}
-            message={"You have no movies or shows to watch. Add some by setting their watch status to 'Plan to watch'"}
-            extraClassNames={"min-h-70"}
-        />
-    }
-
     return (
         <div
             className={"flex flex-col w-full h-auto overflow-y-auto rounded-lg " + (props.extraClassNames || "")}
