@@ -51,7 +51,19 @@ export async function FetchLastWatchedItems(limit: number = -1): Promise<LastWat
  * @returns An object containing arrays of entertainment items and courses, or null if an error occurs.
  */
 export async function FetchToWatchItems(): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
-    return await axios.get<{entertainment: WatchListItem[], courses: WatchListItem[]}>("/api/watchlist")
+    return await axios.get<{entertainment: WatchListItem[], courses: WatchListItem[]}>("/api/watchlist/to-watch")
+    .then(response => response.data)
+    .catch(_error => {
+        return null;
+    });
+}
+
+/**
+ * Fetches items that are currently being watched, including movies and TV shows.
+ * @returns An array of WatchListItem objects representing currently watched items, or null if an error occurs.
+ */
+export async function FetchCurrentlyWatchingItems(): Promise<WatchListItem[] | null> {
+    return await axios.get<WatchListItem[]>("/api/watchlist/watching")
     .then(response => response.data)
     .catch(_error => {
         return null;

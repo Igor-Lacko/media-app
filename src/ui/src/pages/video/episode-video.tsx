@@ -1,7 +1,8 @@
+import WatchStatus from "@shared/enum/watch-status";
 import Episode from "@shared/interface/models/episode";
 import Season from "@shared/interface/models/season";
 import TvShow from "@shared/interface/models/tv-show";
-import { UpdateLength, UpdatePlaybackPosition } from "data/crud/update";
+import UpdateData, { UpdateLength, UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
@@ -43,6 +44,8 @@ export default function EpisodeVideo() {
             saveLength={async (length: number) => {
                 await UpdateLength<Episode>("/api/episodes", episode, length);
             }}
+            onInit={async () => await UpdateData<TvShow>("/api/shows", show.identifier!, {watchStatus: WatchStatus.WATCHING})}
+            onFinish={async () => await UpdateData<Episode>("/api/episodes", episode.identifier!, {watchStatus: WatchStatus.COMPLETED})}
             initialPlaybackTime={episode.continueAt || 0}
             ref={videoRef}
         />

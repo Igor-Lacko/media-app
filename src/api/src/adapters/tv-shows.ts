@@ -1,7 +1,7 @@
 import ClientTvShow from "@shared/interface/models/tv-show";
 import { Show, EntertainmentGenre } from "generated/prisma/client";
 import { DBSeason, DBSeasonToClient } from "./seasons";
-import { Genre } from "generated/prisma/enums";
+import ClientGenre from "@shared/enum/genre";
 
 export interface DBTvShow extends Show {
     seasons: DBSeason[];
@@ -23,6 +23,6 @@ export function DBTvShowToClient(tvShow: DBTvShow): ClientTvShow {
         identifier: id,
         submediaString: `${tvShow.seasons.length} seasons`,
         seasons: tvShow.seasons.map(season => DBSeasonToClient(season)),
-        genres: tvShow.genres.map((genre) : Genre => genre.genre),
+        genres: tvShow.genres.map((genre) : ClientGenre => genre.genre as ClientGenre),
     }
 }

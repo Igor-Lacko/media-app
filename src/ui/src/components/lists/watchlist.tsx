@@ -1,14 +1,14 @@
 import useThumbnail from "hooks/use-thumbnail";
 import { useNavigate } from "react-router-dom";
 import WatchlistProps from "utils/props/lists/watchlist-props";
-import ItemNotFound from "components/other/item-not-found";
 import classNames from "classnames";
 import ProgressBar from "components/other/progress-bar";
 
 /**
- * Returns a watchlist of movies and tv shows.
+ * Returns a watchlist of movies and tv shows that are either currently being watched, or
+ * are being planned to be watched in the future.
  */
-export default function ToWatchList(props: WatchlistProps) {
+export default function Watchlist(props: WatchlistProps) {
     // To link to detail pages
     const navigate = useNavigate();
 
@@ -60,13 +60,13 @@ export default function ToWatchList(props: WatchlistProps) {
                         {item.title}
                     </h2>
                     {/** Short description */}
-                    {item.shortDescription && (
-                        <p className={"text-gray-600 dark:text-gray-400 text-sm mt-1 absolute left-2/5"}>
+                    {props.showShortDescription && item.shortDescription && (
+                        <p className={"text-gray-600 dark:text-gray-400 text-sm mt-1 absolute left-2/5 max-w-2/5 wrap-anywhere line-clamp-4"}>
                             {item.shortDescription}
                         </p>
                     )}
                     {/** Progress, if provided */}
-                    {item.progress && (
+                    {props.showProgressBar && item.progress && (
                         <ProgressBar
                             percentage={item.progressPercentage}
                             label={item.progress}

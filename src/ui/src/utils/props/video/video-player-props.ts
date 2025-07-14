@@ -25,6 +25,12 @@ export interface VideoPlayerProps {
 
     // To hide the notebook on video click, if the notebook is present
     onVideoClick?(): void;
+
+    // Function for tv shows, sets their watch status to "Currently Watching"
+    onInit?(): Promise<boolean>;
+
+    // To set data to finished
+    onFinish?(): Promise<boolean>;
 }
 
 export default VideoPlayerProps;

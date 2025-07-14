@@ -10,7 +10,7 @@ import EpisodesRouter from "routes/episodes";
 import LecturesRouter from "routes/lectures";
 import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
-import WatchlistRouter from "routes/to-watch";
+import WatchlistRouter from "routes/watchlists";
 import CheckRouter from "routes/check";
 export const viteNodeApp = express();
 

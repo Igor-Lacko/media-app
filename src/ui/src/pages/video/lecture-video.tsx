@@ -1,8 +1,9 @@
+import WatchStatus from "@shared/enum/watch-status";
 import Course from "@shared/interface/models/course";
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
 import Notebook from "components/notebook/notebook";
-import { UpdateLength, UpdateNotes, UpdatePlaybackPosition } from "data/crud/update";
+import UpdateData, { UpdateLength, UpdateNotes, UpdatePlaybackPosition } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
@@ -63,6 +64,7 @@ export default function LectureVideo() {
                         setNotebookVisible(false);
                     }
                 }}
+                onFinish={async () => await UpdateData<Lecture>("/api/lectures", lecture.identifier!, {watchStatus: WatchStatus.COMPLETED})}
                 initialPlaybackTime={lecture.continueAt || 0}
                 timestampRef={timestampRef}
             />

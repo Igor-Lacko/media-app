@@ -32,6 +32,7 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
         // Handlers
         saveLength: props.saveLength,
         saveContinueAt: props.saveContinueAt,
+        onInit: props.onInit,
 
         // To sync with the notebook, if provided
         timestampRef: props.timestampRef
@@ -90,6 +91,7 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
                         props.onVideoClick();
                     }
                 }}
+                onEnded={props.onFinish || undefined}
             />
             <VideoLowerBar
                 {...lowerBarProps}

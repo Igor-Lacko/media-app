@@ -27,7 +27,8 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
         setDuration,
         props.saveContinueAt,
         props.saveLength,
-        props.timestampRef
+        props.onInit,
+        props.timestampRef,
     );
 
     return (

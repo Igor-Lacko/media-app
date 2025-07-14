@@ -12,6 +12,7 @@ import React, { useEffect, useRef } from "react";
  * @param setDuration Function to set the total duration of the video.
  * @param playbackStoreFunction Function to store the current playback time into the DB.
  * @param durationStoreFunction Function to store the total duration of the video into the DB.
+ * @param startedWatchingFunction Optional function to call when the video starts playing (sets the tv show status to "Currently Watching").
  * @param timestampRef Optional reference to a number that can be used to sync with a notebook.
  * 
  * @returns An object containing functions to control the video.
@@ -25,6 +26,7 @@ export default function useVideo(
     setDuration: (duration: number) => void,
     playbackStoreFunction: (time: number) => Promise<void>,
     durationStoreFunction: (duration: number) => Promise<void>,
+    startedWatchingFunction?: () => Promise<boolean>,
     timestampRef?: React.RefObject<number>
 ) : {
     onSwitchPlaying: () => void;
@@ -70,7 +72,16 @@ export default function useVideo(
                 setDuration(ref.current!.duration);
                 setTime(ref.current!.currentTime);
                 ref.current!.play();
-                await durationStoreFunction(ref.current!.duration);
+                if (startedWatchingFunction) {
+                    await Promise.all([
+                        durationStoreFunction(ref.current!.duration),
+                        startedWatchingFunction()
+                    ]);
+                }
+
+                else {
+                    await durationStoreFunction(ref.current!.duration);
+                }
             }
         }
     }, [ref]);

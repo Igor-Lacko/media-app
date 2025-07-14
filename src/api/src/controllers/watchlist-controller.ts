@@ -4,6 +4,7 @@ import { WatchStatus } from "generated/prisma/enums";
 import { DBTvShow } from "adapters/tv-shows";
 import { DBSeason } from "adapters/seasons";
 import { DBCourse } from "adapters/courses";
+
 /**
  * Utility function to calculate whether a season has been entirely completed.
  * @param season Season to check.   
@@ -63,16 +64,31 @@ function CalculateCourseProgress(course: DBCourse): { progress: string, progress
     };
 }
 
+function TvShowToWatchListItem(tvShow: DBTvShow, calculateProgress: boolean): WatchListItem {
+    return {
+        title: tvShow.title,
+        shouldHaveThumbnail: true,
+        thumbnailUrl: tvShow.thumbnailUrl,
+        shortDescription: tvShow.shortDescription,
+        url: `/tv-shows/${tvShow.id}`,
+        
+        // Calculate progress if requested
+        ... (calculateProgress ? CalculateTvShowProgress(tvShow) : {} )
+    }
+}
+
 /**
- * Fetch function for retrieving items to watch.
- * @returns All movies and tvshows that have watchStatus === PLAN_TO_WATCH and all courses that have toWatch === true.
+ * Fetch function for retrieving items for a watchlist (so items that are being currently watched or planned to be watched).
+ * @param currentlyWatched If true, fetches items that are currently being watched, otherwise fetches items that are planned to be watched.
+ * @returns An object containing an array of the requested items or null in case of an error.
  */
-export default async function GetToWatchItems(): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
+export default async function GetWatchlistItems(currentlyWatched: boolean): Promise<{entertainment: WatchListItem[], courses: WatchListItem[]} | null> {
+    const watchStatus = currentlyWatched ? WatchStatus.WATCHING : WatchStatus.PLAN_TO_WATCH;
     try {
         // Fetch all movies first
         const moviesToWatch : WatchListItem[] = await prisma.movie.findMany({
             where: {
-                watchStatus: WatchStatus.PLAN_TO_WATCH,
+                watchStatus: watchStatus,
             }
         }).then(movies => movies.map((movie) : WatchListItem => ({
                 // Does not have progress, wouldn't make much sense
@@ -86,7 +102,7 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
         // Tv shows
         const tvShowsToWatch : WatchListItem[] = await prisma.show.findMany({
             where: {
-                watchStatus: WatchStatus.PLAN_TO_WATCH,
+                watchStatus: watchStatus,
             },
 
             // Need these to calculate progress
@@ -100,36 +116,32 @@ export default async function GetToWatchItems(): Promise<{entertainment: WatchLi
                 // To not bother with retyping
                 genres: true
             }
-        }).then(tvShows => tvShows.map((show) : WatchListItem => ({
-            title: show.title,
-            shouldHaveThumbnail: true,
-            thumbnailUrl: show.thumbnailUrl,
-            shortDescription: show.shortDescription,
-            url: `/tv-shows/${show.id}`,
-            // Get the rest from the utils
-            ...CalculateTvShowProgress(show)
-        })));
+        }).then(tvShows => tvShows.map((show) : WatchListItem => TvShowToWatchListItem(show, watchStatus === WatchStatus.WATCHING)));
 
-        // Finally fetch the courses
-        const coursesToWatch : WatchListItem[] = await prisma.course.findMany({
-            where: {
-                toWatch: true,
-            },
+        // Finally fetch the courses (if fetching to watch items)
+        let coursesToWatch : WatchListItem[] = [];
 
-            // For progress
-            include: {
-                lectures: {
-                    include: {
-                        notes: true
+        if (watchStatus === WatchStatus.PLAN_TO_WATCH) {
+            coursesToWatch = await prisma.course.findMany({
+                where: {
+                    toWatch: true,
+                },
+
+                // For progress
+                include: {
+                    lectures: {
+                        include: {
+                            notes: true
+                        }
                     }
                 }
-            }
-        }).then(courses => courses.map((course) : WatchListItem => ({
-            title: course.title,
-            shouldHaveThumbnail: false,
-            url: `/courses/${course.id}`,
-            ...CalculateCourseProgress(course)
-        })));
+            }).then(courses => courses.map((course) : WatchListItem => ({
+                title: course.title,
+                shouldHaveThumbnail: false,
+                url: `/courses/${course.id}`,
+                ...CalculateCourseProgress(course)
+            })));
+        }
 
         return {
             entertainment: [

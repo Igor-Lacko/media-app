@@ -13,6 +13,7 @@ export interface VideoLowerBarProps {
     // Initial time and saving
     initialTime: number;
     saveContinueAt: (time: number) => Promise<void>;
+    onInit?(): Promise<boolean>;
 
     // Save duration on load
     saveLength: (length: number) => Promise<void>;

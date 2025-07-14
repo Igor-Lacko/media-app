@@ -93,3 +93,7 @@ This section contains the screenshots of most app pages (other than forms). Alte
 
 ![Lecture page](./screenshots/lecture.png)
 
+### Home page screenshots
+
+![Continue watching]<br><br>
+![Favorites](./screenshots/favorites.png)

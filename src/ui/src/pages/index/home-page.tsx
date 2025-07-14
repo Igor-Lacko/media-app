@@ -3,13 +3,13 @@ import TvShow from "@shared/interface/models/tv-show";
 import { useQuery } from "@tanstack/react-query";
 import CardGrid from "components/lists/card-grid";
 import HomePageSection from "components/sections/homepage-section";
-import { FetchData, FetchLastWatchedItems, FetchToWatchItems } from "data/crud/read";
+import { FetchCurrentlyWatchingItems, FetchData, FetchLastWatchedItems, FetchToWatchItems } from "data/crud/read";
 import { IsValidVideo } from "electron/electron-api";
 import LoadingPage from "pages/other/loading-page";
 import { useEffect, useState } from "react";
 import LastWatched from "@shared/interface/last-watched";
 import LastWatchedPreview from "components/model-displays/last-watched-preview";
-import ToWatchList from "components/lists/to-watch-list";
+import Watchlist from "components/lists/watchlist";
 import CourseWatchlist from "components/lists/course-watchlist";
 
 /**
@@ -32,6 +32,12 @@ export default function HomePage() {
     const { data: toWatch, isLoading: toWatchLoading } = useQuery({
         queryKey: ["ToWatch"],
         queryFn: async () => await FetchToWatchItems()
+    });
+
+    // Fetch currently watching items
+    const { data: currentlyWatching, isLoading: currentlyWatchingLoading } = useQuery({
+        queryKey: ["CurrentlyWatching"],
+        queryFn: async () => await FetchCurrentlyWatchingItems()
     });
 
     // Items which have valid video files set in item.videoUrl (wouldn't make much sense to display other items since it links to the video)
@@ -57,7 +63,7 @@ export default function HomePage() {
         filterInvalidVideos();
     }, [lastWatched]);
 
-    if (favoritesLoading || lastWatchedLoading || toWatchLoading) {
+    if (favoritesLoading || lastWatchedLoading || toWatchLoading || currentlyWatchingLoading) {
         return <LoadingPage />;
     }
 
@@ -67,7 +73,7 @@ export default function HomePage() {
         >
             {validLastWatched.length > 0 && (
                 <HomePageSection
-                    title={"Continue Watching"}
+                    title={"Continue"}
                     extraClassNames={"w-full h-full"}
                     extraChildClassNames={"border-t w-full h-[800px] border-gray-300 dark:border-gray-700 justify-center items-center"}
                 >
@@ -103,12 +109,14 @@ export default function HomePage() {
                 )}
             </HomePageSection>
             <HomePageSection
-                title={"Your plan-to-watch list"}
+                title={"Currently watching"}
                 extraClassNames={"mt-50"}
                 extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
             >
-                {(toWatch && toWatch.entertainment.length > 0) ? (<ToWatchList
-                    items={toWatch.entertainment}
+                {(currentlyWatching && currentlyWatching.length > 0) ? (<Watchlist
+                    items={currentlyWatching}
+                    showProgressBar={true}
+                    showShortDescription={false}
                 />) : (
                     <div
                         className={"w-full h-120 flex flex-col justify-center items-center"}
@@ -116,12 +124,41 @@ export default function HomePage() {
                         <span
                             className={"text-black dark:text-gray-400 text-4xl font-semibold px-50"}
                         >
-                            You don't have anything on your watchlist yet.
+                            It appears you are not currently watching anything.
+                        </span>
+                        <span
+                            className={"text-black dark:text-gray-400 text-lg font-normal px-30 mt-10"}
+                        >
+                            Movies and Shows will appear here if you set their watch status to "Currently Watching"
+                            on their respective pages or adding a video file to them and starting watching it.
+                        </span>
+                    </div>
+                )}
+            </HomePageSection>
+            <HomePageSection
+                title={"Shows and movies you plan to watch"}
+                extraClassNames={"mt-50"}
+                extraChildClassNames={"w-full h-full border-t border-gray-300 dark:border-gray-700"}
+            >
+                {(toWatch && toWatch.entertainment.length > 0) ? (
+                    <Watchlist
+                        items={toWatch.entertainment}
+                        showProgressBar={false}
+                        showShortDescription={true}
+                    />
+                ) : (
+                    <div
+                        className={"w-full h-120 flex flex-col justify-center items-center"}
+                    >
+                        <span
+                            className={"text-black dark:text-gray-400 text-4xl font-semibold px-50"}
+                        >
+                            You don't have any movies or shows to watch yet.
                         </span>
                         <span
                             className={"text-black dark:text-gray-400 text-lg font-normal px-50 mt-10"}
                         >
-                            You can add movies or tv shows here on their respective pages.
+                            You can add movies and shows here on their respective pages (set their watch status to "Plan to watch").
                         </span>
                     </div>
                 )}
