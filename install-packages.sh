@@ -17,18 +17,10 @@ npm install
 cd src/api || (echo "Failed to change directory to src/api" && exit 1)
 echo "Installing API packages..."
 npm install
+echo "All packages installed successfully"
 
+# Prisma
 echo "Setting up Prisma..."
 npx prisma generate
 npx prisma db push
-
-# Create run script
-echo "Creating run script..."
-cd ../..
-touch media-app.sh
-
-cat <<EOF > media-app.sh
-#!/bin/bash
-# Runs the app
-npm run dev:app
-EOF
+echo "Prisma setup completed successfully"

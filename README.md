@@ -21,17 +21,13 @@ TypeScript and uses Node for the (self hosted) backend and React (with Tailwind 
 
 ### Requirements
 
-To use this app, you need:
-
-1. [NPM and Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-2. [Docker compose](https://docs.docker.com/compose/install/) (if running the app through docker containers) to build the server and client containers.
+To use this app, you need [NPM and Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
 ### Usage
 
 1. Clone this repository: `git clone https://github.com/Igor-Lacko/media-player`.
-2. In it's root folder, run either `bash build-docker.sh` (builds docker containers) or `bash build-manual.sh`
-3. To run the app, run the generated `media-app.sh` script.
-4. To uninstall, run the generated `uninstall.sh` script.
+2. In it's root folder, run either `bash install-packages.sh` or manually install the npm packages.
+3. To run the app, run `npm run dev`.
 
 _Note: If running with the docker containers, you may need to set `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` if you are using Ubuntu 24.04+ (https://github.com/electron/electron/issues/42510#issuecomment-2171583086). You can also run the app with `bash media-app.sh --no-sandbox instead` to disable chrome sandboxing._
 
@@ -55,5 +51,6 @@ The app displays your movie/tv show watchlists on the home page. It also display
 
 ## Notes
 
+- The repo contains a separate README.md with screenshots in *Screenshots/*<br>
 - The app is limited when it comes video codecs to electron (chromium)'s support. See https://www.chromium.org/audio-video/ to display supported codecs.<br>
-- The repo contains a separate README.md with screenshots in *Screenshots/*
+- So far the app only runs in dev mode, i plan to add production mode sometime in the near future.

@@ -7,8 +7,7 @@
     "dev:ui": "pnpm --filter ./src/ui dev",
     "dev:api": "cd src/api && npm run dev",
     "dev:electron": "cd src/electron && npm run dev",
-    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:api\"",
-    "dev:app": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\" \"pnpm dev:api\""
+    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\" \"pnpm dev:api\""
   },
   "keywords": [],
   "author": "",
