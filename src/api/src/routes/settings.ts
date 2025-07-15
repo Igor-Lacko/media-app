@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { DeleteOMDBKey, NukeDatabase, UpdateDarkMode, UpdateOMDBKey } from "controllers/settings-controller";
+import { DeleteOMDBKey, NukeDatabase, UpdateDarkMode, UpdateOMDBKey, UpdateProgressDisplay } from "controllers/settings-controller";
 import { GetSettings } from "controllers/settings-controller";
 
 const router = Router();
@@ -50,6 +50,18 @@ router.patch("/omdb-key", async (req, res) => {
 
     else {
         res.status(500).json({ error: response.errorMessage! });
+    }
+});
+
+// Updates TV show progress display setting
+router.patch("/show-progress", async (req, res) => {
+    const { tvShowProgressInEpisodes } = req.body;
+    if (await UpdateProgressDisplay(tvShowProgressInEpisodes)) {
+        res.status(200).json({ message: "TV show progress display updated successfully." });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to update TV show progress display" });
     }
 });
 

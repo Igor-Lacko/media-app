@@ -9,7 +9,7 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function SeasonDetailHeader(props: DetailProps<Season>) {
     return (
         <div
-            className={"flex items-center justify-start w-full h-auto max-h-80 px-10"}
+            className={"flex items-center justify-start w-full h-auto max-h-80 px-10 mt-5"}
         >
             {/** Title, nofepisodes */}
             <div

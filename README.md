@@ -16,7 +16,6 @@ TypeScript and uses Node for the (self hosted) backend and React (with Tailwind 
    - [Courses](#courses)
    - [Other](#other)
 3. [Notes](#notes)
-4. [Screenshots](#screenshots)
 
 ## Requirements and usage
 
@@ -53,47 +52,3 @@ Courses and their models are another models that can be added. You can also add 
 ## Other
 
 The app displays your movie/tv show watchlists on the home page. It also displays your favorite movies and tv shows and your last watched videos. The app also has dark mode (can be toggled in settings --> Dark Mode). I also plan to add markdown support for taking notes for lectures sometime in the near future.
-
-## Screenshots
-This section contains the screenshots of most app pages (other than forms). Alternatively you can view all of these in the *Screenshots/* folder.
-
-### Movies list
-
-![Movies](./screenshots/movies.png)
-
-### Movie page
-
-![Movie page](./screenshots/movie.png)
-
-### Tv show list
-
-![Tv shows](./screenshots/shows.png)
-
-### Tv show page
-
-![Tv show page](./screenshots/show.png)
-
-### Season page
-
-![Season page](./screenshots/season.png)
-
-### Episode page
-
-![Episode page](./screenshots/episode.png)
-
-### Course list
-
-![Courses](./screenshots/courses.png)
-
-### Course page
-
-![Course page](./screenshots/course.png)
-
-### Lecture page
-
-![Lecture page](./screenshots/lecture.png)
-
-### Home page screenshots
-
-![Continue watching]<br><br>
-![Favorites](./screenshots/favorites.png)

@@ -73,7 +73,7 @@ export default function HomePage() {
         >
             {validLastWatched.length > 0 && (
                 <HomePageSection
-                    title={"Continue"}
+                    title={"Continue watching"}
                     extraClassNames={"w-full h-full"}
                     extraChildClassNames={"border-t w-full h-[800px] border-gray-300 dark:border-gray-700 justify-center items-center"}
                 >

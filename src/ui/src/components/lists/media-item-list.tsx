@@ -47,7 +47,7 @@ export default function MediaItemList(props: ListProps) {
                         <img
                             src={`file://${item.thumbnailUrl}`}
                             alt={item.title}
-                            className={"w-1/12 h-full rounded-lg"}
+                            className={"w-1/12 h-full rounded-lg object-fit"}
                         />
                     ) : (
                         <div

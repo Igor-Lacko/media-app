@@ -76,6 +76,7 @@ export async function GetSettings(): Promise<Settings> {
                 darkMode: settings.darkMode,
                 hasApiKey:
                     settings.omdbApiKey !== null && settings.omdbApiKey !== undefined,
+                tvShowProgressInEpisodes: settings.episodeProgressInEpisodes
             };
         }
 
@@ -90,6 +91,7 @@ export async function GetSettings(): Promise<Settings> {
         return {
             darkMode: false,
             hasApiKey: false,
+            tvShowProgressInEpisodes: false
         };
     } 
 
@@ -149,17 +151,24 @@ export async function UpdateOMDBKey(
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteOMDBKey(): Promise<boolean> {
-    try {
-        await prisma.settings.updateMany({
-            data: {
-                omdbApiKey: null,
-            },
-        });
+    return await prisma.settings.updateMany({
+        data: {
+            omdbApiKey: null,
+        }
+    }).then(() => true)
+    .catch(() => false);
+}
 
-        return true;
-    } 
-
-    catch (error) {
-        return false;
-    }
+/**
+ * Updates the display of TV show progress in episodes or seasons.
+ * @param inEpisodes True if the progress should be displayed in episodes, false for seasons.
+ * @returns A promise that resolves to true if the update was successful, false otherwise.
+ */
+export async function UpdateProgressDisplay(inEpisodes: boolean): Promise<boolean> {
+    return await prisma.settings.updateMany({
+        data: {
+            episodeProgressInEpisodes: inEpisodes,
+        }
+    }).then(() => true)
+    .catch(() => false);
 }

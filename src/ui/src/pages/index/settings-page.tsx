@@ -6,7 +6,7 @@ import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
-import { ToggleDarkMode, UpdateOMDBKey } from "data/crud/update";
+import { ToggleDarkMode, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
 
 export default function SettingsPage() {
@@ -70,6 +70,33 @@ export default function SettingsPage() {
                     }}
                 />
             </div>
+            {/** Tv show progress */}
+            <div
+                className={divClasses}
+            >
+                <h2
+                    className={"text-lg font-semibold text-gray-800 dark:text-gray-400"}
+                >
+                    Show tv show progress in episodes
+                </h2>
+                <span
+                    className={"text-sm text-gray-500 dark:text-gray-400"}
+                >
+                    E.g 27/100 episodes vs 2/10 seasons
+                </span>
+                <Toggle
+                    checked={settings.tvShowProgressInEpisodes}
+                    onChange={async (checked: boolean) => {
+                        const response = await ToggleTvShowProgressDisplay(checked);
+                        if (response) {
+                            setSettings({ ...settings, tvShowProgressInEpisodes: checked });
+                        }
+                        else {
+                            alert("Failed to update TV show progress setting.");
+                        }
+                    }}
+                />
+            </div>
             {/** OMDB API key */}
             <div
                 className={divClasses}
@@ -104,7 +131,7 @@ export default function SettingsPage() {
                     />
                 ) : (
                     <div
-                        className={"flex items-center justify-start h-full"}
+                        className={"flex items-center justify-between h-full"}
                     >
                         <div
                             className={classNames(
@@ -223,7 +250,8 @@ export default function SettingsPage() {
                     await ResetDatabase();
                     setSettings({
                         darkMode: settings.darkMode,
-                        hasApiKey: false
+                        hasApiKey: false,
+                        tvShowProgressInEpisodes: settings.tvShowProgressInEpisodes
                     })
                     setDeleteDBModalVisible(false);
                 }}

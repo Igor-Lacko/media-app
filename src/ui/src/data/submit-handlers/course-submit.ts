@@ -18,7 +18,7 @@ export default async function CourseSubmitHandler(
     id: number = 0
 ): Promise<boolean> {
     // Only mandatory field
-    if (course.title === "") {
+    if (course.title === "" || lectures.some(lecture => lecture.title === "")) {
         return false;
     }
 

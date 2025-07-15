@@ -231,3 +231,14 @@ export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean
         return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
     }
 }
+
+/**
+ * Toggles the display of TV show progress in episodes or seasons.
+ * @param tvShowProgressInEpisodes New value for displaying progress in episodes.
+ * @return True if the operation was successful, false otherwise.
+ */
+export async function ToggleTvShowProgressDisplay(tvShowProgressInEpisodes: boolean): Promise<boolean> {
+    return axios.patch("/api/settings/show-progress", { tvShowProgressInEpisodes })
+        .then(response => response.status === 200)
+        .catch(() => false);
+}

@@ -18,9 +18,10 @@ function IsSeasonCompleted(season: DBSeason): boolean {
 /**
  * Calculates the progress of a TV show based on its seasons and episodes.
  * @param tvShow TV show to calculate progress for.
+ * @param inEpisodes Whether to return the progress in episodes or seasons.
  * @returns An object containing the progress string and percentage.
  */
-function CalculateTvShowProgress(tvShow: DBTvShow): { progress: string, progressPercentage: number } {
+function CalculateTvShowProgress(tvShow: DBTvShow, inEpisodes: boolean): { progress: string, progressPercentage: number } {
     // Get the percentage first
     const totalEpisodes = tvShow.seasons.reduce((total, season) => total + season.episodes.length, 0);
     const completedEpisodes = tvShow.seasons.reduce((total, season) => 
@@ -29,7 +30,7 @@ function CalculateTvShowProgress(tvShow: DBTvShow): { progress: string, progress
     const progressPercentageEpisodes = (completedEpisodes / Math.max(totalEpisodes, 1)) * 100;
 
     // Return completedEpisodes / totalEpisodes if the show has only one season, otherwise calculate per season
-    if (tvShow.seasons.length === 1) {
+    if (tvShow.seasons.length === 1 || inEpisodes) {
         return {
             progress: `${completedEpisodes} / ${totalEpisodes} episodes`,
             progressPercentage: progressPercentageEpisodes,
@@ -64,7 +65,7 @@ function CalculateCourseProgress(course: DBCourse): { progress: string, progress
     };
 }
 
-function TvShowToWatchListItem(tvShow: DBTvShow, calculateProgress: boolean): WatchListItem {
+function TvShowToWatchListItem(tvShow: DBTvShow, progressInEpisodes?: boolean): WatchListItem {
     return {
         title: tvShow.title,
         shouldHaveThumbnail: true,
@@ -73,7 +74,7 @@ function TvShowToWatchListItem(tvShow: DBTvShow, calculateProgress: boolean): Wa
         url: `/tv-shows/${tvShow.id}`,
         
         // Calculate progress if requested
-        ... (calculateProgress ? CalculateTvShowProgress(tvShow) : {} )
+        ... (progressInEpisodes !== null && progressInEpisodes !== undefined ? CalculateTvShowProgress(tvShow, progressInEpisodes) : {} )
     }
 }
 
@@ -104,6 +105,13 @@ export default async function GetWatchlistItems(currentlyWatched: boolean): Prom
             })));
         }
 
+        // Fetch progress display setting
+        const inEpisodes = await prisma.settings.findFirst({
+            select: {
+                episodeProgressInEpisodes: true,
+            }
+        }).then(settings => settings?.episodeProgressInEpisodes ?? false);
+
         // Tv shows
         const tvShowsToWatch : WatchListItem[] = await prisma.show.findMany({
             where: {
@@ -121,7 +129,7 @@ export default async function GetWatchlistItems(currentlyWatched: boolean): Prom
                 // To not bother with retyping
                 genres: true
             }
-        }).then(tvShows => tvShows.map((show) : WatchListItem => TvShowToWatchListItem(show, watchStatus === WatchStatus.WATCHING)));
+        }).then(tvShows => tvShows.map((show) : WatchListItem => TvShowToWatchListItem(show, watchStatus === WatchStatus.WATCHING ? inEpisodes : undefined)));
 
         // Finally fetch the courses (if fetching to watch items)
         let coursesToWatch : WatchListItem[] = [];

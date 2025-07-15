@@ -6,7 +6,7 @@ import DetailProps from "utils/props/detail/detail-props";
 export default function LectureDetailHeader(props : DetailProps<Lecture>) {
     return (
         <div
-            className={"flex items-center justify-between w-full h-auto max-h-80 px-5"}
+            className={"flex items-center justify-between w-full h-auto max-h-80 mt-10 px-5"}
         >
             {/** Title, length */}
             <div

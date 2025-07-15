@@ -7,6 +7,9 @@ export interface Settings {
 
     // Don't actually store it in the FE
     hasApiKey: boolean;
+
+    // E.g. 27/100 episodes vs 2/10 seasons
+    tvShowProgressInEpisodes: boolean;
 }
 
 export default Settings;

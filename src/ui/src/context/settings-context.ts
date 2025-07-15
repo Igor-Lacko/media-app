@@ -6,7 +6,8 @@ export const SettingsContext = createContext<SettingsContextProps>(
     {
         settings: {
             darkMode: false,
-            hasApiKey: false
+            hasApiKey: false,
+            tvShowProgressInEpisodes: false
         },
         setSettings: async (settings: Settings) => {}
     }

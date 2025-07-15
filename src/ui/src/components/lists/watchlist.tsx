@@ -36,7 +36,7 @@ export default function Watchlist(props: WatchlistProps) {
                         <img
                             src={`file://${item.thumbnailUrl}`}
                             alt={item.title}
-                            className={"w-1/10 h-25 mr-4"}
+                            className={"w-1/10 h-25 mr-4 p-2 rounded-lg object-cover shadow-md dark:shadow-lg"}
                         />
                     ) : (
                         <div
@@ -55,7 +55,7 @@ export default function Watchlist(props: WatchlistProps) {
                     </h2>
                     {/** Short description */}
                     {props.showShortDescription && item.shortDescription && (
-                        <p className={"text-gray-600 dark:text-gray-400 text-sm mt-1 absolute left-2/5 max-w-2/5 wrap-anywhere line-clamp-4"}>
+                        <p className={"text-gray-600 dark:text-gray-400 text-sm mt-1 absolute left-2/5 max-w-2/5 wrap-anywhere line-clamp-3"}>
                             {item.shortDescription}
                         </p>
                     )}
