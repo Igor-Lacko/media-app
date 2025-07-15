@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState } from "react";
 import ModalProps from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 import FileBrowseButton from "components/buttons/file-browse-button";
@@ -6,7 +6,7 @@ import RoundedButton from "components/buttons/rounded-button";
 
 export default function FileBrowseModal(props: ModalProps) {
     // Doesn't need to be state, since the button keeps that already
-    const path = useRef(props.initialText || "");
+    const [path, setPath] = useState("");
 
     return (
         <AbstractModal>
@@ -19,10 +19,10 @@ export default function FileBrowseModal(props: ModalProps) {
                 </p>
             )}
             <FileBrowseButton
-                initial={props.initialText || ""}
+                initial={path}
                 allowed={props.allowed || "all"}
                 onChange={(value: string) => {
-                    path.current = value;
+                    setPath(value);
                 }}
             />
             <div
@@ -32,8 +32,10 @@ export default function FileBrowseModal(props: ModalProps) {
                     text={"Save"}
                     extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                     onClick={async () => {
-                        props.onSetText && await props.onSetText(path.current);
-                        props.onClose();
+                        if (path !== "") {
+                            props.onSetText && await props.onSetText(path);
+                            props.onClose();
+                        }
                     }}
                 />
                 <RoundedButton

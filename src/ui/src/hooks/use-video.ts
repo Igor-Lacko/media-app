@@ -68,17 +68,19 @@ export default function useVideo(
 
 			// On video load, get duration and set the initial time
 			ref.current.onloadedmetadata = async () => {
-				ref.current!.currentTime = initialTime;
-				setDuration(ref.current!.duration);
-				setTime(ref.current!.currentTime);
-				ref.current!.play();
-				if (startedWatchingFunction) {
-					await Promise.all([
-						durationStoreFunction(ref.current!.duration),
-						startedWatchingFunction(),
-					]);
-				} else {
-					await durationStoreFunction(ref.current!.duration);
+				if (ref.current) {
+					ref.current!.currentTime = Math.min(initialTime, ref.current!.duration);
+					setDuration(ref.current!.duration);
+					setTime(ref.current!.currentTime);
+					ref.current!.play();
+					if (startedWatchingFunction) {
+						await Promise.all([
+							durationStoreFunction(ref.current!.duration),
+							startedWatchingFunction(),
+						]);
+					} else {
+						await durationStoreFunction(ref.current!.duration);
+					}
 				}
 			};
 		}
