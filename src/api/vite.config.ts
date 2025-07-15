@@ -46,17 +46,16 @@ export default defineConfig({
             swcOptions: {},
         }),
     ],
-    // Localhost
-    server: {
-        host: "127.0.0.1",
-        port: 3000
-    },
     build: {
         target: "node22",
         outDir: "dist",
         rollupOptions: {
             external: ["process", "path", "url", "node:process", "node:path", "node:url"]
         }
+    },
+    server: {
+        port: 3000,
+        host: "127.0.0.1",
     },
     resolve: {
         alias: {

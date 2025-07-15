@@ -16,5 +16,5 @@ WORKDIR /app
 COPY --from=builder /app .
 
 WORKDIR /app/ui
-EXPOSE 5172
+EXPOSE 5173
 CMD ["npm", "run", "dev"]

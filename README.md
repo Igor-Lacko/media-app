@@ -41,14 +41,19 @@ _Note: If running with the docker containers, you may need to set `sudo sysctl -
 
 The app provides a interface to manage your movie library. Movies can be displayed/sorted/filtered, their metadata edited or added to favorites or to a to-watch list. Movies can be added manually or through the [OMDb API](https://www.omdbapi.com/) (requires a key which can be inputted in settings). You can add video files (or thumbnail images) to movies if you have them stored locally and play them directly in the app.
 
-## Tv Shows
+### Tv Shows
 
 A similiar interface is provided for tv shows. Their seasons/episodes are separate models that can be edited/added. They can also be added manually or from an API, in this case the public [TVMaze API](https://www.tvmaze.com/api) which does not require a key. Video files can be added to individual episodes.
 
-## Courses
+### Courses
 
 Courses and their models are another models that can be added. You can also add notes to lectures, either when displaying their pages or when playing their video file. If you add a note when playing a video file, it has a timestamp associated with it. The video can be set to that specific timestamp when clicked on it in the video player.
 
-## Other
+### Other
 
 The app displays your movie/tv show watchlists on the home page. It also displays your favorite movies and tv shows and your last watched videos. The app also has dark mode (can be toggled in settings --> Dark Mode). I also plan to add markdown support for taking notes for lectures sometime in the near future.
+
+## Notes
+
+- The app is limited when it comes video codecs to electron (chromium)'s support. See https://www.chromium.org/audio-video/ to display supported codecs.<br>
+- The repo contains a separate README.md with screenshots in *Screenshots/*

@@ -29,7 +29,7 @@ WORKDIR /app/api
 RUN npx prisma generate
 
 # Port 3000 ig
-EXPOSE 2999
+EXPOSE 3000
 
 # Start the application
 CMD ["npm", "run", "dev"]

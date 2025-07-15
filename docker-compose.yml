@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: src/api/Dockerfile
     ports:
-      - "3000:2999"
+      - "127.0.0.1:3000:3000"
     volumes:
       - "db:/app/db"
     environment:
@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: src/ui/Dockerfile
     ports:
-      - "5173:5172"
+      - "127.0.0.1:5173:5173"
     command: npm run dev
 volumes:
   db:
