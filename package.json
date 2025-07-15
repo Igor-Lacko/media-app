@@ -15,5 +15,8 @@
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@uiw/react-md-editor": "^4.0.7"
   }
 }

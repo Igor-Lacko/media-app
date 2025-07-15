@@ -1,6 +1,8 @@
 import Note from "@shared/interface/models/note";
 import classNames from "classnames";
+import RoundedButton from "components/buttons/rounded-button";
 import { useRef, useState } from "react";
+import MDEditor from "@uiw/react-md-editor";
 
 /**
  * Part of the notebook used for, well, adding notes.
@@ -10,7 +12,7 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
     {onAdd: (note: Note) => void, timestamp: React.RefObject<number>, extraClassNames?: string} 
 ) {
     // Note content, timestamp is provided by the parent component.
-    const content = useRef("");
+    const [content, setContent] = useState("");
 
     return (
         <div
@@ -18,35 +20,39 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
         >
             {/** Text area and error text */}
             <div
-                className={"flex flex-col flex-1 items-start overflow-y-auto justify-center w-full h-auto py-2 space-y-2"}
+                className={"flex flex-col flex-1 items-start overflow-y-auto justify-center w-full h-auto"}
             >
-                <textarea
+                <MDEditor
                     className={classNames(
-                        "w-full flex-1 px-5 outline-none text-black dark:text-gray-400",
+                        "w-full flex-1 px-5 outline-none text-black dark:text-gray-400 bg-white dark:bg-gray-800",
                     )}
-                    placeholder={"Add note..."}
-                    onChange={(e) => {
-                        content.current = e.target.value;
-                    }}
-                    onKeyDown={(e) => {
-                        // Newline ok
-                        if(e.key === "Enter" && e.shiftKey) {
-                            return;
+                    value={content}
+                    onChange={(value) => {
+                        if(value) {
+                            setContent(value);
                         }
-
-                        // Else submit
-                        else if(e.key === "Enter") {
-                            if(content.current.trim() === "") {
+                    }}
+                    hideToolbar
+                />
+                {/** Submit button */}
+                <div
+                    className={"flex items-center justify-end p-3 w-full h-auto border-t-1 border-gray-300 dark:border-gray-600"}
+                >
+                    <RoundedButton
+                        text={"Add Note"}
+                        onClick={() => {
+                            if(content.trim() === "") {
                                 return;
                             }
 
                             onAdd({
-                                content: content.current,
+                                content: content,
                                 timestamp: timestamp.current
-                            })
-                        }
-                    }}
-                />
+                            });
+                        }}
+                        extraClassNames={"bg-purple-500 text-white hover:bg-purple-600 dark:hover:bg-purple-700 dark:bg-purple-600"}
+                    />
+                </div>
             </div>
         </div>
     )

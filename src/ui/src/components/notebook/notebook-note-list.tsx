@@ -2,6 +2,8 @@ import Note from "@shared/interface/models/note";
 import classNames from "classnames";
 import { FaCircle, FaTrash } from "react-icons/fa";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 /**
  * Part oif the notebook used for displaying notes.
@@ -42,11 +44,24 @@ export default function NotebookNoteList({notes, updateNotes, onNoteClick, extra
                                     "border-t-1 border-gray-200 dark:border-gray-700": note.timestamp
                                 })}
                             >
-                                <span
-                                    className={"text-sm md:text-base wrap-anywhere lg:text-lg"}
+                            <div
+                                className={"wrap-anywhere"}
+                            >
+                                <Markdown
+                                    remarkPlugins={[remarkGfm]}
+                                    components={{
+                                        h1: ({children}) => <h1 className={"font-bold text-lg"}>{children}</h1>,
+                                        h2: ({children}) => <h2 className={"font-bold text-md"}>{children}</h2>,
+                                        h3: ({children}) => <h3 className={"font-bold text-sm"}>{children}</h3>,
+                                        h4: ({children}) => <h4 className={"font-semibold text-xs"}>{children}</h4>,
+                                        h5: ({children}) => <h5 className={"font-semibold text-xs wrap-anywhere"}>{children}</h5>,
+                                        h6: ({children}) => <h6 className={"font-semibold text-xs wrap-anywhere"}>{children}</h6>,
+                                        p: ({children}) => <p className={"text-base wrap-anywhere"}>{children}</p>,
+                                    }}
                                 >
                                     {note.content}
-                                </span>
+                                </Markdown>
+                            </div>
                             </div>
                             <div
                                 className={"flex items-center justify-end w-full p-3 mb-2"}

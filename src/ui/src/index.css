@@ -1,2 +1,18 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* To override the markdown editor background color */
+.w-md-editor .w-md-editor-pr {
+  background-color: white !important;
+}
+.dark .w-md-editor {
+  background-color: var(--color-gray-800) !important;
+}
+
+.wmde-markdown {
+  background-color: white !important;
+}
+
+.dark .wmde-markdown {
+  background-color: var(--color-gray-800) !important;
+}
