@@ -10,26 +10,22 @@ import Note from "@shared/interface/models/note";
  * Gets all courses matching the given parameters.
  * @returns List of courses matching the parameters.
  */
-export async function GetCourses() : Promise<Course[]> {
-    try {
-        const courses = await prisma.course.findMany({
-            include: {
-                lectures: {
-                    include: {
-                        notes: true
-                    }
-                }
-            }
-        });
+export async function GetCourses(): Promise<Course[]> {
+	try {
+		const courses = await prisma.course.findMany({
+			include: {
+				lectures: {
+					include: {
+						notes: true,
+					},
+				},
+			},
+		});
 
-        return courses.map(
-            (course): Course => DBCourseToClient(course)
-        )
-    }
-
-    catch (error) {
-        return [];
-    }
+		return courses.map((course): Course => DBCourseToClient(course));
+	} catch (error) {
+		return [];
+	}
 }
 
 /**
@@ -38,32 +34,30 @@ export async function GetCourses() : Promise<Course[]> {
  * @returns Course object if found, null otherwise.
  */
 export async function GetCourseById(id: number): Promise<Course | null> {
-    try {
-        const course = await prisma.course.findUnique({
-            where: {
-                id: id
-            },
+	try {
+		const course = await prisma.course.findUnique({
+			where: {
+				id: id,
+			},
 
-            include: {
-                lectures: {
-                    include: {
-                        notes: true
-                    }
-                }
-            }
-        });
+			include: {
+				lectures: {
+					include: {
+						notes: true,
+					},
+				},
+			},
+		});
 
-        if (!course) {
-            return null;
-        }
+		if (!course) {
+			return null;
+		}
 
-        // Map lectures and notes
-        return DBCourseToClient(course);
-    }
-
-    catch (error) {
-        return null;
-    }
+		// Map lectures and notes
+		return DBCourseToClient(course);
+	} catch (error) {
+		return null;
+	}
 }
 
 /**
@@ -72,33 +66,32 @@ export async function GetCourseById(id: number): Promise<Course | null> {
  * @returns course object if successful, null otherwise.
  */
 export async function InsertCourse(course: Course): Promise<boolean> {
-    const sanitizedCourse = SanitizeClientCourseToDB(course);
-    try {
-        await prisma.course.create({
-            data: {
-                ...sanitizedCourse,
-                lectures: {
-                    create: course.lectures.map((lecture : Lecture) => {
-                        const sanitizedLecture = SanitizeClientLectureToDB(lecture);
-                        return {
-                            ...sanitizedLecture,
-                            notes: {
-                                create: lecture.notes.map((note: Note) => ({
-                                    content: note.content
-                                }))
-                            }
-                        }
-                    })
-                }
-            }
-        });
+	const sanitizedCourse = SanitizeClientCourseToDB(course);
+	try {
+		await prisma.course.create({
+			data: {
+				...sanitizedCourse,
+				lectures: {
+					create: course.lectures.map((lecture: Lecture) => {
+						const sanitizedLecture =
+							SanitizeClientLectureToDB(lecture);
+						return {
+							...sanitizedLecture,
+							notes: {
+								create: lecture.notes.map((note: Note) => ({
+									content: note.content,
+								})),
+							},
+						};
+					}),
+				},
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -107,46 +100,57 @@ export async function InsertCourse(course: Course): Promise<boolean> {
  * @param CourseData Partial object containing fields to update.
  * @returns True if the update was successful, false otherwise.
  */
-export async function UpdateCourse(id: number, CourseData: Partial<Course>): Promise<boolean>  {
-    const sanitizedCourse = SanitizeClientCourseToDB(CourseData as Course);
+export async function UpdateCourse(
+	id: number,
+	CourseData: Partial<Course>,
+): Promise<boolean> {
+	const sanitizedCourse = SanitizeClientCourseToDB(CourseData as Course);
 
-    // Update lectures first (if provided)
-    if(sanitizedCourse.lectures) {
-        for (const lecture of sanitizedCourse.lectures) {
-            lecture.identifier ? await UpdateLecture(lecture.identifier, lecture) :
-            await CreateLecture(lecture, id);
-        }
-    }
+	// Update lectures first (if provided)
+	if (sanitizedCourse.lectures) {
+		for (const lecture of sanitizedCourse.lectures) {
+			lecture.identifier
+				? await UpdateLecture(lecture.identifier, lecture)
+				: await CreateLecture(lecture, id);
+		}
+	}
 
-    // Update the Course itself
-    try {
-        await prisma.course.update({
-            where: {
-                id: id
-            },
+	// Update the Course itself
+	try {
+		await prisma.course.update({
+			where: {
+				id: id,
+			},
 
-            data: {
-                ...sanitizedCourse,
+			data: {
+				...sanitizedCourse,
 
-                // Delete lectures not present in the update, or ignore if lectures object not passed
-                lectures: sanitizedCourse.lectures ? {
-                    deleteMany: {
-                        id: {
-                            notIn: sanitizedCourse.lectures
-                            .filter((lecture: Lecture) => lecture.identifier !== undefined)
-                            .map((lecture : Lecture) => lecture.identifier)
-                        }
-                    }
-                } : undefined,
-            }
-        });
+				// Delete lectures not present in the update, or ignore if lectures object not passed
+				lectures: sanitizedCourse.lectures
+					? {
+							deleteMany: {
+								id: {
+									notIn: sanitizedCourse.lectures
+										.filter(
+											(lecture: Lecture) =>
+												lecture.identifier !==
+												undefined,
+										)
+										.map(
+											(lecture: Lecture) =>
+												lecture.identifier,
+										),
+								},
+							},
+					  }
+					: undefined,
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -155,18 +159,16 @@ export async function UpdateCourse(id: number, CourseData: Partial<Course>): Pro
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteCourse(id: number): Promise<boolean> {
-    // Lectures deleted by cascade
-    try {
-        await prisma.course.delete({
-            where: {
-                id: id
-            }
-        });
+	// Lectures deleted by cascade
+	try {
+		await prisma.course.delete({
+			where: {
+				id: id,
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
-} 
+		return true;
+	} catch (error) {
+		return false;
+	}
+}

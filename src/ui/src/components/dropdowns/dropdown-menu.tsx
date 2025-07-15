@@ -2,11 +2,11 @@ import { useState } from "react";
 import DropdownProps from "utils/props/control-elements/dropdown-props";
 import classNames from "classnames";
 
-export default function DropdownMenu(props : DropdownProps) {
+export default function DropdownMenu(props: DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div 
+        <div
             className={"relative flex flex-col items-start h-full " + props.width}
         >
             <span

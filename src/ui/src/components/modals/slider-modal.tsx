@@ -8,12 +8,12 @@ import AbstractModal from "./abstract-modal";
  * Modal that provides a slider for selecting from a range of values.
  * @param props Initial value, on select function, and title for the modal.
  */
-export default function SliderModal(props : ModalProps) {
+export default function SliderModal(props: ModalProps) {
     const valueRef = useRef(props.initialRating ?? 0);
 
     return (
         <AbstractModal>
-            <h2 
+            <h2
                 className={"text-xl font-semibold text-gray-800 dark:text-gray-200"}
             >
                 {props.title}
@@ -23,7 +23,7 @@ export default function SliderModal(props : ModalProps) {
                     valueRef.current = v;
                 }}
                 max={10}
-                initial={props.initialRating !== undefined ? props.initialRating :0}
+                initial={props.initialRating !== undefined ? props.initialRating : 0}
             />
             <RoundedButton
                 text={"Close"}

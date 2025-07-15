@@ -15,10 +15,10 @@ import DetailProps from "utils/props/detail/detail-props";
  * @returns Season detail page.
  */
 export default function SeasonDetail() {
-    const {model: season, isLoading: seasonLoading} = useFetchById<Season>("/api/seasons", "seasonId");
+    const { model: season, isLoading: seasonLoading } = useFetchById<Season>("/api/seasons", "seasonId");
 
     // Tv show for url
-    const {model: tvShow, isLoading: tvShowLoading} = useFetchById<TvShow>("/api/shows");
+    const { model: tvShow, isLoading: tvShowLoading } = useFetchById<TvShow>("/api/shows");
 
     // State vars
     const [description, setDescription] = useState(season?.description);
@@ -34,7 +34,7 @@ export default function SeasonDetail() {
     }, [season]);
 
     if (seasonLoading || tvShowLoading) {
-        return <LoadingPage/>;
+        return <LoadingPage />;
     }
 
     else if (!season || !tvShow) {
@@ -42,7 +42,7 @@ export default function SeasonDetail() {
     }
 
     // Props including children (episodes)
-    const props : DetailProps<Season> = {
+    const props: DetailProps<Season> = {
         model: season,
         submedia: season.episodes,
         title: `Season ${season.seasonNumber}`,

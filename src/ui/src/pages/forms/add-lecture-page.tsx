@@ -19,10 +19,10 @@ export default function AddLecturePage({ route }: { route?: any }) {
     // Initial data or the course that the lecture is for
     const location = useLocation();
     const courseId = location.state.id || -1;
-    const {model: lecture, isLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
+    const { model: lecture, isLoading } = useFetchById<Lecture>("/api/lectures", "lectureId");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(lecture || {...defaultLecture(-1, courseId)});
+    const [initial, setInitial] = useState(lecture || { ...defaultLecture(-1, courseId) });
     const [creating, setCreating] = useState(!lecture);
 
     // Constructed lecture
@@ -31,8 +31,8 @@ export default function AddLecturePage({ route }: { route?: any }) {
     useEffect(() => {
         if (!lecture) {
             setCreating(true);
-            lectureRef.current = {...defaultLecture(-1, courseId)}
-            setInitial({...defaultLecture(-1, courseId)});
+            lectureRef.current = { ...defaultLecture(-1, courseId) }
+            setInitial({ ...defaultLecture(-1, courseId) });
         } else {
             setCreating(false);
             lectureRef.current = lecture;

@@ -3,12 +3,12 @@ import DropdownProps from "utils/props/control-elements/dropdown-props";
 import classNames from "classnames";
 import Genre from "@shared/enum/genre";
 
-export default function DropdownCheckbox(props : DropdownProps) {
+export default function DropdownCheckbox(props: DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [selections, setSelections] = useState(props.initialSelections || []);
 
     return (
-        <div 
+        <div
             className={"relative flex flex-col items-start h-full " + props.width}
         >
             <span

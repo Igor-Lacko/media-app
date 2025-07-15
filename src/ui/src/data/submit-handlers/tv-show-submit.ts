@@ -14,49 +14,47 @@ import UpdateData from "data/crud/update";
  * @return True if successful, false otherwise.
  */
 export default async function TvShowSubmitHandler(
-    tvShow: TvShow,
-    seasons: Season[],
-    episodes: Episode[],
-    update: boolean,
-    id: number = 0
+	tvShow: TvShow,
+	seasons: Season[],
+	episodes: Episode[],
+	update: boolean,
+	id: number = 0,
 ): Promise<boolean> {
-    // Only mandatory fields
-    if (tvShow.title === "" || tvShow.genres?.length === 1) {
-        return false;
-    }
+	// Only mandatory fields
+	if (tvShow.title === "" || tvShow.genres?.length === 1) {
+		return false;
+	}
 
-    // Each episode has to have a title
-    if (episodes.some((episode) => episode.title === "")) {
-        return false;
-    }
+	// Each episode has to have a title
+	if (episodes.some((episode) => episode.title === "")) {
+		return false;
+	}
 
-    // Add episodes to seasons and seasons to TV show
-    tvShow.seasons = seasons.map((season, index) => {
-        return {
-            ...season,
-            seasonNumber: index + 1,
-            episodes: episodes.filter(
-                (episode) => episode.seasonNumber === index + 1
-            ),
-        };
-    });
+	// Add episodes to seasons and seasons to TV show
+	tvShow.seasons = seasons.map((season, index) => {
+		return {
+			...season,
+			seasonNumber: index + 1,
+			episodes: episodes.filter(
+				(episode) => episode.seasonNumber === index + 1,
+			),
+		};
+	});
 
-    // Submit
-    try {
-        // Updating, don't create a new one
-        if (update) {
-            await UpdateData<TvShow>("api/shows", id, tvShow);
-        }
+	// Submit
+	try {
+		// Updating, don't create a new one
+		if (update) {
+			await UpdateData<TvShow>("api/shows", id, tvShow);
+		}
 
-        // Have to create a new one
-        else {
-            await CreateData<TvShow>("api/shows", tvShow);
-        }
+		// Have to create a new one
+		else {
+			await CreateData<TvShow>("api/shows", tvShow);
+		}
 
-        return true;
-    } 
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }

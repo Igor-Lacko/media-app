@@ -2,14 +2,14 @@
  * Just for convenience (despite the weirdeness of this)
  */
 declare global {
-    interface Window {
-        electron?: {
-            getFilePath: (allowed: string) => Promise<string | null>;
-            isValidFile: (filePath: string) => Promise<boolean>;
-            isValidVideo: (filePath: string) => Promise<boolean>;
-            openExternal: (url: string) => Promise<void>;
-        };
-    }
+	interface Window {
+		electron?: {
+			getFilePath: (allowed: string) => Promise<string | null>;
+			isValidFile: (filePath: string) => Promise<boolean>;
+			isValidVideo: (filePath: string) => Promise<boolean>;
+			openExternal: (url: string) => Promise<void>;
+		};
+	}
 }
 
 /**
@@ -18,11 +18,11 @@ declare global {
  * @returns File path as a string or null if no file was selected.
  */
 export async function GetFilePath(allowed: string): Promise<string | null> {
-    if (!window.electron || !window.electron.getFilePath) {
-        return null;
-    }
+	if (!window.electron || !window.electron.getFilePath) {
+		return null;
+	}
 
-    return await window.electron.getFilePath(allowed);
+	return await window.electron.getFilePath(allowed);
 }
 
 /**
@@ -31,11 +31,11 @@ export async function GetFilePath(allowed: string): Promise<string | null> {
  * @returns True if the file exists, false otherwise.
  */
 export async function IsValidFile(path: string): Promise<boolean> {
-    if(!window.electron || !window.electron.isValidFile) {
-        return false;
-    }
+	if (!window.electron || !window.electron.isValidFile) {
+		return false;
+	}
 
-    return await window.electron.isValidFile(path);
+	return await window.electron.isValidFile(path);
 }
 
 /**
@@ -44,20 +44,23 @@ export async function IsValidFile(path: string): Promise<boolean> {
  * @returns True if the file is a valid video, false otherwise.
  */
 export async function IsValidVideo(path?: string): Promise<boolean> {
-    if(!window.electron || !window.electron.isValidVideo) {
-        return false;
-    }
+	if (!window.electron || !window.electron.isValidVideo) {
+		return false;
+	}
 
-    // No video avaliable
-    if (!path) {
-        return false;
-    }
+	// No video avaliable
+	if (!path) {
+		return false;
+	}
 
-    if (await IsValidFile(path) && await window.electron.isValidVideo(path)) {
-        return true;
-    }
+	if (
+		(await IsValidFile(path)) &&
+		(await window.electron.isValidVideo(path))
+	) {
+		return true;
+	}
 
-    return false;
+	return false;
 }
 
 /**
@@ -65,9 +68,9 @@ export async function IsValidVideo(path?: string): Promise<boolean> {
  * @param url URL to open.
  */
 export async function OpenExternal(url: string): Promise<void> {
-    if (!window.electron || !window.electron.openExternal) {
-        return;
-    }
+	if (!window.electron || !window.electron.openExternal) {
+		return;
+	}
 
-    await window.electron.openExternal(url);
+	await window.electron.openExternal(url);
 }

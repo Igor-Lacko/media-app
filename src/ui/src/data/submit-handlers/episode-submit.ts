@@ -10,17 +10,22 @@ import UpdateData from "data/crud/update";
  * @returns Promise resolving to true if the submission was successful, false otherwise.
  */
 export default async function SubmitEpisode(
-    episode: Episode, 
-    creating: boolean, 
-    seasonId?: number) : Promise<boolean> {
-    // Only title is required
-    if (episode.title === "") {
-        return false;
-    }
+	episode: Episode,
+	creating: boolean,
+	seasonId?: number,
+): Promise<boolean> {
+	// Only title is required
+	if (episode.title === "") {
+		return false;
+	}
 
-    if (creating) {
-        return await CreateData<Episode>(`/api/episodes/${seasonId}`, episode);
-    }
+	if (creating) {
+		return await CreateData<Episode>(`/api/episodes/${seasonId}`, episode);
+	}
 
-    return await UpdateData<Episode>(`/api/episodes`, episode.identifier!, episode);
+	return await UpdateData<Episode>(
+		`/api/episodes`,
+		episode.identifier!,
+		episode,
+	);
 }

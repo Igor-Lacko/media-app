@@ -7,23 +7,31 @@ import { IsValidFile } from "electron/electron-api";
  * @param items Items to check for valid thumbnails.
  * @returns An array of booleans indicating whether each item's thumbnail is valid.
  */
-export default function useThumbnail(items: { thumbnailUrl?: string }[]) : boolean[] {
-    // Otherwise the useEffect would run in a loop since items is a new reference every time
-    const memoizedItems = useMemo(() => items, [items]);
+export default function useThumbnail(
+	items: { thumbnailUrl?: string }[],
+): boolean[] {
+	// Otherwise the useEffect would run in a loop since items is a new reference every time
+	const memoizedItems = useMemo(() => items, [items]);
 
-    // State to hold the validity of thumbnails
-    const [validThumbnails, setValidThumbnails] = useState<boolean[]>(Array(memoizedItems.length).fill(false));
+	// State to hold the validity of thumbnails
+	const [validThumbnails, setValidThumbnails] = useState<boolean[]>(
+		Array(memoizedItems.length).fill(false),
+	);
 
-    // Check thumbnails when items change
-    useEffect(() => {
-        const checkThumbnails = async () => {
-            const newValidThumbnails = await Promise.all(memoizedItems.map(async (item) => 
-                item.thumbnailUrl !== undefined && await IsValidFile(item.thumbnailUrl)
-            ));
-            setValidThumbnails(newValidThumbnails);
-        }
-        checkThumbnails();
-    }, [memoizedItems]);
+	// Check thumbnails when items change
+	useEffect(() => {
+		const checkThumbnails = async () => {
+			const newValidThumbnails = await Promise.all(
+				memoizedItems.map(
+					async (item) =>
+						item.thumbnailUrl !== undefined &&
+						(await IsValidFile(item.thumbnailUrl)),
+				),
+			);
+			setValidThumbnails(newValidThumbnails);
+		};
+		checkThumbnails();
+	}, [memoizedItems]);
 
-    return validThumbnails;
+	return validThumbnails;
 }

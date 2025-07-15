@@ -82,13 +82,13 @@ export default function Sidebar({ visible, onToggle }: { visible: boolean; onTog
                     link={"/settings"}
                 />
             </div>
-                <button
-                    className={"fixed bottom-0 left-0 flex w-full items-center h-10 justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500\
+            <button
+                className={"fixed bottom-0 left-0 flex w-full items-center h-10 justify-center cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500\
                                 text-black dark:text-gray-200 border-t border-black dark:border-gray-700 transition-all duration-300 ease-in-out sm:p-0.5 sm:text-sm"}
-                    onClick={() => { handleToggle(); }}
-                >
-                    Hide Sidebar
-                </button>
+                onClick={() => { handleToggle(); }}
+            >
+                Hide Sidebar
+            </button>
         </div>
     );
 }

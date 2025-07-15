@@ -3,8 +3,8 @@
  * Also used in place of thumbnails when they are not found.
  * @param param0 Title, message
  */
-export default function ItemNotFound({ title, message, extraClassNames }: 
-    { title:string; message: string; extraClassNames?: string }) {
+export default function ItemNotFound({ title, message, extraClassNames }:
+    { title: string; message: string; extraClassNames?: string }) {
     return (
         <div
             className={"flex flex-col items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-700\
@@ -13,7 +13,7 @@ export default function ItemNotFound({ title, message, extraClassNames }:
             <div
                 className={"flex items-center justify-start mb-4"}
             >
-                <h1 
+                <h1
                     className={"text-2xl font-bold"}
                 >
                     {title}

@@ -22,14 +22,14 @@ import LoadingPage from "pages/other/loading-page";
  * Can also be used to edit an existing season, this is done by passing a route param.
  * @param route Optional route parameter containing the season data to pre-fill the form.
  */
-export default function AddSeasonPage({ route } : { route? : any}) {
+export default function AddSeasonPage({ route }: { route?: any }) {
     // Initial data, either get the tv show id as a param or use a default season
     const location = useLocation();
     const showId = location.state.id || 1;
-    const {model: season, isLoading} = useFetchById<Season>("/api/seasons", "seasonId");
+    const { model: season, isLoading } = useFetchById<Season>("/api/seasons", "seasonId");
 
     // State for initial data and creating status
-    const [initial, setInitial] = useState(season || {...defaultSeason(-1, showId)});
+    const [initial, setInitial] = useState(season || { ...defaultSeason(-1, showId) });
     const [creating, setCreating] = useState(!season);
 
     // Constructed season
@@ -42,11 +42,11 @@ export default function AddSeasonPage({ route } : { route? : any}) {
     useEffect(() => {
         if (!season) {
             setCreating(true);
-            seasonRef.current = {...defaultSeason(-1, showId)};
+            seasonRef.current = { ...defaultSeason(-1, showId) };
             counterRef.current = 1;
             setEpisodes([]);
-            setInitial({...defaultSeason(-1, showId)});
-        } 
+            setInitial({ ...defaultSeason(-1, showId) });
+        }
 
         else {
             setCreating(false);
@@ -70,7 +70,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             ref={seasonRef}
             submitFunction={/** Doesn't need any validation */
                 creating ? async (season: Season) => await SubmitSeason(season, false, episodes, showId) :
-                async (season: Season) => await SubmitSeason(season, true, episodes)
+                    async (season: Season) => await SubmitSeason(season, true, episodes)
             }
             errorModalMessage={"Please fill in all required fields."}
             successModalMessage={creating ? "Season added successfully." : "Season updated successfully."}
@@ -93,7 +93,7 @@ export default function AddSeasonPage({ route } : { route? : any}) {
             >
                 <AddOption
                     buttonText={"New Episode"}
-                    onChange={() => {setEpisodes([...episodes, defaultEpisode(counterRef.current++)])}}
+                    onChange={() => { setEpisodes([...episodes, defaultEpisode(counterRef.current++)]) }}
                 />
                 {episodes.map((episode, index) => (
                     <FormSection

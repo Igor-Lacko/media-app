@@ -12,38 +12,37 @@ import UpdateData from "data/crud/update";
  * @return True if successful, false otherwise.
  */
 export default async function CourseSubmitHandler(
-    course: Course,
-    lectures: Lecture[],
-    updating: boolean,
-    id: number = 0
+	course: Course,
+	lectures: Lecture[],
+	updating: boolean,
+	id: number = 0,
 ): Promise<boolean> {
-    // Only mandatory field
-    if (course.title === "" || lectures.some(lecture => lecture.title === "")) {
-        return false;
-    }
+	// Only mandatory field
+	if (
+		course.title === "" ||
+		lectures.some((lecture) => lecture.title === "")
+	) {
+		return false;
+	}
 
-    // Add lectures from the form
-    course.lectures = lectures.map((lecture, index) => {
-        return {
-            ...lecture,
-            lectureNumber: index + 1,
-        };
-    });
+	// Add lectures from the form
+	course.lectures = lectures.map((lecture, index) => {
+		return {
+			...lecture,
+			lectureNumber: index + 1,
+		};
+	});
 
-    // Submit
-    try {
-        if (updating) {
-            await UpdateData<Course>("api/courses", id, course);
-        } 
+	// Submit
+	try {
+		if (updating) {
+			await UpdateData<Course>("api/courses", id, course);
+		} else {
+			await CreateData<Course>("api/courses", course);
+		}
 
-        else {
-            await CreateData<Course>("api/courses", course);
-        }
-
-        return true;
-    } 
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }

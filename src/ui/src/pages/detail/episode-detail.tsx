@@ -15,11 +15,11 @@ import DetailProps from "utils/props/detail/detail-props";
  * Detail page for a episode.
  */
 export default function EpisodeDetail() {
-    const {model: episode, isLoading: episodeLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
+    const { model: episode, isLoading: episodeLoading } = useFetchById<Episode>("/api/episodes", "episodeId");
 
     // Fetch season for title and URL and show for URL
-    const {model: season, isLoading: seasonLoading} = useFetchById<Episode>("/api/seasons", "seasonId");
-    const {model: show, isLoading: showLoading} = useFetchById<TvShow>("/api/shows");
+    const { model: season, isLoading: seasonLoading } = useFetchById<Episode>("/api/seasons", "seasonId");
+    const { model: show, isLoading: showLoading } = useFetchById<TvShow>("/api/shows");
 
     // State
     const [rating, setRating] = useState(episode?.rating);
@@ -37,7 +37,7 @@ export default function EpisodeDetail() {
 
 
     if (episodeLoading || seasonLoading || showLoading) {
-        return <LoadingPage/>;
+        return <LoadingPage />;
     }
 
     // 404
@@ -45,7 +45,7 @@ export default function EpisodeDetail() {
         return <NotFoundPage message="Episode not found" />;
     }
 
-    const props : DetailProps<Episode> = {
+    const props: DetailProps<Episode> = {
         model: episode,
         title: season ? `S${season.seasonNumber}:E${episode.episodeNumber} - ${episode.title}`
             : `Episode ${episode.episodeNumber} : ${episode.title}`,
@@ -76,5 +76,5 @@ export default function EpisodeDetail() {
         }
     }
 
-    return <DetailLayout<Episode> {...props}/>;
+    return <DetailLayout<Episode> {...props} />;
 }

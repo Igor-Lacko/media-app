@@ -15,6 +15,7 @@ function createWindow() {
             preload: join(__dirname, '/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            devTools: false,
 
             // Local files
             webSecurity: false
@@ -27,8 +28,8 @@ function createWindow() {
 // Gets a absolute file path, allows only files ending with "extensions" to be selected
 ipcMain.handle('get-file', async (event, allowed) => {
     const extensions = allowed === "video" ? ['mp4', 'mkv', 'avi', 'mov'] :
-                        allowed === "image" ? ['jpg', 'jpeg', 'png', 'gif'] :
-                        ["*"];
+        allowed === "image" ? ['jpg', 'jpeg', 'png', 'gif'] :
+            ["*"];
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
         filters: [
@@ -38,7 +39,7 @@ ipcMain.handle('get-file', async (event, allowed) => {
             }
         ]
     });
-    return result.filePaths; 
+    return result.filePaths;
 });
 
 // Checks if a file exists

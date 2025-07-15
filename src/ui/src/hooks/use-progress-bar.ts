@@ -8,13 +8,18 @@ import WatchStatus from "@shared/enum/watch-status";
  * @param title Value/Max Title completed.
  * @returns Progress bar props containing value, max, and label.
  */
-export default function useProgressBar(items : CardDisplayable[], title : string) : ProgressBarProps {
-    const value = items.filter(item => item.watchStatus === WatchStatus.COMPLETED).length;
-    const max = items.length;
-    const label = `${value}/${max} ${title} completed`;
-    return {
-        value: value,
-        max: max,
-        label: label
-    };
+export default function useProgressBar(
+	items: CardDisplayable[],
+	title: string,
+): ProgressBarProps {
+	const value = items.filter(
+		(item) => item.watchStatus === WatchStatus.COMPLETED,
+	).length;
+	const max = items.length;
+	const label = `${value}/${max} ${title} completed`;
+	return {
+		value: value,
+		max: max,
+		label: label,
+	};
 }

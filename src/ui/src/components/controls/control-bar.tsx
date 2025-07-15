@@ -13,26 +13,26 @@ import Toggle from "components/buttons/toggle";
 /**
  * Control bar for filtering/sorting the list of media.
  */
-export default function ControlBar(props : ControlBarProps) {
+export default function ControlBar(props: ControlBarProps) {
     // Sort and filter texts
     const spanClasses = "flex items-end text-lg p-2 rounded-full text-gray-500\
         cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-400 transition-all duration-300 ease-in-out";
     const dropdownWidth = "w-2/10";
 
-    const sortProps : DropdownProps = {
+    const sortProps: DropdownProps = {
         width: dropdownWidth,
         prefix: "Sort by",
         icon: <FaSort className={"text-gray-500 h-4 w-4"} />,
-        options: props.sortOptions.map((key : SortKey) => {return SortKeyAdapter(key)}),
+        options: props.sortOptions.map((key: SortKey) => { return SortKeyAdapter(key) }),
         onChange: props.onSortChange as (value: SortKey | Genre) => void,
         initialValue: props.initialSort,
         initialText: SortKeyAdapter(props.initialSort).key
     }
 
-    const filterProps : DropdownProps = {
+    const filterProps: DropdownProps = {
         width: dropdownWidth,
         icon: <FaSort className={"text-gray-500 h-4 w-4"} />,
-        options: Object.values(Genre).map((value) => {return GenreAdapter(value)}),
+        options: Object.values(Genre).map((value) => { return GenreAdapter(value) }),
         onChange: props.onFilterChange as (value: SortKey | Genre) => void,
         initialValue: props.initialFilter || Genre.ALL,
         initialText: GenreAdapter(props.initialFilter || Genre.ALL).key,
@@ -83,7 +83,7 @@ export default function ControlBar(props : ControlBarProps) {
                     <span
                         className={spanClasses}
                     >
-                        <FaPlus     
+                        <FaPlus
                             className={"text-gray-500 font-light h-4 w-4"}
                         />
                     </span>

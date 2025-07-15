@@ -7,14 +7,12 @@ import axios from "axios";
  * @return Promise resolving to true if the creation was successful, false otherwise.
  */
 export async function CreateData<T>(url: string, data: T): Promise<boolean> {
-    try {
-        await axios.post<T>(url, data);
-        return true;
-    } 
-
-    catch (error) {
-        return false;
-    }
+	try {
+		await axios.post<T>(url, data);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -24,15 +22,17 @@ export async function CreateData<T>(url: string, data: T): Promise<boolean> {
  * @param id Foreign key id to associate with the data
  * @return Promise resolving to true if the creation was successful, false otherwise.
  * */
-export async function CreateDataWithId<T>(url: string, data: T, id: number): Promise<boolean> {
-    try {
-        await axios.post<T>(`${url}/${id}`, data);
-        return true;
-    } 
-
-    catch (error) {
-        return false;
-    }
+export async function CreateDataWithId<T>(
+	url: string,
+	data: T,
+	id: number,
+): Promise<boolean> {
+	try {
+		await axios.post<T>(`${url}/${id}`, data);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -41,33 +41,40 @@ export async function CreateDataWithId<T>(url: string, data: T, id: number): Pro
  * @param imdbId Optional IMDb ID of the movie to create. Has precedence.
  * @return Promise resolving to an object indicating success or failure, with an optional error message.
  */
-export async function CreateMovieFromOMDb(title?: string, imdbId?: string): Promise<{ success: boolean, errorMessage?: string }> {
-    try {
-        const response = await axios.post(`/api/movies/omdb`, { title, imdbId });
-        if (response.status === 201) {
-            return { success: true };
-        }
+export async function CreateMovieFromOMDb(
+	title?: string,
+	imdbId?: string,
+): Promise<{ success: boolean; errorMessage?: string }> {
+	try {
+		const response = await axios.post(`/api/movies/omdb`, {
+			title,
+			imdbId,
+		});
+		if (response.status === 201) {
+			return { success: true };
+		}
 
-        return {
-            success: false,
-            errorMessage: response.data.error || "Failed to create movie from OMDb"
-        };
-    }
+		return {
+			success: false,
+			errorMessage:
+				response.data.error || "Failed to create movie from OMDb",
+		};
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			const errorResponse = error.response?.data as { error: string };
+			return {
+				success: false,
+				errorMessage:
+					errorResponse?.error || "Failed to create movie from OMDb",
+			};
+		}
 
-    catch (error) {
-        if (axios.isAxiosError(error)) {
-            const errorResponse = error.response?.data as { error: string };
-            return {
-                success: false,
-                errorMessage: errorResponse?.error || "Failed to create movie from OMDb"
-            };
-        }
-
-        return {            
-            success: false,
-            errorMessage: "An unexpected error occurred while creating movie from OMDb"
-        };        
-    }
+		return {
+			success: false,
+			errorMessage:
+				"An unexpected error occurred while creating movie from OMDb",
+		};
+	}
 }
 
 /**
@@ -77,31 +84,41 @@ export async function CreateMovieFromOMDb(title?: string, imdbId?: string): Prom
  * @note At least one of title or imdbId must be provided.
  * @return Promise resolving to an object indicating success or failure, with an optional error message.
  */
-export async function CreateTvShowFromTvMaze(title?: string, imdbId?: string): Promise<{ success: boolean, errorMessage?: string }> {
-    return await axios.post(`/api/shows/tv-maze`, { title, imdbId })
-    .then((response) => {
-        if (response.status === 201) {
-            return { success: true };
-        }
+export async function CreateTvShowFromTvMaze(
+	title?: string,
+	imdbId?: string,
+): Promise<{ success: boolean; errorMessage?: string }> {
+	return await axios
+		.post(`/api/shows/tv-maze`, { title, imdbId })
+		.then((response) => {
+			if (response.status === 201) {
+				return { success: true };
+			}
 
-        return {
-            success: false,
-            errorMessage: response.data.error || "Failed to create TV show from TV Maze"
-        };
-    })
-    .catch((error) => {
-        if (axios.isAxiosError(error)) {
-            const errorResponse = error.response?.data as { error: string };
-            return {
-                success: false,
-                errorMessage: errorResponse?.error || "Failed to create TV show from TV Maze"
-            };
-        }
+			return {
+				success: false,
+				errorMessage:
+					response.data.error ||
+					"Failed to create TV show from TV Maze",
+			};
+		})
+		.catch((error) => {
+			if (axios.isAxiosError(error)) {
+				const errorResponse = error.response?.data as { error: string };
+				return {
+					success: false,
+					errorMessage:
+						errorResponse?.error ||
+						"Failed to create TV show from TV Maze",
+				};
+			}
 
-        return {            
-            success: false,
-            errorMessage: error instanceof Error ? error.message : 
-            "An unknown error has ocurred when trying to create a show."
-        };        
-    });
+			return {
+				success: false,
+				errorMessage:
+					error instanceof Error
+						? error.message
+						: "An unknown error has ocurred when trying to create a show.",
+			};
+		});
 }

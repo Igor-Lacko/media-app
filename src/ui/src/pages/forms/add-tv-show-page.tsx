@@ -28,9 +28,9 @@ import LoadingPage from "pages/other/loading-page";
  * Can also be used to edit an existing TV show, this is done by passing a `tvshow` prop.
  * @param tvshow Optional TV show object to pre-fill the form.
  */
-export default function AddTvShowPage({ route } : { route?: any }) {
+export default function AddTvShowPage({ route }: { route?: any }) {
     // Get TV show or use a blank one
-    const {model: tvshow, isLoading} = useFetchById<TvShow>("/api/shows");
+    const { model: tvshow, isLoading } = useFetchById<TvShow>("/api/shows");
 
     // State for initial data and creating status
     const [initial, setInitial] = useState(tvshow || structuredClone(defaultTvShow));
@@ -122,7 +122,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
             >
                 <AddOption
                     buttonText={"New Season"}
-                    onChange={() => {setSeasons([...seasons, defaultSeason(seasonCounterRef.current++)])}}
+                    onChange={() => { setSeasons([...seasons, defaultSeason(seasonCounterRef.current++)]) }}
                 />
                 {/** Nested once for seasons */}
                 {seasons.map((season, index) => (
@@ -160,7 +160,7 @@ export default function AddTvShowPage({ route } : { route?: any }) {
                         >
                             <AddOption
                                 buttonText={"New Episode"}
-                                onChange={() => {setEpisodes([...episodes, defaultEpisode(episodeCounterRef.current++, season.seasonNumber)])}}
+                                onChange={() => { setEpisodes([...episodes, defaultEpisode(episodeCounterRef.current++, season.seasonNumber)]) }}
                             />
                             {/** Nested again for episodes */}
                             {episodes.filter(episode => episode.seasonNumber === season.seasonNumber).map((episode, episodeIndex) => (

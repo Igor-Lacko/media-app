@@ -10,7 +10,7 @@ import VideoUpperBarProps from "utils/props/video/video-upper-bar-props";
  * Layout for the video player page.
  * @param props Title, URL, button handlers.
  */
-export default function VideoPlayerLayout(props : VideoPlayerProps) {
+export default function VideoPlayerLayout(props: VideoPlayerProps) {
     // To control lower/upper bars on mouse movement
     const [areBarsVisible, setAreBarsVisible] = useState(true);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -19,7 +19,7 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
     const [errorModalVisible, setErrorModalVisible] = useState(false);
 
     // Lower bar props
-    const lowerBarProps : VideoLowerBarProps = {
+    const lowerBarProps: VideoLowerBarProps = {
         // Seeking
         ref: props.ref,
 
@@ -39,7 +39,7 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
     }
 
     // Upper bar props
-    const upperBarProps : VideoUpperBarProps = {
+    const upperBarProps: VideoUpperBarProps = {
         // Visual
         title: props.title,
         isVisible: areBarsVisible,
@@ -48,8 +48,8 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
         backUrl: props.backUrl,
 
         // Notebook
-        onNoteClick: props.onNoteClick ? () => props.onNoteClick!(props.ref.current?.currentTime || 0) 
-                    : undefined,
+        onNoteClick: props.onNoteClick ? () => props.onNoteClick!(props.ref.current?.currentTime || 0)
+            : undefined,
 
         // Time handler and ref
         saveContinueAt: async (time: number) => {
@@ -83,7 +83,7 @@ export default function VideoPlayerLayout(props : VideoPlayerProps) {
                 className={"w-full h-full object-fill"}
                 ref={props.ref}
                 onClick={() => {
-                    if(props.ref.current) {
+                    if (props.ref.current) {
                         props.ref.current.paused ? props.ref.current.play() : props.ref.current.pause();
                     }
 

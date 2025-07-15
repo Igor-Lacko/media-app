@@ -82,23 +82,23 @@ export default function LastWatchedPreview(props: CarouselProps) {
                     </span>
                 )}
             </div>
-                {/** Next buttons */}
-                {props.models.length > 1 && <div
-                    className={"flex items-center justify-center space-x-2 w-full"}
-                >
-                    {props.models.map((_model, index) => (
-                        <button
-                            key={index}
-                            disabled={index === currentIndex}
-                            className={"text-md text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200\
+            {/** Next buttons */}
+            {props.models.length > 1 && <div
+                className={"flex items-center justify-center space-x-2 w-full"}
+            >
+                {props.models.map((_model, index) => (
+                    <button
+                        key={index}
+                        disabled={index === currentIndex}
+                        className={"text-md text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200\
                                         transition-colors duration-300 p-2 rounded-full bg-gray-100 dark:bg-gray-600 cursor-pointer\
                                         disabled:opacity-50 disabled:cursor-auto size-10"}
-                            onClick={() => setCurrentIndex(index)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>}
+                        onClick={() => setCurrentIndex(index)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>}
         </div>
     </div>
 }

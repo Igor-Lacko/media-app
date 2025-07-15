@@ -155,3 +155,6 @@ Dockerfile*
 docker-compose*.yml
 build-docker.sh
 .dockerignore
+
+# Formatting
+.prettier*

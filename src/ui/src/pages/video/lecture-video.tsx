@@ -14,8 +14,8 @@ import { useEffect, useRef, useState } from "react";
  * Lecture video player page.
  */
 export default function LectureVideo() {
-    const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId")!;
-    const {model: course, isLoading: courseLoading} = useFetchById<Course>("/api/courses")!;
+    const { model: lecture, isLoading: lectureLoading } = useFetchById<Lecture>("/api/lectures", "lectureId")!;
+    const { model: course, isLoading: courseLoading } = useFetchById<Course>("/api/courses")!;
 
     // Video ref
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -37,8 +37,8 @@ export default function LectureVideo() {
 
     else if (!lecture) {
         return <NotFoundPage
-                    message={"Lecture not found"}
-                />;
+            message={"Lecture not found"}
+        />;
     }
 
     return (
@@ -64,7 +64,7 @@ export default function LectureVideo() {
                         setNotebookVisible(false);
                     }
                 }}
-                onFinish={async () => await UpdateData<Lecture>("/api/lectures", lecture.identifier!, {watchStatus: WatchStatus.COMPLETED})}
+                onFinish={async () => await UpdateData<Lecture>("/api/lectures", lecture.identifier!, { watchStatus: WatchStatus.COMPLETED })}
                 initialPlaybackTime={lecture.continueAt || 0}
                 timestampRef={timestampRef}
             />
@@ -80,7 +80,7 @@ export default function LectureVideo() {
                         setNotes(notes);
                     }
                 }}
-                onAddNote={async (note: Note)  => {
+                onAddNote={async (note: Note) => {
                     const newNotes = [...notes, note];
                     if (await UpdateNotes("/api/lectures", lecture, newNotes)) {
                         setNotes(newNotes);

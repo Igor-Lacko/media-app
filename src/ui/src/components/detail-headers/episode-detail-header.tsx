@@ -18,8 +18,8 @@ export default function EpisodeDetailHeader(props: DetailProps<Episode>) {
                 {<span
                     className={"text-lg text-gray-500 dark:text-gray-400 italic"}
                 >
-                    {props.model.length ? `${props.model.length} ${props.model.length > 1 ? "minutes" : "minute"}` 
-                    : "Unknown length"}
+                    {props.model.length ? `${props.model.length} ${props.model.length > 1 ? "minutes" : "minute"}`
+                        : "Unknown length"}
                 </span>}
             </div>
             {/** Short description */}

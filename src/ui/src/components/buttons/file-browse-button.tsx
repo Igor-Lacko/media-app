@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { GetFilePath } from "electron/electron-api";
 
-export default function FileBrowseButton({initial, onChange, allowed, extraClassnames} : {
+export default function FileBrowseButton({ initial, onChange, allowed, extraClassnames }: {
     initial: string,
     onChange: (value: string) => void,
     allowed: string,
@@ -13,7 +13,7 @@ export default function FileBrowseButton({initial, onChange, allowed, extraClass
     return (
         <div
             className={"flex items-center justify-start w-full h-10 rounded-lg\
-                border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 " 
+                border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 "
                 + (extraClassnames || "")}
         >
             <button

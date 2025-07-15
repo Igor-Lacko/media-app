@@ -13,11 +13,11 @@ import { useRef } from "react";
  * Episode video player page.
  */
 export default function EpisodeVideo() {
-    const {model: episode, isLoading: episodeLoading} = useFetchById<Episode>("/api/episodes", "episodeId")!;
+    const { model: episode, isLoading: episodeLoading } = useFetchById<Episode>("/api/episodes", "episodeId")!;
 
     // Fetch season and show for title
-    const {model: season, isLoading: seasonLoading} = useFetchById<Season>("/api/seasons", "seasonId");
-    const {model: show, isLoading: showLoading} = useFetchById<TvShow>("/api/shows");
+    const { model: season, isLoading: seasonLoading } = useFetchById<Season>("/api/seasons", "seasonId");
+    const { model: show, isLoading: showLoading } = useFetchById<TvShow>("/api/shows");
 
     // Video ref
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -28,8 +28,8 @@ export default function EpisodeVideo() {
 
     else if (!season || !episode || !show) {
         return <NotFoundPage
-                    message={"Episode, season, or show not found"}
-                />;
+            message={"Episode, season, or show not found"}
+        />;
     }
 
     return (
@@ -44,8 +44,8 @@ export default function EpisodeVideo() {
             saveLength={async (length: number) => {
                 await UpdateLength<Episode>("/api/episodes", episode, length);
             }}
-            onInit={async () => await UpdateData<TvShow>("/api/shows", show.identifier!, {watchStatus: WatchStatus.WATCHING})}
-            onFinish={async () => await UpdateData<Episode>("/api/episodes", episode.identifier!, {watchStatus: WatchStatus.COMPLETED})}
+            onInit={async () => await UpdateData<TvShow>("/api/shows", show.identifier!, { watchStatus: WatchStatus.WATCHING })}
+            onFinish={async () => await UpdateData<Episode>("/api/episodes", episode.identifier!, { watchStatus: WatchStatus.COMPLETED })}
             initialPlaybackTime={episode.continueAt || 0}
             ref={videoRef}
         />

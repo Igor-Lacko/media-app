@@ -1,4 +1,4 @@
-export default function DetailImage({src, classNames} : {src: string, classNames? : string}) {
+export default function DetailImage({ src, classNames }: { src: string, classNames?: string }) {
     return (
         <img
             src={`file://${src}`}

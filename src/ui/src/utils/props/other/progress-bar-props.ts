@@ -2,17 +2,16 @@
  * Properties for a progress bar component.
  */
 export interface ProgressBarProps {
-    // Optional since percentage can be provided instead
-    value?: number;
-    max?: number;
+	// Optional since percentage can be provided instead
+	value?: number;
+	max?: number;
 
+	label?: string;
 
-    label?: string;
+	// Can be provided straight away
+	percentage?: number;
 
-    // Can be provided straight away
-    percentage?: number;
-
-    extraClassNames?: string;
+	extraClassNames?: string;
 }
 
 export default ProgressBarProps;

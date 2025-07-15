@@ -6,12 +6,12 @@ import TvShow from "@shared/interface/models/tv-show";
  * Used in favorites for now.
  */
 export default interface CardProps {
-    // Model itself
-    model: Movie | TvShow;
+	// Model itself
+	model: Movie | TvShow;
 
-    // Navigates to the model's detail page
-    url: string;
+	// Navigates to the model's detail page
+	url: string;
 
-    // Extra class names for styling
-    extraClassNames?: string;
+	// Extra class names for styling
+	extraClassNames?: string;
 }

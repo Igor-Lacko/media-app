@@ -12,51 +12,61 @@ import { WatchStatus } from "@shared/enum/watch-status";
  */
 
 export const defaultMovie: Movie = {
-    title: "",
-    genres: [Genre.ALL],
-    watchStatus: WatchStatus.NOT_WATCHED,
-    isFavorite: false,
-    rating: 0,
+	title: "",
+	genres: [Genre.ALL],
+	watchStatus: WatchStatus.NOT_WATCHED,
+	isFavorite: false,
+	rating: 0,
 };
 
 export const defaultTvShow: TvShow = {
-    title: "",
-    genres: [Genre.ALL],
-    seasons: [],
-    watchStatus: WatchStatus.NOT_WATCHED,
-    isFavorite: false,
-    rating: 0,
-}
+	title: "",
+	genres: [Genre.ALL],
+	seasons: [],
+	watchStatus: WatchStatus.NOT_WATCHED,
+	isFavorite: false,
+	rating: 0,
+};
 
 export const defaultCourse: Course = {
-    title: "",
-    lectures: [],
-    toWatch: false,
+	title: "",
+	lectures: [],
+	toWatch: false,
+};
+
+export function defaultSeason(
+	seasonNumber: number = -1,
+	showId: number = 0,
+): Season {
+	return {
+		seasonNumber: seasonNumber,
+		episodes: [],
+		rating: 0,
+	};
 }
 
-export function defaultSeason(seasonNumber: number = -1, showId: number = 0) : Season {
-    return {
-        seasonNumber: seasonNumber,
-        episodes: [],
-        rating: 0,
-    };
+export function defaultEpisode(
+	episodeNumber: number = -1,
+	seasonNumber: number = -1,
+	seasonId: number = 0,
+): Episode {
+	return {
+		episodeNumber: episodeNumber,
+		seasonNumber: seasonNumber,
+		title: "",
+		watchStatus: WatchStatus.NOT_WATCHED,
+		rating: 0,
+	};
 }
 
-export function defaultEpisode(episodeNumber: number = -1, seasonNumber: number = -1, seasonId: number = 0) : Episode {
-    return {
-        episodeNumber: episodeNumber,
-        seasonNumber: seasonNumber,
-        title: "",
-        watchStatus: WatchStatus.NOT_WATCHED,
-        rating: 0,
-    };
-}
-
-export function defaultLecture(lectureNumber: number = 1, CourseId: number = 0) : Lecture{
-    return {
-        lectureNumber: lectureNumber,
-        title: "",
-        notes: [],
-        watchStatus: WatchStatus.NOT_WATCHED
-    };
+export function defaultLecture(
+	lectureNumber: number = 1,
+	CourseId: number = 0,
+): Lecture {
+	return {
+		lectureNumber: lectureNumber,
+		title: "",
+		notes: [],
+		watchStatus: WatchStatus.NOT_WATCHED,
+	};
 }

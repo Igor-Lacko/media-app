@@ -8,16 +8,19 @@ import Episode from "@shared/interface/models/episode";
  * @param setEpisodes Function to update the list of episodes.
  */
 export function RemoveEpisodeFromShowFilter(
-    removed: Episode,
-    episodes: Episode[],
-    setEpisodes: (episodes: Episode[]) => void,
+	removed: Episode,
+	episodes: Episode[],
+	setEpisodes: (episodes: Episode[]) => void,
 ) {
-    const updatedEpisodes = episodes
-        // Remove all episodes with the same season and episode number (so the removed one)
-        .filter((episode) => episode.episodeNumber !== removed.episodeNumber 
-        || episode.seasonNumber !== removed.seasonNumber)
+	const updatedEpisodes = episodes
+		// Remove all episodes with the same season and episode number (so the removed one)
+		.filter(
+			(episode) =>
+				episode.episodeNumber !== removed.episodeNumber ||
+				episode.seasonNumber !== removed.seasonNumber,
+		);
 
-    setEpisodes(updatedEpisodes);
+	setEpisodes(updatedEpisodes);
 }
 
 /**
@@ -28,11 +31,12 @@ export function RemoveEpisodeFromShowFilter(
  * @param setEpisodes Function to update the list of episodes in the season.
  */
 export function RemoveEpisodeFromSeasonFilter(
-    removed: Episode,
-    episodes: Episode[],
-    setEpisodes: (episodes: Episode[]) => void,
+	removed: Episode,
+	episodes: Episode[],
+	setEpisodes: (episodes: Episode[]) => void,
 ) {
-    const updatedEpisodes = episodes
-        .filter((episode) => episode.episodeNumber !== removed.episodeNumber)
-    setEpisodes(updatedEpisodes);
+	const updatedEpisodes = episodes.filter(
+		(episode) => episode.episodeNumber !== removed.episodeNumber,
+	);
+	setEpisodes(updatedEpisodes);
 }

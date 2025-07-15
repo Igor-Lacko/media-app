@@ -125,11 +125,11 @@ export default function ApiFormLayout(props: ApiFormProps) {
 
                                 // Submit
                                 await props.onSubmit(trimmedTitle, trimmedImdbId)
-                                .then((res) => {
-                                    setLoading(false);
-                                    res.success ? setSuccessModalVisible(true) :
-                                    setErrorModalMessage(res.errorMessage || "An unknown error occurred.");
-                                })
+                                    .then((res) => {
+                                        setLoading(false);
+                                        res.success ? setSuccessModalVisible(true) :
+                                            setErrorModalMessage(res.errorMessage || "An unknown error occurred.");
+                                    })
                             }}
                         />
                     </div>

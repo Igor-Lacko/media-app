@@ -23,7 +23,7 @@ export default function CoursePage() {
     const navigate = useNavigate();
 
     // Fetch courses
-    const {data, isLoading} = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["Courses", sort],
         queryFn: async () => await FetchData<Course>("/api/courses"),
     });
@@ -35,7 +35,7 @@ export default function CoursePage() {
         initialSort: sort,
         initialSortOrder: ascending,
         onSortChange: (sortKey: SortKey) => { setSort(sortKey); },
-        onFilterChange: () => {},
+        onFilterChange: () => { },
         onSearchChange: (searchTerm: string) => { setSearch(searchTerm); },
         onSortOrderChange: (asc: boolean) => { setAscending(asc); },
         onAddClick: () => navigate("/courses/add"),
@@ -44,12 +44,12 @@ export default function CoursePage() {
     const CourseListProps: ListProps = {
         // Sorted and searched courses
         items: SortMedia<Course>(data || [], sort, ascending)
-        .filter((course: Course) => course.title.toLowerCase().includes(search.toLowerCase())) || [],
+            .filter((course: Course) => course.title.toLowerCase().includes(search.toLowerCase())) || [],
 
         showRating: false,
         showThumbnail: false,
         notFoundTitle: "No courses found :((",
-        notFoundMessage: "It appears you have no courses yet. You can add one by clicking the "+" button on this page."
+        notFoundMessage: "It appears you have no courses yet. You can add one by clicking the " + " button on this page."
     }
 
     if (isLoading) {
@@ -69,7 +69,7 @@ export default function CoursePage() {
                 />
             </div>
             <Routes>
-                <Route path="/add" element={<AddCoursePage/>} />
+                <Route path="/add" element={<AddCoursePage />} />
             </Routes>
         </div>
     );

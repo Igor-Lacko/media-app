@@ -2,7 +2,7 @@
  * Section in a form, with a title and children.
  * @param param0 Title and child elements
  */
-export default function FormSection({ children, title, classNames } : { children : React.ReactNode, title : string, classNames? : string }) {
+export default function FormSection({ children, title, classNames }: { children: React.ReactNode, title: string, classNames?: string }) {
     return (
         <div className={"flex w-full flex-col items-start pb-10 justify-start border-t\
                 border-gray-300 dark:border-gray-600 " + (classNames || "")}>

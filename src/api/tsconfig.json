@@ -3,9 +3,15 @@
         "baseUrl": "./src",
         "esModuleInterop": true,
         "paths": {
-            "@shared/*": ["../../shared/*"],
-            "@/*": ["./src/*"]
+            "@shared/*": [
+                "../../shared/*"
+            ],
+            "@/*": [
+                "./src/*"
+            ]
         }
     },
-    "include": ["src"]
+    "include": [
+        "src"
+    ]
 }

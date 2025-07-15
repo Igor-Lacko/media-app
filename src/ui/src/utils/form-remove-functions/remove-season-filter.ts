@@ -11,20 +11,22 @@ import Episode from "@shared/interface/models/episode";
  * @param setEpisodes Function to update the list of episodes.
  */
 export default function RemoveSeasonFilter(
-    removed: Season,
-    seasons: Season[],
-    setSeasons: (seasons: Season[]) => void,
-    episodes: Episode[],
-    setEpisodes: (episodes: Episode[]) => void,
+	removed: Season,
+	seasons: Season[],
+	setSeasons: (seasons: Season[]) => void,
+	episodes: Episode[],
+	setEpisodes: (episodes: Episode[]) => void,
 ) {
-    // Update seasons
-    const updatedSeasons = seasons
-        .filter((season) => season.seasonNumber !== removed.seasonNumber)
-    setSeasons(updatedSeasons);
+	// Update seasons
+	const updatedSeasons = seasons.filter(
+		(season) => season.seasonNumber !== removed.seasonNumber,
+	);
+	setSeasons(updatedSeasons);
 
-    // Update episodes
-    const updatedEpisodes = episodes
-        .filter(episode => episode.seasonNumber !== removed.seasonNumber)
+	// Update episodes
+	const updatedEpisodes = episodes.filter(
+		(episode) => episode.seasonNumber !== removed.seasonNumber,
+	);
 
-    setEpisodes(updatedEpisodes);
+	setEpisodes(updatedEpisodes);
 }

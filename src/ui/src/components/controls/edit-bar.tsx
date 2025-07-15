@@ -9,7 +9,7 @@ import ToggleWatchlistButton from "components/buttons/toggle-watchlist-button";
  * Edit bar component
  * @param props 
  */
-export default function EditBar(props : EditBarProps) {
+export default function EditBar(props: EditBarProps) {
     return (
         <div
             className={"flex items-center w-full h- border-b-2 border-gray-400 dark:border-gray-600\
@@ -22,31 +22,31 @@ export default function EditBar(props : EditBarProps) {
                     text={props.addTitle}
                     onClick={props.onAdd}
                     extraClassNames={"bg-green-500 dark:bg-green-700 hover:bg-green-600"}
-                    icon={<FaPlus/>}
+                    icon={<FaPlus />}
                 />}
                 {props.editTitle && props.onEdit && <RoundedButton
                     text={props.editTitle}
                     onClick={props.onEdit}
                     extraClassNames={"bg-blue-500 dark:bg-blue-700 hover:bg-blue-600"}
-                    icon={<FaPencilAlt/>}
+                    icon={<FaPencilAlt />}
                 />}
                 {props.deleteTitle && props.onDelete && <RoundedButton
                     text={props.deleteTitle}
                     onClick={props.onDelete}
                     extraClassNames={"bg-red-500 dark:bg-red-700 hover:bg-red-600"}
-                    icon={<FaTrash/>}
+                    icon={<FaTrash />}
                 />}
                 {props.playTitle && props.onPlay && <RoundedButton
                     text={props.playTitle}
                     onClick={props.onPlay}
                     extraClassNames={"bg-purple-500 dark:bg-purple-700 hover:bg-purple-600"}
-                    icon={<FaPlay/>}
+                    icon={<FaPlay />}
                 />}
                 {props.onAddNote && <RoundedButton
                     text={"Add Note"}
                     onClick={props.onAddNote}
                     extraClassNames={"bg-yellow-500 dark:bg-yellow-600 hover:bg-yellow-700"}
-                    icon={<FaPlus/>}
+                    icon={<FaPlus />}
                 />}
             </div>
             <div
@@ -64,19 +64,19 @@ export default function EditBar(props : EditBarProps) {
                     text={props.rateTitle}
                     onClick={props.onRate}
                     extraClassNames={"bg-orange-500 dark:bg-orange-600 hover:bg-orange-700"}
-                    icon={<FaStar/>}
+                    icon={<FaStar />}
                 />}
                 {props.onSetDescription && <RoundedButton
                     text={"Set Description"}
                     onClick={props.onSetDescription}
                     extraClassNames={"bg-purple-500 dark:bg-purple-600 hover:bg-purple-700"}
-                    icon={<FaPencilAlt/>}
+                    icon={<FaPencilAlt />}
                 />}
                 {props.onSetWatchStatus && <RoundedButton
                     text={"Set Watch Status"}
                     onClick={props.onSetWatchStatus}
                     extraClassNames={"bg-green-500 dark:bg-green-600 hover:bg-green-700"}
-                    icon={<FaCheckCircle/>}
+                    icon={<FaCheckCircle />}
                 />}
             </div>
         </div>

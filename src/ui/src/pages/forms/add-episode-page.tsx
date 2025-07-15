@@ -20,20 +20,20 @@ import LoadingPage from "pages/other/loading-page";
 export default function AddEpisodePage() {
     const location = useLocation();
     const seasonId = location.state.id || 1;
-    const {model: episode, isLoading} = useFetchById<Episode>("/api/episodes", "episodeId");
+    const { model: episode, isLoading } = useFetchById<Episode>("/api/episodes", "episodeId");
 
     // Initial data
-    const [initial, setInitial] = useState<Episode>(episode || {...defaultEpisode(-1)});
+    const [initial, setInitial] = useState<Episode>(episode || { ...defaultEpisode(-1) });
     const [creating, setCreating] = useState(!episode);
 
     // Constructed episode
-    const episodeRef = useRef<Episode>(episode || {...defaultEpisode(-1)});
+    const episodeRef = useRef<Episode>(episode || { ...defaultEpisode(-1) });
 
     useEffect(() => {
         if (!episode) {
             setCreating(true);
-            episodeRef.current = {...defaultEpisode(-1)};
-            setInitial({...defaultEpisode(-1)});
+            episodeRef.current = { ...defaultEpisode(-1) };
+            setInitial({ ...defaultEpisode(-1) });
         }
 
         else {

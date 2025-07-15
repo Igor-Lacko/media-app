@@ -12,16 +12,16 @@ export default function ConfirmModal(props: ModalProps) {
             className={"fixed inset-0 flex backdrop-blur-sm items-center justify-center z-50 \
                 " + (props.extraClassNames || "")}
         >
-            <div 
+            <div
                 className={"bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 max-w-md w-full"}
             >
-                <h2 
+                <h2
                     className={"text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4"}
                 >
                     {props.title}
                 </h2>
                 {props.message && (
-                    <p 
+                    <p
                         className={"text-gray-600 dark:text-gray-400 mb-4"}
                     >
                         {props.message}

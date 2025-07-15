@@ -7,24 +7,24 @@ import axios, { AxiosError } from "axios";
  * @returns A promise that resolves to true if the database was successfully deleted, false otherwise.
  */
 export async function NukeDatabase(): Promise<boolean> {
-    try {
-        await prisma.$transaction([
-            prisma.movie.deleteMany(),
-            prisma.show.deleteMany(),
-            prisma.course.deleteMany(),
-        ]);
+	try {
+		await prisma.$transaction([
+			prisma.movie.deleteMany(),
+			prisma.show.deleteMany(),
+			prisma.course.deleteMany(),
+		]);
 
-        // Reset OMDB key
-        await prisma.settings.updateMany({
-            data: {
-                omdbApiKey: null,
-            },
-        });
+		// Reset OMDB key
+		await prisma.settings.updateMany({
+			data: {
+				omdbApiKey: null,
+			},
+		});
 
-        return true;
-    } catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -33,33 +33,35 @@ export async function NukeDatabase(): Promise<boolean> {
  * @returns A promise that resolves to true if the key is valid, false otherwise.
  */
 async function VerifyApiKey(
-    omdbKey: string
+	omdbKey: string,
 ): Promise<{ success: boolean; errorMessage?: string }> {
-    try {
-        const response = await axios.get(
-            `http://www.omdbapi.com/?apikey=${omdbKey}&t=${encodeURIComponent("Interstellar")}`
-        );
+	try {
+		const response = await axios.get(
+			`http://www.omdbapi.com/?apikey=${omdbKey}&t=${encodeURIComponent(
+				"Interstellar",
+			)}`,
+		);
 
-        return {
-            success: response.data.Response === "True",
-            errorMessage: response.data.Error || undefined,
-        };
-    } 
+		return {
+			success: response.data.Response === "True",
+			errorMessage: response.data.Error || undefined,
+		};
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			const errorResponse = error.response?.data as { Error?: string };
+			return {
+				success: false,
+				errorMessage:
+					(errorResponse && errorResponse.Error) || error.message,
+			};
+		}
 
-    catch (error) {
-        if (axios.isAxiosError(error)) {
-            const errorResponse = error.response?.data as { Error?: string };
-            return {
-                success: false,
-                errorMessage: (errorResponse && errorResponse.Error) || error.message
-            };
-        }
-
-        return {
-            success: false,
-            errorMessage: "An unexpected error occurred while verifying the API key",
-        };
-    }
+		return {
+			success: false,
+			errorMessage:
+				"An unexpected error occurred while verifying the API key",
+		};
+	}
 }
 
 /**
@@ -67,36 +69,35 @@ async function VerifyApiKey(
  * @returns A promise that resolves to the current settings.
  */
 export async function GetSettings(): Promise<Settings> {
-    try {
-        const settings = await prisma.settings.findFirst();
-        if (settings) {
-            return {
-                darkMode: settings.darkMode,
-                hasApiKey:
-                    settings.omdbApiKey !== null && settings.omdbApiKey !== undefined,
-                tvShowProgressInEpisodes: settings.episodeProgressInEpisodes,
-                showMarkdownPreview: settings.showPreviewInMarkdown
-            };
-        }
+	try {
+		const settings = await prisma.settings.findFirst();
+		if (settings) {
+			return {
+				darkMode: settings.darkMode,
+				hasApiKey:
+					settings.omdbApiKey !== null &&
+					settings.omdbApiKey !== undefined,
+				tvShowProgressInEpisodes: settings.episodeProgressInEpisodes,
+				showMarkdownPreview: settings.showPreviewInMarkdown,
+			};
+		}
 
-        // Create default
-        await prisma.settings.create({
-            data: {
-                omdbApiKey: null
-            },
-        });
+		// Create default
+		await prisma.settings.create({
+			data: {
+				omdbApiKey: null,
+			},
+		});
 
-        return {
-            darkMode: true,
-            hasApiKey: false,
-            tvShowProgressInEpisodes: false,
-            showMarkdownPreview: false
-        };
-    } 
-
-    catch (error) {
-        throw new Error("Could not fetch settings");
-    }
+		return {
+			darkMode: true,
+			hasApiKey: false,
+			tvShowProgressInEpisodes: false,
+			showMarkdownPreview: false,
+		};
+	} catch (error) {
+		throw new Error("Could not fetch settings");
+	}
 }
 
 /**
@@ -105,18 +106,18 @@ export async function GetSettings(): Promise<Settings> {
  * @returns True if the update was successful, false otherwise.
  */
 export async function UpdateDarkMode(darkMode: boolean): Promise<boolean> {
-    try {
-        // UpdateMany is fine, there is only one row
-        await prisma.settings.updateMany({
-            data: {
-                darkMode: darkMode,
-            },
-        });
+	try {
+		// UpdateMany is fine, there is only one row
+		await prisma.settings.updateMany({
+			data: {
+				darkMode: darkMode,
+			},
+		});
 
-        return true;
-    } catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -125,24 +126,24 @@ export async function UpdateDarkMode(darkMode: boolean): Promise<boolean> {
  * @returns An object indicating success or failure, with an optional error message (api key invalid, internet connection error, etc).
  */
 export async function UpdateOMDBKey(
-    omdbKey: string
+	omdbKey: string,
 ): Promise<{ success: boolean; errorMessage?: string }> {
-    // Verify the key first
-    const keyVerifyStatus = await VerifyApiKey(omdbKey);
-    if (!keyVerifyStatus.success) {
-        return { success: false, errorMessage: keyVerifyStatus.errorMessage };
-    }
+	// Verify the key first
+	const keyVerifyStatus = await VerifyApiKey(omdbKey);
+	if (!keyVerifyStatus.success) {
+		return { success: false, errorMessage: keyVerifyStatus.errorMessage };
+	}
 
-    try {
-        await prisma.settings.updateMany({
-            data: {
-                omdbApiKey: omdbKey,
-            },
-        });
-        return { success: true };
-    } catch (error) {
-        return { success: false, errorMessage: error };
-    }
+	try {
+		await prisma.settings.updateMany({
+			data: {
+				omdbApiKey: omdbKey,
+			},
+		});
+		return { success: true };
+	} catch (error) {
+		return { success: false, errorMessage: error };
+	}
 }
 
 /**
@@ -150,12 +151,14 @@ export async function UpdateOMDBKey(
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteOMDBKey(): Promise<boolean> {
-    return await prisma.settings.updateMany({
-        data: {
-            omdbApiKey: null,
-        }
-    }).then(() => true)
-    .catch(() => false);
+	return await prisma.settings
+		.updateMany({
+			data: {
+				omdbApiKey: null,
+			},
+		})
+		.then(() => true)
+		.catch(() => false);
 }
 
 /**
@@ -163,13 +166,17 @@ export async function DeleteOMDBKey(): Promise<boolean> {
  * @param inEpisodes True if the progress should be displayed in episodes, false for seasons.
  * @returns A promise that resolves to true if the update was successful, false otherwise.
  */
-export async function UpdateProgressDisplay(inEpisodes: boolean): Promise<boolean> {
-    return await prisma.settings.updateMany({
-        data: {
-            episodeProgressInEpisodes: inEpisodes,
-        }
-    }).then(() => true)
-    .catch(() => false);
+export async function UpdateProgressDisplay(
+	inEpisodes: boolean,
+): Promise<boolean> {
+	return await prisma.settings
+		.updateMany({
+			data: {
+				episodeProgressInEpisodes: inEpisodes,
+			},
+		})
+		.then(() => true)
+		.catch(() => false);
 }
 
 /**
@@ -177,11 +184,15 @@ export async function UpdateProgressDisplay(inEpisodes: boolean): Promise<boolea
  * @param showPreview True if the markdown preview should be shown, false otherwise.
  * @returns A promise that resolves to true if the update was successful, false otherwise.
  */
-export async function UpdateMarkdownPreview(showPreview: boolean): Promise<boolean> {
-    return await prisma.settings.updateMany({
-        data: {
-            showPreviewInMarkdown: showPreview
-        }
-    }).then(() => true)
-    .catch(() => false);
+export async function UpdateMarkdownPreview(
+	showPreview: boolean,
+): Promise<boolean> {
+	return await prisma.settings
+		.updateMany({
+			data: {
+				showPreviewInMarkdown: showPreview,
+			},
+		})
+		.then(() => true)
+		.catch(() => false);
 }

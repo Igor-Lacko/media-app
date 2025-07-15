@@ -24,11 +24,16 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@shared/*": ["../../shared/*"],
-      "@api/*": ["../../api/src/*"],
+      "@shared/*": [
+        "../../shared/*"
+      ],
+      "@api/*": [
+        "../../api/src/*"
+      ],
     }
   },
   "include": [
-    "src"
-, "../electron/preload.js"  ]
+    "src",
+    "../electron/preload.js"
+  ]
 }

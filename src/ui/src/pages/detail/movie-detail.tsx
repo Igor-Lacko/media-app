@@ -16,7 +16,7 @@ import LoadingPage from "pages/other/loading-page";
  */
 export default function MovieDetail() {
     // Parse movie id
-    const {model: movie, isLoading} = useFetchById<Movie>("/api/movies");
+    const { model: movie, isLoading } = useFetchById<Movie>("/api/movies");
 
     // State vars and update on fetch
     const [description, setDescription] = useState(movie?.description);
@@ -38,15 +38,15 @@ export default function MovieDetail() {
     }, [movie]);
 
     if (isLoading) {
-        return <LoadingPage/>;
+        return <LoadingPage />;
     }
 
     // 404, shouldn't happen?
-    else if(!movie) {
-        return <NotFoundPage message="Movie not found"/>
+    else if (!movie) {
+        return <NotFoundPage message="Movie not found" />
     }
 
-    const props : DetailProps<Movie> = {
+    const props: DetailProps<Movie> = {
         model: movie,
         title: movie.title!,
         description: description,
@@ -87,5 +87,5 @@ export default function MovieDetail() {
         }
     }
 
-    return <DetailLayout<Movie> {...props}/>;
+    return <DetailLayout<Movie> {...props} />;
 }

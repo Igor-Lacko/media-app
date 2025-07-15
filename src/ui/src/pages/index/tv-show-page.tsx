@@ -30,12 +30,12 @@ export default function TvShowPage() {
     const navigate = useNavigate();
 
     // Fetch
-    const {data, isLoading} = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["shows", sort, filter],
         queryFn: async () => await FetchData<TvShow>("/api/shows"),
     });
 
-    const controlBarProps : ControlBarProps = {
+    const controlBarProps: ControlBarProps = {
         title: "Your TV shows",
         filter: true,
         sortOptions: [SortKey.NAME, SortKey.NOF_EPISODES, SortKey.NOF_SEASONS, SortKey.RATING],
@@ -49,12 +49,12 @@ export default function TvShowPage() {
         onAddClick: () => setAddModalVisible(true),
     }
 
-    const tvShowListProps : ListProps = {
+    const tvShowListProps: ListProps = {
         // Sorted, filtered, and searched tv shows.
         items: SortMedia<TvShow>(data || [], sort, ascending)
-        .filter((tvShow: TvShow) => tvShow.title.toLowerCase().includes(search.toLowerCase()) && 
-        tvShow.genres!.includes(filter)) 
-        || [],
+            .filter((tvShow: TvShow) => tvShow.title.toLowerCase().includes(search.toLowerCase()) &&
+                tvShow.genres!.includes(filter))
+            || [],
 
         showRating: true,
         showThumbnail: true,

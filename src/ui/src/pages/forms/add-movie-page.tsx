@@ -35,7 +35,7 @@ export default function AddMoviePage({ route }: { route?: any }) {
             setCreating(true);
             movieRef.current = structuredClone(defaultMovie);
             setInitial(structuredClone(defaultMovie));
-        } 
+        }
 
         else {
             setCreating(false);

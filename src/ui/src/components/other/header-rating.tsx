@@ -5,9 +5,9 @@ import classNames from "classnames";
  * Component to display the rating of a media item with stars.
  * @param param0 Rating value and optional class names for styling.
  */
-export default function HeaderRating({rating, extraClassNames} : {rating: number, extraClassNames?: string}) {
+export default function HeaderRating({ rating, extraClassNames }: { rating: number, extraClassNames?: string }) {
     // Number of filled stars
-    const stars : React.ReactNode[] = Array.from({ length: 5 }, (_, index) => {
+    const stars: React.ReactNode[] = Array.from({ length: 5 }, (_, index) => {
         const starValue = index + 1;
         return (
             <FaStar
@@ -19,7 +19,7 @@ export default function HeaderRating({rating, extraClassNames} : {rating: number
                         "text-gray-300 dark:text-gray-600": starValue * 2 > Math.round(rating)
                     }
                 )}
-        />)
+            />)
     });
 
     return (

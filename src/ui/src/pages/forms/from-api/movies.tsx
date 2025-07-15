@@ -18,7 +18,7 @@ export default function OMDbMovieForm() {
             <span
                 className={"text-gray-500 dark:text-gray-400 text-lg mb-4"}
             >
-                This form uses the 
+                This form uses the
                 <button
                     className={"text-blue-500 dark:text-blue-400 hover:underline mx-1 cursor-pointer"}
                     onClick={async () => await OpenExternal("https://www.omdbapi.com")}

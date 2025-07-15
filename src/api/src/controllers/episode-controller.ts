@@ -1,5 +1,8 @@
 import Episode from "@shared/interface/models/episode";
-import { DBEpisodeToClient, SanitizeClientEpisodeToDB } from "adapters/episodes";
+import {
+	DBEpisodeToClient,
+	SanitizeClientEpisodeToDB,
+} from "adapters/episodes";
 import prisma from "db/db";
 import { UpdateEpisodeNumbers } from "./season-controller";
 import { WatchStatus } from "generated/prisma/enums";
@@ -10,23 +13,21 @@ import { WatchStatus } from "generated/prisma/enums";
  * @returns Episode object if found, null otherwise.
  */
 export async function GetEpisodeById(id: number): Promise<Episode | null> {
-    try {
-        const episode = await prisma.episode.findUnique({
-            where: {
-                id: id
-            }
-        });
+	try {
+		const episode = await prisma.episode.findUnique({
+			where: {
+				id: id,
+			},
+		});
 
-        if (!episode) {
-            return null;
-        }
+		if (!episode) {
+			return null;
+		}
 
-        return DBEpisodeToClient(episode);
-    }
-
-    catch (error) {
-        return null;
-    }
+		return DBEpisodeToClient(episode);
+	} catch (error) {
+		return null;
+	}
 }
 
 /**
@@ -35,31 +36,35 @@ export async function GetEpisodeById(id: number): Promise<Episode | null> {
  * @param seasonId Identifier of the season to which the episode belongs.
  * @returns True if the creation was successful, false otherwise.
  */
-export async function CreateEpisode(episode: Episode, seasonId: number): Promise<boolean> {
-    const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;
-    try {
-        await prisma.episode.create({
-            data: {
-                ...sanitizedEpisode,
-                episodeNumber: episode.episodeNumber === -1 ? await prisma.episode.count({
-                    where: {
-                        seasonId: seasonId
-                    }
-                }) + 1 : episode.episodeNumber,
-                season: {
-                    connect: {
-                        id: seasonId
-                    }
-                }
-            }
-        })
+export async function CreateEpisode(
+	episode: Episode,
+	seasonId: number,
+): Promise<boolean> {
+	const sanitizedEpisode = SanitizeClientEpisodeToDB(episode) as Episode;
+	try {
+		await prisma.episode.create({
+			data: {
+				...sanitizedEpisode,
+				episodeNumber:
+					episode.episodeNumber === -1
+						? (await prisma.episode.count({
+								where: {
+									seasonId: seasonId,
+								},
+						  })) + 1
+						: episode.episodeNumber,
+				season: {
+					connect: {
+						id: seasonId,
+					},
+				},
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -68,29 +73,35 @@ export async function CreateEpisode(episode: Episode, seasonId: number): Promise
  * @param episodeData Partial object containing fields to update.
  * @returns True if successful, false otherwise.
  */
-export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): Promise<boolean> {
-    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
-    try {
-        await prisma.episode.update({
-            where: {
-                id: id
-            },
+export async function UpdateEpisode(
+	id: number,
+	episodeData: Partial<Episode>,
+): Promise<boolean> {
+	const sanitizedEpisode = SanitizeClientEpisodeToDB(
+		episodeData as Episode,
+	) as Episode;
+	try {
+		await prisma.episode.update({
+			where: {
+				id: id,
+			},
 
-            // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
-            data: {
-                ...sanitizedEpisode,
-                watchStatus: sanitizedEpisode.continueAt === sanitizedEpisode.length 
-                && sanitizedEpisode.length && sanitizedEpisode.length !== 0 ?
-                WatchStatus.COMPLETED : sanitizedEpisode.watchStatus
-            }
-        });
+			// Can't use the spread operator here due to seasonNumber not being part of the prisma schema
+			data: {
+				...sanitizedEpisode,
+				watchStatus:
+					sanitizedEpisode.continueAt === sanitizedEpisode.length &&
+					sanitizedEpisode.length &&
+					sanitizedEpisode.length !== 0
+						? WatchStatus.COMPLETED
+						: sanitizedEpisode.watchStatus,
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -100,35 +111,39 @@ export async function UpdateEpisode(id: number, episodeData: Partial<Episode>): 
  * @param seasonId Identifier of the season to which the episode belongs.
  * @returns True if successful, false otherwise.
  */
-export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Episode>, seasonId?: number): Promise<boolean> {
-    const sanitizedEpisode = SanitizeClientEpisodeToDB(episodeData as Episode) as Episode;
-    try {
-        await prisma.episode.upsert({
-            where: {
-                id: id
-            },
+export async function UpdateOrCreateEpisode(
+	id: number,
+	episodeData: Partial<Episode>,
+	seasonId?: number,
+): Promise<boolean> {
+	const sanitizedEpisode = SanitizeClientEpisodeToDB(
+		episodeData as Episode,
+	) as Episode;
+	try {
+		await prisma.episode.upsert({
+			where: {
+				id: id,
+			},
 
-            // Can't use the spread operator here due to seasonNumber not being part of the prisma schema
-            update: {
-                ...sanitizedEpisode
-            },
+			// Can't use the spread operator here due to seasonNumber not being part of the prisma schema
+			update: {
+				...sanitizedEpisode,
+			},
 
-            create: {
-                ...sanitizedEpisode,
-                season: {
-                    connect: {
-                        id: seasonId
-                    }
-                }
-            }
-        });
+			create: {
+				...sanitizedEpisode,
+				season: {
+					connect: {
+						id: seasonId,
+					},
+				},
+			},
+		});
 
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -137,29 +152,27 @@ export async function UpdateOrCreateEpisode(id: number, episodeData: Partial<Epi
  * @returns True if the deletion was successful, false otherwise.
  */
 export async function DeleteEpisode(id: number): Promise<boolean> {
-    try {
-        // Get the season ID first
-        const seasonID = await prisma.episode.findUnique({
-            where: {
-                id: id
-            },
-            select: {
-                seasonId: true
-            }
-        });
+	try {
+		// Get the season ID first
+		const seasonID = await prisma.episode.findUnique({
+			where: {
+				id: id,
+			},
+			select: {
+				seasonId: true,
+			},
+		});
 
-        // Delete the episode
-        await prisma.episode.delete({
-            where: {
-                id: id
-            }
-        });
+		// Delete the episode
+		await prisma.episode.delete({
+			where: {
+				id: id,
+			},
+		});
 
-        // Update other episodes in the season
-        return await UpdateEpisodeNumbers(seasonID?.seasonId || -1);
-    }
-
-    catch (error) {
-        return false;
-    }
+		// Update other episodes in the season
+		return await UpdateEpisodeNumbers(seasonID?.seasonId || -1);
+	} catch (error) {
+		return false;
+	}
 }

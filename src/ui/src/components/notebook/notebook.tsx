@@ -10,7 +10,7 @@ import Note from "@shared/interface/models/note";
  * Retractable notebook component.
  * @param props Note update handlers, visibility, current timestamp.
  */
-export default function Notebook (props: NotebookProps) {
+export default function Notebook(props: NotebookProps) {
     // Whether to display the note list. If false, displays tye "add note" textfield/area/whatever.
     const [noteListDisplayed, setNoteListDisplayed] = useState(true);
 

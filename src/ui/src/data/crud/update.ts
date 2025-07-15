@@ -12,15 +12,17 @@ import axios from "axios";
  * @param data Partial data to update the entry with.
  * @return Promise resolving to true if the update was successful, false otherwise.
  */
-export default async function UpdateData<T>(url: string, id: number, data: Partial<T>): Promise<boolean> {
-    try {
-        await axios.patch<Partial<T>>(`${url}/${id}`, data);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export default async function UpdateData<T>(
+	url: string,
+	id: number,
+	data: Partial<T>,
+): Promise<boolean> {
+	try {
+		await axios.patch<Partial<T>>(`${url}/${id}`, data);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -29,15 +31,18 @@ export default async function UpdateData<T>(url: string, id: number, data: Parti
  * @param model Movie or TV show model to update.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, model: T): Promise<boolean> {
-    try {
-        await UpdateData<T>(url, model.identifier!, { isFavorite: !model.isFavorite } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function MarkAsFavorite<T extends Movie | TvShow>(
+	url: string,
+	model: T,
+): Promise<boolean> {
+	try {
+		await UpdateData<T>(url, model.identifier!, {
+			isFavorite: !model.isFavorite,
+		} as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -47,16 +52,15 @@ export async function MarkAsFavorite<T extends Movie | TvShow>(url: string, mode
  * @param rating New rating value.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateRating<T extends { rating?: number, identifier?: number }>
-(url: string, model: T, rating: number): Promise<boolean> {
-    try {
-        await UpdateData<T>(url, model.identifier!, { rating } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateRating<
+	T extends { rating?: number; identifier?: number },
+>(url: string, model: T, rating: number): Promise<boolean> {
+	try {
+		await UpdateData<T>(url, model.identifier!, { rating } as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -66,16 +70,17 @@ export async function UpdateRating<T extends { rating?: number, identifier?: num
  * @param watchStatus New watch status value.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateWatchStatus<T extends { watchStatus: string, identifier?: number }>
-(url: string, model: T, watchStatus: string): Promise<boolean> {
-    try {
-        await UpdateData<T>(url, model.identifier!, { watchStatus } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateWatchStatus<
+	T extends { watchStatus: string; identifier?: number },
+>(url: string, model: T, watchStatus: string): Promise<boolean> {
+	try {
+		await UpdateData<T>(url, model.identifier!, {
+			watchStatus,
+		} as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -85,16 +90,17 @@ export async function UpdateWatchStatus<T extends { watchStatus: string, identif
  * @param description New description value.
  * @return Promise resolving to void if the operation was successful, throws an error otherwise.
  */
-export async function UpdateDescription<T extends { description?: string, identifier?: number }>
-(url: string, model: T, description: string): Promise<boolean> {
-    try {
-        await UpdateData<T>(url, model.identifier!, { description } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateDescription<
+	T extends { description?: string; identifier?: number },
+>(url: string, model: T, description: string): Promise<boolean> {
+	try {
+		await UpdateData<T>(url, model.identifier!, {
+			description,
+		} as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -104,17 +110,19 @@ export async function UpdateDescription<T extends { description?: string, identi
  * @param videoUrl New video URL value.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateVideoUrl<T extends { videoUrl?: string, continueAt?: number, identifier?: number }>
-(url: string, model: T, videoUrl: string): Promise<boolean> {
-    try {
-        // Also reset current playback position
-        await UpdateData<T>(url, model.identifier!, { videoUrl, continueAt: 0 } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateVideoUrl<
+	T extends { videoUrl?: string; continueAt?: number; identifier?: number },
+>(url: string, model: T, videoUrl: string): Promise<boolean> {
+	try {
+		// Also reset current playback position
+		await UpdateData<T>(url, model.identifier!, {
+			videoUrl,
+			continueAt: 0,
+		} as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -124,17 +132,23 @@ export async function UpdateVideoUrl<T extends { videoUrl?: string, continueAt?:
  * @param continueAt New playback position in seconds.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdatePlaybackPosition<T extends { continueAt?: number, lastWatchedAt?: number, identifier?: number }> 
-(url: string, model: T, continueAt: number): Promise<boolean> {
-    const lastWatchedAt = Date.now() / 1000;
-    try {
-        await UpdateData<T>(url, model.identifier!, { continueAt, lastWatchedAt } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdatePlaybackPosition<
+	T extends {
+		continueAt?: number;
+		lastWatchedAt?: number;
+		identifier?: number;
+	},
+>(url: string, model: T, continueAt: number): Promise<boolean> {
+	const lastWatchedAt = Date.now() / 1000;
+	try {
+		await UpdateData<T>(url, model.identifier!, {
+			continueAt,
+			lastWatchedAt,
+		} as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -144,15 +158,19 @@ export async function UpdatePlaybackPosition<T extends { continueAt?: number, la
  * @param notes Array of notes to set.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateNotes(url: string, model: Lecture, notes: Note[]): Promise<boolean> {
-    try {
-        await UpdateData<Lecture>(url, model.identifier!, { notes } as Partial<Lecture>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateNotes(
+	url: string,
+	model: Lecture,
+	notes: Note[],
+): Promise<boolean> {
+	try {
+		await UpdateData<Lecture>(url, model.identifier!, {
+			notes,
+		} as Partial<Lecture>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -162,16 +180,15 @@ export async function UpdateNotes(url: string, model: Lecture, notes: Note[]): P
  * @param length New length in seconds.
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
-export async function UpdateLength<T extends { length?: number, identifier?: number }>
-(url: string, model: T, length: number): Promise<boolean> {
-    try {
-        await UpdateData<T>(url, model.identifier!, { length } as Partial<T>);
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+export async function UpdateLength<
+	T extends { length?: number; identifier?: number },
+>(url: string, model: T, length: number): Promise<boolean> {
+	try {
+		await UpdateData<T>(url, model.identifier!, { length } as Partial<T>);
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -180,14 +197,14 @@ export async function UpdateLength<T extends { length?: number, identifier?: num
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
 export async function ToggleCourseWatchlist(model: Course): Promise<boolean> {
-    try {
-        await UpdateData<Course>("/api/courses", model.identifier!, { toWatch: !model.toWatch });
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+	try {
+		await UpdateData<Course>("/api/courses", model.identifier!, {
+			toWatch: !model.toWatch,
+		});
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -196,14 +213,14 @@ export async function ToggleCourseWatchlist(model: Course): Promise<boolean> {
  * @return Promise resolving to true if the operation was successful, false otherwise.
  */
 export async function ToggleDarkMode(darkMode: boolean): Promise<boolean> {
-    try {
-        const response = await axios.patch("/api/settings/dark-mode", { darkMode });
-        return response.status === 200;
-    }
-
-    catch (error) {
-        return false;
-    }
+	try {
+		const response = await axios.patch("/api/settings/dark-mode", {
+			darkMode,
+		});
+		return response.status === 200;
+	} catch (error) {
+		return false;
+	}
 }
 
 /**
@@ -211,25 +228,38 @@ export async function ToggleDarkMode(darkMode: boolean): Promise<boolean> {
  * @param omdbKey New OMDB API key.
  * @return Promise resolving to an object indicating success or failure, with an optional error message.
  */
-export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean, errorMessage?: string }> {
-    try {
-        const response = await axios.patch("/api/settings/omdb-key", { omdbKey });
-        if (response.status === 200) {
-            return { success: true };
-        }
-
-        else {
-            return { success: false, errorMessage: response.data.error || "Failed to update OMDB key" };
-        }
-    }
-
-    catch (error) {
-        if (axios.isAxiosError(error)) {
-            const errorResponse = error.response?.data as { error?: string };
-            return { success: false, errorMessage: errorResponse?.error || "Unknown error when updating api key" };
-        }
-        return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
-    }
+export async function UpdateOMDBKey(
+	omdbKey: string,
+): Promise<{ success: boolean; errorMessage?: string }> {
+	try {
+		const response = await axios.patch("/api/settings/omdb-key", {
+			omdbKey,
+		});
+		if (response.status === 200) {
+			return { success: true };
+		} else {
+			return {
+				success: false,
+				errorMessage:
+					response.data.error || "Failed to update OMDB key",
+			};
+		}
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			const errorResponse = error.response?.data as { error?: string };
+			return {
+				success: false,
+				errorMessage:
+					errorResponse?.error ||
+					"Unknown error when updating api key",
+			};
+		}
+		return {
+			success: false,
+			errorMessage:
+				error instanceof Error ? error.message : "Unknown error",
+		};
+	}
 }
 
 /**
@@ -237,10 +267,13 @@ export async function UpdateOMDBKey(omdbKey: string): Promise<{ success: boolean
  * @param tvShowProgressInEpisodes New value for displaying progress in episodes.
  * @return True if the operation was successful, false otherwise.
  */
-export async function ToggleTvShowProgressDisplay(tvShowProgressInEpisodes: boolean): Promise<boolean> {
-    return axios.patch("/api/settings/show-progress", { tvShowProgressInEpisodes })
-        .then(response => response.status === 200)
-        .catch(() => false);
+export async function ToggleTvShowProgressDisplay(
+	tvShowProgressInEpisodes: boolean,
+): Promise<boolean> {
+	return axios
+		.patch("/api/settings/show-progress", { tvShowProgressInEpisodes })
+		.then((response) => response.status === 200)
+		.catch(() => false);
 }
 
 /**
@@ -248,8 +281,11 @@ export async function ToggleTvShowProgressDisplay(tvShowProgressInEpisodes: bool
  * @param showMarkdownPreview New value for showing markdown preview.
  * @return True if the operation was successful, false otherwise.
  */
-export async function ToggleMarkdownPreview(showMarkdownPreview: boolean): Promise<boolean> {
-    return axios.patch("/api/settings/markdown-preview", { showMarkdownPreview })
-        .then(response => response.status === 200)
-        .catch(() => false);
+export async function ToggleMarkdownPreview(
+	showMarkdownPreview: boolean,
+): Promise<boolean> {
+	return axios
+		.patch("/api/settings/markdown-preview", { showMarkdownPreview })
+		.then((response) => response.status === 200)
+		.catch(() => false);
 }

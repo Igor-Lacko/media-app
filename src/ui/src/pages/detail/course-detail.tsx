@@ -11,7 +11,7 @@ import DetailProps from "utils/props/detail/detail-props";
 
 export default function CourseDetail() {
     // Course for which the detail is displayed
-    const {model: course, isLoading} = useFetchById<Course>("/api/courses");
+    const { model: course, isLoading } = useFetchById<Course>("/api/courses");
 
     // The only state!
     const [inWatchlist, setInWatchlist] = useState(course?.toWatch || false);
@@ -30,7 +30,7 @@ export default function CourseDetail() {
     }
 
     // Props
-    const props : DetailProps<Course> = {
+    const props: DetailProps<Course> = {
         model: course,
         submedia: course.lectures,
         title: course.title!,
@@ -58,8 +58,8 @@ export default function CourseDetail() {
     }
 
     return (
-            <DetailLayout
-                {...props}
-            />
-        );
+        <DetailLayout
+            {...props}
+        />
+    );
 }

@@ -10,7 +10,7 @@ import useVideo from "hooks/use-video";
  * Lower bar for the video player with play, pause, forward, and backward controls.
  * @param props Include button handlers, isVisible ref and extra class names.
  */
-export default function VideoLowerBar(props : VideoLowerBarProps) {
+export default function VideoLowerBar(props: VideoLowerBarProps) {
     // State
     const [speed, setSpeed] = useState(props.ref.current?.playbackRate || 1.0);
     const [playing, setPlaying] = useState(!props.ref.current?.paused || false);
@@ -46,7 +46,7 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                 value={time}
                 setValue={(value) => {
                     setTime(value);
-                    if(props.ref.current) {
+                    if (props.ref.current) {
                         props.ref.current.currentTime = value;
                     }
                 }}
@@ -62,8 +62,8 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                     {playing ?
                         <FaPause
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
-                            onClick={onSwitchPlaying} 
-                        /> : 
+                            onClick={onSwitchPlaying}
+                        /> :
                         <FaPlay
                             className={"text-gray-500 ml-5 text-2xl cursor-pointer hover:text-gray-600"}
                             onClick={onSwitchPlaying}
@@ -93,7 +93,7 @@ export default function VideoLowerBar(props : VideoLowerBarProps) {
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600 ml-5"}
                         onClick={onDecreaseSpeed}
                     />
-                    <FaFastForward 
+                    <FaFastForward
                         className={"text-gray-500 text-2xl cursor-pointer hover:text-gray-600"}
                         onClick={onIncreaseSpeed}
                     />

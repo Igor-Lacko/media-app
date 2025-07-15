@@ -4,7 +4,7 @@ import classNames from "classnames";
  * Button used to add a subject/course to a to-watch list.
  * @param param0 OnClick handler, watchlist status, and optional extra class names.
  */
-export default function ToggleWatchlistButton({onClick, isInWatchlist, extraClassNames} : {
+export default function ToggleWatchlistButton({ onClick, isInWatchlist, extraClassNames }: {
     onClick: () => void;
     isInWatchlist: boolean;
     extraClassNames?: string;

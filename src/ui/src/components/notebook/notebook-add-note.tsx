@@ -9,8 +9,8 @@ import SettingsContext from "context/settings-context";
  * Part of the notebook used for, well, adding notes.
  * @param param0 Add handler, current timestamp, and additional class names.
  */
-export default function NotebookAddNote({onAdd, timestamp, extraClassNames} : 
-    {onAdd: (note: Note) => void, timestamp: React.RefObject<number>, extraClassNames?: string} 
+export default function NotebookAddNote({ onAdd, timestamp, extraClassNames }:
+    { onAdd: (note: Note) => void, timestamp: React.RefObject<number>, extraClassNames?: string }
 ) {
     // Note content, timestamp is provided by the parent component.
     const [content, setContent] = useState("");
@@ -32,7 +32,7 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
                     )}
                     value={content}
                     onChange={(value) => {
-                        if(value) {
+                        if (value) {
                             setContent(value);
                         }
                     }}
@@ -46,7 +46,7 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
                     <RoundedButton
                         text={"Add Note"}
                         onClick={() => {
-                            if(content.trim() === "") {
+                            if (content.trim() === "") {
                                 return;
                             }
 

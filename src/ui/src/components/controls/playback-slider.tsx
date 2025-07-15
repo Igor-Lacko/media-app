@@ -4,7 +4,7 @@ import PlaybackSliderProps from "utils/props/control-elements/playback-slider-pr
  * Playback slider component for controlling video position.
  * @param props Max (video length), current value, onChange handler.
  */
-export default function PlaybackSlider(props : PlaybackSliderProps) {
+export default function PlaybackSlider(props: PlaybackSliderProps) {
     return (
         <div
             className={"relative w-full h-1 bg-gray-400 cursor-pointer " + (props.extraClassNames || "")}

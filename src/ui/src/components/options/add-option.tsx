@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa"
  * @param param0 Title, text near the button, onChange function, extra classnames.
  * @returns Component for adding options.
  */
-export default function AddOption({buttonText, onChange, extraClassnames} : {buttonText : string, onChange : () => void, extraClassnames? : string}) {
+export default function AddOption({ buttonText, onChange, extraClassnames }: { buttonText: string, onChange: () => void, extraClassnames?: string }) {
     return (
         <div
             className={"flex flex-col w-full ml-8 items-start justify-center p-4 space-y-4 " + (extraClassnames || "")}

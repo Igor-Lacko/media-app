@@ -17,10 +17,10 @@ import DetailProps from "utils/props/detail/detail-props";
  * Detail page for lectures.
  */
 export default function LectureDetail() {
-    const {model: lecture, isLoading: lectureLoading} = useFetchById<Lecture>("/api/lectures", "lectureId");
+    const { model: lecture, isLoading: lectureLoading } = useFetchById<Lecture>("/api/lectures", "lectureId");
 
     // Course for URL
-    const {model: course, isLoading: courseLoading} = useFetchById<Course>("/api/courses");
+    const { model: course, isLoading: courseLoading } = useFetchById<Course>("/api/courses");
 
     // State
     const [watchStatus, setWatchStatus] = useState(lecture?.watchStatus);
@@ -39,7 +39,7 @@ export default function LectureDetail() {
     }, [lecture]);
 
     if (lectureLoading || courseLoading) {
-        return <LoadingPage/>;
+        return <LoadingPage />;
     }
 
     // 404
@@ -47,7 +47,7 @@ export default function LectureDetail() {
         return <NotFoundPage message="Lecture not found" />;
     }
 
-    const props : DetailProps<Lecture> = {
+    const props: DetailProps<Lecture> = {
         model: lecture,
         title: `Lecture ${lecture.lectureNumber}: ${lecture.title}`,
         watchStatus: watchStatus,

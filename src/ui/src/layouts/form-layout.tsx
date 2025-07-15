@@ -62,7 +62,7 @@ export default function FormLayout<T>(props: FormProps<T>) {
                         onClick={onSubmit}
                         extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800\
                                 w-1/10 h-full"}
-                        icon={<FaCheck/>}
+                        icon={<FaCheck />}
                     />
                 </div>
             </div>

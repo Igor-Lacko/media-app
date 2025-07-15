@@ -35,7 +35,7 @@ export default function AppLayout() {
     }, [initialSettings, isLoading]);
 
     const isIndexPage = ["/", "/movies", "/tv-shows", "/courses", "/settings"].some(
-        (path) => location.pathname.endsWith(path) 
+        (path) => location.pathname.endsWith(path)
     );
 
     return (
@@ -49,8 +49,8 @@ export default function AppLayout() {
                 className={classNames(
                     "flex bg-white flex-grow dark:bg-gray-800 h-screen w-full overflow-y-auto overflow-x-hidden",
                     {
-                        "dark" : settings.darkMode,
-                        "light" : !settings.darkMode,
+                        "dark": settings.darkMode,
+                        "light": !settings.darkMode,
                     }
                 )}
             >
@@ -68,8 +68,8 @@ export default function AppLayout() {
                             className={classNames(
                                 "text-black dark:text-gray-200 h-full w-1/25 transition-all duration-500 ease-in-out p-0",
                                 {
-                                    "blur-sm" : sidebarVisible,
-                                    "cursor-pointer" : !sidebarVisible
+                                    "blur-sm": sidebarVisible,
+                                    "cursor-pointer": !sidebarVisible
                                 }
                             )}
                             onClick={() => setSidebarVisible(true)}
@@ -79,8 +79,8 @@ export default function AppLayout() {
                         className={classNames(
                             "flex w-full flex-grow",
                             {
-                                "blur-sm" : sidebarVisible,
-                                "pointer-events-none" : sidebarVisible,
+                                "blur-sm": sidebarVisible,
+                                "pointer-events-none": sidebarVisible,
                             }
                         )}
                     >

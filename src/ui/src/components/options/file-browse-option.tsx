@@ -33,10 +33,10 @@ export default function FileBrowseOption({
                 {title}
             </span>
             <div className={"flex items-center justify-start w-4/10"}>
-                <FileBrowseButton 
+                <FileBrowseButton
                     initial={initial}
                     allowed={allowed || "all"}
-                    onChange={onChange} 
+                    onChange={onChange}
                 />
             </div>
         </div>

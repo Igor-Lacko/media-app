@@ -9,41 +9,39 @@ import prisma from "db/db";
  * @returns Array of favorite movies and TV shows.
  */
 export async function GetFavorites(): Promise<(Movie | TvShow)[]> {
-    try {
-        // Fetch movies
-        const favoriteMovies = await prisma.movie.findMany({
-            where: {
-                isFavorite: true,
-            },
+	try {
+		// Fetch movies
+		const favoriteMovies = await prisma.movie.findMany({
+			where: {
+				isFavorite: true,
+			},
 
-            include: {
-                genres: true,
-            }
-        });
+			include: {
+				genres: true,
+			},
+		});
 
-        // Fetch shows
-        const favoriteTvShows = await prisma.show.findMany({
-            where: {
-                isFavorite: true,
-            },
+		// Fetch shows
+		const favoriteTvShows = await prisma.show.findMany({
+			where: {
+				isFavorite: true,
+			},
 
-            include: {
-                genres: true,
-                seasons: {
-                    include: {
-                        episodes: true,
-                    },
-                },
-            }
-        });
+			include: {
+				genres: true,
+				seasons: {
+					include: {
+						episodes: true,
+					},
+				},
+			},
+		});
 
-        return [
-            ...favoriteMovies.map(movie => DBMovieToClient(movie)),
-            ...favoriteTvShows.map(show => DBTvShowToClient(show))
-        ];
-    }
-
-    catch (error) {
-        throw error;
-    }
+		return [
+			...favoriteMovies.map((movie) => DBMovieToClient(movie)),
+			...favoriteTvShows.map((show) => DBTvShowToClient(show)),
+		];
+	} catch (error) {
+		throw error;
+	}
 }

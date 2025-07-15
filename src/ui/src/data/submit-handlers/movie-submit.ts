@@ -9,26 +9,26 @@ import UpdateData from "data/crud/update";
  * @param id Identifier of the movie to update, if it has to be used.
  * @returns A promise that resolves to true if the submission was successful, false otherwise.
  */
-export default async function SubmitMovie(movie: Movie, updating: boolean, id: number = 0): Promise<boolean> {
-    // These have to exist
-    if (movie.title === "" || movie.genres!.length === 1) {
-        return false;
-    }
+export default async function SubmitMovie(
+	movie: Movie,
+	updating: boolean,
+	id: number = 0,
+): Promise<boolean> {
+	// These have to exist
+	if (movie.title === "" || movie.genres!.length === 1) {
+		return false;
+	}
 
-    // Create/update and return
-    try {
-        if (updating) {
-            await UpdateData<Movie>("api/movies", id, movie);
-        } 
+	// Create/update and return
+	try {
+		if (updating) {
+			await UpdateData<Movie>("api/movies", id, movie);
+		} else {
+			await CreateData<Movie>("api/movies", movie);
+		}
 
-        else {
-            await CreateData<Movie>("api/movies", movie);
-        }
-
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }

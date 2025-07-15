@@ -22,30 +22,30 @@ viteNodeApp.use(express.json());
 
 // Add routers
 const addRouters = () => {
-        viteNodeApp.use("/api/movies", MovieRouter);
-        viteNodeApp.use("/api/settings", SettingsRouter);
-        viteNodeApp.use("/api/shows", TvShowRouter);
-        viteNodeApp.use("/api/courses", CoursesRouter);
-        viteNodeApp.use("/api/seasons", SeasonsRouter);
-        viteNodeApp.use("/api/episodes", EpisodesRouter);
-        viteNodeApp.use("/api/lectures", LecturesRouter);
-        viteNodeApp.use("/api/favorites", FavoritesRouter);
-        viteNodeApp.use("/api/last-watched", LastWatchedRouter);
-        viteNodeApp.use("/api/watchlist", WatchlistRouter);
-        viteNodeApp.use("/api/check", CheckRouter);
-}
+	viteNodeApp.use("/api/movies", MovieRouter);
+	viteNodeApp.use("/api/settings", SettingsRouter);
+	viteNodeApp.use("/api/shows", TvShowRouter);
+	viteNodeApp.use("/api/courses", CoursesRouter);
+	viteNodeApp.use("/api/seasons", SeasonsRouter);
+	viteNodeApp.use("/api/episodes", EpisodesRouter);
+	viteNodeApp.use("/api/lectures", LecturesRouter);
+	viteNodeApp.use("/api/favorites", FavoritesRouter);
+	viteNodeApp.use("/api/last-watched", LastWatchedRouter);
+	viteNodeApp.use("/api/watchlist", WatchlistRouter);
+	viteNodeApp.use("/api/check", CheckRouter);
+};
 
 const startServer = async () => {
-    try {
-        addRouters();
-        const PORT = 3000;
-        viteNodeApp.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error("Error occurred:", error);
-        process.exit(1);
-    }
-}
+	try {
+		addRouters();
+		const PORT = 3000;
+		viteNodeApp.listen(PORT, () => {
+			console.log(`Server is running on http://localhost:${PORT}`);
+		});
+	} catch (error) {
+		console.error("Error occurred:", error);
+		process.exit(1);
+	}
+};
 
 startServer();

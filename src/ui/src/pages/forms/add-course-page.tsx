@@ -19,9 +19,9 @@ import LoadingPage from "pages/other/loading-page";
  * Can also be used to edit an existing course, this is done by passing a `course` prop.
  * @param Course Optional course object to pre-fill the form.
  */
-export default function AddCoursePage({ route } : { route?: any }) {
+export default function AddCoursePage({ route }: { route?: any }) {
     // Get param course or use a blank one
-    const {model: course, isLoading} = useFetchById<Course>("/api/courses");
+    const { model: course, isLoading } = useFetchById<Course>("/api/courses");
 
     // State for initial data and creating status
     const [initial, setInitial] = useState(course || structuredClone(defaultCourse));
@@ -32,7 +32,7 @@ export default function AddCoursePage({ route } : { route?: any }) {
 
     // To re-render on each add
     const [lectures, setLectures] = useState(initial.lectures);
-    const counterRef = useRef(lectures.length + 1); 
+    const counterRef = useRef(lectures.length + 1);
 
     useEffect(() => {
         if (!course) {
@@ -77,7 +77,7 @@ export default function AddCoursePage({ route } : { route?: any }) {
             >
                 <AddOption
                     buttonText={"New Lecture"}
-                    onChange={() => {setLectures([...lectures, defaultLecture(counterRef.current++)])}}
+                    onChange={() => { setLectures([...lectures, defaultLecture(counterRef.current++)]) }}
                 />
                 {lectures.map((lecture, index) => (
                     <FormSection

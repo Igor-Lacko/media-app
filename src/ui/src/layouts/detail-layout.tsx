@@ -32,16 +32,18 @@ import MarkdownModal from "components/modals/markdown-modal";
  * Layout for a detail element.
  * @param props Detail properties including model, submedia, title, and display options.
  */
-export default function DetailLayout<T extends DetailFillable>(props : DetailProps<T>) {
+export default function DetailLayout<T extends DetailFillable>(props: DetailProps<T>) {
     const navigate = useNavigate();
     const [visibleModal, setVisibleModal] = useState(VisibleModal.NONE);
 
     // Edit bar props
-    const editBarProps : EditBarProps = {
+    const editBarProps: EditBarProps = {
         // Add
-        onAdd: props.addTitle ? () => navigate("add", { state: {
-            id: props.model.identifier
-        } }) : undefined,
+        onAdd: props.addTitle ? () => navigate("add", {
+            state: {
+                id: props.model.identifier
+            }
+        }) : undefined,
         addTitle: props.addTitle,
 
         // Edit
@@ -59,7 +61,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         // Toggle watchlist
         onToggleWatchlist: props.toggleWatchListFunction,
         isInWatchlist: props.inWatchlist,
-        
+
         // Rate
         onRate: () => setVisibleModal(VisibleModal.RATE),
         rateTitle: props.rateTitle,
@@ -87,8 +89,8 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
         onSetWatchStatus: props.watchStatus ? () => setVisibleModal(VisibleModal.WATCH_STATUS) : undefined,
 
         // Set description
-        onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION) 
-        : undefined,
+        onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION)
+            : undefined,
 
         // Open notes modal
         onAddNote: props.addNoteFunction ? () => setVisibleModal(VisibleModal.ADD_NOTE) : undefined

@@ -10,36 +10,32 @@ import UpdateData from "data/crud/update";
  * @param showId Show ID to which the season belongs, if creating a new one.
  */
 export default async function SubmitSeason(
-    season: Season,
-    updating: boolean,
-    episodes: Episode[],
-    showId: number = 0
-) : Promise<boolean> {
-    // Each episode has to have a title
-    if (episodes.some((episode) => episode.title === "")) {
-        return false;
-    }
+	season: Season,
+	updating: boolean,
+	episodes: Episode[],
+	showId: number = 0,
+): Promise<boolean> {
+	// Each episode has to have a title
+	if (episodes.some((episode) => episode.title === "")) {
+		return false;
+	}
 
-    season.episodes = episodes.map((episode, index) => {
-        return {
-            ...episode,
-            episodeNumber: index + 1,
-        };
-    });
+	season.episodes = episodes.map((episode, index) => {
+		return {
+			...episode,
+			episodeNumber: index + 1,
+		};
+	});
 
-    try {
-        if (updating) {
-            await UpdateData<Season>("api/seasons", season.identifier!, season);
-        }
+	try {
+		if (updating) {
+			await UpdateData<Season>("api/seasons", season.identifier!, season);
+		} else {
+			await CreateData<Season>(`api/seasons/${showId}`, season);
+		}
 
-        else {
-            await CreateData<Season>(`api/seasons/${showId}`, season);
-        }
-
-        return true;
-    }
-
-    catch (error) {
-        return false;
-    }
+		return true;
+	} catch (error) {
+		return false;
+	}
 }

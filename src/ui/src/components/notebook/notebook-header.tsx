@@ -6,8 +6,8 @@ import { FaPlus, FaStickyNote, FaTimes } from "react-icons/fa";
  * Component containing two buttons for switching between the notebook and the note editor.
  * @param param0 Passed by the parent, switches between the two mentioned components. Additional class names can be passed for styling.
  */
-export default function NotebookHeader({onSwitch, noteListDisplayed, extraClassNames} : 
-    {onSwitch: () => void, noteListDisplayed: boolean, extraClassNames?: string}) {
+export default function NotebookHeader({ onSwitch, noteListDisplayed, extraClassNames }:
+    { onSwitch: () => void, noteListDisplayed: boolean, extraClassNames?: string }) {
 
     return (
         <div

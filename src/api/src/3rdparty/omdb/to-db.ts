@@ -6,7 +6,7 @@ import { Genre } from "generated/prisma/enums";
  * @returns The runtime in seconds as a number.
  */
 export function OMDbRuntimeToDB(runtime?: string): number {
-    return parseInt(runtime.replace(' min', ''), 10) * 60 || 0;
+	return parseInt(runtime.replace(" min", ""), 10) * 60 || 0;
 }
 
 /**
@@ -15,23 +15,23 @@ export function OMDbRuntimeToDB(runtime?: string): number {
  * @returns An array of Genre enums.
  */
 export function OMDbGenresToDB(genres: string): Genre[] {
-    // Values that match the DB enum
-    const allowedGenres = Object.values(Genre)
-        .map((genre) => genre.toUpperCase())
-        .filter((genre) => genre !== Genre.ALL);
+	// Values that match the DB enum
+	const allowedGenres = Object.values(Genre)
+		.map((genre) => genre.toUpperCase())
+		.filter((genre) => genre !== Genre.ALL);
 
-    // All movies have Genre.ALL
-    let genresArray : Genre[] = [Genre.ALL];
+	// All movies have Genre.ALL
+	let genresArray: Genre[] = [Genre.ALL];
 
-    // Map to an enum array
-    for (const genre of genres.split(', ')) {
-        const trimmed = genre.trim().toUpperCase();
-        if (allowedGenres.includes(trimmed)) {
-            genresArray.push(trimmed as Genre);
-        }
-    }
+	// Map to an enum array
+	for (const genre of genres.split(", ")) {
+		const trimmed = genre.trim().toUpperCase();
+		if (allowedGenres.includes(trimmed)) {
+			genresArray.push(trimmed as Genre);
+		}
+	}
 
-    return genresArray;
+	return genresArray;
 }
 
 /**
@@ -41,21 +41,17 @@ export function OMDbGenresToDB(genres: string): Genre[] {
  * @returns The average rating as a number.
  */
 export function OMDbRatingsToDB(metascore: string, imdbRating: string): number {
-    const metascoreValue = parseFloat(metascore);
-    const imdbRatingValue = parseFloat(imdbRating);
+	const metascoreValue = parseFloat(metascore);
+	const imdbRatingValue = parseFloat(imdbRating);
 
-    if (isNaN(metascoreValue) && isNaN(imdbRatingValue)) {
-        return 0;
-    }
+	if (isNaN(metascoreValue) && isNaN(imdbRatingValue)) {
+		return 0;
+	} else if (isNaN(metascoreValue)) {
+		return imdbRatingValue;
+	} else if (isNaN(imdbRatingValue)) {
+		return metascoreValue;
+	}
 
-    else if (isNaN(metascoreValue)) {
-        return imdbRatingValue;
-    }
-
-    else if (isNaN(imdbRatingValue)) {
-        return metascoreValue;
-    }
-
-    // Metascore is /100, imdb is /10
-    return ((metascoreValue / 10) + imdbRatingValue) / 2;
+	// Metascore is /100, imdb is /10
+	return (metascoreValue / 10 + imdbRatingValue) / 2;
 }

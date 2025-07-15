@@ -4,7 +4,7 @@ import RoundedButtonProps from "utils/props/control-elements/rounded-button-prop
  * Returns a rounded button component.
  * @param props Properties for the rounded button, including text, click handler, extra classnames for styling and optional icon.
  */
-export default function RoundedButton(props : RoundedButtonProps) {
+export default function RoundedButton(props: RoundedButtonProps) {
     return (
         <div
             className={"flex items-center justify-center rounded-lg cursor-pointer transition-allduration-200\

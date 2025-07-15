@@ -8,7 +8,7 @@ import TvMazeEpisode from "./interface/tv-maze-episode";
  * @returns That same summary as plain text.
  */
 export function TvMazeSummaryToDB(summary: string): string {
-    return summary.replace(/<[^>]*>/gi, "");
+	return summary.replace(/<[^>]*>/gi, "");
 }
 
 /**
@@ -17,51 +17,53 @@ export function TvMazeSummaryToDB(summary: string): string {
  * @returns An array of Genre enums.
  */
 export function TvMazeGenresToDB(genres: string[]): Genre[] {
-    // Alllowed values
-    const allowedGenres = Object.values(Genre)
-    .filter((genre) => genre !== Genre.ALL)
-    .map((genre) => genre.toUpperCase());
+	// Alllowed values
+	const allowedGenres = Object.values(Genre)
+		.filter((genre) => genre !== Genre.ALL)
+		.map((genre) => genre.toUpperCase());
 
-    // Current values, start with ALL
-    let currentGenres : Genre[] = [Genre.ALL];
+	// Current values, start with ALL
+	let currentGenres: Genre[] = [Genre.ALL];
 
-    for (const genre of genres) {
-        const trimmed = genre.trim().toUpperCase();
-        if (allowedGenres.includes(trimmed)) {
-            currentGenres.push(trimmed as Genre);
-        }
-    }
+	for (const genre of genres) {
+		const trimmed = genre.trim().toUpperCase();
+		if (allowedGenres.includes(trimmed)) {
+			currentGenres.push(trimmed as Genre);
+		}
+	}
 
-    return currentGenres;
+	return currentGenres;
 }
 
-export function TvMazeEpisodesToSeasons(episodes: TvMazeEpisode[]): TvMazeSeason[] {
-    // Map of [seasonNumber, season]
-    const seasons = new Map<number, TvMazeSeason>();
+export function TvMazeEpisodesToSeasons(
+	episodes: TvMazeEpisode[],
+): TvMazeSeason[] {
+	// Map of [seasonNumber, season]
+	const seasons = new Map<number, TvMazeSeason>();
 
-    for (const episode of episodes) {
-        // Create a new map entry if it doesn't exist already
-        if (!seasons.has(episode.season)) {
-            seasons.set(episode.season, {
-                seasonNumber: episode.season,
-                episodes: [episode],
-                rating: episode.rating.average,
-            });
-        }
+	for (const episode of episodes) {
+		// Create a new map entry if it doesn't exist already
+		if (!seasons.has(episode.season)) {
+			seasons.set(episode.season, {
+				seasonNumber: episode.season,
+				episodes: [episode],
+				rating: episode.rating.average,
+			});
+		}
 
-        // Else just add the episode
-        else {
-            let season = seasons.get(episode.season);
-            season.episodes.push(episode);
-            season.rating += episode.rating.average;
-        }
-    }
+		// Else just add the episode
+		else {
+			let season = seasons.get(episode.season);
+			season.episodes.push(episode);
+			season.rating += episode.rating.average;
+		}
+	}
 
-    // Divide ratings for all seasons
-    seasons.forEach((season) => {
-        // Seems like their ratings are < 0, 10 > so i think nothing else is needed here
-        season.rating /= season.episodes.length;
-    });
+	// Divide ratings for all seasons
+	seasons.forEach((season) => {
+		// Seems like their ratings are < 0, 10 > so i think nothing else is needed here
+		season.rating /= season.episodes.length;
+	});
 
-    return Array.from(seasons.values());
+	return Array.from(seasons.values());
 }

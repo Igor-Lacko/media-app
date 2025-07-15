@@ -8,7 +8,7 @@ import RoundedButton from "components/buttons/rounded-button";
  * Modal providing a list of items from which one can be selected.
  * @param props Props for the modal including title, onSelect function, and initial selection.
  */
-export default function EnumModal(props : ModalProps) {
+export default function EnumModal(props: ModalProps) {
     const [selected, setSelected] = useState(props.initialWatchStatus!.value)
 
     return (
@@ -21,7 +21,7 @@ export default function EnumModal(props : ModalProps) {
                     key={option.value}
                     className={"flex items-center p-2 w-full text-left rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700\
                             transition-colors duration-300 text-black dark:text-gray-400"}
-                    onClick={() => {setSelected(option.value!);}}
+                    onClick={() => { setSelected(option.value!); }}
                 >
                     <span className={"flex-1"}>
                         {option.key}

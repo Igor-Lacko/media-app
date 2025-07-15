@@ -15,7 +15,7 @@ import LoadingPage from "pages/other/loading-page";
  * @returns Tv Show detail page.
  */
 export default function TvShowDetail() {
-    const {model: tvShow, isLoading} = useFetchById<TvShow>("/api/shows");
+    const { model: tvShow, isLoading } = useFetchById<TvShow>("/api/shows");
 
     // State vars
     const [description, setDescription] = useState(tvShow?.description);
@@ -42,7 +42,7 @@ export default function TvShowDetail() {
     }
 
     // Props including children
-    const props : DetailProps<TvShow> = {
+    const props: DetailProps<TvShow> = {
         model: tvShow,
         submedia: tvShow.seasons,
         title: tvShow.title!,
