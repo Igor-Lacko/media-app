@@ -1,4 +1,6 @@
 import FileBrowseButton from "components/buttons/file-browse-button";
+import RoundedButton from "components/buttons/rounded-button";
+import { useState } from "react";
 
 /**
  * Option for file browsing in a form.
@@ -14,10 +16,11 @@ export default function FileBrowseOption({
 }: {
     title: string;
     initial: string;
-    onChange: (value: string) => void;
+    onChange: (value: string | undefined) => void;
     allowed: string;
     extraClassnames?: string;
 }) {
+    const [filePath, setFilePath] = useState(initial);
     return (
         <div
             className={
@@ -32,11 +35,25 @@ export default function FileBrowseOption({
             >
                 {title}
             </span>
-            <div className={"flex items-center justify-start w-4/10"}>
+            <div className={"flex items-center justify-start w-5/10"}>
                 <FileBrowseButton
-                    initial={initial}
+                    initial={filePath}
                     allowed={allowed || "all"}
-                    onChange={onChange}
+                    onChange={(value) => {
+                        setFilePath(value);
+                        onChange(value);
+                    }}
+                />
+                {/** Clear button */}
+                <RoundedButton
+                    text={"Clear"}
+                    extraClassNames={
+                        "bg-purple-800 dark:bg-purple-600 text-gray-200 hover:bg-purple-500 dark:hover:bg-purple-500 ml-4"
+                    }
+                    onClick={() => {
+                        setFilePath("");
+                        onChange("");
+                    }}
                 />
             </div>
         </div>

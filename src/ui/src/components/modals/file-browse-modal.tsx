@@ -25,14 +25,23 @@ export default function FileBrowseModal(props: ModalProps) {
                     path.current = value;
                 }}
             />
-            <RoundedButton
-                text={"Close"}
-                extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
-                onClick={async () => {
-                    props.onSetText && await props.onSetText(path.current);
-                    props.onClose();
-                }}
-            />
+            <div
+                className={"flex items-center justify-end space-x-4 mt-4"}
+            >
+                <RoundedButton
+                    text={"Save"}
+                    extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
+                    onClick={async () => {
+                        props.onSetText && await props.onSetText(path.current);
+                        props.onClose();
+                    }}
+                />
+                <RoundedButton
+                    text={"Cancel"}
+                    extraClassNames={"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"}
+                    onClick={props.onClose}
+                />
+            </div>
         </AbstractModal>
     )
 }

@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { GetFilePath } from "electron/electron-api";
 
 export default function FileBrowseButton({ initial, onChange, allowed, extraClassnames }: {
@@ -7,9 +6,6 @@ export default function FileBrowseButton({ initial, onChange, allowed, extraClas
     allowed: string,
     extraClassnames?: string
 }) {
-    // To display the currently selected file name
-    const [fileName, setFileName] = useState(initial);
-
     return (
         <div
             className={"flex items-center justify-start w-full h-10 rounded-lg\
@@ -22,7 +18,6 @@ export default function FileBrowseButton({ initial, onChange, allowed, extraClas
                 onClick={async () => {
                     const path = await GetFilePath(allowed);
                     if (path) {
-                        setFileName(path);
                         onChange(path);
                     }
                 }}
@@ -34,7 +29,7 @@ export default function FileBrowseButton({ initial, onChange, allowed, extraClas
                     overflow-hidden whitespace-nowrap text-ellipsis"}
                 style={{ direction: "rtl" }}
             >
-                {fileName || "No file selected"}
+                {initial || "No file selected"}
             </span>
         </div>
     )
