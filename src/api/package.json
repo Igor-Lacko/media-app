@@ -4,7 +4,7 @@
   "main": "main.ts",
   "type": "commonjs",
   "scripts": {
-    "dev": "vite --host"
+    "dev": "vite"
   },
   "keywords": [],
   "author": "",

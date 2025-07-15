@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "wait-on http://localhost:5173 && electron --gtk-version=3 .",
-    "no-sandbox": "wait-on http://localhost:5173 && electron --gtk-version=3 --no-sandbox ."
+    "dev:no-sandbox": "wait-on http://localhost:5173 && electron --gtk-version=3 --no-sandbox ."
   },
   "keywords": [],
   "author": "",

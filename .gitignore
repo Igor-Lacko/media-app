@@ -154,3 +154,4 @@ run-dev.sh
 Dockerfile*
 docker-compose*.yml
 build-docker.sh
+.dockerignore

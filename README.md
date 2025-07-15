@@ -29,6 +29,8 @@ To use this app, you need [NPM and Node.js](https://docs.npmjs.com/downloading-a
 2. In it's root folder, run either `bash install-packages.sh` or manually install the npm packages and then `cd src/api && npx prisma generate && npx prisma db push`.
 3. To run the app, run `npm run dev` in the root folder of the repository.
 
+*NOTE: If you are running on Ubuntu 24.04+, you may need to set `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` for electron (https://github.com/electron/electron/issues/42510#issuecomment-2171583086). Alternatively you can run electron without the chromium sandbox with `npm run dev:no-sandbox`.* 
+
 ## Features
 
 ### Movies

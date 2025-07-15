@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:ui": "pnpm --filter ./src/ui dev",
+    "dev:ui": "cd src/ui && npm run dev",
     "dev:api": "cd src/api && npm run dev",
     "dev:electron": "cd src/electron && npm run dev",
-    "dev": "concurrently \"pnpm dev:ui\" \"pnpm dev:electron\" \"pnpm dev:api\""
+    "dev:electron:no-sandbox": "cd src/electron && npm run dev:no-sandbox",
+    "dev": "concurrently \"npm run dev:ui\" \"npm run dev:electron\" \"npm run dev:api\"",
+    "dev:no-sandbox": "concurrently \"npm run dev:ui\" \"npm run dev:electron:no-sandbox\" \"npm run dev:api\""
   },
   "keywords": [],
   "author": "",

@@ -1,11 +1,11 @@
 generator client {
     provider = "prisma-client-ts"
-    output   = env("PRISMA_CLIENT_OUTPUT")
+    output   = "../src/generated/prisma"
 }
 
 datasource db {
     provider = "sqlite"
-    url      = env("DATABASE_URL")
+    url      = "file:./database.db"
 }
 
 model Movie {
