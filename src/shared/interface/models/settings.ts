@@ -10,6 +10,9 @@ export interface Settings {
 
     // E.g. 27/100 episodes vs 2/10 seasons
     tvShowProgressInEpisodes: boolean;
+
+    // Show preview in markdown
+    showMarkdownPreview: boolean;
 }
 
 export default Settings;

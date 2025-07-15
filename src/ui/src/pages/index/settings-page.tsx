@@ -6,7 +6,7 @@ import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
-import { ToggleDarkMode, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
+import { ToggleDarkMode, ToggleMarkdownPreview, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
 
 export default function SettingsPage() {
@@ -93,6 +93,33 @@ export default function SettingsPage() {
                         }
                         else {
                             alert("Failed to update TV show progress setting.");
+                        }
+                    }}
+                />
+            </div>
+            {/** Preview in markdown editors */}
+            <div
+                className={divClasses}
+            >
+                <h2
+                    className={"text-lg font-semibold text-gray-800 dark:text-gray-400"}
+                >
+                    Preview in markdown editors
+                </h2>
+                <span
+                    className={"text-sm text-gray-500 dark:text-gray-400"}
+                >
+                    If enabled, this shows a preview of the note in markdown editors for lecture notes.
+                </span>
+                <Toggle
+                    checked={settings.showMarkdownPreview}
+                    onChange={async (checked: boolean) => {
+                        const response = await ToggleMarkdownPreview(checked);
+                        if (response) {
+                            setSettings({ ...settings, showMarkdownPreview: checked });
+                        }
+                        else {
+                            alert("Failed to update markdown preview setting.");
                         }
                     }}
                 />
@@ -251,7 +278,8 @@ export default function SettingsPage() {
                     setSettings({
                         darkMode: settings.darkMode,
                         hasApiKey: false,
-                        tvShowProgressInEpisodes: settings.tvShowProgressInEpisodes
+                        tvShowProgressInEpisodes: settings.tvShowProgressInEpisodes,
+                        showMarkdownPreview: settings.showMarkdownPreview
                     })
                     setDeleteDBModalVisible(false);
                 }}

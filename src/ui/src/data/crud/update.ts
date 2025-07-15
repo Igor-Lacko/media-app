@@ -242,3 +242,14 @@ export async function ToggleTvShowProgressDisplay(tvShowProgressInEpisodes: bool
         .then(response => response.status === 200)
         .catch(() => false);
 }
+
+/**
+ * Toggles the markdown preview setting.
+ * @param showMarkdownPreview New value for showing markdown preview.
+ * @return True if the operation was successful, false otherwise.
+ */
+export async function ToggleMarkdownPreview(showMarkdownPreview: boolean): Promise<boolean> {
+    return axios.patch("/api/settings/markdown-preview", { showMarkdownPreview })
+        .then(response => response.status === 200)
+        .catch(() => false);
+}

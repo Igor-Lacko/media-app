@@ -1,8 +1,9 @@
 import Note from "@shared/interface/models/note";
 import classNames from "classnames";
 import RoundedButton from "components/buttons/rounded-button";
-import { useRef, useState } from "react";
+import { useContext, useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
+import SettingsContext from "context/settings-context";
 
 /**
  * Part of the notebook used for, well, adding notes.
@@ -14,6 +15,9 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
     // Note content, timestamp is provided by the parent component.
     const [content, setContent] = useState("");
 
+    // To either enable or disable markdown preview
+    const { settings } = useContext(SettingsContext);
+
     return (
         <div
             className={"flex flex-col flex-grow items-start justify-center w-full " + (extraClassNames || "")}
@@ -24,7 +28,7 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
             >
                 <MDEditor
                     className={classNames(
-                        "w-full flex-1 px-5 outline-none text-black dark:text-gray-400 bg-white dark:bg-gray-800",
+                        "w-full flex-1 px-5 outline-none text-black dark:text-gray-400",
                     )}
                     value={content}
                     onChange={(value) => {
@@ -33,6 +37,7 @@ export default function NotebookAddNote({onAdd, timestamp, extraClassNames} :
                         }
                     }}
                     hideToolbar
+                    preview={settings.showMarkdownPreview ? "live" : "edit"}
                 />
                 {/** Submit button */}
                 <div

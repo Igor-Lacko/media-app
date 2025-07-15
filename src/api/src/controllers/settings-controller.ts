@@ -76,22 +76,23 @@ export async function GetSettings(): Promise<Settings> {
                 darkMode: settings.darkMode,
                 hasApiKey:
                     settings.omdbApiKey !== null && settings.omdbApiKey !== undefined,
-                tvShowProgressInEpisodes: settings.episodeProgressInEpisodes
+                tvShowProgressInEpisodes: settings.episodeProgressInEpisodes,
+                showMarkdownPreview: settings.showPreviewInMarkdown
             };
         }
 
         // Create default
         await prisma.settings.create({
             data: {
-                darkMode: false,
-                omdbApiKey: null,
+                omdbApiKey: null
             },
         });
 
         return {
             darkMode: false,
             hasApiKey: false,
-            tvShowProgressInEpisodes: false
+            tvShowProgressInEpisodes: false,
+            showMarkdownPreview: false
         };
     } 
 
@@ -168,6 +169,20 @@ export async function UpdateProgressDisplay(inEpisodes: boolean): Promise<boolea
     return await prisma.settings.updateMany({
         data: {
             episodeProgressInEpisodes: inEpisodes,
+        }
+    }).then(() => true)
+    .catch(() => false);
+}
+
+/**
+ * Updates the markdown preview setting in the database.
+ * @param showPreview True if the markdown preview should be shown, false otherwise.
+ * @returns A promise that resolves to true if the update was successful, false otherwise.
+ */
+export async function UpdateMarkdownPreview(showPreview: boolean): Promise<boolean> {
+    return await prisma.settings.updateMany({
+        data: {
+            showPreviewInMarkdown: showPreview
         }
     }).then(() => true)
     .catch(() => false);

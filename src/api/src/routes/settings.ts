@@ -65,6 +65,18 @@ router.patch("/show-progress", async (req, res) => {
     }
 });
 
+// Updates markdown preview setting
+router.patch("/markdown-preview", async (req, res) => {
+    const { showMarkdownPreview } = req.body;
+    if (await UpdateProgressDisplay(showMarkdownPreview)) {
+        res.status(200).json({ message: "Markdown preview setting updated successfully." });
+    }
+
+    else {
+        res.status(500).json({ error: "Failed to update markdown preview setting" });
+    }
+});
+
 // Deletes OMDB api key
 router.delete("/omdb-key", async (req, res) => {
     if (await DeleteOMDBKey()) {

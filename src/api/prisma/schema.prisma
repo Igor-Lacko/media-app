@@ -9,96 +9,96 @@ datasource db {
 }
 
 model Movie {
-    id           Int     @id @default(autoincrement())
-    title        String
-    rating       Float?
-    genres       EntertainmentGenre[]
+    id               Int                  @id @default(autoincrement())
+    title            String
+    rating           Float?
+    genres           EntertainmentGenre[]
     shortDescription String?
-    description  String?
-    videoUrl     String?
-    thumbnailUrl String?
-    length       Int?
-    lastWatchedAt Int?
-    watchStatus WatchStatus @default(NOT_WATCHED)
-    isFavorite   Boolean @default(false)
-    continueAt  Int @default(0)
+    description      String?
+    videoUrl         String?
+    thumbnailUrl     String?
+    length           Int?
+    lastWatchedAt    Int?
+    watchStatus      WatchStatus          @default(NOT_WATCHED)
+    isFavorite       Boolean              @default(false)
+    continueAt       Int                  @default(0)
 }
 
 model Show {
-    id          Int      @id @default(autoincrement())
-    title       String
-    rating      Float?
-    genres      EntertainmentGenre[]
+    id               Int                  @id @default(autoincrement())
+    title            String
+    rating           Float?
+    genres           EntertainmentGenre[]
     shortDescription String?
-    description String?
-    seasons     Season[]
-    thumbnailUrl String?
-    isFavorite Boolean @default(false)
-    watchStatus  WatchStatus @default(NOT_WATCHED)
+    description      String?
+    seasons          Season[]
+    thumbnailUrl     String?
+    isFavorite       Boolean              @default(false)
+    watchStatus      WatchStatus          @default(NOT_WATCHED)
 }
 
 model EntertainmentGenre {
-    id        Int     @id @default(autoincrement())
-    genre    Genre
-    movieId  Int?
-    showId   Int?
-    movie    Movie?  @relation(fields: [movieId], references: [id], onDelete: Cascade)
-    show     Show?   @relation(fields: [showId], references: [id], onDelete: Cascade)
+    id      Int    @id @default(autoincrement())
+    genre   Genre
+    movieId Int?
+    showId  Int?
+    movie   Movie? @relation(fields: [movieId], references: [id], onDelete: Cascade)
+    show    Show?  @relation(fields: [showId], references: [id], onDelete: Cascade)
 }
 
 model Season {
-    id           Int       @id @default(autoincrement())
-    showId       Int
-    seasonNumber Int
-    episodes     Episode[]
-    show         Show      @relation(fields: [showId], references: [id], onDelete: Cascade)
-    rating       Float?
-    description  String?
+    id               Int       @id @default(autoincrement())
+    showId           Int
+    seasonNumber     Int
+    episodes         Episode[]
+    show             Show      @relation(fields: [showId], references: [id], onDelete: Cascade)
+    rating           Float?
+    description      String?
     shortDescription String?
 }
 
 model Episode {
-    id            Int     @id @default(autoincrement())
-    seasonId      Int
-    episodeNumber Int
-    title         String
-    rating        Float?
+    id               Int         @id @default(autoincrement())
+    seasonId         Int
+    episodeNumber    Int
+    title            String
+    rating           Float?
     shortDescription String?
-    season        Season  @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-    videoUrl      String?
-    length        Int?
-    lastWatchedAt Int?
-    continueAt  Int @default(0)
-    watchStatus WatchStatus @default(NOT_WATCHED)
+    season           Season      @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+    videoUrl         String?
+    length           Int?
+    lastWatchedAt    Int?
+    continueAt       Int         @default(0)
+    watchStatus      WatchStatus @default(NOT_WATCHED)
 }
 
 model Course {
-    id           Int       @id @default(autoincrement())
-    title        String
-    toWatch      Boolean @default(false)
-    lectures     Lecture[]
+    id       Int       @id @default(autoincrement())
+    title    String
+    toWatch  Boolean   @default(false)
+    lectures Lecture[]
 }
 
 model Lecture {
-    id        Int      @id @default(autoincrement())
-    title     String
+    id            Int         @id @default(autoincrement())
+    title         String
     lectureNumber Int
-    notes     Note[]
-    videoUrl  String?
-    courseId Int
-    course   Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-    watchStatus WatchStatus @default(NOT_WATCHED)
-    length    Int?
+    notes         Note[]
+    videoUrl      String?
+    courseId      Int
+    course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    watchStatus   WatchStatus @default(NOT_WATCHED)
+    length        Int?
     lastWatchedAt Int?
-    continueAt  Int @default(0)
+    continueAt    Int         @default(0)
 }
 
 model Note {
-    id      Int     @id @default(autoincrement())
-    content String
-    timestamp Int?  // Notes can also be added in the lecture's page/detail footer, so a timestamp can't be mandatory
+    id        Int     @id @default(autoincrement())
+    content   String
+    timestamp Int? // Notes can also be added in the lecture's page/detail footer, so a timestamp can't be mandatory
     lectureId Int
-    lecture Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+    lecture   Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
 }
 
 enum Genre {
@@ -130,9 +130,9 @@ enum WatchStatus {
 }
 
 model Settings {
-    id       Int     @id @default(autoincrement())
-    darkMode Boolean @default(false)
+    id                        Int     @id @default(autoincrement())
+    darkMode                  Boolean @default(false)
     episodeProgressInEpisodes Boolean @default(false)
-    omdbApiKey String?
+    showPreviewInMarkdown     Boolean @default(false)
+    omdbApiKey                String?
 }
-
