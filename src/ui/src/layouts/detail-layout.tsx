@@ -26,6 +26,7 @@ import EpisodeDetailHeader from "components/detail-headers/episode-detail-header
 import Episode from "@shared/interface/models/episode";
 import { IsValidVideo } from "electron/electron-api";
 import FileBrowseModal from "components/modals/file-browse-modal";
+import MarkdownModal from "components/modals/markdown-modal";
 
 /**
  * Layout for a detail element.
@@ -198,7 +199,7 @@ export default function DetailLayout<T extends DetailFillable>(props : DetailPro
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 7. Add note modal */}
-            {visibleModal === VisibleModal.ADD_NOTE && props.addNoteFunction && <TextAreaModal
+            {visibleModal === VisibleModal.ADD_NOTE && props.addNoteFunction && <MarkdownModal
                 title={"Add Note"}
                 initialText={""}
                 onSetText={async (note: string) => {

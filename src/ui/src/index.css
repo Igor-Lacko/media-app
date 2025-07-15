@@ -3,9 +3,10 @@
 
 /* To override the markdown editor background color */
 .w-md-editor {
-  background-color: white !important;
+  background-color: var(--color-white) !important;
   color: black !important;
 }
+
 .dark .w-md-editor {
   background-color: var(--color-gray-800) !important;
   color: var(--color-gray-400) !important;
@@ -13,8 +14,14 @@
 
 .wmde-markdown {
   background-color: white !important;
+  color: black !important;
 }
 
 .dark .wmde-markdown {
   background-color: var(--color-gray-800) !important;
+  color: var(--color-gray-400) !important;
+}
+
+.title {
+  color: var(--color-orange-500) !important;
 }
