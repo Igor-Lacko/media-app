@@ -21,6 +21,5 @@ echo "All packages installed successfully"
 
 # Prisma
 echo "Setting up Prisma..."
-npx prisma generate
 npx prisma db push
 echo "Prisma setup completed successfully"
