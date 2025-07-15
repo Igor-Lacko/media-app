@@ -26,10 +26,8 @@ To use this app, you need [NPM and Node.js](https://docs.npmjs.com/downloading-a
 ### Usage
 
 1. Clone this repository: `git clone https://github.com/Igor-Lacko/media-player`.
-2. In it's root folder, run either `bash install-packages.sh` or manually install the npm packages.
-3. To run the app, run `npm run dev`.
-
-_Note: If running with the docker containers, you may need to set `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` if you are using Ubuntu 24.04+ (https://github.com/electron/electron/issues/42510#issuecomment-2171583086). You can also run the app with `bash media-app.sh --no-sandbox instead` to disable chrome sandboxing._
+2. In it's root folder, run either `bash install-packages.sh` or manually install the npm packages and then `cd src/api && npx prisma generate && npx prisma db push`.
+3. To run the app, run `npm run dev` in the root folder of the repository.
 
 ## Features
 
@@ -43,11 +41,11 @@ A similiar interface is provided for tv shows. Their seasons/episodes are separa
 
 ### Courses
 
-Courses and their models are another models that can be added. You can also add notes to lectures, either when displaying their pages or when playing their video file. If you add a note when playing a video file, it has a timestamp associated with it. The video can be set to that specific timestamp when clicked on it in the video player.
+Courses and their models are another models that can be added. You can also add notes to lectures, either when displaying their pages or when playing their video file. The note editor components have markdown support and the notes are displayed in markdown. If you add a note when playing a video file, it has a timestamp associated with it (the current video position when you added the note). The video can be set to that specific timestamp when clicked on it in the video player.
 
 ### Other
 
-The app displays your movie/tv show watchlists on the home page. It also displays your favorite movies and tv shows and your last watched videos. The app also has dark mode (can be toggled in settings --> Dark Mode). I also plan to add markdown support for taking notes for lectures sometime in the near future.
+The app displays your currently watching movies/tv shows on the home page and plan-to-watch movies/tv shows. It also displays your favorite movies and tv shows and your last watched videos. The app also has dark mode (can be toggled in settings --> Dark Mode). 
 
 ## Notes
 
