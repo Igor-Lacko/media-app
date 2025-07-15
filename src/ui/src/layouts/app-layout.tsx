@@ -14,7 +14,12 @@ import { useQuery } from "@tanstack/react-query";
  * App layout component (sidebar and toggle, invisible in non-index pages).
  */
 export default function AppLayout() {
-    const [settings, setSettings] = useState<Settings>({darkMode: false, hasApiKey: false});
+    const [settings, setSettings] = useState<Settings>({
+        darkMode: true,
+        hasApiKey: false,
+        tvShowProgressInEpisodes: false,
+        showMarkdownPreview: false
+    });
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
 
@@ -75,6 +80,7 @@ export default function AppLayout() {
                             "flex w-full flex-grow",
                             {
                                 "blur-sm" : sidebarVisible,
+                                "pointer-events-none" : sidebarVisible,
                             }
                         )}
                     >
