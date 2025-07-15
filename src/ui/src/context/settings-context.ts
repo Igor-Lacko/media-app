@@ -5,7 +5,7 @@ import { SettingsContextProps } from 'utils/props/other/settings-props';
 export const SettingsContext = createContext<SettingsContextProps>(
     {
         settings: {
-            darkMode: false,
+            darkMode: true,
             hasApiKey: false,
             tvShowProgressInEpisodes: false,
             showMarkdownPreview: false

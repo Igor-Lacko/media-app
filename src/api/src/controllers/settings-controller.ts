@@ -12,13 +12,11 @@ export async function NukeDatabase(): Promise<boolean> {
             prisma.movie.deleteMany(),
             prisma.show.deleteMany(),
             prisma.course.deleteMany(),
-            prisma.settings.deleteMany(),
         ]);
 
-        // Create default settings
-        await prisma.settings.create({
+        // Reset OMDB key
+        await prisma.settings.updateMany({
             data: {
-                darkMode: false,
                 omdbApiKey: null,
             },
         });
@@ -89,7 +87,7 @@ export async function GetSettings(): Promise<Settings> {
         });
 
         return {
-            darkMode: false,
+            darkMode: true,
             hasApiKey: false,
             tvShowProgressInEpisodes: false,
             showMarkdownPreview: false

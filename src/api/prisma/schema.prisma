@@ -131,7 +131,7 @@ enum WatchStatus {
 
 model Settings {
     id                        Int     @id @default(autoincrement())
-    darkMode                  Boolean @default(false)
+    darkMode                  Boolean @default(true)
     episodeProgressInEpisodes Boolean @default(false)
     showPreviewInMarkdown     Boolean @default(false)
     omdbApiKey                String?
