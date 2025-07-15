@@ -38,7 +38,7 @@ export default function AddLecturePage({ route }: { route?: any }) {
             lectureRef.current = lecture;
             setInitial(lecture);
         }
-    })
+    }, [lecture, isLoading]);
 
     if (isLoading) {
         return <LoadingPage />;

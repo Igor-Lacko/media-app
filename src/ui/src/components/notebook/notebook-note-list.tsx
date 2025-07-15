@@ -4,6 +4,8 @@ import { FaCircle, FaTrash } from "react-icons/fa";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 /**
  * Part oif the notebook used for displaying notes.
@@ -48,7 +50,8 @@ export default function NotebookNoteList({notes, updateNotes, onNoteClick, extra
                                 className={"wrap-anywhere"}
                             >
                                 <Markdown
-                                    remarkPlugins={[remarkGfm]}
+                                    remarkPlugins={[remarkGfm, remarkMath]}
+                                    rehypePlugins={[rehypeKatex]}
                                     components={{
                                         h1: ({children}) => <h1 className={"font-bold text-lg"}>{children}</h1>,
                                         h2: ({children}) => <h2 className={"font-bold text-md"}>{children}</h2>,

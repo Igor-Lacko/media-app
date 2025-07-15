@@ -35,6 +35,7 @@ export default function MarkdownModal(props: ModalProps) {
                         }
                     }}
                     hideToolbar
+                    preview={settings.showMarkdownPreview ? "live" : "edit"}
                 />
                 <div
                     className={"flex items-center mt-3 justify-between p-3 w-full h-auto self-end"}

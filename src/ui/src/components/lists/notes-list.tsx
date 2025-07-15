@@ -4,6 +4,8 @@ import ListNotFound from "components/other/item-not-found";
 import { FaCircle, FaTrash } from "react-icons/fa"
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
 
 /**
@@ -46,10 +48,11 @@ export default function NotesList({ notes, updateNotes }: { notes: Note[], updat
                                 + (note.timestamp ? "border-t-2 pt-3 border-gray-200 dark:border-gray-700" : "")}
                         >
                             <div
-                                className={"wrap-anywhere"}
+                                className={"wrap-anywhere text-black dark:text-gray-400"}
                             >
                                 <Markdown
-                                    remarkPlugins={[remarkGfm]}
+                                    remarkPlugins={[remarkGfm, remarkMath]}
+                                    rehypePlugins={[rehypeKatex]}
                                     components={{
                                         h1: ({ children }) => <h1 className={"font-bold text-lg"}>{children}</h1>,
                                         h2: ({ children }) => <h2 className={"font-bold text-md"}>{children}</h2>,

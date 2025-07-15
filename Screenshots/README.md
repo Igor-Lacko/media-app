@@ -38,6 +38,11 @@ This README contains some screenshots from inside the app. It covers basically a
 
 ![Lecture page](lecture.png)
 
+## Video screenshots
+
+![Video player](video-lecture.png)
+![Video notes](video-notes.png)
+
 ## Home page screenshots
 
 ![Continue watching](continue-watching.png)<br><br>
