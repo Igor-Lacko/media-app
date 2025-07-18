@@ -19,7 +19,7 @@ export default function MediaItemList(props: ListProps) {
     const location = useLocation();
 
     // Get valid thumbnails
-    const validThumbnails = useThumbnail(props.items);
+    const { thumbnails: validThumbnails, setThumbnails } = useThumbnail(props.items);
 
     if (props.items.length === 0) {
         return <ItemNotFound
@@ -46,6 +46,11 @@ export default function MediaItemList(props: ListProps) {
                     {props.showThumbnail && (validThumbnails[index] ? (
                         <img
                             src={ImagePathToURL(item.thumbnailUrl).path}
+                            onError={() => {
+                                const newThumbnails = [...validThumbnails];
+                                newThumbnails[index] = false;
+                                setThumbnails(newThumbnails);
+                            }}
                             alt={item.title}
                             className={"size-32 rounded-lg object-fit"}
                         />

@@ -19,7 +19,8 @@ export default function LastWatchedPreview(props: CarouselProps) {
         const checkThumbnails = async () => {
             const thumbnails = await Promise.all(props.models.map(async (model) => {
                 if (model.thumbnailUrl) {
-                    return await IsValidFile(model.thumbnailUrl) || !ImagePathToURL(model.thumbnailUrl).isLocal;
+                    return await IsValidFile(model.thumbnailUrl) || 
+                    !ImagePathToURL(model.thumbnailUrl).isLocal;
                 }
 
                 return false;
@@ -42,6 +43,11 @@ export default function LastWatchedPreview(props: CarouselProps) {
                     src={ImagePathToURL(props.models[currentIndex].thumbnailUrl).path}
                     alt={props.models[currentIndex].title}
                     className={"w-full h-full object-fill"}
+                    onError={() => {
+                        const newThumbnails = [...validThumbnails];
+                        newThumbnails[currentIndex] = false;
+                        setValidThumbnails(newThumbnails);
+                    }}
                 />
             ) : (
                 <div

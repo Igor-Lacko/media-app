@@ -20,7 +20,8 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
     useEffect(() => {
         const checkThumbnail = async () => {
             if (props.model.thumbnailUrl) {
-                if (await IsValidFile(props.model.thumbnailUrl) || !ImagePathToURL(props.model.thumbnailUrl).isLocal) {
+                if (await IsValidFile(props.model.thumbnailUrl) || 
+                (!ImagePathToURL(props.model.thumbnailUrl).isLocal)) {
                     setThumbnailLoaded(true);
                 }
             }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IsValidFile } from "electron/electron-api";
 import ImagePathToURL from "utils/adapters/file-url-to-path";
 
@@ -10,7 +10,7 @@ import ImagePathToURL from "utils/adapters/file-url-to-path";
  */
 export default function useThumbnail(
 	items: { thumbnailUrl?: string }[],
-): boolean[] {
+): { thumbnails: boolean[], setThumbnails: (thumbnails: boolean[]) => void } {
 	// Otherwise the useEffect would run in a loop since items is a new reference every time
 	const memoizedItems = useMemo(() => items, [items]);
 
@@ -26,7 +26,8 @@ export default function useThumbnail(
 				memoizedItems.map(
 					async (item) =>
 						item.thumbnailUrl !== undefined && item.thumbnailUrl !== null &&
-						(await IsValidFile(item.thumbnailUrl) || !ImagePathToURL(item.thumbnailUrl).isLocal),
+						(await IsValidFile(item.thumbnailUrl) ||
+							(!ImagePathToURL(item.thumbnailUrl).isLocal)),
 				),
 			);
 			setValidThumbnails(newValidThumbnails);
@@ -34,5 +35,5 @@ export default function useThumbnail(
 		checkThumbnails();
 	}, [memoizedItems]);
 
-	return validThumbnails;
+	return { thumbnails: validThumbnails, setThumbnails: setValidThumbnails };
 }

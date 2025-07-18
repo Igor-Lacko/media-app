@@ -13,10 +13,12 @@ import ImagePathToURL from "utils/adapters/file-url-to-path";
 export default function MediaItemCard(props: CardProps) {
     // Check if the thumbnail is a valid file
     const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+
     useEffect(() => {
         const checkThumbnail = async () => {
             if (props.model.thumbnailUrl) {
-                if (await IsValidFile(props.model.thumbnailUrl) || !ImagePathToURL(props.model.thumbnailUrl).isLocal) {
+                if (await IsValidFile(props.model.thumbnailUrl) || 
+                !ImagePathToURL(props.model.thumbnailUrl).isLocal) {
                     setThumbnailLoaded(true);
                 }
             }
@@ -42,6 +44,7 @@ export default function MediaItemCard(props: CardProps) {
                         src={ImagePathToURL(props.model.thumbnailUrl).path}
                         alt={props.model.title}
                         className={"w-full h-full object-fill border-gray-400 dark:border-gray-700"}
+                        onError={() => setThumbnailLoaded(false)}
                     />
                 ) : (
                     <ItemNotFound

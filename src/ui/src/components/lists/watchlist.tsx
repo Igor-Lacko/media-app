@@ -14,7 +14,7 @@ export default function Watchlist(props: WatchlistProps) {
     const navigate = useNavigate();
 
     // To determine which item has a valid thumbnail (unfortunate naming here)
-    const validThumbnails = useThumbnail(props.items);
+    const { thumbnails: validThumbnails, setThumbnails } = useThumbnail(props.items);
 
     return (
         <div
@@ -36,6 +36,11 @@ export default function Watchlist(props: WatchlistProps) {
                     {validThumbnails[index] ? (
                         <img
                             src={ImagePathToURL(item.thumbnailUrl).path}
+                            onError={() => {
+                                const newThumbnails = [...validThumbnails];
+                                newThumbnails[index] = false;
+                                setThumbnails(newThumbnails);
+                            }}
                             alt={item.title}
                             className={"w-1/10 size-32 mr-4 p-2 rounded-lg object-cover shadow-md dark:shadow-lg"}
                         />
