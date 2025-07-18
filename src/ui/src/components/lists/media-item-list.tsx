@@ -8,7 +8,7 @@ import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
 import ItemNotFound from "components/other/item-not-found";
 import useThumbnail from "hooks/use-thumbnail";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * List of media items with links to their pages.

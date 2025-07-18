@@ -22,6 +22,7 @@ import { RemoveEpisodeFromShowFilter } from "utils/form-remove-functions/remove-
 import RemoveSeasonFilter from "utils/form-remove-functions/remove-season-filter";
 import useFetchById from "hooks/use-fetch-by-id";
 import LoadingPage from "pages/other/loading-page";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Form page for adding a new TV show.
@@ -113,7 +114,10 @@ export default function AddTvShowPage({ route }: { route?: any }) {
                 <FileBrowseOption
                     title={"Thumbnail Image"}
                     allowed={"image"}
-                    initial={tvShowRef.current.thumbnailUrl || ""}
+                    initial={ImagePathToURL(tvShowRef.current.thumbnailUrl).isLocal ?
+                        (tvShowRef.current.thumbnailUrl || "") 
+                        : "External URL"
+                    }
                     onChange={(value) => tvShowRef.current.thumbnailUrl = value}
                 />
             </FormSection>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import WatchlistProps from "utils/props/lists/watchlist-props";
 import classNames from "classnames";
 import ProgressBar from "components/other/progress-bar";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Returns a watchlist of movies and tv shows that are either currently being watched, or

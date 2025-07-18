@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { IsValidFile } from "electron/electron-api";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Hook that returns a boolean array indicating whether each item has a valid thumbnail.

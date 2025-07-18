@@ -1,6 +1,6 @@
 import ItemNotFound from "components/other/item-not-found";
 import { useState } from "react";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 export default function DetailImage({ src, classNames }: { src: string, classNames?: string }) {
     // Return a placeholder div on error

@@ -41,7 +41,7 @@ export default function FileBrowseOption({
                     allowed={allowed || "all"}
                     onChange={(value) => {
                         setFilePath(value);
-                        onChange(`file://${value}`);
+                        onChange(value);
                     }}
                 />
                 {/** Clear button */}

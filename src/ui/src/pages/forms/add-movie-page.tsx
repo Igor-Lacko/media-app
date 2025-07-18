@@ -14,6 +14,7 @@ import useRatingSlider from "hooks/use-rating-slider";
 import SubmitMovie from "data/submit-handlers/movie-submit";
 import useFetchById from "hooks/use-fetch-by-id";
 import LoadingPage from "pages/other/loading-page";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Form page for adding a new movie.
@@ -95,7 +96,10 @@ export default function AddMoviePage({ route }: { route?: any }) {
                 <FileBrowseOption
                     title={"Thumbnail"}
                     allowed={"image"}
-                    initial={movieRef.current.thumbnailUrl || ""}
+                    initial={ImagePathToURL(movieRef.current.thumbnailUrl).isLocal ?
+                        (movieRef.current.thumbnailUrl || "") : 
+                        "External URL"
+                    }
                     onChange={(value) => movieRef.current.thumbnailUrl = value}
                 />
                 <FileBrowseOption

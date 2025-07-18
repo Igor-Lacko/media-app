@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ItemNotFound from "components/other/item-not-found";
 import { useNavigate } from "react-router-dom";
 import CardRating from "components/other/card-rating";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Card element displaying a movie or tv show.

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { IsValidFile } from "electron/electron-api";
 import { useNavigate } from "react-router-dom";
 import { LengthToTimeVideo } from "utils/adapters/length-to-time";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 export default function LastWatchedPreview(props: CarouselProps) {
     // For navigation to the videos

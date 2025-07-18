@@ -5,7 +5,7 @@
  */
 export default function ImagePathToURL(fileUrl?: string): { isLocal: boolean, path?: string,  } {
 	if (!fileUrl) {
-		return { isLocal: false, path: undefined };
+		return { isLocal: true, path: undefined };
 	}
 
 	// Could also test for file:// but DB insertion would have to be updated

@@ -9,7 +9,7 @@ import { LengthToTimeHeader } from "utils/adapters/length-to-time";
 import { IsValidFile } from "electron/electron-api";
 import { useEffect, useState } from "react";
 import ItemNotFound from "components/other/item-not-found";
-import ImagePathToURL from "utils/adapters/file-url-to-path";
+import ImagePathToURL from "utils/adapters/image-path-to-url";
 
 /**
  * Header for a entertainment model's (movie, show) detail page.
