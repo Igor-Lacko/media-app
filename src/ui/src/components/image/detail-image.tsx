@@ -5,7 +5,7 @@ export default function DetailImage({ src, classNames }: { src: string, classNam
         <img
             src={ImagePathToURL(src).path}
             alt="Detail"
-            className={"size-80 ml-10 border-2 border-black dark:border-gray-700 rounded-lg\
+            className={"size-110 ml-10 border-2 border-black dark:border-gray-700 rounded-lg\
             overflow-hidden shadow-lg object-fill " + (classNames || "")}
         />
     )

@@ -40,7 +40,6 @@ export default function MediaItemList(props: ListProps) {
                             "bg-gray-200 dark:bg-gray-900": index % 2 === 0,
                             "bg-white dark:bg-gray-800": index % 2 !== 0,
                             "border-b-2 border-gray-300 dark:border-gray-700": index < props.items.length - 1,
-                            "h-32": props.showThumbnail // Else smaller
                         }
                     )}
                 >
@@ -48,11 +47,11 @@ export default function MediaItemList(props: ListProps) {
                         <img
                             src={ImagePathToURL(item.thumbnailUrl).path}
                             alt={item.title}
-                            className={"w-1/12 h-full rounded-lg object-fit"}
+                            className={"size-32 rounded-lg object-fit"}
                         />
                     ) : (
                         <div
-                            className={"w-1/12 h-full rounded-lg bg-gray-200 dark:bg-gray-700\
+                            className={"size-32 rounded-lg bg-gray-200 dark:bg-gray-700\
                                     flex items-center justify-center text-xs text-gray-500 dark:text-gray-400\
                                     border border-gray-300 dark:border-gray-600 shadow-sm"}
                         >

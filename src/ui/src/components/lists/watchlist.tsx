@@ -37,11 +37,11 @@ export default function Watchlist(props: WatchlistProps) {
                         <img
                             src={ImagePathToURL(item.thumbnailUrl).path}
                             alt={item.title}
-                            className={"w-1/10 h-25 mr-4 p-2 rounded-lg object-cover shadow-md dark:shadow-lg"}
+                            className={"w-1/10 size-32 mr-4 p-2 rounded-lg object-cover shadow-md dark:shadow-lg"}
                         />
                     ) : (
                         <div
-                            className={"w-1/12 h-20 bg-gray-200 dark:bg-gray-700 flex\
+                            className={"w-1/12 size-32 bg-gray-200 dark:bg-gray-700 flex\
                                 items-center justify-center text-xs text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 shadow-sm mr-4"}
                         >
                             Thumbnail not found :((
