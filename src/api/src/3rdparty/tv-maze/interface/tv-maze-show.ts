@@ -23,4 +23,10 @@ export default interface TvMazeShow {
 	_embedded?: {
 		episodes?: TvMazeEpisode[];
 	};
+
+	// Image (if set in settings to allow external images)
+	image?: {
+		medium: string;
+		original: string;
+	}
 }

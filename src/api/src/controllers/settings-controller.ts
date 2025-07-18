@@ -79,6 +79,7 @@ export async function GetSettings(): Promise<Settings> {
 					settings.omdbApiKey !== undefined,
 				tvShowProgressInEpisodes: settings.episodeProgressInEpisodes,
 				showMarkdownPreview: settings.showPreviewInMarkdown,
+				showExternalImages: settings.allowExternalImages,
 			};
 		}
 
@@ -94,6 +95,7 @@ export async function GetSettings(): Promise<Settings> {
 			hasApiKey: false,
 			tvShowProgressInEpisodes: false,
 			showMarkdownPreview: false,
+			showExternalImages: false,
 		};
 	} catch (error) {
 		throw new Error("Could not fetch settings");
@@ -191,6 +193,24 @@ export async function UpdateMarkdownPreview(
 		.updateMany({
 			data: {
 				showPreviewInMarkdown: showPreview,
+			},
+		})
+		.then(() => true)
+		.catch(() => false);
+}
+
+/**
+ * Allows showing external images as thumbnails instead of local files.
+ * @param allowExternalImages True if external images should be allowed, false otherwise.
+ * @returns A promise that resolves to true if the update was successful, false otherwise.
+ */
+export async function UpdateExternalImages(
+	allowExternalImages: boolean,
+): Promise<boolean> {
+	return await prisma.settings
+		.updateMany({
+			data: {
+				allowExternalImages: allowExternalImages,
 			},
 		})
 		.then(() => true)

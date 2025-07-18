@@ -8,6 +8,7 @@ import classNames from "classnames";
 import WatchStatus from "@shared/enum/watch-status";
 import ItemNotFound from "components/other/item-not-found";
 import useThumbnail from "hooks/use-thumbnail";
+import ImagePathToURL from "utils/adapters/file-url-to-path";
 
 /**
  * List of media items with links to their pages.
@@ -45,7 +46,7 @@ export default function MediaItemList(props: ListProps) {
                 >
                     {props.showThumbnail && (validThumbnails[index] ? (
                         <img
-                            src={`file://${item.thumbnailUrl}`}
+                            src={ImagePathToURL(item.thumbnailUrl).path}
                             alt={item.title}
                             className={"w-1/12 h-full rounded-lg object-fit"}
                         />

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import WatchlistProps from "utils/props/lists/watchlist-props";
 import classNames from "classnames";
 import ProgressBar from "components/other/progress-bar";
+import ImagePathToURL from "utils/adapters/file-url-to-path";
 
 /**
  * Returns a watchlist of movies and tv shows that are either currently being watched, or
@@ -34,7 +35,7 @@ export default function Watchlist(props: WatchlistProps) {
                     {/** Thumbnail */}
                     {validThumbnails[index] ? (
                         <img
-                            src={`file://${item.thumbnailUrl}`}
+                            src={ImagePathToURL(item.thumbnailUrl).path}
                             alt={item.title}
                             className={"w-1/10 h-25 mr-4 p-2 rounded-lg object-cover shadow-md dark:shadow-lg"}
                         />

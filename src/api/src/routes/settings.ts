@@ -3,6 +3,7 @@ import {
 	DeleteOMDBKey,
 	NukeDatabase,
 	UpdateDarkMode,
+	UpdateExternalImages,
 	UpdateOMDBKey,
 	UpdateProgressDisplay,
 } from "controllers/settings-controller";
@@ -75,6 +76,20 @@ router.patch("/markdown-preview", async (req, res) => {
 	} else {
 		res.status(500).json({
 			error: "Failed to update markdown preview setting",
+		});
+	}
+});
+
+// Updates external images setting
+router.patch("/allow-external", async (req, res) => {
+	const { showExternalImages } = req.body;
+	if (await UpdateExternalImages(showExternalImages)) {
+		res.status(200).json({
+			message: "External images setting updated successfully.",
+		});
+	} else {
+		res.status(500).json({
+			error: "Failed to update external images setting",
 		});
 	}
 });

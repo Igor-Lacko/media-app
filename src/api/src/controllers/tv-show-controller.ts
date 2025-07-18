@@ -290,6 +290,20 @@ export async function InsertTvMazeShow(
 			? TvMazeEpisodesToSeasons(response._embedded.episodes)
 			: undefined;
 
+		// Fetch the setting if the image should be allowed
+		const showExternalImages = await prisma.settings.findFirst({
+			select: {
+				allowExternalImages: true,
+			},
+		})
+			.then((settings) => settings?.allowExternalImages)
+			.catch(() => false);
+
+		// Get a image URL
+		const imageUrl = showExternalImages && response.image ? 
+		response.image.original 
+		: undefined;
+
 		// Insert into the DB
 		await prisma.show.create({
 			data: {
@@ -306,6 +320,9 @@ export async function InsertTvMazeShow(
 				// Use the same description for both (shortDescription is clipped in ui)
 				shortDescription: TvMazeSummaryToDB(response.summary),
 				description: TvMazeSummaryToDB(response.summary),
+
+				// Image if allowed in settings (if not undefined doesn't do anything)
+				thumbnailUrl: imageUrl,
 
 				// Create seasons by mapping episodes
 				seasons: tvMazeSeasons

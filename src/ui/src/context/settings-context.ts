@@ -8,6 +8,7 @@ export const SettingsContext = createContext<SettingsContextProps>({
 		hasApiKey: false,
 		tvShowProgressInEpisodes: false,
 		showMarkdownPreview: false,
+		showExternalImages: false,
 	},
 	setSettings: async (settings: Settings) => {},
 });

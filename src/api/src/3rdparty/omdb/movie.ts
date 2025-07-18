@@ -18,6 +18,9 @@ export default interface OMDbMovie {
 	Metascore?: string;
 	imdbRating?: string;
 
+	// Per the API, this shouldn't be in the response (posters for patrons only but it always... is?)
+	Poster?: string;
+
 	// Status ("True"/"False")
 	Response: string;
 

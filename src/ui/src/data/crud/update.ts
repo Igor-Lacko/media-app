@@ -264,7 +264,7 @@ export async function UpdateOMDBKey(
 
 /**
  * Toggles the display of TV show progress in episodes or seasons.
- * @param tvShowProgressInEpisodes New value for displaying progress in episodes.
+ * @param tvShowProgressInEpisodes Whether to show progress in episodes.
  * @return True if the operation was successful, false otherwise.
  */
 export async function ToggleTvShowProgressDisplay(
@@ -278,7 +278,7 @@ export async function ToggleTvShowProgressDisplay(
 
 /**
  * Toggles the markdown preview setting.
- * @param showMarkdownPreview New value for showing markdown preview.
+ * @param showMarkdownPreview Whether to show markdown preview.
  * @return True if the operation was successful, false otherwise.
  */
 export async function ToggleMarkdownPreview(
@@ -286,6 +286,20 @@ export async function ToggleMarkdownPreview(
 ): Promise<boolean> {
 	return axios
 		.patch("/api/settings/markdown-preview", { showMarkdownPreview })
+		.then((response) => response.status === 200)
+		.catch(() => false);
+}
+
+/**
+ * Toggles the display of external images.
+ * @param showExternalImages Whether to show external images.
+ * @return True if the operation was successful, false otherwise.
+ */
+export async function ToggleExternalImages(
+	showExternalImages: boolean,
+): Promise<boolean> {
+	return axios
+		.patch("/api/settings/allow-external", { showExternalImages })
 		.then((response) => response.status === 200)
 		.catch(() => false);
 }

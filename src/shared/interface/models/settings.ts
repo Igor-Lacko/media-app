@@ -12,6 +12,9 @@ export interface Settings {
 
 	// Show preview in markdown
 	showMarkdownPreview: boolean;
+
+	// Show external images
+	showExternalImages: boolean;
 }
 
 export default Settings;

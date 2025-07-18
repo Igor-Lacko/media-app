@@ -6,7 +6,7 @@ import RoundedButton from "components/buttons/rounded-button";
 import InfoModal from "components/modals/info-modal";
 import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
-import { ToggleDarkMode, ToggleMarkdownPreview, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
+import { ToggleDarkMode, ToggleExternalImages, ToggleMarkdownPreview, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
 
 export default function SettingsPage() {
@@ -122,6 +122,33 @@ export default function SettingsPage() {
                             alert("Failed to update markdown preview setting.");
                         }
                     }}
+                />
+            </div>
+            {/** Show external images */}
+            <div
+                className={divClasses}
+            >
+                <h2
+                    className={"text-lg font-semibold text-gray-800 dark:text-gray-400"}
+                >
+                    Show external images
+                </h2>
+                <span
+                    className={"text-sm text-gray-500 dark:text-gray-400"}
+                >
+                    This enables showing external images fetched from the OMDb or TV Maze APIs (if present in the response) in addition to local files.
+                </span>
+                <Toggle
+                    checked={settings.showExternalImages}
+                    onChange={async (checked: boolean) => await ToggleExternalImages(checked)
+                        .then((response) => {
+                            if (response) {
+                                setSettings({ ...settings, showExternalImages: checked });
+                            }
+                            else {
+                                alert("Failed to update external images setting.");
+                            }
+                        })}
                 />
             </div>
             {/** OMDB API key */}
@@ -279,7 +306,8 @@ export default function SettingsPage() {
                         darkMode: settings.darkMode,
                         hasApiKey: false,
                         tvShowProgressInEpisodes: settings.tvShowProgressInEpisodes,
-                        showMarkdownPreview: settings.showMarkdownPreview
+                        showMarkdownPreview: settings.showMarkdownPreview,
+                        showExternalImages: settings.showExternalImages,
                     })
                     setDeleteDBModalVisible(false);
                 }}

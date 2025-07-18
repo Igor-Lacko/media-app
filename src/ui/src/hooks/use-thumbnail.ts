@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IsValidFile } from "electron/electron-api";
+import ImagePathToURL from "utils/adapters/file-url-to-path";
 
 /**
  * Hook that returns a boolean array indicating whether each item has a valid thumbnail.
@@ -24,8 +25,8 @@ export default function useThumbnail(
 			const newValidThumbnails = await Promise.all(
 				memoizedItems.map(
 					async (item) =>
-						item.thumbnailUrl !== undefined &&
-						(await IsValidFile(item.thumbnailUrl)),
+						item.thumbnailUrl !== undefined && item.thumbnailUrl !== null &&
+						(await IsValidFile(item.thumbnailUrl) || !ImagePathToURL(item.thumbnailUrl).isLocal),
 				),
 			);
 			setValidThumbnails(newValidThumbnails);

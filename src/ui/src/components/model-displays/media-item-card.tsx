@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ItemNotFound from "components/other/item-not-found";
 import { useNavigate } from "react-router-dom";
 import CardRating from "components/other/card-rating";
+import ImagePathToURL from "utils/adapters/file-url-to-path";
 
 /**
  * Card element displaying a movie or tv show.
@@ -15,7 +16,7 @@ export default function MediaItemCard(props: CardProps) {
     useEffect(() => {
         const checkThumbnail = async () => {
             if (props.model.thumbnailUrl) {
-                if (await IsValidFile(props.model.thumbnailUrl)) {
+                if (await IsValidFile(props.model.thumbnailUrl) || !ImagePathToURL(props.model.thumbnailUrl).isLocal) {
                     setThumbnailLoaded(true);
                 }
             }
@@ -38,7 +39,7 @@ export default function MediaItemCard(props: CardProps) {
             >
                 {thumbnailLoaded ? (
                     <img
-                        src={"file://" + props.model.thumbnailUrl}
+                        src={ImagePathToURL(props.model.thumbnailUrl).path}
                         alt={props.model.title}
                         className={"w-full h-full object-fill border-gray-400 dark:border-gray-700"}
                     />

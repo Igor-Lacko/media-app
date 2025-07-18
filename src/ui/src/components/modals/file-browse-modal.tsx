@@ -33,7 +33,7 @@ export default function FileBrowseModal(props: ModalProps) {
                     extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                     onClick={async () => {
                         if (path !== "") {
-                            props.onSetText && await props.onSetText(path);
+                            props.onSetText && await props.onSetText(`file://${path}`);
                             props.onClose();
                         }
                     }}

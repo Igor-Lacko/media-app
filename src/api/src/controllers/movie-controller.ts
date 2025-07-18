@@ -132,12 +132,27 @@ export async function InsertMovieFromOMDb(
 			// Full description
 			const longDescription = await GetFullDescriptionFromOMDb(url);
 
+			// Fetch settings to check if external images are allowed
+			const showExternalImages = await prisma.settings.findFirst({
+				select: {
+					allowExternalImages: true,
+				},
+			})
+				.then((settings) => settings?.allowExternalImages)
+				.catch(() => false);
+
+			// Image URL if allowed in settings
+			const imageUrl = showExternalImages && response.data.Poster ? 
+			response.data.Poster 
+			: undefined;
+
 			await prisma.movie.create({
 				data: {
 					title: response.data.Title || "",
 					length: OMDbRuntimeToDB(response.data.Runtime!),
 					shortDescription: response.data.Plot || "",
 					description: longDescription || "",
+					thumbnailUrl: imageUrl,
 					genres: {
 						create: genreArray.map((genre: Genre) => ({
 							genre: genre,

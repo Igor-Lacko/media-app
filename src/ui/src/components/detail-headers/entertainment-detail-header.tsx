@@ -9,6 +9,7 @@ import { LengthToTimeHeader } from "utils/adapters/length-to-time";
 import { IsValidFile } from "electron/electron-api";
 import { useEffect, useState } from "react";
 import ItemNotFound from "components/other/item-not-found";
+import ImagePathToURL from "utils/adapters/file-url-to-path";
 
 /**
  * Header for a entertainment model's (movie, show) detail page.
@@ -19,7 +20,7 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
     useEffect(() => {
         const checkThumbnail = async () => {
             if (props.model.thumbnailUrl) {
-                if (await IsValidFile(props.model.thumbnailUrl)) {
+                if (await IsValidFile(props.model.thumbnailUrl) || !ImagePathToURL(props.model.thumbnailUrl).isLocal) {
                     setThumbnailLoaded(true);
                 }
             }
@@ -33,12 +34,11 @@ export default function EntertainmentDetailHeader<T extends DetailFillable>(prop
         >
             {/*  thumbnail */}
             {props.hasThumbnail && <div
-                className={"flex flex-col items-center justify-center w-3/10 pb-5 h-full"}
+                className={"flex flex-col items-center justify-center max-w-3/10 pb-5 h-full"}
             >
                 {thumbnailLoaded ? (
                     <DetailImage
                         src={props.model.thumbnailUrl!}
-                        classNames={"h-full"}
                     />)
                     : (
                         <ItemNotFound
