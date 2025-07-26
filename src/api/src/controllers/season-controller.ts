@@ -9,6 +9,7 @@ import Episode from "@shared/interface/models/episode";
 import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 import { UpdateSeasonNumbers } from "./tv-show-controller";
+import { WatchStatus } from "@shared/enum/watch-status";
 
 /**
  * Gets a season by its ID, including its episodes.
@@ -174,6 +175,35 @@ export async function UpdateEpisodeNumbers(seasonId: number): Promise<boolean> {
 				});
 			}
 		}
+	} catch (error) {
+		return false;
+	}
+}
+
+/**
+ * Marks the first `count` episodes of a season as completed.
+ * @param count The number of episodes to mark as completed.
+ * @param seasonId The ID of the season.
+ * @returns True if the operation was successful, false otherwise.
+ */
+export async function MarkEpisodesAsCompleted(count: number, seasonId: number): Promise<boolean> {
+	try {
+		// First mark the completed episodes as watched
+		await prisma.episode.updateMany({
+			where: {
+				seasonId: seasonId,
+				episodeNumber: {
+					lte: count,
+				}
+			},
+
+			data: {
+				watchStatus: WatchStatus.COMPLETED
+			}
+		}).catch(() => {
+			return false;
+		});
+		return true;
 	} catch (error) {
 		return false;
 	}

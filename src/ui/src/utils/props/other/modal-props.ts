@@ -18,9 +18,12 @@ export interface ModalProps {
 	initialWatchStatus?: { key: string; value: WatchStatus };
 	selectOptions?: { key: string; value: WatchStatus }[];
 
-	// For rating select modals
-	onSelectRating?: (rating: number) => Promise<void>;
-	initialRating?: number;
+	// For slider modals
+	onSliderEnter?: (value: number) => Promise<void>;
+	initialValue?: number;
+	maxValue?: number;
+	jump?: number;
+	precision?: number;
 
 	// For text area/filepath modals
 	onSetText?: (text: string) => Promise<void>;

@@ -303,3 +303,20 @@ export async function ToggleExternalImages(
 		.then((response) => response.status === 200)
 		.catch(() => false);
 }
+
+/**
+ * Marks 'count' episodes of the season identified by the given id as completed.
+ * @note All other episodes are marked as not watched yet.
+ * @param seasonId Id of the season.
+ * @param count Count of the episodes to update.
+ * @returns True if the operation was successful, false otherwise.
+ */
+export async function MarkEpisodesAsCompleted(
+	seasonId: number,
+	count: number,
+): Promise<boolean> {
+	return axios
+		.patch(`/api/seasons/${seasonId}/mark-completed`, { count })
+		.then((response) => response.status === 200)
+		.catch(() => false)
+}

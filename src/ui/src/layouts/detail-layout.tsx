@@ -92,6 +92,10 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
         onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION)
             : undefined,
 
+        // Mark episodes as completed
+        onCompleteEpisodes: props.completeEpisodesFunction ?  () => setVisibleModal(VisibleModal.MARK_EPISODES_AS_COMPLETED)
+            : undefined,
+
         // Open notes modal
         onAddNote: props.addNoteFunction ? () => setVisibleModal(VisibleModal.ADD_NOTE) : undefined
     }
@@ -140,11 +144,12 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
             {/** 2. Rate modal */}
             {visibleModal === VisibleModal.RATE && props.rateFunction !== undefined && props.rateFunction !== null && <SliderModal
                 title={props.rateTitle || "Rate"}
-                onSelectRating={async (rating: number) => {
+                onSliderEnter={async (rating: number) => {
                     props.rateFunction && await props.rateFunction(rating);
                     setVisibleModal(VisibleModal.NONE);
                 }}
-                initialRating={props.rating && props.rating > 0 ? props.rating : 0}
+                initialValue={props.rating && props.rating > 0 ? props.rating : 0}
+                maxValue={10}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 3. Watch status modal */}
@@ -208,6 +213,24 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
                     props.addNoteFunction && await props.addNoteFunction({ content: note });
                     setVisibleModal(VisibleModal.NONE);
                 }}
+                onClose={() => setVisibleModal(VisibleModal.NONE)}
+            />}
+            {/** 8. Complete episodes modal */}
+            {visibleModal === VisibleModal.MARK_EPISODES_AS_COMPLETED && props.completeEpisodesFunction && <SliderModal
+                title={"Mark episodes as completed"}
+                message={"This will mark the first X episodes of this season as completed."}
+                onSliderEnter={async (count: number) => {
+                    props.completeEpisodesFunction && await props.completeEpisodesFunction((props.model as unknown as Season).identifier!, count);
+                    setVisibleModal(VisibleModal.NONE);
+                }}
+                initialValue={
+                    props.submedia
+                        ?.filter((item) => item.watchStatus === WatchStatus.COMPLETED)
+                        .length || 0
+                }
+                maxValue={props.submedia?.length || 0}
+                jump={1}
+                precision={-1}
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
         </div>

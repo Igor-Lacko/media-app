@@ -9,7 +9,7 @@ import AbstractModal from "./abstract-modal";
  * @param props Initial value, on select function, and title for the modal.
  */
 export default function SliderModal(props: ModalProps) {
-    const valueRef = useRef(props.initialRating ?? 0);
+    const valueRef = useRef(props.initialValue ?? 0);
 
     return (
         <AbstractModal>
@@ -18,18 +18,25 @@ export default function SliderModal(props: ModalProps) {
             >
                 {props.title}
             </h2>
+            {props.message && <p
+                className={"text-gray-600 dark:text-gray-400 mb-4"}
+            >
+                {props.message}
+            </p>}
             <Slider
                 onChange={(v: number) => {
                     valueRef.current = v;
                 }}
-                max={10}
-                initial={props.initialRating !== undefined ? props.initialRating : 0}
+                jump={props.jump}
+                max={props.maxValue!}
+                precision={props.precision}
+                initial={props.initialValue !== undefined ? props.initialValue : 0}
             />
             <RoundedButton
                 text={"Close"}
                 extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 onClick={async () => {
-                    props.onSelectRating && await props.onSelectRating(valueRef.current);
+                    props.onSliderEnter && await props.onSliderEnter(valueRef.current);
                     props.onClose();
                 }}
             />

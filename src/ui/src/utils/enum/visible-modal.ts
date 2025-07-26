@@ -10,6 +10,7 @@ export enum VisibleModal {
 	PLAY_NOFILE,
 	PLAY_WRONG_FILE,
 	ADD_NOTE,
+	MARK_EPISODES_AS_COMPLETED
 }
 
 export default VisibleModal;

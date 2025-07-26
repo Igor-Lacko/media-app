@@ -61,6 +61,7 @@ export interface DetailProps<T extends DetailFillable> {
 	setDescriptionFunction?: (description: string) => Promise<boolean>;
 	setVideoUrlFunction?: (videoUrl: string) => Promise<boolean>;
 	addNoteFunction?: (note: Note) => Promise<boolean>;
+	completeEpisodesFunction?: (seasonId: number, count: number) => Promise<boolean>;
 
 	// Optional other children (footers)
 	children?: React.ReactNode;

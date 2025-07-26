@@ -1,7 +1,7 @@
 import Season from "@shared/interface/models/season";
 import TvShow from "@shared/interface/models/tv-show";
 import DeleteData from "data/crud/delete";
-import { UpdateDescription, UpdateRating } from "data/crud/update";
+import { MarkEpisodesAsCompleted, UpdateDescription, UpdateRating } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import LoadingPage from "pages/other/loading-page";
@@ -68,6 +68,9 @@ export default function SeasonDetail() {
         rateFunction: async (rating: number) => {
             setRating(rating);
             return await UpdateRating<Season>("/api/seasons", season, rating)
+        },
+        completeEpisodesFunction: async (seasonId: number, count: number) => {
+            return await MarkEpisodesAsCompleted(seasonId, count);
         },
         setDescriptionFunction: async (description: string) => {
             setDescription(description);

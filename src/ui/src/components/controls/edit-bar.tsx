@@ -60,6 +60,12 @@ export default function EditBar(props: EditBarProps) {
                     onClick={props.onMarkFavorite}
                     isFavorite={props.isFavorite!}
                 />}
+                {props.onCompleteEpisodes && <RoundedButton
+                    text={"Mark Episodes as Completed"}
+                    onClick={props.onCompleteEpisodes}
+                    extraClassNames={"bg-green-500 dark:bg-green-600 hover:bg-green-700"}
+                    icon={<FaCheckCircle />}
+                />}
                 {props.rateTitle && props.onRate && <RoundedButton
                     text={props.rateTitle}
                     onClick={props.onRate}

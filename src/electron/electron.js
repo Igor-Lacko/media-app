@@ -15,7 +15,7 @@ function createWindow() {
             preload: join(__dirname, '/preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
-            devTools: false,
+            //devTools: false,
 
             // Local files
             webSecurity: false
