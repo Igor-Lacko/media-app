@@ -1,7 +1,9 @@
+import WatchStatus from "@shared/enum/watch-status";
+import Episode from "@shared/interface/models/episode";
 import Season from "@shared/interface/models/season";
 import TvShow from "@shared/interface/models/tv-show";
 import DeleteData from "data/crud/delete";
-import { MarkEpisodesAsCompleted, UpdateDescription, UpdateRating } from "data/crud/update";
+import { MarkSubmediaAsCompleted, UpdateDescription, UpdateRating } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import LoadingPage from "pages/other/loading-page";
@@ -23,6 +25,9 @@ export default function SeasonDetail() {
     // State vars
     const [description, setDescription] = useState(season?.description);
     const [rating, setRating] = useState(season?.rating);
+    const [episodesCompleted, setEpisodesCompleted] = useState<boolean[]>(
+        []
+    );
 
 
     // Update state on data load
@@ -30,7 +35,10 @@ export default function SeasonDetail() {
         if (season) {
             setDescription(season.description);
             setRating(season.rating);
-        }
+            setEpisodesCompleted(
+                season.episodes.map((episode: Episode) => episode.watchStatus === WatchStatus.COMPLETED)
+            )
+        }   
     }, [season]);
 
     if (seasonLoading || tvShowLoading) {
@@ -41,10 +49,18 @@ export default function SeasonDetail() {
         return <NotFoundPage message={"Season not found."} />;
     }
 
+    // Episodes
+    const episodes = season.episodes
+                    .map((episode, index) => ({
+                        ...episode,
+                        watchStatus: episodesCompleted[index] ? WatchStatus.COMPLETED :
+                            WatchStatus.NOT_WATCHED
+                    }));
+
     // Props including children (episodes)
     const props: DetailProps<Season> = {
         model: season,
-        submedia: season.episodes,
+        submedia: episodes,
         title: `Season ${season.seasonNumber}`,
         description: description,
         rating: rating,
@@ -54,7 +70,7 @@ export default function SeasonDetail() {
         backUrl: `/tv-shows/${tvShow.identifier}`,
         listProps: {
             path: "episodes",
-            items: season.episodes,
+            items: episodes,
             showRating: true,
             showThumbnail: false,
             notFoundTitle: "No episodes found",
@@ -69,8 +85,15 @@ export default function SeasonDetail() {
             setRating(rating);
             return await UpdateRating<Season>("/api/seasons", season, rating)
         },
-        completeEpisodesFunction: async (seasonId: number, count: number) => {
-            return await MarkEpisodesAsCompleted(seasonId, count);
+        completeSubmediaFunction: async (id: number, count: number) => {
+            const completed = Array(count)
+                    .fill(true)
+                    .concat(
+                        Array(season.episodes.length - count)
+                        .fill(false)
+                    )
+            setEpisodesCompleted(completed);
+            return await MarkSubmediaAsCompleted(`/api/seasons/${id}/mark-completed`, count);
         },
         setDescriptionFunction: async (description: string) => {
             setDescription(description);
