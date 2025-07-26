@@ -5,6 +5,7 @@ import {
 	GetCourseById,
 	GetCourses,
 	InsertCourse,
+	MarkLecturesAsCompleted,
 	UpdateCourse,
 } from "controllers/course-controller";
 
@@ -63,6 +64,22 @@ router.patch("/:id", async (req, res) => {
 		res.status(200).json({ message: "Course updated successfully" });
 	} else {
 		res.status(500).json({ error: "Failed to update Course" });
+	}
+});
+
+// Mark lectures as completed
+router.patch("/:id/mark-completed", async (req, res) => {
+	const courseId = parseInt(req.params.id, 10);
+	if (isNaN(courseId)) {
+		res.status(400).json({ error: "Invalid Course ID" });
+		return;
+	}
+
+	const count = req.body.count;
+	if (await MarkLecturesAsCompleted(courseId, count)) {
+		res.status(200).json({ message: `${count} lectures marked as completed.` });
+	} else {
+		res.status(500).json({ error: "Failed to mark lectures as completed" });
 	}
 });
 

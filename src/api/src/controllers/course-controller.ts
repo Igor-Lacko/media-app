@@ -5,6 +5,7 @@ import Lecture from "@shared/interface/models/lecture";
 import { DBCourseToClient, SanitizeClientCourseToDB } from "adapters/courses";
 import { SanitizeClientLectureToDB } from "adapters/lectures";
 import Note from "@shared/interface/models/note";
+import { WatchStatus } from "generated/prisma/enums";
 
 /**
  * Gets all courses matching the given parameters.
@@ -153,6 +154,55 @@ export async function UpdateCourse(
 	}
 }
 
+/**
+ * Marks the first `count` lectures of a course as completed.
+ * @note Sets the watch status of the lectures outside the range to NOT_WATCHED.
+ * @param id The ID of the course.
+ * @param count The number of lectures to mark as completed.
+ * @returns True if the operation was successful, false otherwise.
+ */
+export async function MarkLecturesAsCompleted(
+	id: number,
+	count: number,
+): Promise<boolean> {
+	try {
+		// Complete the lectures <= count
+		await prisma.lecture.updateMany({
+			where: {
+				courseId: id,
+				lectureNumber: {
+					lte: count,
+				}
+			},
+
+			data: {
+				watchStatus: WatchStatus.NOT_WATCHED,
+			}
+		}).catch(() => {
+			return false;
+		});
+
+		// Others to NOT_WATCHED
+		await prisma.lecture.updateMany({
+			where: {
+				courseId: id,
+				lectureNumber: {
+					gt: count,
+				}
+			},
+
+			data: {
+				watchStatus: WatchStatus.NOT_WATCHED,
+			}
+		}).catch(() => {
+			return false;
+		});
+
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
 /**
  * Deletes a course by its ID.
  * @param id Identifier of the course to delete.

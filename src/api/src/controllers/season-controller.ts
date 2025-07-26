@@ -182,6 +182,7 @@ export async function UpdateEpisodeNumbers(seasonId: number): Promise<boolean> {
 
 /**
  * Marks the first `count` episodes of a season as completed.
+ * @note Sets the watch status of the episodes outside the range to NOT_WATCHED.
  * @param count The number of episodes to mark as completed.
  * @param seasonId The ID of the season.
  * @returns True if the operation was successful, false otherwise.
@@ -203,6 +204,22 @@ export async function MarkEpisodesAsCompleted(count: number, seasonId: number): 
 		}).catch(() => {
 			return false;
 		});
+
+		// Then mark the rest as not watched
+		await prisma.episode.updateMany({
+			where: {
+				seasonId: seasonId,
+				episodeNumber: {
+					gt: count,
+				}
+			},
+			data: {
+				watchStatus: WatchStatus.NOT_WATCHED
+			}
+		}).catch(() => {
+			return false;
+		});
+
 		return true;
 	} catch (error) {
 		return false;
