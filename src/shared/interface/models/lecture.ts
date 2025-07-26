@@ -1,4 +1,4 @@
-import WatchStatus from "shared/enum/watch-status";
+import WatchStatus from "@shared/enum/watch-status";
 import DetailFillable from "../detail-fillable";
 import Note from "./note";
 

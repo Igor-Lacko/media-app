@@ -1,6 +1,7 @@
 import ClientMovie from "@shared/interface/models/movie";
 import { EntertainmentGenre, Movie } from "generated/prisma/client";
 import { Genre } from "generated/prisma/enums";
+import ClientGenre from "@shared/enum/genre";
 
 export interface DBMovie extends Movie {
 	genres: EntertainmentGenre[];
@@ -19,6 +20,6 @@ export function DBMovieToClient(movie: DBMovie): ClientMovie {
 	return {
 		...data,
 		identifier: id,
-		genres: movie.genres.map((genre): Genre => genre.genre),
+		genres: movie.genres.map((genre): ClientGenre => genre.genre as ClientGenre),
 	};
 }

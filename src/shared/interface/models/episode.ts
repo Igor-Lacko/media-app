@@ -1,4 +1,4 @@
-import WatchStatus from "shared/enum/watch-status";
+import WatchStatus from "@shared/enum/watch-status";
 import CardDisplayable from "../card-displayable";
 
 /**
