@@ -10,8 +10,9 @@ export interface EditBarProps {
 	isInWatchlist?: boolean;
 	rateTitle?: string;
 	playTitle?: string;
-	
-	// These mostly open modals which have buttons to do the __actual__ update
+	markSubmediaAsCompletedTitle?: string;
+
+	// These mostly open modals which have buttons to do the actual update
 	onAdd?: () => void;
 	onEdit?: () => void;
 	onDelete?: () => void;
@@ -22,7 +23,7 @@ export interface EditBarProps {
 	onSetDescription?: () => void;
 	onRate?: () => void;
 	onSetWatchStatus?: () => void;
-	onCompleteEpisodes?: () => void;
+	onCompleteSubmedia?: () => void;
 }
 
 export default EditBarProps;

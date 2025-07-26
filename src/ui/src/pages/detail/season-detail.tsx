@@ -85,6 +85,7 @@ export default function SeasonDetail() {
             setRating(rating);
             return await UpdateRating<Season>("/api/seasons", season, rating)
         },
+        markSubmediaAsCompletedTitle: "Mark Episodes as Completed",
         completeSubmediaFunction: async (id: number, count: number) => {
             const completed = Array(count)
                     .fill(true)

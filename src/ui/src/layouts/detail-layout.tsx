@@ -92,8 +92,9 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
         onSetDescription: props.setDescriptionFunction ? () => setVisibleModal(VisibleModal.DESCRIPTION)
             : undefined,
 
-        // Mark episodes as completed
-        onCompleteEpisodes: props.completeSubmediaFunction ?  () => setVisibleModal(VisibleModal.MARK_SUBMEDIA_AS_COMPLETED)
+        // Mark submedia as completed
+        markSubmediaAsCompletedTitle: props.markSubmediaAsCompletedTitle,
+        onCompleteSubmedia: props.completeSubmediaFunction ?  () => setVisibleModal(VisibleModal.MARK_SUBMEDIA_AS_COMPLETED)
             : undefined,
 
         // Open notes modal
@@ -217,8 +218,9 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
             />}
             {/** 8. Complete submedia modal */}
             {visibleModal === VisibleModal.MARK_SUBMEDIA_AS_COMPLETED && props.completeSubmediaFunction && <SliderModal
-                title={"Mark submedia as completed"}
-                message={"This will mark the first X submedia of this season as completed."}
+                title={props.markSubmediaAsCompletedTitle || ""}
+                message={"This will mark the first X submedia of this season as completed\
+                        and the rest as not watched."}
                 onSliderEnter={async (count: number) => {
                     props.completeSubmediaFunction && await props.completeSubmediaFunction((props.model as unknown as Season).identifier!, count);
                     setVisibleModal(VisibleModal.NONE);

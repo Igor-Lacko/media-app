@@ -1,6 +1,7 @@
+import { WatchStatus } from "@shared/enum/watch-status";
 import Course from "@shared/interface/models/course";
 import DeleteData from "data/crud/delete";
-import { ToggleCourseWatchlist } from "data/crud/update";
+import { MarkSubmediaAsCompleted, ToggleCourseWatchlist } from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import DetailLayout from "layouts/detail-layout";
 import LoadingPage from "pages/other/loading-page";
@@ -13,11 +14,17 @@ export default function CourseDetail() {
     // Course for which the detail is displayed
     const { model: course, isLoading } = useFetchById<Course>("/api/courses");
 
-    // The only state!
+    // State vars (watchlist, completed lectures)
     const [inWatchlist, setInWatchlist] = useState(course?.toWatch || false);
+    const [completedLectures, setCompletedLectures] = useState<boolean[]>(
+        course?.lectures.map(lecture => lecture.watchStatus === WatchStatus.COMPLETED) || []
+    )
     useEffect(() => {
         if (course) {
             setInWatchlist(course.toWatch || false);
+            setCompletedLectures(
+                course.lectures.map(lecture => lecture.watchStatus === WatchStatus.COMPLETED)
+            );
         }
     }, [course, isLoading]);
 
@@ -29,10 +36,16 @@ export default function CourseDetail() {
         return <NotFoundPage message="Course not found" />;
     }
 
+    // Lectures with updated watch status
+    const lectures = course.lectures.map((lecture, index) => ({
+        ...lecture,
+        watchStatus: completedLectures[index] ? WatchStatus.COMPLETED : WatchStatus.NOT_WATCHED
+    }));
+
     // Props
     const props: DetailProps<Course> = {
         model: course,
-        submedia: course.lectures,
+        submedia: lectures,
         title: course.title!,
         hasThumbnail: false,
         hasGenres: false,
@@ -40,7 +53,7 @@ export default function CourseDetail() {
         headerType: DetailHeaders.COURSE,
         listProps: {
             path: "lectures",
-            items: course.lectures,
+            items: lectures,
             showRating: false,
             showThumbnail: false,
             notFoundTitle: "No lectures found",
@@ -54,6 +67,17 @@ export default function CourseDetail() {
         addTitle: "Add Lecture",
         editTitle: "Edit Course",
         deleteTitle: "Delete Course",
+        markSubmediaAsCompletedTitle: "Mark Lectures as Completed",
+        completeSubmediaFunction: async (id: number, count: number) => {
+            const completed = Array(count)
+                .fill(false)
+                .concat(
+                    Array(course.lectures.length - count)
+                        .fill(true)
+                );
+            setCompletedLectures(completed);
+            return await MarkSubmediaAsCompleted(`/api/courses/${id}/mark-completed`, count);
+        },
         deleteFunction: async () => await DeleteData("/api/courses", course.identifier!),
     }
 

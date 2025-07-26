@@ -51,6 +51,7 @@ export interface DetailProps<T extends DetailFillable> {
 	editTitle?: string;
 	deleteTitle?: string;
 	rateTitle?: string;
+	markSubmediaAsCompletedTitle?: string;
 
 	// Button functions
 	deleteFunction?: () => Promise<boolean>;

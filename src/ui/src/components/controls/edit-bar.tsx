@@ -60,9 +60,9 @@ export default function EditBar(props: EditBarProps) {
                     onClick={props.onMarkFavorite}
                     isFavorite={props.isFavorite!}
                 />}
-                {props.onCompleteEpisodes && <RoundedButton
-                    text={"Mark Episodes as Completed"}
-                    onClick={props.onCompleteEpisodes}
+                {props.onCompleteSubmedia && <RoundedButton
+                    text={props.markSubmediaAsCompletedTitle || ""}
+                    onClick={props.onCompleteSubmedia}
                     extraClassNames={"bg-green-500 dark:bg-green-600 hover:bg-green-700"}
                     icon={<FaCheckCircle />}
                 />}
