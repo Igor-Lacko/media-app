@@ -47,15 +47,17 @@ export function TvMazeEpisodesToSeasons(
 			seasons.set(episode.season, {
 				seasonNumber: episode.season,
 				episodes: [episode],
-				rating: episode.rating.average,
+				rating: episode.rating.average || 0,
 			});
 		}
 
 		// Else just add the episode
 		else {
 			let season = seasons.get(episode.season);
-			season.episodes.push(episode);
-			season.rating += episode.rating.average;
+			if (season) {
+				season.episodes.push(episode);
+				season.rating += episode.rating.average || 0;
+			}
 		}
 	}
 

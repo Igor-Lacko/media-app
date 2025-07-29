@@ -109,7 +109,7 @@ export async function UpdateTvShow(
 										)
 										.map(
 											(season: Season) =>
-												season.identifier,
+												season.identifier!,
 										),
 								},
 							},
@@ -174,6 +174,8 @@ export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
 				});
 			}
 		}
+
+		return true;
 	} catch (error) {
 		return false;
 	}
@@ -214,7 +216,7 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
 				},
 
 				genres: {
-					create: tvShow.genres.map((genre: Genre) => ({
+					create: tvShow.genres!.map((genre: Genre) => ({
 						genre: genre,
 					})),
 				},
@@ -234,12 +236,12 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
  */
 async function GetEpisodesFromTvMaze(
 	id: number,
-): Promise<TvMazeEpisode[] | null> {
+): Promise<TvMazeEpisode[] | undefined> {
 	return await axios
 		.get<TvMazeEpisode[]>(`https://api.tvmaze.com/shows/${id}/episodes`)
 		.then((response) => response.data)
 		.catch((_error) => {
-			return null;
+			return undefined;
 		});
 }
 
@@ -267,7 +269,7 @@ export async function InsertTvMazeShow(
 		const url = imdbId
 			? `https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`
 			: `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(
-					title,
+					title!,
 			  )}&embed=episodes`;
 
 		// Fetch from api

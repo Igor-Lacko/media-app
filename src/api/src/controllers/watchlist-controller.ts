@@ -95,8 +95,8 @@ function TvShowToWatchListItem(
 	return {
 		title: tvShow.title,
 		shouldHaveThumbnail: true,
-		thumbnailUrl: tvShow.thumbnailUrl,
-		shortDescription: tvShow.shortDescription,
+		thumbnailUrl: tvShow.thumbnailUrl || undefined,
+		shortDescription: tvShow.shortDescription || undefined,
 		url: `/tv-shows/${tvShow.id}`,
 
 		// Calculate progress if requested
@@ -138,8 +138,8 @@ export default async function GetWatchlistItems(
 							// Does not have progress, wouldn't make much sense
 							title: movie.title,
 							shouldHaveThumbnail: true,
-							shortDescription: movie.shortDescription,
-							thumbnailUrl: movie.thumbnailUrl,
+							shortDescription: movie.shortDescription || undefined,
+							thumbnailUrl: movie.thumbnailUrl || undefined,
 							url: `/movies/${movie.id}`,
 						}),
 					),

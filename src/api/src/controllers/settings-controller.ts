@@ -144,7 +144,7 @@ export async function UpdateOMDBKey(
 		});
 		return { success: true };
 	} catch (error) {
-		return { success: false, errorMessage: error };
+		return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
 	}
 }
 

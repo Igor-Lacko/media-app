@@ -139,7 +139,7 @@ export async function UpdateCourse(
 										)
 										.map(
 											(lecture: Lecture) =>
-												lecture.identifier,
+												lecture.identifier!,
 										),
 								},
 							},

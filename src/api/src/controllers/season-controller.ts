@@ -119,7 +119,7 @@ export async function UpdateSeason(
 										)
 										.map(
 											(episode: Episode) =>
-												episode.identifier,
+												episode.identifier!,
 										),
 								},
 							},
@@ -175,6 +175,8 @@ export async function UpdateEpisodeNumbers(seasonId: number): Promise<boolean> {
 				});
 			}
 		}
+
+		return true;
 	} catch (error) {
 		return false;
 	}

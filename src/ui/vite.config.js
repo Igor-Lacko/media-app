@@ -19,7 +19,6 @@ export default defineConfig({
       'electron': '/src/electron',
       // Does not work normally for some reason
       '@shared': path.resolve(__dirname, '../shared'),
-      '@api': path.resolve(__dirname, '../api/src')
     }
   },
   server: {

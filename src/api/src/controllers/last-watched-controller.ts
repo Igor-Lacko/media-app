@@ -16,6 +16,10 @@ export async function GetLastWatchedItems(
 					lastWatchedAt: {
 						not: null,
 					},
+
+					videoUrl: {
+						not: null,
+					}
 				},
 
 				orderBy: {
@@ -32,12 +36,12 @@ export async function GetLastWatchedItems(
 					return {
 						title: movie.title,
 						continueAt: movie.continueAt,
-						length: movie.length,
-						thumbnailUrl: movie.thumbnailUrl,
+						length: movie.length!,
+						thumbnailUrl: movie.thumbnailUrl || undefined,
 						shouldHaveThumbnail: true,
-						lastWatchedAt: movie.lastWatchedAt,
+						lastWatchedAt: movie.lastWatchedAt!,
 						url: `/movies/${movie.id}/play`,
-						filePath: movie.videoUrl,
+						filePath: movie.videoUrl!,
 					};
 				});
 			});
@@ -47,6 +51,10 @@ export async function GetLastWatchedItems(
 			.findMany({
 				where: {
 					lastWatchedAt: {
+						not: null,
+					},
+
+					videoUrl: {
 						not: null,
 					},
 				},
@@ -81,12 +89,12 @@ export async function GetLastWatchedItems(
 						title: season.show.title,
 						subTitle: `S${season.seasonNumber}E${rest.episodeNumber}: ${rest.title}`,
 						continueAt: rest.continueAt,
-						length: rest.length,
-						thumbnailUrl: season.show.thumbnailUrl,
+						length: rest.length!,
+						thumbnailUrl: season.show.thumbnailUrl || undefined,
 						shouldHaveThumbnail: true,
-						lastWatchedAt: rest.lastWatchedAt,
+						lastWatchedAt: rest.lastWatchedAt!,
 						url: `/tv-shows/${season.show.id}/${season.id}/${rest.id}/play`,
-						filePath: rest.videoUrl,
+						filePath: rest.videoUrl!,
 					};
 				});
 			});
@@ -96,6 +104,10 @@ export async function GetLastWatchedItems(
 			.findMany({
 				where: {
 					lastWatchedAt: {
+						not: null,
+					},
+
+					videoUrl: {
 						not: null,
 					},
 				},
@@ -116,11 +128,11 @@ export async function GetLastWatchedItems(
 						title: lecture.course.title,
 						subTitle: `Lecture ${lecture.lectureNumber}: ${lecture.title}`,
 						continueAt: lecture.continueAt,
-						length: lecture.length,
+						length: lecture.length!,
 						shouldHaveThumbnail: false,
-						lastWatchedAt: lecture.lastWatchedAt,
+						lastWatchedAt: lecture.lastWatchedAt!,
 						url: `/courses/${lecture.course.id}/${lecture.id}/play`,
-						filePath: lecture.videoUrl,
+						filePath: lecture.videoUrl!,
 					};
 				});
 			});

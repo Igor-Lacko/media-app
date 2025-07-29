@@ -12,34 +12,33 @@ import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
 import WatchlistRouter from "routes/watchlists";
 import CheckRouter from "routes/check";
-export const viteNodeApp = express();
+const app = express();
 
-console.log("Starting Express server...");
-viteNodeApp.use(cors());
+app.use(cors());
 
 // For parsing
-viteNodeApp.use(express.json());
+app.use(express.json());
 
 // Add routers
 const addRouters = () => {
-	viteNodeApp.use("/api/movies", MovieRouter);
-	viteNodeApp.use("/api/settings", SettingsRouter);
-	viteNodeApp.use("/api/shows", TvShowRouter);
-	viteNodeApp.use("/api/courses", CoursesRouter);
-	viteNodeApp.use("/api/seasons", SeasonsRouter);
-	viteNodeApp.use("/api/episodes", EpisodesRouter);
-	viteNodeApp.use("/api/lectures", LecturesRouter);
-	viteNodeApp.use("/api/favorites", FavoritesRouter);
-	viteNodeApp.use("/api/last-watched", LastWatchedRouter);
-	viteNodeApp.use("/api/watchlist", WatchlistRouter);
-	viteNodeApp.use("/api/check", CheckRouter);
+	app.use("/api/movies", MovieRouter);
+	app.use("/api/settings", SettingsRouter);
+	app.use("/api/shows", TvShowRouter);
+	app.use("/api/courses", CoursesRouter);
+	app.use("/api/seasons", SeasonsRouter);
+	app.use("/api/episodes", EpisodesRouter);
+	app.use("/api/lectures", LecturesRouter);
+	app.use("/api/favorites", FavoritesRouter);
+	app.use("/api/last-watched", LastWatchedRouter);
+	app.use("/api/watchlist", WatchlistRouter);
+	app.use("/api/check", CheckRouter);
 };
 
 const startServer = async () => {
 	try {
 		addRouters();
 		const PORT = 3000;
-		viteNodeApp.listen(PORT, () => {
+		app.listen(PORT, () => {
 			console.log(`Server is running on http://localhost:${PORT}`);
 		});
 	} catch (error) {

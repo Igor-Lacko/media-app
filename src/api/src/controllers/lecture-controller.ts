@@ -80,6 +80,8 @@ export async function CreateLecture(
 				},
 			},
 		});
+
+		return true;
 	} catch (error) {
 		return false;
 	}

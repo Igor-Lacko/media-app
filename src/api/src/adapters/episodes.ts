@@ -1,5 +1,6 @@
 import ClientEpisode from "@shared/interface/models/episode";
 import { Episode } from "generated/prisma/client";
+import WatchStatus from "@shared/enum/watch-status";
 
 export function SanitizeClientEpisodeToDB(
 	episode: ClientEpisode,
@@ -24,5 +25,11 @@ export function DBEpisodeToClient(
 		...data,
 		identifier: id,
 		seasonNumber: seasonNumber, // Placeholder, maybe todo?
+		videoUrl: episode.videoUrl || undefined,
+		length: episode.length || undefined,
+		watchStatus: episode.watchStatus as WatchStatus,
+		lastWatchedAt: episode.lastWatchedAt || undefined,
+		rating: episode.rating || undefined,
+		shortDescription: episode.shortDescription || undefined,
 	};
 }

@@ -115,7 +115,7 @@ export async function InsertMovieFromOMDb(
 			const url = imdbId
 				? `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`
 				: `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(
-						title,
+						title!,
 				  )}`;
 			const response = await axios.get<OMDbMovie>(url);
 
@@ -258,7 +258,7 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
 			data: {
 				...sanitizedMovie,
 				genres: {
-					create: movie.genres.map((genre: Genre) => ({
+					create: movie.genres!.map((genre: Genre) => ({
 						genre: genre,
 					})),
 				},

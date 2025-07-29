@@ -29,6 +29,9 @@ export function DBSeasonToClient(season: DBSeason): ClientSeason {
 		identifier: id,
 		title: `Season ${season.seasonNumber}`,
 		submediaString: `${season.episodes.length} episodes`,
+		description: season.description || undefined,
+		rating: season.rating || undefined,
+		shortDescription: season.shortDescription || undefined,
 		episodes: season.episodes.map((episode) =>
 			DBEpisodeToClient(episode, data.seasonNumber),
 		),

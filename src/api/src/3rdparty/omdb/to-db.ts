@@ -6,7 +6,7 @@ import { Genre } from "generated/prisma/enums";
  * @returns The runtime in seconds as a number.
  */
 export function OMDbRuntimeToDB(runtime?: string): number {
-	return parseInt(runtime.replace(" min", ""), 10) * 60 || 0;
+	return parseInt(runtime?.replace(" min", "") || "", 10) * 60 || 0;
 }
 
 /**

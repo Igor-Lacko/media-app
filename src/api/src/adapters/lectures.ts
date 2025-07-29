@@ -1,3 +1,4 @@
+import WatchStatus from "@shared/enum/watch-status";
 import ClientLecture from "@shared/interface/models/lecture";
 import { Lecture, Note } from "generated/prisma/client";
 
@@ -27,8 +28,12 @@ export function DBLectureToClient(lecture: DBLecture): ClientLecture {
 	return {
 		...data,
 		identifier: id,
+		watchStatus: lecture.watchStatus as WatchStatus,
+		lastWatchedAt: lecture.lastWatchedAt || undefined,
+		videoUrl: lecture.videoUrl || undefined,
+		length: lecture.length || undefined,
 		notes: lecture.notes.map((note) => {
-			return { content: note.content, timestamp: note.timestamp };
+			return { content: note.content, timestamp: note.timestamp || undefined };
 		}),
 	};
 }
