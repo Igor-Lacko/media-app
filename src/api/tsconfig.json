@@ -12,6 +12,7 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "baseUrl": "./src",
+		"outDir": "./dist",
         "paths": {
             "controllers/*": [
                 "./controllers/*"

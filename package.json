@@ -9,7 +9,10 @@
     "dev:electron": "cd src/electron && npm run dev",
     "dev:electron:no-sandbox": "cd src/electron && npm run dev:no-sandbox",
     "dev": "concurrently \"npm run dev:ui\" \"npm run dev:electron\" \"npm run dev:api\"",
-    "dev:no-sandbox": "concurrently \"npm run dev:ui\" \"npm run dev:electron:no-sandbox\" \"npm run dev:api\""
+    "dev:no-sandbox": "concurrently \"npm run dev:ui\" \"npm run dev:electron:no-sandbox\" \"npm run dev:api\"",
+	"normal": "cd src/electron && npm run normal",
+	"build:api": "cd src/api && npm run build:exe",
+	"build:ui": "cd src/ui && npm run build"
   },
   "keywords": [],
   "author": "",

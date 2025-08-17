@@ -3,7 +3,12 @@
   "type": "module",
   "scripts": {
     "dev": "wait-on http://localhost:5173 && electron --gtk-version=3 .",
-    "dev:no-sandbox": "wait-on http://localhost:5173 && electron --gtk-version=3 --no-sandbox ."
+    "dev:no-sandbox": "wait-on http://localhost:5173 && electron --gtk-version=3 --no-sandbox .",
+	"normal": "electron --gtk-version=3 .",
+	"make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "start": "electron-forge start",
+    "package": "electron-forge package"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +16,16 @@
   "dependencies": {
     "electron": "^37.2.1",
     "wait-on": "8.0.3"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.3"
+  },
+  "config": {
+	"forge": {
+		"packagerConfig": {
+			"name": "Media App",
+			"executableName": "media-app"
+		}
+	}
   }
 }

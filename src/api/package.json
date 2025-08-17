@@ -2,9 +2,11 @@
   "name": "api",
   "version": "1.0.0",
   "main": "main.ts",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "dev": "tsx --watch src/main.ts"
+    "dev": "tsx --watch src/main.ts",
+	"build": "tsc",
+	"build:exe": "rm -rf build/* && bun build src/main.ts --compile --outfile build/media-api"
   },
   "keywords": [],
   "author": "",
