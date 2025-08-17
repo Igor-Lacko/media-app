@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
 import { existsSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { spawn } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const isDev = process.env.NODE_ENV === "development";
@@ -10,55 +9,15 @@ const UI_SERVER_URL = isDev
 	? "http://localhost:5173/"
 	: `file://${join(__dirname, "../ui/dist/index.html")}`;
 
-console.log("UI Server URL:", UI_SERVER_URL);
-
-let api = undefined;
-
-/**
- * Starts the API Express server (in production).
- */
-function startServer() {
-	const exePath = join(__dirname, "../api/build/media-api");
-	if (!existsSync(exePath)) {
-		console.error("API server executable not found:", exePath);
+async function startApiServer() {
+	const dbPath = join(__dirname, "../api/prisma/database.db");
+	const apiPath = join(__dirname, "../api/dist/main.js");
+	if (!existsSync(dbPath) || !existsSync(apiPath)) {
+		console.error("API server files not found:", dbPath, apiPath);
 		return;
 	}
-
-	api = spawn(exePath, {
-		cwd: join(__dirname, "../api/build"),
-		shell: true,
-		env: {
-			...process.env,
-			DATABASE_URL: `file:${join(__dirname, "../api/prisma/database.db")}`,
-		}
-	});
-
-	api.stdout.on("data", (data) => {
-		console.log(`API stdout: ${data}`);
-	});
-
-	api.stderr.on("data", (data) => {
-		console.error(`API stderr: ${data}`);
-	});
-
-	api.on("error", (error) => {
-		console.error("API process error:", error);
-	});
-
-	api.on("exit", (code) => {
-		console.log(`API process exited with code: ${code}`);
-	});
-}
-
-/**
- * Stops the API Express server.
- */
-function stopServer() {
-	if (api) {
-		console.log("Stopping API server...");
-		api.kill("SIGTERM");
-		api = undefined;
-	}
+	process.env.DATABASE_URL = `file:${dbPath}`;
+	await import("../api/dist/main.js");
 }
 
 /**
@@ -67,8 +26,8 @@ function stopServer() {
 function createWindow() {
 	const mainWindow = new BrowserWindow({
 		titleBarStyle: "hidden",
-		height: 600,
-		width: 800,
+		fullscreen: true,
+		fullscreenable: true,
 		webPreferences: {
 			preload: join(__dirname, "/preload.js"),
 			contextIsolation: true,
@@ -83,7 +42,7 @@ function createWindow() {
 }
 
 // Gets a absolute file path, allows only files ending with "extensions" to be selected
-ipcMain.handle("get-file", async (event, allowed) => {
+ipcMain.handle("get-file", async (_event, allowed) => {
 	const extensions =
 		allowed === "video"
 			? ["mp4", "mkv", "avi", "mov"]
@@ -108,22 +67,21 @@ ipcMain.handle("check-file-exists", async (event, filePath) => {
 });
 
 // Checks if a file is a valid video
-ipcMain.handle("is-valid-video", async (event, filePath) => {
+ipcMain.handle("is-valid-video", async (_event, filePath) => {
 	const validExtensions = [".mp4", ".mkv", ".avi", ".mov"];
 	return validExtensions.some((ext) => filePath.endsWith(ext));
 });
 
 // Opens a external browser
-ipcMain.handle("open-external", async (event, url) => {
+ipcMain.handle("open-external", async (_event, url) => {
 	shell.openExternal(url);
 });
 
-app.whenReady().then(() => {
-	if (!isDev) {
-		startServer();
-	}
-
+app.whenReady().then(async () => {
 	createWindow();
+	if (!isDev) {
+		await startApiServer();
+	}
 
 	app.on("activate", () => {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -131,9 +89,6 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-	if (!isDev) {
-		stopServer();
-	}
 	if (process.platform !== "darwin") {
 		app.quit();
 	}

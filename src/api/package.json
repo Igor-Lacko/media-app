@@ -4,9 +4,9 @@
   "main": "main.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch src/main.ts",
-	"build": "tsc",
-	"build:exe": "rm -rf build/* && bun build src/main.ts --compile --outfile build/media-api"
+    "dev": "tsx --import=tsconfig-paths/register --watch src/main.ts",
+    "build": "bun build src/main.ts --outdir dist --target node --format esm",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,8 @@
     "@types/express": "^5.0.3",
     "prisma": "^6.11.1",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },

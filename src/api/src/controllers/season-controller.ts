@@ -3,13 +3,12 @@ import prisma from "db/db";
 import {
 	CreateEpisode,
 	UpdateEpisode,
-	UpdateOrCreateEpisode,
 } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
 import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
 import { UpdateSeasonNumbers } from "./tv-show-controller";
-import { WatchStatus } from "@shared/enum/watch-status";
+import { WatchStatus } from "generated/prisma/enums";
 
 /**
  * Gets a season by its ID, including its episodes.

@@ -34,7 +34,7 @@ const addRouters = () => {
 	app.use("/api/check", CheckRouter);
 };
 
-const startServer = async () => {
+export const startServer = async () => {
 	try {
 		addRouters();
 		const PORT = 3000;
