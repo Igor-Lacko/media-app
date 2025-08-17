@@ -4,20 +4,21 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const isDev = process.env.NODE_ENV === "development";
+const isDev = !app.isPackaged;
 const UI_SERVER_URL = isDev
 	? "http://localhost:5173/"
-	: `file://${join(__dirname, "../ui/dist/index.html")}`;
+	: `file://${join(process.resourcesPath, "ui-dist", "index.html")}`;
 
+// This only runs when packaged
 async function startApiServer() {
-	const dbPath = join(__dirname, "../api/prisma/database.db");
-	const apiPath = join(__dirname, "../api/dist/main.js");
+	const dbPath = join(process.resourcesPath, "prisma", "database.db");
+	const apiPath = join(process.resourcesPath, "api-dist", "main.js");
 	if (!existsSync(dbPath) || !existsSync(apiPath)) {
 		console.error("API server files not found:", dbPath, apiPath);
 		return;
 	}
 	process.env.DATABASE_URL = `file:${dbPath}`;
-	await import("../api/dist/main.js");
+	await import(apiPath);
 }
 
 /**

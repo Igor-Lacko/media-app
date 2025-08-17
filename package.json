@@ -10,11 +10,17 @@
     "dev:electron:no-sandbox": "cd src/electron && npm run dev:no-sandbox",
     "dev": "concurrently \"npm run dev:ui\" \"npm run dev:electron\" \"npm run dev:api\"",
     "dev:no-sandbox": "concurrently \"npm run dev:ui\" \"npm run dev:electron:no-sandbox\" \"npm run dev:api\"",
+
+	"build:api": "echo Building the API && cd src/api && npm run build",
+	"build:ui": "echo Building the UI && cd src/ui && npm run build",
+	"build": "concurrently \"npm run build:ui\" \"npm run build:api\"",
 	"normal": "cd src/electron && npm run normal",
-	"build:api": "cd src/api && npm run build",
-	"build:ui": "cd src/ui && npm run build",
+
 	"clean:api": "cd src/api && npm run clean",
-	"clean:ui": "cd src/ui && npm run clean"
+	"clean:ui": "cd src/ui && npm run clean",
+	"clean": "concurrently \"npm run clean:ui\" \"npm run clean:api\"",
+
+	"package": "npm run build && cd src/electron && npm run package"
   },
   "keywords": [],
   "author": "",
