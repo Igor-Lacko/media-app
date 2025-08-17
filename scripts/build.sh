@@ -7,8 +7,23 @@ cd "$NPM_DIR" || {
   	exit 1
 }
 
-# Build the API and UI
+# Build the API
 echo "Building the API..."
+
+# Set up prisma if needed
+echo "Set up prisma? (y/n) (Run this if you are running this script for the first time or if src/api/prisma/database.db does not exist)."
+read -r setup_prisma
+if [[ "$setup_prisma" == "y" || "$setup_prisma" == "Y" ]]; then
+	echo "Setting up prisma..."
+	cd src/api || {
+		echo "Failed to change directory to src/api"
+		exit 1
+	}
+	npx prisma db push
+	cd ../..
+	echo "Prisma set up successfully."
+fi
+
 npm run build:api
 
 # Build the UI
