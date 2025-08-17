@@ -19,6 +19,7 @@ if [[ "$setup_prisma" == "y" || "$setup_prisma" == "Y" ]]; then
 		echo "Failed to change directory to src/api"
 		exit 1
 	}
+	export DATABASE_URL="file:./database.db"
 	npx prisma db push
 	cd ../..
 	echo "Prisma set up successfully."
