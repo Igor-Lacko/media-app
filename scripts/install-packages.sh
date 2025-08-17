@@ -14,6 +14,7 @@ install_dir_packages() {
 	if [[ "$install_choice" == "y" || "$install_choice" == "Y" ]]; then
 		if [ -d "$dirpath" ]; then
 			echo "Installing packages in $dirname..."
+			CURRENT_DIR=$(pwd)
 			cd "$dirpath" || {
 				echo "Failed to change directory to $dirpath"
 				exit 1
@@ -23,6 +24,10 @@ install_dir_packages() {
 				exit 1
 			fi
 			echo "Packages installed successfully in $dirname."
+			cd "$CURRENT_DIR" || {
+				echo "Failed to return to the original directory"
+				exit 1
+			}
 		else
 			echo "Directory $dirname does not exist, skipping package installation."
 		fi

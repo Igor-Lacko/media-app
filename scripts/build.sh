@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Get the ../ dirname from the script's directory
-NPM_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-echo "NPM_DIR is set to: $NPM_DIR"
+NPM_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/..
 cd "$NPM_DIR" || {
 	echo "Failed to change directory to $NPM_DIR"
   	exit 1
@@ -73,7 +72,7 @@ echo "Do you want to delete the node_modules directories? (y/n)"
 read -r delete_node_modules
 if [[ "$delete_node_modules" == "y" || "$delete_node_modules" == "Y" ]]; then
 	echo "Deleting node_modules directories..."
-	cd NPM_DIR || {
+	cd "$NPM_DIR" || {
 		echo "Failed to change directory to $NPM_DIR"
 		exit 1
 	}
