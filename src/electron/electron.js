@@ -26,8 +26,6 @@ async function startApiServer() {
  */
 function createWindow() {
 	const mainWindow = new BrowserWindow({
-		titleBarStyle: "hidden",
-		fullscreen: true,
 		fullscreenable: true,
 		webPreferences: {
 			preload: join(__dirname, "/preload.js"),
@@ -37,8 +35,10 @@ function createWindow() {
 			// Local files
 			webSecurity: false,
 		},
+		
 	});
 
+	mainWindow.removeMenu();
 	mainWindow.loadURL(UI_SERVER_URL);
 }
 

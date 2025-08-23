@@ -18,7 +18,8 @@ export default function AppLayout() {
         darkMode: true,
         hasApiKey: false,
         tvShowProgressInEpisodes: false,
-        showMarkdownPreview: false
+        showMarkdownPreview: false,
+		showExternalImages: false,
     });
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const location = useLocation();
