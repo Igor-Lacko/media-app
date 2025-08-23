@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import ModalProps from "utils/props/other/modal-props";
+import { MarkdownEditorModalProps } from "utils/props/other/modal-props";
 import MDEditor from "@uiw/react-md-editor";
 import SettingsContext from "context/settings-context";
 import RoundedButton from "components/buttons/rounded-button";
@@ -8,7 +8,7 @@ import RoundedButton from "components/buttons/rounded-button";
  * Modal for adding notes to lectures with markdown support.
  * @param props Title, onSetText function, and onClose function.
  */
-export default function MarkdownModal(props: ModalProps) {
+export default function MarkdownModal(props: MarkdownEditorModalProps) {
     // Current text
     const [text, setText] = useState("");
 

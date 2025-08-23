@@ -154,7 +154,7 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
                 onClose={() => setVisibleModal(VisibleModal.NONE)}
             />}
             {/** 3. Watch status modal */}
-            {visibleModal === VisibleModal.WATCH_STATUS && props.watchStatus && <EnumModal
+            {visibleModal === VisibleModal.WATCH_STATUS && props.watchStatus && <EnumModal<WatchStatus>
                 title={"Select Watch Status"}
                 selectOptions={props.watchStatusOptions!.map((status) => {
                     return {
@@ -162,11 +162,11 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
                         value: status
                     }
                 })}
-                initialWatchStatus={{
+                initialSelection={{
                     key: watchStatusAdapter(props.watchStatus),
                     value: props.watchStatus
                 }}
-                onSelectWatchStatus={async (watchStatus: WatchStatus) => {
+                onSelect={async (watchStatus: WatchStatus) => {
                     props.watchStatusFunction && await props.watchStatusFunction(watchStatus);
                     setVisibleModal(VisibleModal.NONE);
                 }}
@@ -186,7 +186,6 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
             {visibleModal === VisibleModal.PLAY_NOFILE && <FileBrowseModal
                 title={"Error: No video found"}
                 message={`${props.title} does not have a video file associated with it yet. Please select a video file to play.`}
-                initialText={props.videoUrl?.current || ""}
                 allowed={"video"}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
@@ -198,7 +197,6 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
             {visibleModal === VisibleModal.PLAY_WRONG_FILE && <FileBrowseModal
                 title={"Error: Invalid video file"}
                 message={`The video file for ${props.title} is invalid or does not exist. Please select a valid video file.`}
-                initialText={props.videoUrl?.current || ""}
                 allowed={"video"}
                 onSetText={async (videoUrl: string) => {
                     props.setVideoUrlFunction && await props.setVideoUrlFunction(videoUrl);
@@ -209,7 +207,6 @@ export default function DetailLayout<T extends DetailFillable>(props: DetailProp
             {/** 7. Add note modal */}
             {visibleModal === VisibleModal.ADD_NOTE && props.addNoteFunction && <MarkdownModal
                 title={"Add Note"}
-                initialText={""}
                 onSetText={async (note: string) => {
                     props.addNoteFunction && await props.addNoteFunction({ content: note });
                     setVisibleModal(VisibleModal.NONE);

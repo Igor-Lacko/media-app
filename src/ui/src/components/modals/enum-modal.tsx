@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalProps from "utils/props/other/modal-props";
+import { EnumModalProps } from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 import { FaCheckCircle } from "react-icons/fa";
 import RoundedButton from "components/buttons/rounded-button";
@@ -8,8 +8,8 @@ import RoundedButton from "components/buttons/rounded-button";
  * Modal providing a list of items from which one can be selected.
  * @param props Props for the modal including title, onSelect function, and initial selection.
  */
-export default function EnumModal(props: ModalProps) {
-    const [selected, setSelected] = useState(props.initialWatchStatus!.value)
+export default function EnumModal<T>(props: EnumModalProps<T>) {
+    const [selected, setSelected] = useState(props.initialSelection.value)
 
     return (
         <AbstractModal>
@@ -18,10 +18,10 @@ export default function EnumModal(props: ModalProps) {
             </h2>
             {props.selectOptions && props.selectOptions.map((option) => (
                 <button
-                    key={option.value}
+                    key={option.key}
                     className={"flex items-center p-2 w-full text-left rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700\
                             transition-colors duration-300 text-black dark:text-gray-400"}
-                    onClick={() => { setSelected(option.value!); }}
+                    onClick={() => { setSelected(option.value); }}
                 >
                     <span className={"flex-1"}>
                         {option.key}
@@ -35,7 +35,7 @@ export default function EnumModal(props: ModalProps) {
                 text={"Close"}
                 extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 onClick={async () => {
-                    props.onSelectWatchStatus && await props.onSelectWatchStatus(selected);
+                    await props.onSelect(selected);
                     props.onClose();
                 }}
             />

@@ -1,5 +1,5 @@
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/other/modal-props";
+import { InfoModalProps } from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 
 /**
@@ -7,7 +7,7 @@ import AbstractModal from "./abstract-modal";
  * @param props Title, children, onClose, classNames
  * @returns A modal component.
  */
-export default function InfoModal(props: ModalProps) {
+export default function InfoModal(props: InfoModalProps) {
     return (
         <AbstractModal>
             <h2
@@ -18,7 +18,7 @@ export default function InfoModal(props: ModalProps) {
             <p
                 className={"text-gray-600 dark:text-gray-400 mb-4"}
             >
-                {props.message!}
+                {props.message}
             </p>
             <RoundedButton
                 onClick={props.onClose}

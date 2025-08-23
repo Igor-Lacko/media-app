@@ -22,6 +22,9 @@ export default function SettingsPage() {
     // Delete DB confirm modal
     const [deleteDBModalVisible, setDeleteDBModalVisible] = useState(false);
 
+	// Export DB modal
+	const [exportDBModalVisible, setExportDBModalVisible] = useState(false);
+
     // Deletion status message
     const [deletionStatusMessage, setDeletionStatusMessage] = useState("");
 
@@ -251,7 +254,7 @@ export default function SettingsPage() {
             </div>
             {/** Reset DB button */}
             <div
-                className={divClasses + "border-b"}
+                className={divClasses}
             >
                 <h2
                     className={"text-lg font-semibold dark:text-gray-400 text-gray-800"}
@@ -264,6 +267,16 @@ export default function SettingsPage() {
                     text={"Reset database"}
                 />
             </div>
+			{/** Export DB button */}
+			<div
+				className={divClasses + "border-b"}
+			>
+				<RoundedButton
+					onClick={() => setExportDBModalVisible(true)}
+					extraClassNames={"bg-blue-500 h-9/10"}
+					text={"Export data to JSON"}
+				/>
+			</div>
             {/** Delete key confirm modal */}
             {deleteKeyModalVisible && <ConfirmModal
                 title={"Delete API key"}
@@ -312,6 +325,7 @@ export default function SettingsPage() {
                     setDeleteDBModalVisible(false);
                 }}
             />}
+			{/** Export DB popup */}
         </div>
     );
 }

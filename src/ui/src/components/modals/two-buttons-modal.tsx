@@ -1,12 +1,12 @@
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/other/modal-props";
+import { TwoButtonsModalProps } from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 
 /**
  * Returns a modal with 2 buttons.
  * @param props Title, onClose, paths.
  */
-export default function TwoButtonsModal(props: ModalProps) {
+export default function TwoButtonsModal(props: TwoButtonsModalProps) {
     return (
         <AbstractModal>
             <div
@@ -21,7 +21,7 @@ export default function TwoButtonsModal(props: ModalProps) {
             <div
                 className={"flex items-center justify-center space-x-20 mt-4 mb-8"}
             >
-                {props.options && props.options.map((option, index) => (
+                {props.options.map((option, index) => (
                     <RoundedButton
                         key={index}
                         text={option.title}

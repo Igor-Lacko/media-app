@@ -1,12 +1,12 @@
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/other/modal-props";
+import { ConfirmModalProps } from "utils/props/other/modal-props";
 
 /**
  * Returns a modal component with a confirm and close buttons.
  * @param props Title, onConfirm, onClose, classNames
  * @returns A modal component.
  */
-export default function ConfirmModal(props: ModalProps) {
+export default function ConfirmModal(props: ConfirmModalProps) {
     return (
         <div
             className={"fixed inset-0 flex backdrop-blur-sm items-center justify-center z-50 \
@@ -33,7 +33,7 @@ export default function ConfirmModal(props: ModalProps) {
                     <RoundedButton
                         text={"Confirm"}
                         extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
-                        onClick={props.onConfirm!}
+                        onClick={props.onConfirm}
                     />
                     <RoundedButton
                         text={"Close"}

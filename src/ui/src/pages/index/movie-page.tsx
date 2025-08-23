@@ -14,7 +14,7 @@ import { SortMedia } from "utils/other/sort-media";
 import SettingsContext from "context/settings-context";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import TwoButtonsModal from "components/modals/navigate-modal";
+import TwoButtonsModal from "components/modals/two-buttons-modal";
 
 /**
  * App Movie page.

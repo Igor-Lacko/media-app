@@ -1,10 +1,10 @@
 import { useState } from "react";
-import ModalProps from "utils/props/other/modal-props";
+import { FileBrowseModalProps } from "utils/props/other/modal-props";
 import AbstractModal from "./abstract-modal";
 import FileBrowseButton from "components/buttons/file-browse-button";
 import RoundedButton from "components/buttons/rounded-button";
 
-export default function FileBrowseModal(props: ModalProps) {
+export default function FileBrowseModal(props: FileBrowseModalProps) {
     // Doesn't need to be state, since the button keeps that already
     const [path, setPath] = useState("");
 

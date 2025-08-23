@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import AbstractModal from "./abstract-modal";
 import RoundedButton from "components/buttons/rounded-button";
-import ModalProps from "utils/props/other/modal-props";
+import { TextAreaModalProps } from "utils/props/other/modal-props";
 
 /**
  * Modal that provides a text area for entering a description.
  * @param props Props for the modal including title, onSetText function, and onClose function.
  */
-export default function TextAreaModal(props: ModalProps) {
+export default function TextAreaModal(props: TextAreaModalProps) {
     const description = useRef(props.initialText || "");
 
     return (
@@ -30,7 +30,7 @@ export default function TextAreaModal(props: ModalProps) {
                 text={"Close"}
                 extraClassNames={"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"}
                 onClick={async () => {
-                    props.onSetText && await props.onSetText(description.current);
+                    await props.onSetText(description.current);
                     props.onClose();
                 }}
             />

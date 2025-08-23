@@ -1,45 +1,75 @@
-import WatchStatus from "@shared/enum/watch-status";
-
 /**
- * Props for modal components.
+ * Base props for all modal components.
  */
-export interface ModalProps {
-	// Each one has this
+type ModalProps = {
 	title: string;
-
-	// For info modals
-	message?: string;
-
-	// For close or confirm modals
-	onConfirm?: () => void;
-
-	// For watch status select modals
-	onSelectWatchStatus?: (watchStatus: WatchStatus) => Promise<void>;
-	initialWatchStatus?: { key: string; value: WatchStatus };
-	selectOptions?: { key: string; value: WatchStatus }[];
-
-	// For slider modals
-	onSliderEnter?: (value: number) => Promise<void>;
-	initialValue?: number;
-	maxValue?: number;
-	jump?: number;
-	precision?: number;
-
-	// For text area/filepath modals
-	onSetText?: (text: string) => Promise<void>;
-	initialText?: string;
-
-	// Strictly for file browse modals
-	allowed?: string;
-
-	// For navigate modals
-	options?: { title: string; onClick: () => void }[];
-
-	// Each one also has this
 	onClose: () => void;
-
-	// Extra for styling
 	extraClassNames?: string;
 }
 
-export default ModalProps;
+/**
+ * For confirm modals.
+ */
+export type ConfirmModalProps = ModalProps & {
+	message: string;
+	onConfirm: () => void;
+}
+
+/**
+ * For modals with multiple options with one to select.
+ */
+export type EnumModalProps<T> = ModalProps & {
+	selectOptions: { key: string; value: T }[];
+	onSelect: (value: T) => Promise<void>;
+	initialSelection: { key: string; value: T };
+}
+
+/**
+ * For modals which open file dialogs.
+ */
+export type FileBrowseModalProps = ModalProps & {
+	message: string;
+	allowed: string;
+	onSetText: (text: string) => Promise<void>;
+}
+
+/**
+ * For modals which just show info.
+ */
+export type InfoModalProps = ModalProps & {
+	message: string;
+}
+
+/**
+ * For the markdown editor modal.
+ */
+export type MarkdownEditorModalProps = ModalProps & {
+	onSetText: (text: string) => Promise<void>;
+}
+
+/**
+ * For modals which allow a choice from 2 buttons.
+ */
+export type TwoButtonsModalProps = ModalProps & {
+	options: { title: string; onClick: () => void }[];
+}
+
+/**
+ * For slider modals.
+ */
+export type SliderModalProps = ModalProps & {
+	onSliderEnter: (value: number) => Promise<void>;
+	message?: string;
+	initialValue?: number;
+	maxValue: number;
+	jump?: number;
+	precision?: number;
+}
+
+/**
+ * For text area modals.
+ */
+export type TextAreaModalProps = ModalProps & {
+	onSetText: (text: string) => Promise<void>;
+	initialText?: string;
+}
