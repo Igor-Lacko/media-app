@@ -330,11 +330,9 @@ export default function SettingsPage() {
 			{exportDBModalVisible && <CheckMarkModal
 				title={"Export Database"}
                 options={[
-                    { title: "Export movies", checked: false },
-                    { title: "Export tv shows", checked: false },
-                    { title: "Export courses", checked: false },
-                    { title: "Export settings", checked: false },
-                    ...(settings.hasApiKey ? [{ title: "Export API key", checked: false }] : [])
+                    { title: "Export Movies", checked: false },
+                    { title: "Export TV shows", checked: false },
+                    { title: "Export Courses", checked: false },
                 ]}
 				onClose={() => setExportDBModalVisible(false)}
 				onConfirm={async (options) => {

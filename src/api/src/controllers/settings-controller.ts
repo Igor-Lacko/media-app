@@ -1,6 +1,9 @@
-import prisma from "db/db";
+import prisma, { DBData } from "db/db";
 import Settings from "@shared/interface/models/settings";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { GetMovies } from "./movie-controller";
+import { GetTvShows } from "./tv-show-controller";
+import { GetCourses } from "./course-controller";
 
 /**
  * Deletes the entire database.
@@ -215,4 +218,23 @@ export async function UpdateExternalImages(
 		})
 		.then(() => true)
 		.catch(() => false);
+}
+
+type ExportOptions = Record<keyof DBData, boolean>;
+
+/**
+ * Returns the db with the params provided as JSON.
+ * @param options What to include.
+ * @returns A DB object with the requested data.
+ */
+export async function ExportDatabase(options: ExportOptions): Promise<DBData> {
+	try {
+		return {
+			movies: options.movies ? await GetMovies() : undefined,
+			shows: options.shows ? await GetTvShows() : undefined,
+			courses: options.courses ? await GetCourses() : undefined,
+		}
+	} catch (error) {
+		throw new Error(error instanceof Error ? error.message : "Unknown error")
+	}
 }

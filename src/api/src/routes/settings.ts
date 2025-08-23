@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
 	DeleteOMDBKey,
+	ExportDatabase,
 	NukeDatabase,
 	UpdateDarkMode,
 	UpdateExternalImages,
@@ -29,6 +30,21 @@ router.get("/", async (_req, res) => {
 		res.status(500).json({ error: "Failed to fetch settings" });
 	}
 });
+
+// Returns the DB as JSON depending on the given params
+router.get("/export", async (req, res) => {
+	try {
+		const options = req.body;
+		if (!options) {
+			res.status(400).json({ error: "No options provided" });
+			return;
+		}
+		const db = await ExportDatabase(options);
+		res.status(200).json(db);
+	} catch(error) {
+		res.status(500).json({ error: error instanceof Error ? error.message : "Failed to export database" });
+	}
+})
 
 // Toggles dark mode
 router.patch("/dark-mode", async (req, res) => {
