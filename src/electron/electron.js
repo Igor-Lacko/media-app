@@ -28,6 +28,7 @@ function createWindow() {
 	const mainWindow = new BrowserWindow({
 		fullscreenable: true,
 		webPreferences: {
+			devTools: isDev,
 			preload: join(__dirname, "/preload.js"),
 			contextIsolation: true,
 			nodeIntegration: false,
@@ -38,7 +39,9 @@ function createWindow() {
 		
 	});
 
-	mainWindow.removeMenu();
+	if (!isDev) {
+		mainWindow.removeMenu();
+	}
 	mainWindow.loadURL(UI_SERVER_URL);
 }
 

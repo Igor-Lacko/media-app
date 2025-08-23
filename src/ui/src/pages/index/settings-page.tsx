@@ -8,6 +8,7 @@ import ConfirmModal from "components/modals/confirm-modal";
 import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
 import { ToggleDarkMode, ToggleExternalImages, ToggleMarkdownPreview, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
+import CheckMarkModal from "components/modals/checkmark-modal";
 
 export default function SettingsPage() {
     // Current settings
@@ -326,6 +327,20 @@ export default function SettingsPage() {
                 }}
             />}
 			{/** Export DB popup */}
+			{exportDBModalVisible && <CheckMarkModal
+				title={"Export Database"}
+                options={[
+                    { title: "Export movies", checked: false },
+                    { title: "Export tv shows", checked: false },
+                    { title: "Export courses", checked: false },
+                    { title: "Export settings", checked: false },
+                    ...(settings.hasApiKey ? [{ title: "Export API key", checked: false }] : [])
+                ]}
+				onClose={() => setExportDBModalVisible(false)}
+				onConfirm={async (options) => {
+					console.log("todo");
+				}}
+			/>}
         </div>
     );
 }

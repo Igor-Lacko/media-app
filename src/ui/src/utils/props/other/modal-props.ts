@@ -73,3 +73,16 @@ export type TextAreaModalProps = ModalProps & {
 	onSetText: (text: string) => Promise<void>;
 	initialText?: string;
 }
+
+type CheckMarkOption = {
+	title: string;
+	checked: boolean;
+}
+
+/**
+ * For modals with checkmarks/toggles (e.g. export to JSON, checkmarks for each thing to include).
+ */
+export type CheckMarkModalProps = ModalProps & {
+	options: CheckMarkOption[];
+	onConfirm: (options: CheckMarkOption[]) => Promise<void>;
+}
