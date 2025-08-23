@@ -1,5 +1,6 @@
-import prisma, { DBData } from "db/db";
+import prisma from "db/db";
 import Settings from "@shared/interface/models/settings";
+import { DBData, DBOptions } from "@shared/export-types";
 import axios from "axios";
 import { GetMovies } from "./movie-controller";
 import { GetTvShows } from "./tv-show-controller";
@@ -220,14 +221,12 @@ export async function UpdateExternalImages(
 		.catch(() => false);
 }
 
-type ExportOptions = Record<keyof DBData, boolean>;
-
 /**
  * Returns the db with the params provided as JSON.
  * @param options What to include.
  * @returns A DB object with the requested data.
  */
-export async function ExportDatabase(options: ExportOptions): Promise<DBData> {
+export async function ExportDatabase(options: DBOptions): Promise<DBData> {
 	try {
 		return {
 			movies: options.movies ? await GetMovies() : undefined,

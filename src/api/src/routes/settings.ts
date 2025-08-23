@@ -9,6 +9,7 @@ import {
 	UpdateProgressDisplay,
 } from "controllers/settings-controller";
 import { GetSettings } from "controllers/settings-controller";
+import { DBOptions } from "@shared/export-types";
 
 const router = Router();
 
@@ -34,7 +35,7 @@ router.get("/", async (_req, res) => {
 // Returns the DB as JSON depending on the given params
 router.get("/export", async (req, res) => {
 	try {
-		const options = req.body;
+		const options: DBOptions = req.body;
 		if (!options) {
 			res.status(400).json({ error: "No options provided" });
 			return;

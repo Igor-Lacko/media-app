@@ -1,3 +1,5 @@
+import { DBData } from "@shared/export-types";
+
 /**
  * Just for convenience (despite the weirdeness of this)
  */
@@ -8,6 +10,7 @@ declare global {
 			isValidFile: (filePath: string) => Promise<boolean>;
 			isValidVideo: (filePath: string) => Promise<boolean>;
 			openExternal: (url: string) => Promise<void>;
+			saveFile: (data: DBData) => Promise<boolean>;
 		};
 	}
 }
@@ -73,4 +76,17 @@ export async function OpenExternal(url: string): Promise<void> {
 	}
 
 	await window.electron.openExternal(url);
+}
+
+/**
+ * Saves the given data to a file.
+ * @param data DB data to save.
+ * @returns True if the file was saved successfully, false otherwise.
+ */
+export async function SaveFile(data: DBData): Promise<boolean> {
+	if (!window.electron || !window.electron.saveFile) {
+		return false;
+	}
+
+	return await window.electron.saveFile(data);
 }

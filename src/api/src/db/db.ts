@@ -13,9 +13,3 @@ if (!process.env.DATABASE_URL) {
 const prisma = new PrismaClient();
 
 export default prisma;
-
-export type DBData = {
-	movies?: Movie[],
-	shows?: TvShow[],
-	courses?: Course[],
-}

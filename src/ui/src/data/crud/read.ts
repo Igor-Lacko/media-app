@@ -2,6 +2,8 @@ import axios from "axios";
 import Settings from "@shared/interface/models/settings";
 import LastWatched from "@shared/interface/last-watched";
 import WatchListItem from "@shared/interface/watchlist-item";
+import { DBOptions } from "@shared/export-types";
+import { SaveFile } from "electron/electron-api";
 
 /**
  * Fetches bulk data from the given URL with the provided parameters.
@@ -97,6 +99,45 @@ export async function LoadSettings(): Promise<Settings> {
 		.get<Settings>("/api/settings")
 		.then((response) => response.data)
 		.catch((_error) => {
-			return { darkMode: true, hasApiKey: false };
+			return { 
+				darkMode: true, 
+				hasApiKey: false,
+				tvShowProgressInEpisodes: false,
+				showMarkdownPreview: false,
+				showExternalImages: false
+			};
 		});
+}
+
+/**
+ * Calls the API to export the current db and then invokes electron's api to save it as a JSON file.
+ * @param options Which data to include.
+ * @returns Promise with success status and optional error message.
+ */
+export async function ExportDb(options: DBOptions): Promise<{ success: boolean; errorMessage?: string }> {
+	try {
+		// Fetch the data first
+		const response = await axios.get("/api/settings/export", { data: options })
+			.then((res) => res.data);
+
+		// And invoke electron
+		return {
+			success: await SaveFile(response)
+		}
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			const errorResponse = error.response?.data as { error?: string };
+			return {
+				success: false,
+				errorMessage:
+					(errorResponse && errorResponse.error) || error.message,
+			};
+		} else {
+			return {
+				success: false,
+				errorMessage: error instanceof Error ? error.message :
+					"An unexpected error occurred while exporting the database",
+			};
+		}
+	}
 }

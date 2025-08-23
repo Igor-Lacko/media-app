@@ -9,6 +9,7 @@ import { DeleteAPIKey, ResetDatabase } from "data/crud/delete";
 import { ToggleDarkMode, ToggleExternalImages, ToggleMarkdownPreview, ToggleTvShowProgressDisplay, UpdateOMDBKey } from "data/crud/update";
 import { OpenExternal } from "electron/electron-api";
 import CheckMarkModal from "components/modals/checkmark-modal";
+import { ExportDb } from "data/crud/read";
 
 export default function SettingsPage() {
     // Current settings
@@ -336,7 +337,16 @@ export default function SettingsPage() {
                 ]}
 				onClose={() => setExportDBModalVisible(false)}
 				onConfirm={async (options) => {
-					console.log("todo");
+					if (await ExportDb({
+						movies: options[0].checked,
+						shows: options[1].checked,
+						courses: options[2].checked
+					})) {
+						// todo
+						console.log("Export successful");
+					} else {
+						alert("Export failed");
+					}
 				}}
 			/>}
         </div>

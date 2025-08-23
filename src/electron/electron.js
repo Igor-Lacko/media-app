@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
-import { existsSync } from "fs";
+import { existsSync, writeFile } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -63,6 +63,26 @@ ipcMain.handle("get-file", async (_event, allowed) => {
 		],
 	});
 	return result.filePaths;
+});
+
+// Dumps json into a file
+ipcMain.handle("save-file", async (_event, data) => {
+	const result = await dialog.showSaveDialog({
+		title: "Save File",
+		filters: [{ name: "JSON Files", extensions: ["json"] }],
+	});
+	if (result.canceled || !result.filePath) {
+		return false;
+	}
+
+	writeFile(result.filePath, data, (err) => {
+		if (err) {
+			console.error("Error saving file:", err);
+			return false;
+		}
+	});
+
+	return true;
 });
 
 // Checks if a file exists
