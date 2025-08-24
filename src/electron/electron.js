@@ -72,17 +72,24 @@ ipcMain.handle("save-file", async (_event, data) => {
 		filters: [{ name: "JSON Files", extensions: ["json"] }],
 	});
 	if (result.canceled || !result.filePath) {
-		return false;
+		return {
+			success: false,
+			errorMessage: "Save operation was canceled"
+		}
 	}
 
 	writeFile(result.filePath, data, (err) => {
 		if (err) {
-			console.error("Error saving file:", err);
-			return false;
+			return {
+				success: false,
+				errorMessage: `Failed to save file: ${err.message}`
+			}
 		}
 	});
 
-	return true;
+	return {
+		success: true,
+	}
 });
 
 // Checks if a file exists

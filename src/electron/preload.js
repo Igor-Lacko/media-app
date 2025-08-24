@@ -17,5 +17,9 @@ contextBridge.exposeInMainWorld('electron', {
 
     openExternal: async (url) => {
         await ipcRenderer.invoke('open-external', url);
-    }
+    },
+
+	saveFile: async (data) => {
+		return await ipcRenderer.invoke('save-file', data);
+	}
 });

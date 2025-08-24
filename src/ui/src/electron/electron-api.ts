@@ -1,4 +1,5 @@
 import { DBData } from "@shared/export-types";
+import { SuccessOrError } from "@shared/success-types";
 
 /**
  * Just for convenience (despite the weirdeness of this)
@@ -10,7 +11,7 @@ declare global {
 			isValidFile: (filePath: string) => Promise<boolean>;
 			isValidVideo: (filePath: string) => Promise<boolean>;
 			openExternal: (url: string) => Promise<void>;
-			saveFile: (data: DBData) => Promise<boolean>;
+			saveFile: (data: string) => Promise<SuccessOrError>;
 		};
 	}
 }
@@ -83,10 +84,10 @@ export async function OpenExternal(url: string): Promise<void> {
  * @param data DB data to save.
  * @returns True if the file was saved successfully, false otherwise.
  */
-export async function SaveFile(data: DBData): Promise<boolean> {
+export async function SaveFile(data: DBData): Promise<SuccessOrError> {
 	if (!window.electron || !window.electron.saveFile) {
-		return false;
+		return { success: false, errorMessage: "Electron API not available" };
 	}
 
-	return await window.electron.saveFile(data);
+	return await window.electron.saveFile(JSON.stringify(data));
 }

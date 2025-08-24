@@ -33,9 +33,10 @@ router.get("/", async (_req, res) => {
 });
 
 // Returns the DB as JSON depending on the given params
-router.get("/export", async (req, res) => {
+router.post("/export", async (req, res) => {
 	try {
-		const options: DBOptions = req.body;
+		console.log("Exporting database with options:", req.body.data);
+		const options: DBOptions = req.body.data;
 		if (!options) {
 			res.status(400).json({ error: "No options provided" });
 			return;
@@ -112,7 +113,7 @@ router.patch("/allow-external", async (req, res) => {
 });
 
 // Deletes OMDB api key
-router.delete("/omdb-key", async (req, res) => {
+router.delete("/omdb-key", async (_req, res) => {
 	if (await DeleteOMDBKey()) {
 		res.status(200).json({ message: "OMDB key deleted successfully." });
 	} else {

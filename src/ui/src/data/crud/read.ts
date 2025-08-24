@@ -4,6 +4,7 @@ import LastWatched from "@shared/interface/last-watched";
 import WatchListItem from "@shared/interface/watchlist-item";
 import { DBOptions } from "@shared/export-types";
 import { SaveFile } from "electron/electron-api";
+import { SuccessOrError } from "@shared/success-types";
 
 /**
  * Fetches bulk data from the given URL with the provided parameters.
@@ -114,16 +115,16 @@ export async function LoadSettings(): Promise<Settings> {
  * @param options Which data to include.
  * @returns Promise with success status and optional error message.
  */
-export async function ExportDb(options: DBOptions): Promise<{ success: boolean; errorMessage?: string }> {
+export async function ExportDb(options: DBOptions): Promise<SuccessOrError> {
 	try {
 		// Fetch the data first
-		const response = await axios.get("/api/settings/export", { data: options })
+		const response = await axios.post("/api/settings/export", { data: options })
 			.then((res) => res.data);
 
+		console.log("Received data for export:", response);
+
 		// And invoke electron
-		return {
-			success: await SaveFile(response)
-		}
+		return await SaveFile(response);
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			const errorResponse = error.response?.data as { error?: string };

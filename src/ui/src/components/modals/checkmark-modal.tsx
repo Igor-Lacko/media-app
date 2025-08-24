@@ -11,12 +11,14 @@ import Toggle from "components/buttons/toggle";
  */
 export default function CheckmarkModal(props: CheckMarkModalProps) {
 	const [options, setOptions] = useState(props.options);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	return (
 		<AbstractModal>
 			<h2 className={"text-xl font-semibold text-gray-800 dark:text-gray-200"}>
 				{props.title}
 			</h2>
+			{/** Toggles */}
 			<ul className={"flex flex-col"}>
 				{options.map((o, index) => (
 					<li
@@ -35,14 +37,25 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 					</li>
 				))}
 			</ul>
+			{/** Error text */}
+			<div
+				className={"h-6 text-red-600 text-sm text-center mb-2"}
+			>
+				{errorMessage !== "" && errorMessage}
+			</div>
 			<div
 				className={"flex items-center w-full justify-between px-4 mb-2"}
 			>
 				<RoundedButton
 					text={"Confirm"}
 					onClick={async () => {
-						await props.onConfirm(options);
-						props.onClose();
+						if (props.someNeeded && !options.some(o => o.checked)) {
+							setErrorMessage("Please select at least one option to continue.");
+						} else {
+							setErrorMessage("");
+							await props.onConfirm(options);
+							props.onClose();
+						}
 					}}
 					extraClassNames={"bg-purple-600 hover:bg-purple-700 w-1/2"}
 				/>

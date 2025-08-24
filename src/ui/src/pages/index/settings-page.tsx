@@ -33,6 +33,9 @@ export default function SettingsPage() {
     // Key submission status message
     const [keySubmissionStatusMessage, setKeySubmissionStatusMessage] = useState("");
 
+	// Andd a db export status message
+	const [exportStatusMessage, setExportStatusMessage] = useState("");
+
     // Used for all divs here
     const divClasses = "flex w-full items-center justify-between space-x-7 p-4 h-20\
     shadow-sm border-t border-x border-gray-200 dark:border-gray-700 ";
@@ -298,18 +301,7 @@ export default function SettingsPage() {
                     }
                 }}
             />}
-            {/** Deletion status message */}
-            {deletionStatusMessage !== "" && <InfoModal
-                title={"API Key Deletion Status"}
-                message={deletionStatusMessage}
-                onClose={() => setDeletionStatusMessage("")}
-            />}
-            {/** Key submission status message */}
-            {keySubmissionStatusMessage !== "" && <InfoModal
-                title={"API Key Submission Status"}
-                message={keySubmissionStatusMessage}
-                onClose={() => setKeySubmissionStatusMessage("")}
-            />}
+            
             {/** Clear DB popup */}
             {deleteDBModalVisible && <ConfirmModal
                 title={"Reset Database"}
@@ -335,19 +327,40 @@ export default function SettingsPage() {
                     { title: "Export TV shows", checked: false },
                     { title: "Export Courses", checked: false },
                 ]}
+				someNeeded={true}
 				onClose={() => setExportDBModalVisible(false)}
 				onConfirm={async (options) => {
-					if (await ExportDb({
+					// Check for success
+					const res = await ExportDb({
 						movies: options[0].checked,
 						shows: options[1].checked,
-						courses: options[2].checked
-					})) {
-						// todo
-						console.log("Export successful");
+						courses: options[2].checked,
+					});
+
+					if (res.success) {
+						setExportStatusMessage("Data exported successfully");
 					} else {
-						alert("Export failed");
+						setExportStatusMessage(`Failed to export data: ${res.errorMessage}`);
 					}
 				}}
+			/>}
+			{/** Deletion status message */}
+            {deletionStatusMessage !== "" && <InfoModal
+                title={"API Key Deletion Status"}
+                message={deletionStatusMessage}
+                onClose={() => setDeletionStatusMessage("")}
+            />}
+            {/** Key submission status message */}
+            {keySubmissionStatusMessage !== "" && <InfoModal
+                title={"API Key submission"}
+                message={keySubmissionStatusMessage}
+                onClose={() => setKeySubmissionStatusMessage("")}
+            />}
+			{/** Export status message */}
+			{exportStatusMessage !== "" && <InfoModal
+				title={"DB export"}
+				message={exportStatusMessage}
+				onClose={() => setExportStatusMessage("")}
 			/>}
         </div>
     );

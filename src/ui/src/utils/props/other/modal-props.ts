@@ -83,6 +83,7 @@ type CheckMarkOption = {
  * For modals with checkmarks/toggles (e.g. export to JSON, checkmarks for each thing to include).
  */
 export type CheckMarkModalProps = ModalProps & {
+	someNeeded: boolean;
 	options: CheckMarkOption[];
 	onConfirm: (options: CheckMarkOption[]) => Promise<void>;
 }
