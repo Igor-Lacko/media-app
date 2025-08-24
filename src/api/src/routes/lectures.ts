@@ -17,9 +17,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const lecture = await GetLectureById(lectureId);
-	lecture
-		? res.json(lecture)
-		: res.status(404).json({ error: "Lecture not found" });
+	lecture ?
+		res.json(lecture)
+	:	res.status(404).json({ error: "Lecture not found" });
 });
 
 // Creating a new lecture

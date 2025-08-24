@@ -17,9 +17,7 @@ import {
 export async function GetMovies(): Promise<Movie[]> {
 	try {
 		const movies = await prisma.movie.findMany({
-			include: {
-				genres: true,
-			},
+			include: { genres: true },
 		});
 
 		// Map DB objects to movie interface for easier FE genre access
@@ -37,13 +35,9 @@ export async function GetMovies(): Promise<Movie[]> {
 export async function GetMovieById(id: number): Promise<Movie | null> {
 	try {
 		const movie = await prisma.movie.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
-			include: {
-				genres: true,
-			},
+			include: { genres: true },
 		});
 
 		if (!movie) {
@@ -93,14 +87,8 @@ export async function InsertMovieFromOMDb(
 	try {
 		// Fetch api key first
 		const settings = await prisma.settings.findFirst({
-			where: {
-				omdbApiKey: {
-					not: null,
-				},
-			},
-			select: {
-				omdbApiKey: true,
-			},
+			where: { omdbApiKey: { not: null } },
+			select: { omdbApiKey: true },
 		});
 
 		const apiKey = settings?.omdbApiKey;
@@ -112,11 +100,12 @@ export async function InsertMovieFromOMDb(
 
 		// OMDb request
 		try {
-			const url = imdbId
-				? `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`
-				: `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(
+			const url =
+				imdbId ?
+					`http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`
+				:	`http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(
 						title!,
-				  )}`;
+					)}`;
 			const response = await axios.get<OMDbMovie>(url);
 
 			if (response.data.Response !== "True") {
@@ -133,18 +122,16 @@ export async function InsertMovieFromOMDb(
 			const longDescription = await GetFullDescriptionFromOMDb(url);
 
 			// Fetch settings to check if external images are allowed
-			const showExternalImages = await prisma.settings.findFirst({
-				select: {
-					allowExternalImages: true,
-				},
-			})
+			const showExternalImages = await prisma.settings
+				.findFirst({ select: { allowExternalImages: true } })
 				.then((settings) => settings?.allowExternalImages)
 				.catch(() => false);
 
 			// Image URL if allowed in settings
-			const imageUrl = showExternalImages && response.data.Poster ? 
-			response.data.Poster 
-			: undefined;
+			const imageUrl =
+				showExternalImages && response.data.Poster ?
+					response.data.Poster
+				:	undefined;
 
 			await prisma.movie.create({
 				data: {
@@ -175,18 +162,18 @@ export async function InsertMovieFromOMDb(
 				return {
 					success: false,
 					errorMessage:
-						errorResponse.Error ||
-						error.message ||
-						"An error occurred while fetching movie from OMDb",
+						errorResponse.Error
+						|| error.message
+						|| "An error occurred while fetching movie from OMDb",
 				};
 			}
 
 			return {
 				success: false,
 				errorMessage:
-					error instanceof Error
-						? error.message
-						: "An unexpected error occurred while fetching movie from OMDb",
+					error instanceof Error ?
+						error.message
+					:	"An unexpected error occurred while fetching movie from OMDb",
 			};
 		}
 	} catch (error) {
@@ -194,9 +181,9 @@ export async function InsertMovieFromOMDb(
 		return {
 			success: false,
 			errorMessage:
-				error instanceof Error
-					? error.message
-					: "An unexpected error occurred while inserting movie from OMDb",
+				error instanceof Error ?
+					error.message
+				:	"An unexpected error occurred while inserting movie from OMDb",
 		};
 	}
 }
@@ -213,9 +200,7 @@ export async function UpdateMovie(
 	const sanitizedMovie = SanitizeClientMovieToDB(movie as Movie);
 	try {
 		await prisma.movie.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			// If genres are to be updated delete all existing genres and create new ones
 			data: {
@@ -223,20 +208,23 @@ export async function UpdateMovie(
 
 				// Set watch status to finished if continueAt === length and length actually is set
 				watchStatus:
-					sanitizedMovie.continueAt === sanitizedMovie.length &&
-					sanitizedMovie.length &&
-					sanitizedMovie.length !== 0
-						? WatchStatus.COMPLETED
-						: sanitizedMovie.watchStatus,
+					(
+						sanitizedMovie.continueAt === sanitizedMovie.length
+						&& sanitizedMovie.length
+						&& sanitizedMovie.length !== 0
+					) ?
+						WatchStatus.COMPLETED
+					:	sanitizedMovie.watchStatus,
 
-				genres: movie.genres
-					? {
+				genres:
+					movie.genres ?
+						{
 							deleteMany: {},
 							create: movie.genres.map((genre: Genre) => ({
 								genre: genre,
 							})),
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
@@ -278,11 +266,7 @@ export async function InsertMovie(movie: Movie): Promise<boolean> {
  */
 export async function DeleteMovie(id: number): Promise<boolean> {
 	try {
-		await prisma.movie.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.movie.delete({ where: { id: id } });
 
 		return true;
 	} catch (error) {

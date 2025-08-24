@@ -19,11 +19,7 @@ export async function NukeDatabase(): Promise<boolean> {
 		]);
 
 		// Reset OMDB key
-		await prisma.settings.updateMany({
-			data: {
-				omdbApiKey: null,
-			},
-		});
+		await prisma.settings.updateMany({ data: { omdbApiKey: null } });
 
 		return true;
 	} catch (error) {
@@ -79,8 +75,8 @@ export async function GetSettings(): Promise<Settings> {
 			return {
 				darkMode: settings.darkMode,
 				hasApiKey:
-					settings.omdbApiKey !== null &&
-					settings.omdbApiKey !== undefined,
+					settings.omdbApiKey !== null
+					&& settings.omdbApiKey !== undefined,
 				tvShowProgressInEpisodes: settings.episodeProgressInEpisodes,
 				showMarkdownPreview: settings.showPreviewInMarkdown,
 				showExternalImages: settings.allowExternalImages,
@@ -88,11 +84,7 @@ export async function GetSettings(): Promise<Settings> {
 		}
 
 		// Create default
-		await prisma.settings.create({
-			data: {
-				omdbApiKey: null,
-			},
-		});
+		await prisma.settings.create({ data: { omdbApiKey: null } });
 
 		return {
 			darkMode: true,
@@ -114,11 +106,7 @@ export async function GetSettings(): Promise<Settings> {
 export async function UpdateDarkMode(darkMode: boolean): Promise<boolean> {
 	try {
 		// UpdateMany is fine, there is only one row
-		await prisma.settings.updateMany({
-			data: {
-				darkMode: darkMode,
-			},
-		});
+		await prisma.settings.updateMany({ data: { darkMode: darkMode } });
 
 		return true;
 	} catch (error) {
@@ -141,14 +129,14 @@ export async function UpdateOMDBKey(
 	}
 
 	try {
-		await prisma.settings.updateMany({
-			data: {
-				omdbApiKey: omdbKey,
-			},
-		});
+		await prisma.settings.updateMany({ data: { omdbApiKey: omdbKey } });
 		return { success: true };
 	} catch (error) {
-		return { success: false, errorMessage: error instanceof Error ? error.message : "Unknown error" };
+		return {
+			success: false,
+			errorMessage:
+				error instanceof Error ? error.message : "Unknown error",
+		};
 	}
 }
 
@@ -158,11 +146,7 @@ export async function UpdateOMDBKey(
  */
 export async function DeleteOMDBKey(): Promise<boolean> {
 	return await prisma.settings
-		.updateMany({
-			data: {
-				omdbApiKey: null,
-			},
-		})
+		.updateMany({ data: { omdbApiKey: null } })
 		.then(() => true)
 		.catch(() => false);
 }
@@ -176,11 +160,7 @@ export async function UpdateProgressDisplay(
 	inEpisodes: boolean,
 ): Promise<boolean> {
 	return await prisma.settings
-		.updateMany({
-			data: {
-				episodeProgressInEpisodes: inEpisodes,
-			},
-		})
+		.updateMany({ data: { episodeProgressInEpisodes: inEpisodes } })
 		.then(() => true)
 		.catch(() => false);
 }
@@ -194,11 +174,7 @@ export async function UpdateMarkdownPreview(
 	showPreview: boolean,
 ): Promise<boolean> {
 	return await prisma.settings
-		.updateMany({
-			data: {
-				showPreviewInMarkdown: showPreview,
-			},
-		})
+		.updateMany({ data: { showPreviewInMarkdown: showPreview } })
 		.then(() => true)
 		.catch(() => false);
 }
@@ -212,11 +188,7 @@ export async function UpdateExternalImages(
 	allowExternalImages: boolean,
 ): Promise<boolean> {
 	return await prisma.settings
-		.updateMany({
-			data: {
-				allowExternalImages: allowExternalImages,
-			},
-		})
+		.updateMany({ data: { allowExternalImages: allowExternalImages } })
 		.then(() => true)
 		.catch(() => false);
 }
@@ -232,8 +204,10 @@ export async function ExportDatabase(options: DBOptions): Promise<DBData> {
 			movies: options.movies ? await GetMovies() : undefined,
 			shows: options.shows ? await GetTvShows() : undefined,
 			courses: options.courses ? await GetCourses() : undefined,
-		}
+		};
 	} catch (error) {
-		throw new Error(error instanceof Error ? error.message : "Unknown error")
+		throw new Error(
+			error instanceof Error ? error.message : "Unknown error",
+		);
 	}
 }

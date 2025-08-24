@@ -20,24 +20,24 @@ export function SortMedia<
 >(models: T[], sortBy: SortKey, asc: boolean): T[] {
 	switch (sortBy) {
 		case SortKey.NAME:
-			return asc
-				? models.sort((a, b) => a.title.localeCompare(b.title))
-				: models.sort((a, b) => b.title.localeCompare(a.title));
+			return asc ?
+					models.sort((a, b) => a.title.localeCompare(b.title))
+				:	models.sort((a, b) => b.title.localeCompare(a.title));
 
 		case SortKey.RATING:
-			return asc
-				? models.sort((a, b) => a.rating! - b.rating!)
-				: models.sort((a, b) => b.rating! - a.rating!);
+			return asc ?
+					models.sort((a, b) => a.rating! - b.rating!)
+				:	models.sort((a, b) => b.rating! - a.rating!);
 
 		case SortKey.LENGTH:
-			return asc
-				? models.sort((a, b) => a.length! - b.length!)
-				: models.sort((a, b) => b.length! - a.length!);
+			return asc ?
+					models.sort((a, b) => a.length! - b.length!)
+				:	models.sort((a, b) => b.length! - a.length!);
 
 		case SortKey.NOF_SEASONS:
-			return asc
-				? models.sort((a, b) => a.seasons!.length - b.seasons!.length)
-				: models.sort((a, b) => b.seasons!.length - a.seasons!.length);
+			return asc ?
+					models.sort((a, b) => a.seasons!.length - b.seasons!.length)
+				:	models.sort((a, b) => b.seasons!.length - a.seasons!.length);
 
 		case SortKey.NOF_EPISODES:
 			return models.sort((a, b) => {
@@ -49,16 +49,16 @@ export function SortMedia<
 					(current, season) => current + season.episodes.length,
 					0,
 				);
-				return asc
-					? nofEpisodesA - nofEpisodesB
-					: nofEpisodesB - nofEpisodesA;
+				return asc ?
+						nofEpisodesA - nofEpisodesB
+					:	nofEpisodesB - nofEpisodesA;
 			});
 
 		case SortKey.NOF_LECTURES:
-			return asc
-				? models.sort((a, b) => a.lectures!.length - b.lectures!.length)
-				: models.sort(
-						(a, b) => b.lectures!.length - a.lectures!.length,
-				  );
+			return asc ?
+					models.sort(
+						(a, b) => a.lectures!.length - b.lectures!.length,
+					)
+				:	models.sort((a, b) => b.lectures!.length - a.lectures!.length);
 	}
 }

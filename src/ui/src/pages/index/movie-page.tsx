@@ -21,80 +21,103 @@ import TwoButtonsModal from "components/modals/two-buttons-modal";
  * Displays a list of Movies with control bar for filtering/sorting.
  */
 export default function MoviePage() {
-    // Sort/filter/search
-    const { filter, setFilter, sort, setSort, search, setSearch, ascending, setAscending } = useFilter();
+	// Sort/filter/search
+	const {
+		filter,
+		setFilter,
+		sort,
+		setSort,
+		search,
+		setSearch,
+		ascending,
+		setAscending,
+	} = useFilter();
 
-    // Settings (for hasApiKey)
-    const { settings } = useContext(SettingsContext);
+	// Settings (for hasApiKey)
+	const { settings } = useContext(SettingsContext);
 
-    // Modal to add normally or from API
-    const [addModalVisible, setAddModalVisible] = useState(false);
+	// Modal to add normally or from API
+	const [addModalVisible, setAddModalVisible] = useState(false);
 
-    // To navigate
-    const navigate = useNavigate();
+	// To navigate
+	const navigate = useNavigate();
 
-    // Fetch Movies
-    const { data, isLoading } = useQuery({
-        queryKey: ["Movies"],
-        queryFn: async () => await FetchData<Movie>("/api/movies"),
-    })
+	// Fetch Movies
+	const { data, isLoading } = useQuery({
+		queryKey: ["Movies"],
+		queryFn: async () => await FetchData<Movie>("/api/movies"),
+	});
 
-    const controlBarProps: ControlBarProps = {
-        title: "Your Movies",
-        filter: true,
-        sortOptions: [SortKey.LENGTH, SortKey.NAME, SortKey.RATING],
-        onSortChange: (sortKey: SortKey) => { setSort(sortKey) },
-        onFilterChange: (filterKey: Genre) => { setFilter(filterKey) },
-        onSearchChange: (searchTerm: string) => { setSearch(searchTerm) },
-        initialSort: sort,
-        initialFilter: filter,
-        initialSortOrder: ascending,
-        onSortOrderChange: (asc: boolean) => { setAscending(asc) },
-        onAddClick: settings.hasApiKey ? () => setAddModalVisible(true) : () => navigate("/movies/add"),
-    };
+	const controlBarProps: ControlBarProps = {
+		title: "Your Movies",
+		filter: true,
+		sortOptions: [SortKey.LENGTH, SortKey.NAME, SortKey.RATING],
+		onSortChange: (sortKey: SortKey) => {
+			setSort(sortKey);
+		},
+		onFilterChange: (filterKey: Genre) => {
+			setFilter(filterKey);
+		},
+		onSearchChange: (searchTerm: string) => {
+			setSearch(searchTerm);
+		},
+		initialSort: sort,
+		initialFilter: filter,
+		initialSortOrder: ascending,
+		onSortOrderChange: (asc: boolean) => {
+			setAscending(asc);
+		},
+		onAddClick:
+			settings.hasApiKey ?
+				() => setAddModalVisible(true)
+			:	() => navigate("/movies/add"),
+	};
 
-    const MovieListProps: ListProps = {
-        // Probably won;'t be a lot of items, so sorting in FE makes sense
-        items: SortMedia<Movie>(data || [], sort, ascending)
-            .filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase()) &&
-                movie.genres!.includes(filter)) || [],
+	const MovieListProps: ListProps = {
+		// Probably won;'t be a lot of items, so sorting in FE makes sense
+		items:
+			SortMedia<Movie>(data || [], sort, ascending).filter(
+				(movie: Movie) =>
+					movie.title.toLowerCase().includes(search.toLowerCase())
+					&& movie.genres!.includes(filter),
+			) || [],
 
-        showRating: true,
-        showThumbnail: true,
-        notFoundTitle: "No movies found :((",
-        notFoundMessage: "There are no movies that match your search criteria.",
-    }
+		showRating: true,
+		showThumbnail: true,
+		notFoundTitle: "No movies found :((",
+		notFoundMessage: "There are no movies that match your search criteria.",
+	};
 
-    if (isLoading) {
-        return <LoadingPage />;
-    }
+	if (isLoading) {
+		return <LoadingPage />;
+	}
 
-    return (
-        <div
-            className={"flex w-full h-full flex-col items-center justify-center p-0 m-0 overflow-y-hidden"}
-        >
-            <ControlBar {...controlBarProps} />
-            <div
-                className={"flex flex-col w-full h-full p-4"}
-            >
-                <MediaItemList
-                    {...MovieListProps}
-                />
-            </div>
-            {addModalVisible && settings.hasApiKey && <TwoButtonsModal
-                title={"Add Movie"}
-                options={[
-                    {
-                        title: "Add from API",
-                        onClick: () => navigate("/movies/from-api")
-                    },
-                    {
-                        title: "Add manually",
-                        onClick: () => navigate("/movies/add")
-                    }
-                ]}
-                onClose={() => setAddModalVisible(false)}
-            />}
-        </div>
-    );
+	return (
+		<div
+			className={
+				"flex w-full h-full flex-col items-center justify-center p-0 m-0 overflow-y-hidden"
+			}
+		>
+			<ControlBar {...controlBarProps} />
+			<div className={"flex flex-col w-full h-full p-4"}>
+				<MediaItemList {...MovieListProps} />
+			</div>
+			{addModalVisible && settings.hasApiKey && (
+				<TwoButtonsModal
+					title={"Add Movie"}
+					options={[
+						{
+							title: "Add from API",
+							onClick: () => navigate("/movies/from-api"),
+						},
+						{
+							title: "Add manually",
+							onClick: () => navigate("/movies/add"),
+						},
+					]}
+					onClose={() => setAddModalVisible(false)}
+				/>
+			)}
+		</div>
+	);
 }

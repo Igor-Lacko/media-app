@@ -12,29 +12,16 @@ export async function GetFavorites(): Promise<(Movie | TvShow)[]> {
 	try {
 		// Fetch movies
 		const favoriteMovies = await prisma.movie.findMany({
-			where: {
-				isFavorite: true,
-			},
+			where: { isFavorite: true },
 
-			include: {
-				genres: true,
-			},
+			include: { genres: true },
 		});
 
 		// Fetch shows
 		const favoriteTvShows = await prisma.show.findMany({
-			where: {
-				isFavorite: true,
-			},
+			where: { isFavorite: true },
 
-			include: {
-				genres: true,
-				seasons: {
-					include: {
-						episodes: true,
-					},
-				},
-			},
+			include: { genres: true, seasons: { include: { episodes: true } } },
 		});
 
 		return [

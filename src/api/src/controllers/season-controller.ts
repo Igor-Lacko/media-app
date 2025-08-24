@@ -1,9 +1,6 @@
 import Season from "@shared/interface/models/season";
 import prisma from "db/db";
-import {
-	CreateEpisode,
-	UpdateEpisode,
-} from "./episode-controller";
+import { CreateEpisode, UpdateEpisode } from "./episode-controller";
 import Episode from "@shared/interface/models/episode";
 import { DBSeasonToClient, SanitizeClientSeasonToDB } from "adapters/seasons";
 import { SanitizeClientEpisodeToDB } from "adapters/episodes";
@@ -18,13 +15,9 @@ import { WatchStatus } from "generated/prisma/enums";
 export async function GetSeasonById(id: number): Promise<Season | null> {
 	try {
 		const season = await prisma.season.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
-			include: {
-				episodes: true,
-			},
+			include: { episodes: true },
 		});
 
 		if (!season) {
@@ -52,27 +45,19 @@ export async function CreateSeason(
 		await prisma.season.create({
 			data: {
 				...sanitizedSeason,
-				show: {
-					connect: {
-						id: showId,
-					},
-				},
+				show: { connect: { id: showId } },
 				seasonNumber:
-					season.seasonNumber === -1
-						? (await prisma.season.count({
-								where: {
-									showId: showId,
-								},
-						  })) + 1
-						: season.seasonNumber,
+					season.seasonNumber === -1 ?
+						(await prisma.season.count({
+							where: { showId: showId },
+						})) + 1
+					:	season.seasonNumber,
 				episodes: {
 					create: season.episodes.map((episode: Episode) => {
 						const sanitizedEpisode = SanitizeClientEpisodeToDB(
 							episode,
 						) as Episode;
-						return {
-							...sanitizedEpisode,
-						};
+						return { ...sanitizedEpisode };
 					}),
 				},
 			},
@@ -98,23 +83,22 @@ export async function UpdateSeason(
 
 	try {
 		await prisma.season.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			data: {
 				...sanitizedSeason,
 
 				// Delete episodes that are not in the new list
-				episodes: sanitizedSeason.episodes
-					? {
+				episodes:
+					sanitizedSeason.episodes ?
+						{
 							deleteMany: {
 								id: {
 									notIn: sanitizedSeason.episodes
 										.filter(
 											(episode: Episode) =>
-												episode.identifier !==
-												undefined,
+												episode.identifier
+												!== undefined,
 										)
 										.map(
 											(episode: Episode) =>
@@ -122,17 +106,17 @@ export async function UpdateSeason(
 										),
 								},
 							},
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
 		// Update/create episodes
 		if (seasonData.episodes) {
 			for (const episode of seasonData.episodes) {
-				episode.identifier
-					? await UpdateEpisode(episode.identifier, episode)
-					: await CreateEpisode(episode, id);
+				episode.identifier ?
+					await UpdateEpisode(episode.identifier, episode)
+				:	await CreateEpisode(episode, id);
 			}
 		}
 
@@ -151,26 +135,18 @@ export async function UpdateSeason(
 export async function UpdateEpisodeNumbers(seasonId: number): Promise<boolean> {
 	try {
 		const episodes = await prisma.episode.findMany({
-			where: {
-				seasonId: seasonId,
-			},
+			where: { seasonId: seasonId },
 
-			orderBy: {
-				episodeNumber: "asc",
-			},
+			orderBy: { episodeNumber: "asc" },
 		});
 
 		for (let i = 0; i < episodes.length; i++) {
 			const episode = episodes[i];
 			if (episode.episodeNumber !== i + 1) {
 				await prisma.episode.update({
-					where: {
-						id: episode.id,
-					},
+					where: { id: episode.id },
 
-					data: {
-						episodeNumber: i + 1,
-					},
+					data: { episodeNumber: i + 1 },
 				});
 			}
 		}
@@ -188,38 +164,31 @@ export async function UpdateEpisodeNumbers(seasonId: number): Promise<boolean> {
  * @param seasonId The ID of the season.
  * @returns True if the operation was successful, false otherwise.
  */
-export async function MarkEpisodesAsCompleted(count: number, seasonId: number): Promise<boolean> {
+export async function MarkEpisodesAsCompleted(
+	count: number,
+	seasonId: number,
+): Promise<boolean> {
 	try {
 		// First mark the completed episodes as watched
-		await prisma.episode.updateMany({
-			where: {
-				seasonId: seasonId,
-				episodeNumber: {
-					lte: count,
-				}
-			},
+		await prisma.episode
+			.updateMany({
+				where: { seasonId: seasonId, episodeNumber: { lte: count } },
 
-			data: {
-				watchStatus: WatchStatus.COMPLETED
-			}
-		}).catch(() => {
-			return false;
-		});
+				data: { watchStatus: WatchStatus.COMPLETED },
+			})
+			.catch(() => {
+				return false;
+			});
 
 		// Then mark the rest as not watched
-		await prisma.episode.updateMany({
-			where: {
-				seasonId: seasonId,
-				episodeNumber: {
-					gt: count,
-				}
-			},
-			data: {
-				watchStatus: WatchStatus.NOT_WATCHED
-			}
-		}).catch(() => {
-			return false;
-		});
+		await prisma.episode
+			.updateMany({
+				where: { seasonId: seasonId, episodeNumber: { gt: count } },
+				data: { watchStatus: WatchStatus.NOT_WATCHED },
+			})
+			.catch(() => {
+				return false;
+			});
 
 		return true;
 	} catch (error) {
@@ -237,21 +206,13 @@ export async function DeleteSeason(id: number): Promise<boolean> {
 	try {
 		// Get the show ID first
 		const showID = await prisma.season.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
-			select: {
-				showId: true,
-			},
+			select: { showId: true },
 		});
 
 		// Delete season
-		await prisma.season.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.season.delete({ where: { id: id } });
 
 		// Update other seasons (should never fail but prisma query results are optional)
 		return await UpdateSeasonNumbers(showID?.showId || -1);

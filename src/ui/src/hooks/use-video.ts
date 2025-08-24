@@ -69,7 +69,10 @@ export default function useVideo(
 			// On video load, get duration and set the initial time
 			ref.current.onloadedmetadata = async () => {
 				if (ref.current) {
-					ref.current!.currentTime = Math.min(initialTime, ref.current!.duration);
+					ref.current!.currentTime = Math.min(
+						initialTime,
+						ref.current!.duration,
+					);
 					setDuration(ref.current!.duration);
 					setTime(ref.current!.currentTime);
 					ref.current!.play();

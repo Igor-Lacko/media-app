@@ -14,13 +14,9 @@ import { WatchStatus } from "generated/prisma/enums";
 export async function GetLectureById(id: number): Promise<Lecture | null> {
 	try {
 		const lecture = await prisma.lecture.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
-			include: {
-				notes: true,
-			},
+			include: { notes: true },
 		});
 		if (!lecture) {
 			return null;
@@ -50,26 +46,22 @@ export async function CreateLecture(
 				...sanitizedLecture,
 
 				watchStatus:
-					sanitizedLecture.continueAt === sanitizedLecture.length &&
-					sanitizedLecture.length &&
-					sanitizedLecture.length !== 0
-						? WatchStatus.COMPLETED
-						: sanitizedLecture.watchStatus,
+					(
+						sanitizedLecture.continueAt === sanitizedLecture.length
+						&& sanitizedLecture.length
+						&& sanitizedLecture.length !== 0
+					) ?
+						WatchStatus.COMPLETED
+					:	sanitizedLecture.watchStatus,
 
 				lectureNumber:
-					lecture.lectureNumber === -1
-						? (await prisma.lecture.count({
-								where: {
-									courseId: courseId,
-								},
-						  })) + 1
-						: lecture.lectureNumber,
+					lecture.lectureNumber === -1 ?
+						(await prisma.lecture.count({
+							where: { courseId: courseId },
+						})) + 1
+					:	lecture.lectureNumber,
 
-				course: {
-					connect: {
-						id: courseId,
-					},
-				},
+				course: { connect: { id: courseId } },
 
 				// This will probably always be empty on creation, but just in case?
 				notes: {
@@ -101,23 +93,22 @@ export async function UpdateLecture(
 
 	try {
 		await prisma.lecture.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			data: {
 				...sanitizedLecture,
 
 				// If provided
-				notes: sanitizedLecture.notes
-					? {
+				notes:
+					sanitizedLecture.notes ?
+						{
 							deleteMany: {},
 							create: sanitizedLecture.notes.map((note) => ({
 								content: note.content,
 								timestamp: note.timestamp,
 							})),
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
@@ -134,11 +125,7 @@ export async function UpdateLecture(
  */
 export async function DeleteLecture(id: number): Promise<boolean> {
 	try {
-		await prisma.lecture.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.lecture.delete({ where: { id: id } });
 
 		return true;
 	} catch (error) {

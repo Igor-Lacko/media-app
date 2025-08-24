@@ -1,15 +1,11 @@
 import Course from "./interface/models/course";
-import Movie from "./interface/models/movie"
-import TvShow from "./interface/models/tv-show"
+import Movie from "./interface/models/movie";
+import TvShow from "./interface/models/tv-show";
 
 /**
  * All saved data, can be exported as JSON.
  */
-export type DBData = {
-	movies?: Movie[],
-	shows?: TvShow[],
-	courses?: Course[],
-}
+export type DBData = { movies?: Movie[]; shows?: TvShow[]; courses?: Course[] };
 
 /**
  * Options for the prior type.

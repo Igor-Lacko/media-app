@@ -47,11 +47,7 @@ export async function FetchLastWatchedItems(
 	limit: number = -1,
 ): Promise<LastWatched[] | null> {
 	return await axios
-		.get<LastWatched[]>(`/api/last-watched`, {
-			params: {
-				limit: limit,
-			},
-		})
+		.get<LastWatched[]>(`/api/last-watched`, { params: { limit: limit } })
 		.then((response) => response.data)
 		.catch((_error) => {
 			return null;
@@ -100,12 +96,12 @@ export async function LoadSettings(): Promise<Settings> {
 		.get<Settings>("/api/settings")
 		.then((response) => response.data)
 		.catch((_error) => {
-			return { 
-				darkMode: true, 
+			return {
+				darkMode: true,
 				hasApiKey: false,
 				tvShowProgressInEpisodes: false,
 				showMarkdownPreview: false,
-				showExternalImages: false
+				showExternalImages: false,
 			};
 		});
 }
@@ -118,7 +114,8 @@ export async function LoadSettings(): Promise<Settings> {
 export async function ExportDb(options: DBOptions): Promise<SuccessOrError> {
 	try {
 		// Fetch the data first
-		const response = await axios.post("/api/settings/export", { data: options })
+		const response = await axios
+			.post("/api/settings/export", { data: options })
 			.then((res) => res.data);
 
 		console.log("Received data for export:", response);
@@ -136,8 +133,10 @@ export async function ExportDb(options: DBOptions): Promise<SuccessOrError> {
 		} else {
 			return {
 				success: false,
-				errorMessage: error instanceof Error ? error.message :
-					"An unexpected error occurred while exporting the database",
+				errorMessage:
+					error instanceof Error ?
+						error.message
+					:	"An unexpected error occurred while exporting the database",
 			};
 		}
 	}

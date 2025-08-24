@@ -43,10 +43,15 @@ router.post("/export", async (req, res) => {
 		}
 		const db = await ExportDatabase(options);
 		res.status(200).json(db);
-	} catch(error) {
-		res.status(500).json({ error: error instanceof Error ? error.message : "Failed to export database" });
+	} catch (error) {
+		res.status(500).json({
+			error:
+				error instanceof Error ?
+					error.message
+				:	"Failed to export database",
+		});
 	}
-})
+});
 
 // Toggles dark mode
 router.patch("/dark-mode", async (req, res) => {

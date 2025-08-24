@@ -21,10 +21,7 @@ export default async function SubmitSeason(
 	}
 
 	season.episodes = episodes.map((episode, index) => {
-		return {
-			...episode,
-			episodeNumber: index + 1,
-		};
+		return { ...episode, episodeNumber: index + 1 };
 	});
 
 	try {

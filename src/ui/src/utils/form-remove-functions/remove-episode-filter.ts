@@ -16,8 +16,8 @@ export function RemoveEpisodeFromShowFilter(
 		// Remove all episodes with the same season and episode number (so the removed one)
 		.filter(
 			(episode) =>
-				episode.episodeNumber !== removed.episodeNumber ||
-				episode.seasonNumber !== removed.seasonNumber,
+				episode.episodeNumber !== removed.episodeNumber
+				|| episode.seasonNumber !== removed.seasonNumber,
 		);
 
 	setEpisodes(updatedEpisodes);

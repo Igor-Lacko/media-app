@@ -10,9 +10,9 @@ router.get("/", async (_req, res) => {
 	} catch (e) {
 		res.status(500).json({
 			error:
-				e instanceof Error
-					? e.message
-					: "An error occurred while fetching favorites.",
+				e instanceof Error ?
+					e.message
+				:	"An error occurred while fetching favorites.",
 		});
 	}
 });

@@ -98,8 +98,8 @@ export async function CreateTvShowFromTvMaze(
 			return {
 				success: false,
 				errorMessage:
-					response.data.error ||
-					"Failed to create TV show from TV Maze",
+					response.data.error
+					|| "Failed to create TV show from TV Maze",
 			};
 		})
 		.catch((error) => {
@@ -108,17 +108,17 @@ export async function CreateTvShowFromTvMaze(
 				return {
 					success: false,
 					errorMessage:
-						errorResponse?.error ||
-						"Failed to create TV show from TV Maze",
+						errorResponse?.error
+						|| "Failed to create TV show from TV Maze",
 				};
 			}
 
 			return {
 				success: false,
 				errorMessage:
-					error instanceof Error
-						? error.message
-						: "An unknown error has ocurred when trying to create a show.",
+					error instanceof Error ?
+						error.message
+					:	"An unknown error has ocurred when trying to create a show.",
 			};
 		});
 }

@@ -17,9 +17,5 @@ export default function useProgressBar(
 	).length;
 	const max = items.length;
 	const label = `${value}/${max} ${title} completed`;
-	return {
-		value: value,
-		max: max,
-		label: label,
-	};
+	return { value: value, max: max, label: label };
 }

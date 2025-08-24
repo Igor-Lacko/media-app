@@ -5,9 +5,8 @@ const router = Router();
 
 // Getter for last watched items
 router.get("/", async (req, res) => {
-	const limit = req.query.limit
-		? parseInt(req.query.limit as string, 10)
-		: -1;
+	const limit =
+		req.query.limit ? parseInt(req.query.limit as string, 10) : -1;
 	if (isNaN(limit)) {
 		res.status(400).json({ error: "Invalid limit parameter" });
 		return;

@@ -18,76 +18,82 @@ import LoadingPage from "pages/other/loading-page";
  * Can also be used to edit an existing episode, this is done by passing a route param.
  */
 export default function AddEpisodePage() {
-    const location = useLocation();
-    const seasonId = location.state.id || 1;
-    const { model: episode, isLoading } = useFetchById<Episode>("/api/episodes", "episodeId");
+	const location = useLocation();
+	const seasonId = location.state.id || 1;
+	const { model: episode, isLoading } = useFetchById<Episode>(
+		"/api/episodes",
+		"episodeId",
+	);
 
-    // Initial data
-    const [initial, setInitial] = useState<Episode>(episode || { ...defaultEpisode(-1) });
-    const [creating, setCreating] = useState(!episode);
+	// Initial data
+	const [initial, setInitial] = useState<Episode>(
+		episode || { ...defaultEpisode(-1) },
+	);
+	const [creating, setCreating] = useState(!episode);
 
-    // Constructed episode
-    const episodeRef = useRef<Episode>(episode || { ...defaultEpisode(-1) });
+	// Constructed episode
+	const episodeRef = useRef<Episode>(episode || { ...defaultEpisode(-1) });
 
-    useEffect(() => {
-        if (!episode) {
-            setCreating(true);
-            episodeRef.current = { ...defaultEpisode(-1) };
-            setInitial({ ...defaultEpisode(-1) });
-        }
+	useEffect(() => {
+		if (!episode) {
+			setCreating(true);
+			episodeRef.current = { ...defaultEpisode(-1) };
+			setInitial({ ...defaultEpisode(-1) });
+		} else {
+			setCreating(false);
+			episodeRef.current = episode;
+			setInitial(episode);
+		}
+	}, [episode, isLoading]);
 
-        else {
-            setCreating(false);
-            episodeRef.current = episode;
-            setInitial(episode);
-        }
-    }, [episode, isLoading]);
+	// Slider
+	const ratingSliderProps = useRatingSlider(episodeRef, initial.rating || 0);
 
-    // Slider
-    const ratingSliderProps = useRatingSlider(episodeRef, initial.rating || 0);
+	if (isLoading) {
+		return <LoadingPage />;
+	}
 
-    if (isLoading) {
-        return <LoadingPage />;
-    }
-
-    // Form
-    return (
-        <FormLayout
-            title={creating ? "Add Episode" : "Edit Episode"}
-            ref={episodeRef}
-            submitFunction={creating ? async (episode: Episode) => await SubmitEpisode(episode, true, seasonId)
-                : async (episode: Episode) => await SubmitEpisode(episode, false)}
-            errorModalMessage={"Please fill in all required fields."}
-            successModalMessage={creating ? "Episode added successfully." : "Episode updated successfully."}
-        >
-            <FormSection
-                title={"Episode Information"}
-            >
-                <InputOption
-                    title={"Title *"}
-                    initial={initial.title}
-                    onChange={(value) => episodeRef.current.title = value}
-                />
-                <TextAreaOption
-                    title={"Short Description"}
-                    initial={initial.shortDescription || ""}
-                    onChange={(value) => episodeRef.current.shortDescription = value}
-                />
-                <SliderOption
-                    props={ratingSliderProps}
-                    title={"Rating"}
-                />
-            </FormSection>
-            <FormSection
-                title={"Media"}
-            >
-                <FileBrowseOption
-                    title={"Video File"}
-                    allowed={"video"}
-                    initial={initial.videoUrl || ""}
-                    onChange={(value) => episodeRef.current.videoUrl = value}
-                />
-            </FormSection>
-        </FormLayout>
-    )
+	// Form
+	return (
+		<FormLayout
+			title={creating ? "Add Episode" : "Edit Episode"}
+			ref={episodeRef}
+			submitFunction={
+				creating ?
+					async (episode: Episode) =>
+						await SubmitEpisode(episode, true, seasonId)
+				:	async (episode: Episode) => await SubmitEpisode(episode, false)
+			}
+			errorModalMessage={"Please fill in all required fields."}
+			successModalMessage={
+				creating ?
+					"Episode added successfully."
+				:	"Episode updated successfully."
+			}
+		>
+			<FormSection title={"Episode Information"}>
+				<InputOption
+					title={"Title *"}
+					initial={initial.title}
+					onChange={(value) => (episodeRef.current.title = value)}
+				/>
+				<TextAreaOption
+					title={"Short Description"}
+					initial={initial.shortDescription || ""}
+					onChange={(value) =>
+						(episodeRef.current.shortDescription = value)
+					}
+				/>
+				<SliderOption props={ratingSliderProps} title={"Rating"} />
+			</FormSection>
+			<FormSection title={"Media"}>
+				<FileBrowseOption
+					title={"Video File"}
+					allowed={"video"}
+					initial={initial.videoUrl || ""}
+					onChange={(value) => (episodeRef.current.videoUrl = value)}
+				/>
+			</FormSection>
+		</FormLayout>
+	);
 }

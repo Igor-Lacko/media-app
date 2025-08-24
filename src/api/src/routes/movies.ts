@@ -30,9 +30,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const movie = await GetMovieById(movieId);
-	movie
-		? res.json(movie)
-		: res.status(404).json({ error: "Movie not found" });
+	movie ?
+		res.json(movie)
+	:	res.status(404).json({ error: "Movie not found" });
 });
 
 // Setter for inserting a movie
@@ -57,13 +57,15 @@ router.post("/omdb", async (req, res) => {
 	}
 
 	await InsertMovieFromOMDb(title, imdbId).then((result) => {
-		result.success
-			? res.status(201).json({ message: "Movie created successfully" })
-			: res.status(500).json({
+		result.success ?
+			res.status(201).json({ message: "Movie created successfully" })
+		:	res
+				.status(500)
+				.json({
 					error:
-						result.errorMessage ||
-						"Failed to create movie from OMDb",
-			  });
+						result.errorMessage
+						|| "Failed to create movie from OMDb",
+				});
 	});
 });
 

@@ -8,9 +8,10 @@ import ImagePathToURL from "utils/adapters/image-path-to-url";
  * @param items Items to check for valid thumbnails.
  * @returns An array of booleans indicating whether each item's thumbnail is valid.
  */
-export default function useThumbnail(
-	items: { thumbnailUrl?: string }[],
-): { thumbnails: boolean[], setThumbnails: (thumbnails: boolean[]) => void } {
+export default function useThumbnail(items: { thumbnailUrl?: string }[]): {
+	thumbnails: boolean[];
+	setThumbnails: (thumbnails: boolean[]) => void;
+} {
 	// Otherwise the useEffect would run in a loop since items is a new reference every time
 	const memoizedItems = useMemo(() => items, [items]);
 
@@ -25,9 +26,10 @@ export default function useThumbnail(
 			const newValidThumbnails = await Promise.all(
 				memoizedItems.map(
 					async (item) =>
-						item.thumbnailUrl !== undefined && item.thumbnailUrl !== null &&
-						(await IsValidFile(item.thumbnailUrl) ||
-							(!ImagePathToURL(item.thumbnailUrl).isLocal)),
+						item.thumbnailUrl !== undefined
+						&& item.thumbnailUrl !== null
+						&& ((await IsValidFile(item.thumbnailUrl))
+							|| !ImagePathToURL(item.thumbnailUrl).isLocal),
 				),
 			);
 			setValidThumbnails(newValidThumbnails);

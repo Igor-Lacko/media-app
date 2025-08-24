@@ -38,11 +38,7 @@ export function defaultSeason(
 	seasonNumber: number = -1,
 	showId: number = 0,
 ): Season {
-	return {
-		seasonNumber: seasonNumber,
-		episodes: [],
-		rating: 0,
-	};
+	return { seasonNumber: seasonNumber, episodes: [], rating: 0 };
 }
 
 export function defaultEpisode(

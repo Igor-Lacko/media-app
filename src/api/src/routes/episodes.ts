@@ -17,9 +17,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const episode = await GetEpisodeById(episodeId);
-	episode
-		? res.json(episode)
-		: res.status(404).json({ error: "Episode not found" });
+	episode ?
+		res.json(episode)
+	:	res.status(404).json({ error: "Episode not found" });
 });
 
 // Create a new episode

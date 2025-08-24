@@ -24,11 +24,7 @@ export async function GetTvShows(): Promise<TvShow[]> {
 	try {
 		const tvShows = await prisma.show.findMany({
 			include: {
-				seasons: {
-					include: {
-						episodes: true,
-					},
-				},
+				seasons: { include: { episodes: true } },
 
 				genres: true,
 			},
@@ -48,16 +44,10 @@ export async function GetTvShows(): Promise<TvShow[]> {
 export async function GetTvShowById(id: number): Promise<TvShow | null> {
 	try {
 		const tvShow = await prisma.show.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			include: {
-				seasons: {
-					include: {
-						episodes: true,
-					},
-				},
+				seasons: { include: { episodes: true } },
 
 				genres: true,
 			},
@@ -90,16 +80,15 @@ export async function UpdateTvShow(
 	// Update rest of the show
 	try {
 		await prisma.show.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			data: {
 				...sanitized,
 
 				// Delete seasons not present in the update, or ignore if seasons object not passed
-				seasons: sanitized.seasons
-					? {
+				seasons:
+					sanitized.seasons ?
+						{
 							deleteMany: {
 								id: {
 									notIn: sanitized.seasons
@@ -113,27 +102,28 @@ export async function UpdateTvShow(
 										),
 								},
 							},
-					  }
-					: undefined,
+						}
+					:	undefined,
 
 				// Simpler than updating genres separately
-				genres: sanitized.genres
-					? {
+				genres:
+					sanitized.genres ?
+						{
 							deleteMany: {},
 							create: sanitized.genres.map((genre: Genre) => ({
 								genre: genre,
 							})),
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
 		// Create/update non-deleted seasons
 		if (tvShowData.seasons) {
 			for (const season of tvShowData.seasons) {
-				season.identifier
-					? await UpdateSeason(season.identifier, season)
-					: await CreateSeason(season, id);
+				season.identifier ?
+					await UpdateSeason(season.identifier, season)
+				:	await CreateSeason(season, id);
 			}
 		}
 
@@ -151,26 +141,18 @@ export async function UpdateTvShow(
 export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
 	try {
 		const seasons = await prisma.season.findMany({
-			where: {
-				showId: id,
-			},
+			where: { showId: id },
 
-			orderBy: {
-				seasonNumber: "asc",
-			},
+			orderBy: { seasonNumber: "asc" },
 		});
 
 		for (let i = 0; i < seasons.length; i++) {
 			const season = seasons[i];
 			if (season.seasonNumber !== i + 1) {
 				await prisma.season.update({
-					where: {
-						id: season.id,
-					},
+					where: { id: season.id },
 
-					data: {
-						seasonNumber: i + 1,
-					},
+					data: { seasonNumber: i + 1 },
 				});
 			}
 		}
@@ -205,9 +187,7 @@ export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
 											SanitizeClientEpisodeToDB(
 												episode,
 											) as Episode;
-										return {
-											...sanitizedEpisode,
-										};
+										return { ...sanitizedEpisode };
 									},
 								),
 							},
@@ -266,11 +246,12 @@ export async function InsertTvMazeShow(
 		}
 
 		// Get the url
-		const url = imdbId
-			? `https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`
-			: `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(
+		const url =
+			imdbId ?
+				`https://api.tvmaze.com/lookup/shows?imdb=${imdbId}`
+			:	`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(
 					title!,
-			  )}&embed=episodes`;
+				)}&embed=episodes`;
 
 		// Fetch from api
 		const response = await axios
@@ -288,23 +269,22 @@ export async function InsertTvMazeShow(
 		const genreArray = TvMazeGenresToDB(response.genres);
 
 		// Map episodes ==> seasons (if the data is present)
-		const tvMazeSeasons = response._embedded?.episodes
-			? TvMazeEpisodesToSeasons(response._embedded.episodes)
-			: undefined;
+		const tvMazeSeasons =
+			response._embedded?.episodes ?
+				TvMazeEpisodesToSeasons(response._embedded.episodes)
+			:	undefined;
 
 		// Fetch the setting if the image should be allowed
-		const showExternalImages = await prisma.settings.findFirst({
-			select: {
-				allowExternalImages: true,
-			},
-		})
+		const showExternalImages = await prisma.settings
+			.findFirst({ select: { allowExternalImages: true } })
 			.then((settings) => settings?.allowExternalImages)
 			.catch(() => false);
 
 		// Get a image URL
-		const imageUrl = showExternalImages && response.image ? 
-		response.image.original 
-		: undefined;
+		const imageUrl =
+			showExternalImages && response.image ?
+				response.image.original
+			:	undefined;
 
 		// Insert into the DB
 		await prisma.show.create({
@@ -327,8 +307,9 @@ export async function InsertTvMazeShow(
 				thumbnailUrl: imageUrl,
 
 				// Create seasons by mapping episodes
-				seasons: tvMazeSeasons
-					? {
+				seasons:
+					tvMazeSeasons ?
+						{
 							create: tvMazeSeasons.map((season) => ({
 								seasonNumber: season.seasonNumber,
 
@@ -341,15 +322,18 @@ export async function InsertTvMazeShow(
 										title: episode.name,
 										rating:
 											episode.rating.average || undefined,
-										shortDescription: episode.summary
-											? TvMazeSummaryToDB(episode.summary)
-											: undefined,
+										shortDescription:
+											episode.summary ?
+												TvMazeSummaryToDB(
+													episode.summary,
+												)
+											:	undefined,
 										length: episode.runtime || undefined,
 									})),
 								},
 							})),
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
@@ -358,18 +342,17 @@ export async function InsertTvMazeShow(
 		if (axios.isAxiosError(error)) {
 			return {
 				success: false,
-				errorMessage: error.response
-					? error.response.data.error
-					: error.message,
+				errorMessage:
+					error.response ? error.response.data.error : error.message,
 			};
 		}
 
 		return {
 			success: false,
 			errorMessage:
-				error instanceof Error
-					? error.message
-					: "An unexpected error occurred while inserting TV show from TV Maze API",
+				error instanceof Error ?
+					error.message
+				:	"An unexpected error occurred while inserting TV show from TV Maze API",
 		};
 	}
 }
@@ -382,11 +365,7 @@ export async function InsertTvMazeShow(
 export async function DeleteTvShow(id: number): Promise<boolean> {
 	// Seasons and episodes deleted by cascade
 	try {
-		await prisma.show.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.show.delete({ where: { id: id } });
 
 		return true;
 	} catch (error) {

@@ -3,7 +3,11 @@ import Course from "@shared/interface/models/course";
 import Lecture from "@shared/interface/models/lecture";
 import Note from "@shared/interface/models/note";
 import Notebook from "components/notebook/notebook";
-import UpdateData, { UpdateLength, UpdateNotes, UpdatePlaybackPosition } from "data/crud/update";
+import UpdateData, {
+	UpdateLength,
+	UpdateNotes,
+	UpdatePlaybackPosition,
+} from "data/crud/update";
 import useFetchById from "hooks/use-fetch-by-id";
 import VideoPlayerLayout from "layouts/video-player";
 import LoadingPage from "pages/other/loading-page";
@@ -14,84 +18,95 @@ import { useEffect, useRef, useState } from "react";
  * Lecture video player page.
  */
 export default function LectureVideo() {
-    const { model: lecture, isLoading: lectureLoading } = useFetchById<Lecture>("/api/lectures", "lectureId")!;
-    const { model: course, isLoading: courseLoading } = useFetchById<Course>("/api/courses")!;
+	const { model: lecture, isLoading: lectureLoading } = useFetchById<Lecture>(
+		"/api/lectures",
+		"lectureId",
+	)!;
+	const { model: course, isLoading: courseLoading } =
+		useFetchById<Course>("/api/courses")!;
 
-    // Video ref
-    const videoRef = useRef<HTMLVideoElement>(null);
+	// Video ref
+	const videoRef = useRef<HTMLVideoElement>(null);
 
-    // For the notebook
-    const [notebookVisible, setNotebookVisible] = useState(false);
-    const [notes, setNotes] = useState(lecture?.notes || []);
-    const timestampRef = useRef<number>(0);
+	// For the notebook
+	const [notebookVisible, setNotebookVisible] = useState(false);
+	const [notes, setNotes] = useState(lecture?.notes || []);
+	const timestampRef = useRef<number>(0);
 
-    // Something something functional components app
-    useEffect(() => {
-        setNotes(lecture?.notes || []);
-        timestampRef.current = lecture?.continueAt || 0;
-    }, [lecture]);
+	// Something something functional components app
+	useEffect(() => {
+		setNotes(lecture?.notes || []);
+		timestampRef.current = lecture?.continueAt || 0;
+	}, [lecture]);
 
-    if (lectureLoading || courseLoading) {
-        return <LoadingPage />;
-    }
+	if (lectureLoading || courseLoading) {
+		return <LoadingPage />;
+	} else if (!lecture) {
+		return <NotFoundPage message={"Lecture not found"} />;
+	}
 
-    else if (!lecture) {
-        return <NotFoundPage
-            message={"Lecture not found"}
-        />;
-    }
-
-    return (
-        <div
-            className={"relative overflow-hidden"}
-        >
-            <VideoPlayerLayout
-                ref={videoRef}
-                title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
-                url={lecture.videoUrl || ""}
-                backUrl={`/courses/${course?.identifier}/${lecture.identifier}`}
-                saveContinueAt={async (time: number) => {
-                    await UpdatePlaybackPosition<Lecture>("/api/lectures", lecture, time);
-                }}
-                saveLength={async (length: number) => {
-                    await UpdateLength<Lecture>("/api/lectures", lecture, length);
-                }}
-                onNoteClick={() => {
-                    setNotebookVisible(!notebookVisible);
-                }}
-                onVideoClick={() => {
-                    if (notebookVisible) {
-                        setNotebookVisible(false);
-                    }
-                }}
-                onFinish={async () => await UpdateData<Lecture>("/api/lectures", lecture.identifier!, { watchStatus: WatchStatus.COMPLETED })}
-                initialPlaybackTime={lecture.continueAt || 0}
-                timestampRef={timestampRef}
-            />
-            <Notebook
-                isVisible={notebookVisible}
-                timestamp={timestampRef}
-                notes={notes}
-                onClose={() => setNotebookVisible(false)}
-
-                // Note handlers
-                onUpdateNotes={async (notes: Note[]) => {
-                    if (await UpdateNotes("/api/lectures", lecture, notes)) {
-                        setNotes(notes);
-                    }
-                }}
-                onAddNote={async (note: Note) => {
-                    const newNotes = [...notes, note];
-                    if (await UpdateNotes("/api/lectures", lecture, newNotes)) {
-                        setNotes(newNotes);
-                    }
-                }}
-                onNoteClick={(timestamp: number) => {
-                    if (videoRef.current) {
-                        videoRef.current.currentTime = timestamp;
-                    }
-                }}
-            />
-        </div>
-    );
+	return (
+		<div className={"relative overflow-hidden"}>
+			<VideoPlayerLayout
+				ref={videoRef}
+				title={`Lecture ${lecture.lectureNumber}: ${lecture.title}`}
+				url={lecture.videoUrl || ""}
+				backUrl={`/courses/${course?.identifier}/${lecture.identifier}`}
+				saveContinueAt={async (time: number) => {
+					await UpdatePlaybackPosition<Lecture>(
+						"/api/lectures",
+						lecture,
+						time,
+					);
+				}}
+				saveLength={async (length: number) => {
+					await UpdateLength<Lecture>(
+						"/api/lectures",
+						lecture,
+						length,
+					);
+				}}
+				onNoteClick={() => {
+					setNotebookVisible(!notebookVisible);
+				}}
+				onVideoClick={() => {
+					if (notebookVisible) {
+						setNotebookVisible(false);
+					}
+				}}
+				onFinish={async () =>
+					await UpdateData<Lecture>(
+						"/api/lectures",
+						lecture.identifier!,
+						{ watchStatus: WatchStatus.COMPLETED },
+					)
+				}
+				initialPlaybackTime={lecture.continueAt || 0}
+				timestampRef={timestampRef}
+			/>
+			<Notebook
+				isVisible={notebookVisible}
+				timestamp={timestampRef}
+				notes={notes}
+				onClose={() => setNotebookVisible(false)}
+				// Note handlers
+				onUpdateNotes={async (notes: Note[]) => {
+					if (await UpdateNotes("/api/lectures", lecture, notes)) {
+						setNotes(notes);
+					}
+				}}
+				onAddNote={async (note: Note) => {
+					const newNotes = [...notes, note];
+					if (await UpdateNotes("/api/lectures", lecture, newNotes)) {
+						setNotes(newNotes);
+					}
+				}}
+				onNoteClick={(timestamp: number) => {
+					if (videoRef.current) {
+						videoRef.current.currentTime = timestamp;
+					}
+				}}
+			/>
+		</div>
+	);
 }

@@ -14,11 +14,7 @@ import { WatchStatus } from "generated/prisma/enums";
  */
 export async function GetEpisodeById(id: number): Promise<Episode | null> {
 	try {
-		const episode = await prisma.episode.findUnique({
-			where: {
-				id: id,
-			},
-		});
+		const episode = await prisma.episode.findUnique({ where: { id: id } });
 
 		if (!episode) {
 			return null;
@@ -46,18 +42,12 @@ export async function CreateEpisode(
 			data: {
 				...sanitizedEpisode,
 				episodeNumber:
-					episode.episodeNumber === -1
-						? (await prisma.episode.count({
-								where: {
-									seasonId: seasonId,
-								},
-						  })) + 1
-						: episode.episodeNumber,
-				season: {
-					connect: {
-						id: seasonId,
-					},
-				},
+					episode.episodeNumber === -1 ?
+						(await prisma.episode.count({
+							where: { seasonId: seasonId },
+						})) + 1
+					:	episode.episodeNumber,
+				season: { connect: { id: seasonId } },
 			},
 		});
 
@@ -82,19 +72,19 @@ export async function UpdateEpisode(
 	) as Episode;
 	try {
 		await prisma.episode.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			// Can't use the spread operator here due to seasonNumber not being part of the prisma schema
 			data: {
 				...sanitizedEpisode,
 				watchStatus:
-					sanitizedEpisode.continueAt === sanitizedEpisode.length &&
-					sanitizedEpisode.length &&
-					sanitizedEpisode.length !== 0
-						? WatchStatus.COMPLETED
-						: sanitizedEpisode.watchStatus,
+					(
+						sanitizedEpisode.continueAt === sanitizedEpisode.length
+						&& sanitizedEpisode.length
+						&& sanitizedEpisode.length !== 0
+					) ?
+						WatchStatus.COMPLETED
+					:	sanitizedEpisode.watchStatus,
 			},
 		});
 
@@ -121,22 +111,14 @@ export async function UpdateOrCreateEpisode(
 	) as Episode;
 	try {
 		await prisma.episode.upsert({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			// Can't use the spread operator here due to seasonNumber not being part of the prisma schema
-			update: {
-				...sanitizedEpisode,
-			},
+			update: { ...sanitizedEpisode },
 
 			create: {
 				...sanitizedEpisode,
-				season: {
-					connect: {
-						id: seasonId,
-					},
-				},
+				season: { connect: { id: seasonId } },
 			},
 		});
 
@@ -155,20 +137,12 @@ export async function DeleteEpisode(id: number): Promise<boolean> {
 	try {
 		// Get the season ID first
 		const seasonID = await prisma.episode.findUnique({
-			where: {
-				id: id,
-			},
-			select: {
-				seasonId: true,
-			},
+			where: { id: id },
+			select: { seasonId: true },
 		});
 
 		// Delete the episode
-		await prisma.episode.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.episode.delete({ where: { id: id } });
 
 		// Update other episodes in the season
 		return await UpdateEpisodeNumbers(seasonID?.seasonId || -1);

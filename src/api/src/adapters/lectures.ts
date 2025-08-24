@@ -33,7 +33,10 @@ export function DBLectureToClient(lecture: DBLecture): ClientLecture {
 		videoUrl: lecture.videoUrl || undefined,
 		length: lecture.length || undefined,
 		notes: lecture.notes.map((note) => {
-			return { content: note.content, timestamp: note.timestamp || undefined };
+			return {
+				content: note.content,
+				timestamp: note.timestamp || undefined,
+			};
 		}),
 	};
 }

@@ -35,8 +35,8 @@ function CalculateTvShowProgress(
 	);
 	const completedEpisodes = tvShow.seasons.reduce(
 		(total, season) =>
-			total +
-			season.episodes.filter(
+			total
+			+ season.episodes.filter(
 				(episode) => episode.watchStatus === WatchStatus.COMPLETED,
 			).length,
 		0,
@@ -100,9 +100,9 @@ function TvShowToWatchListItem(
 		url: `/tv-shows/${tvShow.id}`,
 
 		// Calculate progress if requested
-		...(progressInEpisodes !== null && progressInEpisodes !== undefined
-			? CalculateTvShowProgress(tvShow, progressInEpisodes)
-			: {}),
+		...(progressInEpisodes !== null && progressInEpisodes !== undefined ?
+			CalculateTvShowProgress(tvShow, progressInEpisodes)
+		:	{}),
 	};
 }
 
@@ -118,27 +118,23 @@ export default async function GetWatchlistItems(
 	entertainment: WatchListItem[];
 	courses: WatchListItem[];
 } | null> {
-	const watchStatus = currentlyWatched
-		? WatchStatus.WATCHING
-		: WatchStatus.PLAN_TO_WATCH;
+	const watchStatus =
+		currentlyWatched ? WatchStatus.WATCHING : WatchStatus.PLAN_TO_WATCH;
 	try {
 		// Fetch all movies first (if requested)
 		let moviesToWatch: WatchListItem[] = [];
 
 		if (watchStatus === WatchStatus.PLAN_TO_WATCH) {
 			moviesToWatch = await prisma.movie
-				.findMany({
-					where: {
-						watchStatus: WatchStatus.PLAN_TO_WATCH,
-					},
-				})
+				.findMany({ where: { watchStatus: WatchStatus.PLAN_TO_WATCH } })
 				.then((movies) =>
 					movies.map(
 						(movie): WatchListItem => ({
 							// Does not have progress, wouldn't make much sense
 							title: movie.title,
 							shouldHaveThumbnail: true,
-							shortDescription: movie.shortDescription || undefined,
+							shortDescription:
+								movie.shortDescription || undefined,
 							thumbnailUrl: movie.thumbnailUrl || undefined,
 							url: `/movies/${movie.id}`,
 						}),
@@ -148,27 +144,17 @@ export default async function GetWatchlistItems(
 
 		// Fetch progress display setting
 		const inEpisodes = await prisma.settings
-			.findFirst({
-				select: {
-					episodeProgressInEpisodes: true,
-				},
-			})
+			.findFirst({ select: { episodeProgressInEpisodes: true } })
 			.then((settings) => settings?.episodeProgressInEpisodes ?? false);
 
 		// Tv shows
 		const tvShowsToWatch: WatchListItem[] = await prisma.show
 			.findMany({
-				where: {
-					watchStatus: watchStatus,
-				},
+				where: { watchStatus: watchStatus },
 
 				// Need these to calculate progress
 				include: {
-					seasons: {
-						include: {
-							episodes: true,
-						},
-					},
+					seasons: { include: { episodes: true } },
 
 					// To not bother with retyping
 					genres: true,
@@ -179,9 +165,9 @@ export default async function GetWatchlistItems(
 					(show): WatchListItem =>
 						TvShowToWatchListItem(
 							show,
-							watchStatus === WatchStatus.WATCHING
-								? inEpisodes
-								: undefined,
+							watchStatus === WatchStatus.WATCHING ?
+								inEpisodes
+							:	undefined,
 						),
 				),
 			);
@@ -192,18 +178,10 @@ export default async function GetWatchlistItems(
 		if (watchStatus === WatchStatus.PLAN_TO_WATCH) {
 			coursesToWatch = await prisma.course
 				.findMany({
-					where: {
-						toWatch: true,
-					},
+					where: { toWatch: true },
 
 					// For progress
-					include: {
-						lectures: {
-							include: {
-								notes: true,
-							},
-						},
-					},
+					include: { lectures: { include: { notes: true } } },
 				})
 				.then((courses) =>
 					courses.map(

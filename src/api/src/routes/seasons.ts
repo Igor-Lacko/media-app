@@ -18,9 +18,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const season = await GetSeasonById(seasonId);
-	season
-		? res.json(season)
-		: res.status(404).json({ error: "Season not found" });
+	season ?
+		res.json(season)
+	:	res.status(404).json({ error: "Season not found" });
 });
 
 // Create a new season
@@ -65,7 +65,9 @@ router.patch("/:id/mark-completed", async (req, res) => {
 
 	const count = req.body.count;
 	if (await MarkEpisodesAsCompleted(count, seasonId)) {
-		res.status(200).json({ message: `${count} episodes marked as completed.` });
+		res.status(200).json({
+			message: `${count} episodes marked as completed.`,
+		});
 	} else {
 		res.status(500).json({ error: "Failed to mark episodes as completed" });
 	}

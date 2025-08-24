@@ -19,18 +19,15 @@ export default async function CourseSubmitHandler(
 ): Promise<boolean> {
 	// Only mandatory field
 	if (
-		course.title === "" ||
-		lectures.some((lecture) => lecture.title === "")
+		course.title === ""
+		|| lectures.some((lecture) => lecture.title === "")
 	) {
 		return false;
 	}
 
 	// Add lectures from the form
 	course.lectures = lectures.map((lecture, index) => {
-		return {
-			...lecture,
-			lectureNumber: index + 1,
-		};
+		return { ...lecture, lectureNumber: index + 1 };
 	});
 
 	// Submit

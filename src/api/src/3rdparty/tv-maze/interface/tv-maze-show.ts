@@ -20,13 +20,8 @@ export default interface TvMazeShow {
 	summary: string;
 
 	// Append to response
-	_embedded?: {
-		episodes?: TvMazeEpisode[];
-	};
+	_embedded?: { episodes?: TvMazeEpisode[] };
 
 	// Image (if set in settings to allow external images)
-	image?: {
-		medium: string;
-		original: string;
-	}
+	image?: { medium: string; original: string };
 }

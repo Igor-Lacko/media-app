@@ -15,7 +15,11 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 
 	return (
 		<AbstractModal>
-			<h2 className={"text-xl font-semibold text-gray-800 dark:text-gray-200"}>
+			<h2
+				className={
+					"text-xl font-semibold text-gray-800 dark:text-gray-200"
+				}
+			>
 				{props.title}
 			</h2>
 			{/** Toggles */}
@@ -23,9 +27,13 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 				{options.map((o, index) => (
 					<li
 						key={index}
-						className={"flex items-center p-2 w-full justify-between"}
+						className={
+							"flex items-center p-2 w-full justify-between"
+						}
 					>
-						<span className={"text-black dark:text-gray-400"}>{o.title}</span>
+						<span className={"text-black dark:text-gray-400"}>
+							{o.title}
+						</span>
 						<Toggle
 							checked={o.checked}
 							onChange={(isChecked) => {
@@ -38,9 +46,7 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 				))}
 			</ul>
 			{/** Error text */}
-			<div
-				className={"h-6 text-red-600 text-sm text-center mb-2"}
-			>
+			<div className={"h-6 text-red-600 text-sm text-center mb-2"}>
 				{errorMessage !== "" && errorMessage}
 			</div>
 			<div
@@ -49,8 +55,13 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 				<RoundedButton
 					text={"Confirm"}
 					onClick={async () => {
-						if (props.someNeeded && !options.some(o => o.checked)) {
-							setErrorMessage("Please select at least one option to continue.");
+						if (
+							props.someNeeded
+							&& !options.some((o) => o.checked)
+						) {
+							setErrorMessage(
+								"Please select at least one option to continue.",
+							);
 						} else {
 							setErrorMessage("");
 							await props.onConfirm(options);

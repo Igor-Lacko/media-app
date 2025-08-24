@@ -58,8 +58,8 @@ export async function IsValidVideo(path?: string): Promise<boolean> {
 	}
 
 	if (
-		(await IsValidFile(path)) &&
-		(await window.electron.isValidVideo(path))
+		(await IsValidFile(path))
+		&& (await window.electron.isValidVideo(path))
 	) {
 		return true;
 	}

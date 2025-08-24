@@ -29,6 +29,8 @@ export function DBMovieToClient(movie: DBMovie): ClientMovie {
 		rating: movie.rating || undefined,
 		thumbnailUrl: movie.thumbnailUrl || undefined,
 		shortDescription: movie.shortDescription || undefined,
-		genres: movie.genres.map((genre): ClientGenre => genre.genre as ClientGenre),
+		genres: movie.genres.map(
+			(genre): ClientGenre => genre.genre as ClientGenre,
+		),
 	};
 }

@@ -14,13 +14,7 @@ import { WatchStatus } from "generated/prisma/enums";
 export async function GetCourses(): Promise<Course[]> {
 	try {
 		const courses = await prisma.course.findMany({
-			include: {
-				lectures: {
-					include: {
-						notes: true,
-					},
-				},
-			},
+			include: { lectures: { include: { notes: true } } },
 		});
 
 		return courses.map((course): Course => DBCourseToClient(course));
@@ -37,17 +31,9 @@ export async function GetCourses(): Promise<Course[]> {
 export async function GetCourseById(id: number): Promise<Course | null> {
 	try {
 		const course = await prisma.course.findUnique({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
-			include: {
-				lectures: {
-					include: {
-						notes: true,
-					},
-				},
-			},
+			include: { lectures: { include: { notes: true } } },
 		});
 
 		if (!course) {
@@ -110,32 +96,31 @@ export async function UpdateCourse(
 	// Update lectures first (if provided)
 	if (sanitizedCourse.lectures) {
 		for (const lecture of sanitizedCourse.lectures) {
-			lecture.identifier
-				? await UpdateLecture(lecture.identifier, lecture)
-				: await CreateLecture(lecture, id);
+			lecture.identifier ?
+				await UpdateLecture(lecture.identifier, lecture)
+			:	await CreateLecture(lecture, id);
 		}
 	}
 
 	// Update the Course itself
 	try {
 		await prisma.course.update({
-			where: {
-				id: id,
-			},
+			where: { id: id },
 
 			data: {
 				...sanitizedCourse,
 
 				// Delete lectures not present in the update, or ignore if lectures object not passed
-				lectures: sanitizedCourse.lectures
-					? {
+				lectures:
+					sanitizedCourse.lectures ?
+						{
 							deleteMany: {
 								id: {
 									notIn: sanitizedCourse.lectures
 										.filter(
 											(lecture: Lecture) =>
-												lecture.identifier !==
-												undefined,
+												lecture.identifier
+												!== undefined,
 										)
 										.map(
 											(lecture: Lecture) =>
@@ -143,8 +128,8 @@ export async function UpdateCourse(
 										),
 								},
 							},
-					  }
-					: undefined,
+						}
+					:	undefined,
 			},
 		});
 
@@ -167,36 +152,26 @@ export async function MarkLecturesAsCompleted(
 ): Promise<boolean> {
 	try {
 		// Complete the lectures <= count
-		await prisma.lecture.updateMany({
-			where: {
-				courseId: id,
-				lectureNumber: {
-					lte: count,
-				}
-			},
+		await prisma.lecture
+			.updateMany({
+				where: { courseId: id, lectureNumber: { lte: count } },
 
-			data: {
-				watchStatus: WatchStatus.NOT_WATCHED,
-			}
-		}).catch(() => {
-			return false;
-		});
+				data: { watchStatus: WatchStatus.NOT_WATCHED },
+			})
+			.catch(() => {
+				return false;
+			});
 
 		// Others to NOT_WATCHED
-		await prisma.lecture.updateMany({
-			where: {
-				courseId: id,
-				lectureNumber: {
-					gt: count,
-				}
-			},
+		await prisma.lecture
+			.updateMany({
+				where: { courseId: id, lectureNumber: { gt: count } },
 
-			data: {
-				watchStatus: WatchStatus.NOT_WATCHED,
-			}
-		}).catch(() => {
-			return false;
-		});
+				data: { watchStatus: WatchStatus.NOT_WATCHED },
+			})
+			.catch(() => {
+				return false;
+			});
 
 		return true;
 	} catch (error) {
@@ -211,11 +186,7 @@ export async function MarkLecturesAsCompleted(
 export async function DeleteCourse(id: number): Promise<boolean> {
 	// Lectures deleted by cascade
 	try {
-		await prisma.course.delete({
-			where: {
-				id: id,
-			},
-		});
+		await prisma.course.delete({ where: { id: id } });
 
 		return true;
 	} catch (error) {

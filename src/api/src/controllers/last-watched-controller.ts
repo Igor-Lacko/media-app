@@ -13,22 +13,14 @@ export async function GetLastWatchedItems(
 		const lastWatchedMovies: LastWatched[] = await prisma.movie
 			.findMany({
 				where: {
-					lastWatchedAt: {
-						not: null,
-					},
+					lastWatchedAt: { not: null },
 
-					videoUrl: {
-						not: null,
-					}
+					videoUrl: { not: null },
 				},
 
-				orderBy: {
-					lastWatchedAt: "desc",
-				},
+				orderBy: { lastWatchedAt: "desc" },
 
-				include: {
-					genres: true,
-				},
+				include: { genres: true },
 			})
 			.then((movies) => {
 				// Can straight map to LastWatched object
@@ -50,18 +42,12 @@ export async function GetLastWatchedItems(
 		const lastWatchedEpisodes: LastWatched[] = await prisma.episode
 			.findMany({
 				where: {
-					lastWatchedAt: {
-						not: null,
-					},
+					lastWatchedAt: { not: null },
 
-					videoUrl: {
-						not: null,
-					},
+					videoUrl: { not: null },
 				},
 
-				orderBy: {
-					lastWatchedAt: "desc",
-				},
+				orderBy: { lastWatchedAt: "desc" },
 
 				// Select season for url, show and title
 				include: {
@@ -103,23 +89,12 @@ export async function GetLastWatchedItems(
 		const lastWatchedLectures: LastWatched[] = await prisma.lecture
 			.findMany({
 				where: {
-					lastWatchedAt: {
-						not: null,
-					},
+					lastWatchedAt: { not: null },
 
-					videoUrl: {
-						not: null,
-					},
+					videoUrl: { not: null },
 				},
 
-				include: {
-					course: {
-						select: {
-							title: true,
-							id: true,
-						},
-					},
-				},
+				include: { course: { select: { title: true, id: true } } },
 			})
 			.then((lectures) => {
 				return lectures.map((lecture) => {

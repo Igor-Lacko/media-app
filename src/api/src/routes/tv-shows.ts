@@ -29,9 +29,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const tvShow = await GetTvShowById(tvShowId);
-	tvShow
-		? res.json(tvShow)
-		: res.status(404).json({ error: "TV show not found" });
+	tvShow ?
+		res.json(tvShow)
+	:	res.status(404).json({ error: "TV show not found" });
 });
 
 // Setter for inserting a TV show
@@ -58,8 +58,8 @@ router.post("/tv-maze", async (req, res) => {
 		} else {
 			res.status(500).json({
 				error:
-					result.errorMessage ||
-					"Failed to insert TV show from TV Maze",
+					result.errorMessage
+					|| "Failed to insert TV show from TV Maze",
 			});
 		}
 	});

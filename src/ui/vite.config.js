@@ -22,10 +22,6 @@ export default defineConfig({
 			"@shared": path.resolve(__dirname, "../shared"),
 		},
 	},
-	server: {
-		port: 5173,
-	},
-	build: {
-		outDir: "dist",
-	},
+	server: { port: 5173 },
+	build: { outDir: "dist" },
 });

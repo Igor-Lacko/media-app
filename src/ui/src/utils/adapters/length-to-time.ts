@@ -12,13 +12,13 @@ export function LengthToTimeHeader(length: number): string {
 	const minutes = Math.floor((length % 3600) / 60);
 
 	const minutesString =
-		minutes !== 0
-			? `${minutes === 1 ? `${minutes} minute` : `${minutes} minutes`}`
-			: "";
+		minutes !== 0 ?
+			`${minutes === 1 ? `${minutes} minute` : `${minutes} minutes`}`
+		:	"";
 	const hoursString =
-		hours !== 0
-			? `${hours === 1 ? `${hours} hour` : `${hours} hours`}`
-			: "";
+		hours !== 0 ?
+			`${hours === 1 ? `${hours} hour` : `${hours} hours`}`
+		:	"";
 
 	let result = "";
 

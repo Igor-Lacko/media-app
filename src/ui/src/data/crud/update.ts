@@ -250,8 +250,8 @@ export async function UpdateOMDBKey(
 			return {
 				success: false,
 				errorMessage:
-					errorResponse?.error ||
-					"Unknown error when updating api key",
+					errorResponse?.error
+					|| "Unknown error when updating api key",
 			};
 		}
 		return {
@@ -318,5 +318,5 @@ export async function MarkSubmediaAsCompleted(
 	return axios
 		.patch(url, { count })
 		.then((response) => response.status === 200)
-		.catch(() => false)
+		.catch(() => false);
 }

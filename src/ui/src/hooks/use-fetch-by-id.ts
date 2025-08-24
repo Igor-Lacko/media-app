@@ -10,10 +10,7 @@ export default function useFetchById<T>(
 	url: string,
 	param: string = "id",
 	deps: any[] = [],
-): {
-	model?: T | undefined;
-	isLoading: boolean;
-} {
+): { model?: T | undefined; isLoading: boolean } {
 	// Get param id depending on the provided parameter
 	const params = useParams<{
 		id?: string;
@@ -22,25 +19,22 @@ export default function useFetchById<T>(
 		episodeId?: string;
 	}>();
 	const id =
-		param === "id"
-			? params.id
-			: param === "seasonId"
-			? params.seasonId
-			: param === "lectureId"
-			? params.lectureId
-			: param === "episodeId"
-			? params.episodeId
-			: (() => {
-					throw new Error(`Invalid parameter: ${param}`);
-			  })();
+		param === "id" ? params.id
+		: param === "seasonId" ? params.seasonId
+		: param === "lectureId" ? params.lectureId
+		: param === "episodeId" ? params.episodeId
+		: (() => {
+				throw new Error(`Invalid parameter: ${param}`);
+			})();
 
 	// Fetch
-	const data = id
-		? useQuery({
+	const data =
+		id ?
+			useQuery({
 				queryKey: [url, id, ...deps],
 				queryFn: async () => await FetchDataWithId<T>(url, id),
-		  })
-		: undefined;
+			})
+		:	undefined;
 
 	return {
 		model: data?.data || undefined,

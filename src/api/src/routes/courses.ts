@@ -30,9 +30,9 @@ router.get("/:id", async (req, res) => {
 	}
 
 	const course = await GetCourseById(courseId);
-	course
-		? res.json(course)
-		: res.status(404).json({ error: "Course not found" });
+	course ?
+		res.json(course)
+	:	res.status(404).json({ error: "Course not found" });
 });
 
 // Setter for inserting a course
@@ -77,7 +77,9 @@ router.patch("/:id/mark-completed", async (req, res) => {
 
 	const count = req.body.count;
 	if (await MarkLecturesAsCompleted(courseId, count)) {
-		res.status(200).json({ message: `${count} lectures marked as completed.` });
+		res.status(200).json({
+			message: `${count} lectures marked as completed.`,
+		});
 	} else {
 		res.status(500).json({ error: "Failed to mark lectures as completed" });
 	}

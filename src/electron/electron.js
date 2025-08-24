@@ -5,9 +5,10 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const isDev = !app.isPackaged;
-const UI_SERVER_URL = isDev
-	? "http://localhost:5173/"
-	: `file://${join(process.resourcesPath, "ui-dist", "index.html")}`;
+const UI_SERVER_URL =
+	isDev ?
+		"http://localhost:5173/"
+	:	`file://${join(process.resourcesPath, "ui-dist", "index.html")}`;
 
 // This only runs when packaged
 async function startApiServer() {
@@ -36,7 +37,6 @@ function createWindow() {
 			// Local files
 			webSecurity: false,
 		},
-		
 	});
 
 	if (!isDev) {
@@ -48,19 +48,12 @@ function createWindow() {
 // Gets a absolute file path, allows only files ending with "extensions" to be selected
 ipcMain.handle("get-file", async (_event, allowed) => {
 	const extensions =
-		allowed === "video"
-			? ["mp4", "mkv", "avi", "mov"]
-			: allowed === "image"
-				? ["jpg", "jpeg", "png", "gif"]
-				: ["*"];
+		allowed === "video" ? ["mp4", "mkv", "avi", "mov"]
+		: allowed === "image" ? ["jpg", "jpeg", "png", "gif"]
+		: ["*"];
 	const result = await dialog.showOpenDialog({
 		properties: ["openFile"],
-		filters: [
-			{
-				name: "Files",
-				extensions: extensions,
-			},
-		],
+		filters: [{ name: "Files", extensions: extensions }],
 	});
 	return result.filePaths;
 });
@@ -72,24 +65,19 @@ ipcMain.handle("save-file", async (_event, data) => {
 		filters: [{ name: "JSON Files", extensions: ["json"] }],
 	});
 	if (result.canceled || !result.filePath) {
-		return {
-			success: false,
-			errorMessage: "Save operation was canceled"
-		}
+		return { success: false, errorMessage: "Save operation was canceled" };
 	}
 
 	writeFile(result.filePath, data, (err) => {
 		if (err) {
 			return {
 				success: false,
-				errorMessage: `Failed to save file: ${err.message}`
-			}
+				errorMessage: `Failed to save file: ${err.message}`,
+			};
 		}
 	});
 
-	return {
-		success: true,
-	}
+	return { success: true };
 });
 
 // Checks if a file exists
