@@ -192,22 +192,3 @@ export async function UpdateExternalImages(
 		.then(() => true)
 		.catch(() => false);
 }
-
-/**
- * Returns the db with the params provided as JSON.
- * @param options What to include.
- * @returns A DB object with the requested data.
- */
-export async function ExportDatabase(options: DBOptions): Promise<DBData> {
-	try {
-		return {
-			movies: options.movies ? await GetMovies() : undefined,
-			shows: options.shows ? await GetTvShows() : undefined,
-			courses: options.courses ? await GetCourses() : undefined,
-		};
-	} catch (error) {
-		throw new Error(
-			error instanceof Error ? error.message : "Unknown error",
-		);
-	}
-}

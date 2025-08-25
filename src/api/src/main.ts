@@ -12,6 +12,8 @@ import FavoritesRouter from "routes/favorites";
 import LastWatchedRouter from "routes/last-watched";
 import WatchlistRouter from "routes/watchlists";
 import CheckRouter from "routes/check";
+import BackupRouter from "routes/backup";
+
 const app = express();
 
 app.use(cors());
@@ -32,6 +34,7 @@ const addRouters = () => {
 	app.use("/api/last-watched", LastWatchedRouter);
 	app.use("/api/watchlist", WatchlistRouter);
 	app.use("/api/check", CheckRouter);
+	app.use("/api/backup", BackupRouter);
 };
 
 export const startServer = async () => {

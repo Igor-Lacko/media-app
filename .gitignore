@@ -154,3 +154,6 @@ src/api/build/
 
 # Formatting
 .prettier*
+
+# DB tests, etc.
+dev/

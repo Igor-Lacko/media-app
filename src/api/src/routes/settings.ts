@@ -9,7 +9,6 @@ import {
 	UpdateProgressDisplay,
 } from "controllers/settings-controller";
 import { GetSettings } from "controllers/settings-controller";
-import { DBOptions } from "@shared/export-types";
 
 const router = Router();
 
@@ -29,27 +28,6 @@ router.get("/", async (_req, res) => {
 		res.status(200).json(settings);
 	} catch (error) {
 		res.status(500).json({ error: "Failed to fetch settings" });
-	}
-});
-
-// Returns the DB as JSON depending on the given params
-router.post("/export", async (req, res) => {
-	try {
-		console.log("Exporting database with options:", req.body.data);
-		const options: DBOptions = req.body.data;
-		if (!options) {
-			res.status(400).json({ error: "No options provided" });
-			return;
-		}
-		const db = await ExportDatabase(options);
-		res.status(200).json(db);
-	} catch (error) {
-		res.status(500).json({
-			error:
-				error instanceof Error ?
-					error.message
-				:	"Failed to export database",
-		});
 	}
 });
 

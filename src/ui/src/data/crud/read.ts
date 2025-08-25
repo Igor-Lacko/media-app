@@ -2,7 +2,7 @@ import axios from "axios";
 import Settings from "@shared/interface/models/settings";
 import LastWatched from "@shared/interface/last-watched";
 import WatchListItem from "@shared/interface/watchlist-item";
-import { DBOptions } from "@shared/export-types";
+import { DBData, DBOptions } from "@shared/export-types";
 import { SaveFile } from "electron/electron-api";
 import { SuccessOrError } from "@shared/success-types";
 
@@ -115,10 +115,8 @@ export async function ExportDb(options: DBOptions): Promise<SuccessOrError> {
 	try {
 		// Fetch the data first
 		const response = await axios
-			.post("/api/settings/export", { data: options })
+			.get<DBData>("/api/backup/export", { params: options })
 			.then((res) => res.data);
-
-		console.log("Received data for export:", response);
 
 		// And invoke electron
 		return await SaveFile(response);
