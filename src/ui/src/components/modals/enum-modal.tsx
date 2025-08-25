@@ -12,16 +12,9 @@ export default function EnumModal<T>(props: EnumModalProps<T>) {
 	const [selected, setSelected] = useState(props.initialSelection.value);
 
 	return (
-		<AbstractModal>
-			<h2
-				className={
-					"text-xl font-semibold text-gray-800 dark:text-gray-200"
-				}
-			>
-				{props.title}
-			</h2>
-			{props.selectOptions
-				&& props.selectOptions.map((option) => (
+		<AbstractModal title={props.title}>
+			{props.selectOptions &&
+				props.selectOptions.map((option) => (
 					<button
 						key={option.key}
 						className={

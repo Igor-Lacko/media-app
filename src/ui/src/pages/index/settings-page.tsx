@@ -16,6 +16,7 @@ import {
 import { OpenExternal } from "electron/electron-api";
 import CheckMarkModal from "components/modals/checkmark-modal";
 import { ExportDb } from "data/crud/read";
+import LoadDBModal from "components/modals/db-load-modal";
 
 export default function SettingsPage() {
 	// I should really refactor this...
@@ -283,8 +284,8 @@ export default function SettingsPage() {
 										});
 									} else {
 										setKeySubmissionStatusMessage(
-											"Failed to update API key: "
-												+ response.errorMessage,
+											"Failed to update API key: " +
+												response.errorMessage,
 										);
 									}
 								} else {
@@ -355,8 +356,8 @@ export default function SettingsPage() {
 							);
 						} else {
 							setDeletionStatusMessage(
-								"Failed to delete API key: "
-									+ response.errorMessage,
+								"Failed to delete API key: " +
+									response.errorMessage,
 							);
 						}
 					}}
@@ -416,6 +417,17 @@ export default function SettingsPage() {
 					}}
 				/>
 			)}
+			{/** Load DB popup */}
+			{loadDBModalVisible && (
+				<LoadDBModal
+					title={"Load Database"}
+					onClose={() => setLoadDBModalVisible(false)}
+					onConfirm={async (filePath, overwrite) => {
+						console.log("todo todo");
+						return { success: true };
+					}}
+				/>
+			)}
 			{/** Deletion status message */}
 			{deletionStatusMessage !== "" && (
 				<InfoModal
@@ -438,6 +450,14 @@ export default function SettingsPage() {
 					title={"DB export"}
 					message={exportStatusMessage}
 					onClose={() => setExportStatusMessage("")}
+				/>
+			)}
+			{/** And load... */}
+			{loadStatusMessage !== "" && (
+				<InfoModal
+					title={"DB load"}
+					message={loadStatusMessage}
+					onClose={() => setLoadStatusMessage("")}
 				/>
 			)}
 		</div>

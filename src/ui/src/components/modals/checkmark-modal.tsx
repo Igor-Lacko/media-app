@@ -14,14 +14,7 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 	const [errorMessage, setErrorMessage] = useState("");
 
 	return (
-		<AbstractModal>
-			<h2
-				className={
-					"text-xl font-semibold text-gray-800 dark:text-gray-200"
-				}
-			>
-				{props.title}
-			</h2>
+		<AbstractModal title={props.title}>
 			{/** Toggles */}
 			<ul className={"flex flex-col"}>
 				{options.map((o, index) => (
@@ -56,8 +49,8 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 					text={"Confirm"}
 					onClick={async () => {
 						if (
-							props.someNeeded
-							&& !options.some((o) => o.checked)
+							props.someNeeded &&
+							!options.some((o) => o.checked)
 						) {
 							setErrorMessage(
 								"Please select at least one option to continue.",

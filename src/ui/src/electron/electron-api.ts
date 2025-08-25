@@ -89,5 +89,5 @@ export async function SaveFile(data: DBData): Promise<SuccessOrError> {
 		return { success: false, errorMessage: "Electron API not available" };
 	}
 
-	return await window.electron.saveFile(JSON.stringify(data));
+	return await window.electron.saveFile(JSON.stringify(data, null, 2));
 }

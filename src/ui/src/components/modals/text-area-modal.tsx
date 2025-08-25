@@ -11,14 +11,7 @@ export default function TextAreaModal(props: TextAreaModalProps) {
 	const description = useRef(props.initialText || "");
 
 	return (
-		<AbstractModal>
-			<h2
-				className={
-					"text-xl font-semibold text-gray-800 dark:text-gray-200"
-				}
-			>
-				{props.title}
-			</h2>
+		<AbstractModal title={props.title}>
 			<textarea
 				className={
 					"w-full h-40 p-2 border rounded-lg dark:bg-gray-700 dark:text-gray-200 text-black\

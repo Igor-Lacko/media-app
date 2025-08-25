@@ -20,17 +20,17 @@ import { SuccessOrError } from "@shared/success-types";
  * @returns A DB object with the requested data.
  */
 export async function ExportDatabase(options: DBOptions): Promise<DBData> {
-    try {
-        return {
-            movies: options.movies ? await GetMovies() : undefined,
-            shows: options.shows ? await GetTvShows() : undefined,
-            courses: options.courses ? await GetCourses() : undefined,
-        };
-    } catch (error) {
-        throw new Error(
-            error instanceof Error ? error.message : "Unknown error",
-        );
-    }
+	try {
+		return {
+			movies: options.movies ? await GetMovies() : undefined,
+			shows: options.shows ? await GetTvShows() : undefined,
+			courses: options.courses ? await GetCourses() : undefined,
+		};
+	} catch (error) {
+		throw new Error(
+			error instanceof Error ? error.message : "Unknown error",
+		);
+	}
 }
 
 /**
@@ -38,24 +38,27 @@ export async function ExportDatabase(options: DBOptions): Promise<DBData> {
  * @param shows Array of TV shows to load.
  * @param client Prisma Client instance.
  */
-async function InsertBulkShows(shows: TvShow[], client: PrismaClient): Promise<void> {
-    for (const show of shows) {
-        await client.show.create({
-            data: {
-                ...SanitizeTvShowForDB(show),
-                seasons: {
-                    create: show.seasons.map((season) => ({
-                        ...SanitizeClientSeasonToDB(season),
-                        episodes: {
-                            create: season.episodes.map((episode) => ({
-                                ...SanitizeClientEpisodeToDB(episode),
-                            }))
-                        }
-                    }))
-                }
-            }
-        })
-    }
+async function InsertBulkShows(
+	shows: TvShow[],
+	client: PrismaClient,
+): Promise<void> {
+	for (const show of shows) {
+		await client.show.create({
+			data: {
+				...SanitizeTvShowForDB(show),
+				seasons: {
+					create: show.seasons.map((season) => ({
+						...SanitizeClientSeasonToDB(season),
+						episodes: {
+							create: season.episodes.map((episode) => ({
+								...SanitizeClientEpisodeToDB(episode),
+							})),
+						},
+					})),
+				},
+			},
+		});
+	}
 }
 
 /**
@@ -63,24 +66,27 @@ async function InsertBulkShows(shows: TvShow[], client: PrismaClient): Promise<v
  * @param courses Array of courses to insert.
  * @param client Prisma Client instance.
  */
-async function InsertBulkCourses(courses: Course[], client: PrismaClient): Promise<void> {
-    for (const course of courses) {
-        await client.course.create({
-            data: {
-                ...SanitizeClientCourseToDB(course),
-                lectures: {
-                    create: course.lectures.map((lecture) => ({
-                        ...SanitizeClientLectureToDB(lecture),
-                        notes: {
-                            create: lecture.notes.map((note) => ({
-                                content: note.content
-                            }))
-                        }
-                    }))
-                }
-            }
-        })
-    }
+async function InsertBulkCourses(
+	courses: Course[],
+	client: PrismaClient,
+): Promise<void> {
+	for (const course of courses) {
+		await client.course.create({
+			data: {
+				...SanitizeClientCourseToDB(course),
+				lectures: {
+					create: course.lectures.map((lecture) => ({
+						...SanitizeClientLectureToDB(lecture),
+						notes: {
+							create: lecture.notes.map((note) => ({
+								content: note.content,
+							})),
+						},
+					})),
+				},
+			},
+		});
+	}
 }
 
 /**
@@ -88,33 +94,40 @@ async function InsertBulkCourses(courses: Course[], client: PrismaClient): Promi
  * @param data A object with movies/shows/courses.
  * @param rewrite If this is true, removes existing data before loading.
  */
-export async function LoadDatabase(data: DBData, rewrite: boolean): Promise<SuccessOrError> {
-    try {
-        // Remove existing data if passed the option to do so
-        if (rewrite) {
-            await prisma.$transaction([
-                prisma.movie.deleteMany(),
-                prisma.show.deleteMany(),
-                prisma.course.deleteMany(),
-            ]);
-        }
+export async function LoadDatabase(
+	data: DBData,
+	rewrite: boolean,
+): Promise<SuccessOrError> {
+	try {
+		// Remove existing data if passed the option to do so
+		if (rewrite) {
+			await prisma.$transaction([
+				prisma.movie.deleteMany(),
+				prisma.show.deleteMany(),
+				prisma.course.deleteMany(),
+			]);
+		}
 
-        // Create new data
-        const sanitizedMovies = data.movies ? data.movies.map((movie) => SanitizeClientMovieToDB(movie)) : [];
-        await prisma.$transaction(async (tx) => {
-            await tx.movie.createMany({ data: sanitizedMovies });
-            if (data.shows) {
-                await InsertBulkShows(data.shows, tx);
-            }
-            if (data.courses) {
-                await InsertBulkCourses(data.courses, tx);
-            }
-        });
-        return { success: true };
-    } catch (error) {
-        return {
-            success: false,
-            errorMessage: error instanceof Error ? error.message : "Unknown error",
-        };
-    }
+		// Create new data
+		const sanitizedMovies =
+			data.movies ?
+				data.movies.map((movie) => SanitizeClientMovieToDB(movie))
+			:	[];
+		await prisma.$transaction(async (tx) => {
+			await tx.movie.createMany({ data: sanitizedMovies });
+			if (data.shows) {
+				await InsertBulkShows(data.shows, tx);
+			}
+			if (data.courses) {
+				await InsertBulkCourses(data.courses, tx);
+			}
+		});
+		return { success: true };
+	} catch (error) {
+		return {
+			success: false,
+			errorMessage:
+				error instanceof Error ? error.message : "Unknown error",
+		};
+	}
 }

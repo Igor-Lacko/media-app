@@ -3,8 +3,10 @@
  * @param children Children to be rendered inside the modal.
  */
 export default function AbstractModal({
+	title,
 	children,
 }: {
+	title: string;
 	children: React.ReactNode;
 }) {
 	return (
@@ -19,6 +21,13 @@ export default function AbstractModal({
                         py-3 px-10 space-y-4 max-w-md w-full border border-gray-300 dark:border-gray-700"
 				}
 			>
+				<h2
+					className={
+						"text-xl font-semibold text-gray-800 dark:text-gray-200"
+					}
+				>
+					{title}
+				</h2>
 				{children}
 			</div>
 		</div>

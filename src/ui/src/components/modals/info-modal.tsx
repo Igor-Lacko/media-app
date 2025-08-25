@@ -9,14 +9,7 @@ import AbstractModal from "./abstract-modal";
  */
 export default function InfoModal(props: InfoModalProps) {
 	return (
-		<AbstractModal>
-			<h2
-				className={
-					"text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4"
-				}
-			>
-				{props.title}
-			</h2>
+		<AbstractModal title={props.title}>
 			<p className={"text-gray-600 dark:text-gray-400 mb-4"}>
 				{props.message}
 			</p>

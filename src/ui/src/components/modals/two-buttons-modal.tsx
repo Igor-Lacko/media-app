@@ -8,16 +8,7 @@ import AbstractModal from "./abstract-modal";
  */
 export default function TwoButtonsModal(props: TwoButtonsModalProps) {
 	return (
-		<AbstractModal>
-			<div className={"flex items-center justify-center"}>
-				<h2
-					className={
-						"text-xl font-semibold text-gray-800 dark:text-gray-200"
-					}
-				>
-					{props.title}
-				</h2>
-			</div>
+		<AbstractModal title={props.title}>
 			<div
 				className={
 					"flex items-center justify-center space-x-20 mt-4 mb-8"
