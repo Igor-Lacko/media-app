@@ -49,20 +49,20 @@ export default function MarkdownModal(props: MarkdownEditorModalProps) {
 				/>
 				<div
 					className={
-						"flex items-center mt-3 justify-between p-3 w-full h-auto self-end"
+						"flex items-center mt-3 justify-center p-3 w-full h-auto self-end space-x-4"
 					}
 				>
 					<RoundedButton
 						text={"Close"}
 						extraClassNames={
-							"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+							"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 w-1/2"
 						}
 						onClick={props.onClose}
 					/>
 					<RoundedButton
 						text={"Save"}
 						extraClassNames={
-							"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"
+							"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800 w-1/2"
 						}
 						onClick={async () => {
 							if (props.onSetText) {

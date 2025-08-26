@@ -64,7 +64,7 @@ export default function LoadDBModal(props: LoadDBModalProps) {
 			{/** Close/confirm buttons */}
 			<div
 				className={
-					"flex items-center w-full justify-between px-4 mb-2 mt-5"
+					"flex items-center w-full justify-between px-4 mb-2 mt-5 space-x-4"
 				}
 			>
 				<RoundedButton
@@ -89,7 +89,7 @@ export default function LoadDBModal(props: LoadDBModalProps) {
 					text={"Close"}
 					onClick={props.onClose}
 					extraClassNames={
-						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 w-1/2"
 					}
 				/>
 			</div>

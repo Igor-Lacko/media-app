@@ -39,6 +39,13 @@ function createWindow() {
 		},
 	});
 
+	mainWindow.webContents.on("before-input-event", (event, input) => {
+		if (input.type === "keyDown" && input.key === "F11") {
+			mainWindow.setFullScreen(!mainWindow.isFullScreen());
+			event.preventDefault();
+		}
+	});
+
 	if (!isDev) {
 		mainWindow.removeMenu();
 	}

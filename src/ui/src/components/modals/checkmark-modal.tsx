@@ -43,7 +43,7 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 				{errorMessage !== "" && errorMessage}
 			</div>
 			<div
-				className={"flex items-center w-full justify-between px-4 mb-2"}
+				className={"flex items-center w-full justify-between px-4 mb-2 space-x-4"}
 			>
 				<RoundedButton
 					text={"Confirm"}
@@ -67,7 +67,7 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 					text={"Close"}
 					onClick={props.onClose}
 					extraClassNames={
-						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 w-1/2"
 					}
 				/>
 			</div>

@@ -19,14 +19,14 @@ export default function ConfirmModal(props: ConfirmModalProps) {
 				<RoundedButton
 					text={"Confirm"}
 					extraClassNames={
-						"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"
+						"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800 w-1/2"
 					}
 					onClick={props.onConfirm}
 				/>
 				<RoundedButton
 					text={"Close"}
 					extraClassNames={
-						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 w-1/2"
 					}
 					onClick={props.onClose}
 				/>
