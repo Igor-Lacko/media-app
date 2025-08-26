@@ -18,7 +18,7 @@ export default function DetailImage({
 				alt="Detail"
 				onError={() => setThumbnailLoaded(false)}
 				className={
-					"size-110 ml-10 border-2 border-black dark:border-gray-700 rounded-lg\
+					"h-128 w-100 ml-10 border-2 border-black dark:border-gray-700 rounded-lg\
                 overflow-hidden shadow-lg object-fill " + (classNames || "")
 				}
 			/>
@@ -28,7 +28,7 @@ export default function DetailImage({
 					"The thumbnail for this item does not exist or is not a valid file."
 				}
 				extraClassNames={
-					"rounded-lg size-110 shadow-md ml-10 border-2 border-black dark:border-gray-700"
+					"rounded-lg h-128 w-100 shadow-md ml-10 border-2 border-black dark:border-gray-700"
 				}
 			/>;
 }

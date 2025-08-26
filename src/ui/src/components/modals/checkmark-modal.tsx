@@ -64,9 +64,11 @@ export default function CheckmarkModal(props: CheckMarkModalProps) {
 					extraClassNames={"bg-purple-600 hover:bg-purple-700 w-1/2"}
 				/>
 				<RoundedButton
-					text={"Cancel"}
+					text={"Close"}
 					onClick={props.onClose}
-					extraClassNames={"bg-gray-600 hover:bg-gray-700 w-1/2 ml-4"}
+					extraClassNames={
+						"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+					}
 				/>
 			</div>
 		</AbstractModal>

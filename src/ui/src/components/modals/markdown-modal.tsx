@@ -55,14 +55,14 @@ export default function MarkdownModal(props: MarkdownEditorModalProps) {
 					<RoundedButton
 						text={"Close"}
 						extraClassNames={
-							"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"
+							"bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
 						}
 						onClick={props.onClose}
 					/>
 					<RoundedButton
 						text={"Save"}
 						extraClassNames={
-							"bg-blue-500 text-white hover:bg-blue-600 dark:hover:bg-blue-700 dark:bg-blue-600"
+							"bg-purple-700 dark:bg-purple-800 hover:bg-purple-800"
 						}
 						onClick={async () => {
 							if (props.onSetText) {

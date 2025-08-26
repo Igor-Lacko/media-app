@@ -1,8 +1,9 @@
-import { createRoot } from 'react-dom/client';
-import { ReactNode } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import '@fontsource/roboto';
+import { createRoot } from "react-dom/client";
+import { ReactNode } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@fontsource/roboto";
+import "@fontsource/lobster";
 
 import "./index.css";
 import "data/axios-config";
@@ -32,7 +33,6 @@ import LoadingPage from "pages/other/loading-page";
 import TvMazeShowForm from "pages/forms/from-api/tv-shows";
 import OMDbMovieForm from "pages/forms/from-api/movies";
 
-// React-query
 const queryClient = new QueryClient();
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
@@ -41,23 +41,65 @@ const rootContainer: ReactNode = (
 	<QueryClientProvider client={queryClient}>
 		<HashRouter>
 			<Routes>
-				<Route path="/" element={<MainPage />}>
-					<Route index element={<HomePage />} />
+				<Route
+					path="/"
+					element={<MainPage />}
+				>
+					<Route
+						index
+						element={<HomePage />}
+					/>
 					<Route path="movies/*">
-						<Route index element={<MoviePage />} />
-						<Route path="add" element={<AddMoviePage />} />
-						<Route path="from-api" element={<OMDbMovieForm />} />
-						<Route path=":id" element={<MovieDetail />} />
-						<Route path=":id/edit" element={<AddMoviePage />} />
-						<Route path=":id/play" element={<MovieVideo />} />
+						<Route
+							index
+							element={<MoviePage />}
+						/>
+						<Route
+							path="add"
+							element={<AddMoviePage />}
+						/>
+						<Route
+							path="from-api"
+							element={<OMDbMovieForm />}
+						/>
+						<Route
+							path=":id"
+							element={<MovieDetail />}
+						/>
+						<Route
+							path=":id/edit"
+							element={<AddMoviePage />}
+						/>
+						<Route
+							path=":id/play"
+							element={<MovieVideo />}
+						/>
 					</Route>
 					<Route path="tv-shows/*">
-						<Route index element={<TvShowPage />} />
-						<Route path="add" element={<AddTvShowPage />} />
-						<Route path="from-api" element={<TvMazeShowForm />} />
-						<Route path=":id" element={<TvShowDetail />} />
-						<Route path=":id/edit" element={<AddTvShowPage />} />
-						<Route path=":id/add" element={<AddSeasonPage />} />
+						<Route
+							index
+							element={<TvShowPage />}
+						/>
+						<Route
+							path="add"
+							element={<AddTvShowPage />}
+						/>
+						<Route
+							path="from-api"
+							element={<TvMazeShowForm />}
+						/>
+						<Route
+							path=":id"
+							element={<TvShowDetail />}
+						/>
+						<Route
+							path=":id/edit"
+							element={<AddTvShowPage />}
+						/>
+						<Route
+							path=":id/add"
+							element={<AddSeasonPage />}
+						/>
 						<Route
 							path=":id/:seasonId"
 							element={<SeasonDetail />}
@@ -84,11 +126,26 @@ const rootContainer: ReactNode = (
 						/>
 					</Route>
 					<Route path="courses/*">
-						<Route index element={<CoursePage />} />
-						<Route path="add" element={<AddCoursePage />} />
-						<Route path=":id" element={<CourseDetail />} />
-						<Route path=":id/edit" element={<AddCoursePage />} />
-						<Route path=":id/add" element={<AddLecturePage />} />
+						<Route
+							index
+							element={<CoursePage />}
+						/>
+						<Route
+							path="add"
+							element={<AddCoursePage />}
+						/>
+						<Route
+							path=":id"
+							element={<CourseDetail />}
+						/>
+						<Route
+							path=":id/edit"
+							element={<AddCoursePage />}
+						/>
+						<Route
+							path=":id/add"
+							element={<AddLecturePage />}
+						/>
 						<Route
 							path=":id/:lectureId"
 							element={<LectureDetail />}
@@ -102,7 +159,10 @@ const rootContainer: ReactNode = (
 							element={<LectureVideo />}
 						/>
 					</Route>
-					<Route path="settings/*" element={<SettingsPage />} />
+					<Route
+						path="settings/*"
+						element={<SettingsPage />}
+					/>
 				</Route>
 			</Routes>
 		</HashRouter>

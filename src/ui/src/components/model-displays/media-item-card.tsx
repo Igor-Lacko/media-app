@@ -36,7 +36,7 @@ export default function MediaItemCard(props: CardProps) {
 			className={
 				"flex flex-col flex-shrink items-center justify-start bg-white dark:bg-gray-800\
                 rounded-t-lg shadow-md hover:shadow-2xl transition-shadow duration-200 ease-in-out \
-                border-2 border-black dark:border-gray-700 size-80 overflow-hidden"
+                border-2 border-black dark:border-gray-700 h-80 w-70 overflow-hidden"
 			}
 		>
 			{/** Thumbnail */}
@@ -50,7 +50,7 @@ export default function MediaItemCard(props: CardProps) {
 						src={ImagePathToURL(props.model.thumbnailUrl).path}
 						alt={props.model.title}
 						className={
-							"w-full h-full object-fill border-gray-400 dark:border-gray-700"
+							"w-full h-full object-fit border-gray-400 dark:border-gray-700"
 						}
 						onError={() => setThumbnailLoaded(false)}
 					/>
