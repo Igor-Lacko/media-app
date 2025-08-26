@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { DBOptions, DBData } from "@shared/export-types";
+import { DBOptions } from "@shared/export-types";
 import { ExportDatabase, LoadDatabase } from "controllers/backup-controller";
 
 const router = Router();
@@ -34,23 +34,23 @@ router.get("/export", async (req, res) => {
 // Loads the DB from JSON, either appending or rewriting the current DB
 router.post("/load", async (req, res) => {
 	try {
-		const data: DBData = req.body.data;
-		const rewrite = req.query.rewrite;
-		if (rewrite === undefined || rewrite === null) {
+		const contents: string = req.body.contents;
+		const overwrite = req.query.overwrite;
+		if (overwrite === undefined || overwrite === null) {
 			res.status(400).json({
-				error: "Please provide a rewrite/append option.",
+				error: "Please provide a overwrite/append option.",
 			});
 			return;
 		}
 
-		if (!data) {
+		if (!contents) {
 			res.status(400).json({ error: "No data provided" });
 			return;
 		}
 
-		const result = await LoadDatabase(data, rewrite === "true");
+		const result = await LoadDatabase(contents, overwrite === "true");
 		if (result.success) {
-			res.status(200);
+			res.status(200).json({ message: "Database loaded successfully" });
 		} else {
 			res.status(500).json({ error: result.errorMessage });
 		}

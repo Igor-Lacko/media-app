@@ -6,6 +6,7 @@ import { DBCourseToClient, SanitizeClientCourseToDB } from "adapters/courses";
 import { SanitizeClientLectureToDB } from "adapters/lectures";
 import Note from "@shared/interface/models/note";
 import { WatchStatus } from "generated/prisma/enums";
+import { PrismaClient } from "@prisma/client";
 
 /**
  * Gets all courses matching the given parameters.
@@ -52,10 +53,10 @@ export async function GetCourseById(id: number): Promise<Course | null> {
  * @param Course course to insert.
  * @returns course object if successful, null otherwise.
  */
-export async function InsertCourse(course: Course): Promise<boolean> {
+export async function InsertCourse(course: Course, client?: PrismaClient): Promise<boolean> {
 	const sanitizedCourse = SanitizeClientCourseToDB(course);
 	try {
-		await prisma.course.create({
+		await (client || prisma).course.create({
 			data: {
 				...sanitizedCourse,
 				lectures: {

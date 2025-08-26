@@ -8,6 +8,7 @@ declare global {
 	interface Window {
 		electron?: {
 			getFilePath: (allowed: string) => Promise<string | null>;
+			getFileContents: (filePath: string) => Promise<string | null>;
 			isValidFile: (filePath: string) => Promise<boolean>;
 			isValidVideo: (filePath: string) => Promise<boolean>;
 			openExternal: (url: string) => Promise<void>;
@@ -90,4 +91,17 @@ export async function SaveFile(data: DBData): Promise<SuccessOrError> {
 	}
 
 	return await window.electron.saveFile(JSON.stringify(data, null, 2));
+}
+
+/**
+ * Gets the contents of a file.
+ * @param filePath Path to the file.
+ * @returns File contents as a string or null if the file could not be read/electron API is not avaliable.
+ */
+export async function GetFileContents(filePath: string): Promise<string | null> {
+	if (!window.electron || !window.electron.getFileContents) {
+		return null;
+	}
+
+	return await window.electron.getFileContents(filePath);
 }

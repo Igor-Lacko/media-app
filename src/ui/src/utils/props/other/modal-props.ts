@@ -85,5 +85,5 @@ export type CheckMarkModalProps = ModalProps & {
  * Specific modal type with a file browse button and two enum options (append to/overwrite DB).
  */
 export type LoadDBModalProps = ModalProps & {
-	onConfirm: (filePath: string, overwrite: boolean) => Promise<SuccessOrError>;
+	onConfirm: (filePath: string, overwrite: boolean) => Promise<void>;
 };

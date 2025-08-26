@@ -22,4 +22,8 @@ contextBridge.exposeInMainWorld("electron", {
 	saveFile: async (data) => {
 		return await ipcRenderer.invoke("save-file", data);
 	},
+
+	getFileContents: async (filePath) => {
+		return await ipcRenderer.invoke("get-file-contents", filePath);
+	}
 });

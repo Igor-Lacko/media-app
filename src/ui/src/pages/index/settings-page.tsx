@@ -13,10 +13,11 @@ import {
 	ToggleTvShowProgressDisplay,
 	UpdateOMDBKey,
 } from "data/crud/update";
-import { OpenExternal } from "electron/electron-api";
+import { GetFileContents, OpenExternal } from "electron/electron-api";
 import CheckMarkModal from "components/modals/checkmark-modal";
 import { ExportDb } from "data/crud/read";
 import LoadDBModal from "components/modals/db-load-modal";
+import { LoadDB } from "data/crud/create";
 
 export default function SettingsPage() {
 	// I should really refactor this...
@@ -423,8 +424,21 @@ export default function SettingsPage() {
 					title={"Load Database"}
 					onClose={() => setLoadDBModalVisible(false)}
 					onConfirm={async (filePath, overwrite) => {
-						console.log("todo todo");
-						return { success: true };
+						const contents = await GetFileContents(filePath);
+						if (contents === null) {
+							setLoadStatusMessage(`Failed to load contents of file: ${filePath}`);
+							return;
+						} else if (contents === "") {
+							setLoadStatusMessage(`File is empty: ${filePath}`);
+							return;
+						} else {
+							const result = await LoadDB(contents, overwrite);
+							if (result.success) {
+								setLoadStatusMessage("Database loaded successfully.");
+							} else {
+								setLoadStatusMessage("Failed to load database: " + result.errorMessage);
+							}
+						}
 					}}
 				/>
 			)}

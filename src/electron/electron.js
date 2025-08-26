@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
-import { existsSync, writeFile } from "fs";
+import { existsSync, writeFile, promises } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -94,6 +94,14 @@ ipcMain.handle("is-valid-video", async (_event, filePath) => {
 // Opens a external browser
 ipcMain.handle("open-external", async (_event, url) => {
 	shell.openExternal(url);
+});
+
+// Returns contents of a file
+ipcMain.handle("get-file-contents", async (_event, filePath) => {
+	if (!existsSync(filePath)) {
+		return null;
+	}
+	return await promises.readFile(filePath, "utf-8");
 });
 
 app.whenReady().then(async () => {

@@ -1,3 +1,4 @@
+import { SuccessOrError } from "@shared/success-types";
 import axios from "axios";
 
 /**
@@ -98,8 +99,8 @@ export async function CreateTvShowFromTvMaze(
 			return {
 				success: false,
 				errorMessage:
-					response.data.error
-					|| "Failed to create TV show from TV Maze",
+					response.data.error ||
+					"Failed to create TV show from TV Maze",
 			};
 		})
 		.catch((error) => {
@@ -108,8 +109,8 @@ export async function CreateTvShowFromTvMaze(
 				return {
 					success: false,
 					errorMessage:
-						errorResponse?.error
-						|| "Failed to create TV show from TV Maze",
+						errorResponse?.error ||
+						"Failed to create TV show from TV Maze",
 				};
 			}
 
@@ -120,5 +121,47 @@ export async function CreateTvShowFromTvMaze(
 						error.message
 					:	"An unknown error has ocurred when trying to create a show.",
 			};
+		});
+}
+
+/**
+ * Calls the API endpoint which loads the DB from JSON to append or overwrite data in the DB.
+ * @param contents File contents as a string.
+ */
+export async function LoadDB(
+	contents: string,
+	overwrite: boolean,
+): Promise<SuccessOrError> {
+	return await axios
+		.post("api/backup/load", { contents }, { params: { overwrite } })
+		.then((res) => {
+			if (res.status === 200) {
+				return { success: true };
+			} else {
+				return {
+					success: false,
+					errorMessage:
+						res.data.error ||
+						"An unknown error occurred while loading the database",
+				};
+			}
+		})
+		.catch((err) => {
+			if (axios.isAxiosError(err)) {
+				return {
+					success: false,
+					errorMessage:
+						err.response?.data.error ||
+						"An unknown error occurred while loading the database",
+				};
+			} else {
+				return {
+					success: false,
+					errorMessage:
+						err instanceof Error ?
+							err.message
+						:	"An unknown error occurred while loading the database",
+				};
+			}
 		});
 }

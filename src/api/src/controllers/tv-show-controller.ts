@@ -15,6 +15,7 @@ import {
 	TvMazeSummaryToDB,
 } from "3rdparty/tv-maze/to-db";
 import TvMazeEpisode from "3rdparty/tv-maze/interface/tv-maze-episode";
+import { PrismaClient } from "@prisma/client";
 
 /**
  * Gets all TV shows matching the given parameters.
@@ -168,10 +169,10 @@ export async function UpdateSeasonNumbers(id: number): Promise<boolean> {
  * @param tvShow TvShow to insert.
  * @returns TvShow object if successful, null otherwise.
  */
-export async function InsertTvShow(tvShow: TvShow): Promise<boolean> {
+export async function InsertTvShow(tvShow: TvShow, client?: PrismaClient): Promise<boolean> {
 	const sanitizedTvShow = SanitizeTvShowForDB(tvShow);
 	try {
-		await prisma.show.create({
+		await (client || prisma).show.create({
 			data: {
 				...sanitizedTvShow,
 				seasons: {

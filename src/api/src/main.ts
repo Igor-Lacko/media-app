@@ -19,7 +19,7 @@ const app = express();
 app.use(cors());
 
 // For parsing
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 // Add routers
 const addRouters = () => {
