@@ -8,13 +8,13 @@ TypeScript and uses Node for the (self hosted) backend and React (with Tailwind 
 ## Table of contents
 
 1. [Requirements and usage](#requirements-and-usage)
-   - [Requirements](#requirements)
-   - [Usage](#usage)
+    - [Requirements](#requirements)
+    - [Usage](#usage)
 2. [Features](#features)
-   - [Movies](#movies)
-   - [TV shows](#tv-shows)
-   - [Courses](#courses)
-   - [Other](#other)
+    - [Movies](#movies)
+    - [TV shows](#tv-shows)
+    - [Courses](#courses)
+    - [Other](#other)
 3. [Notes](#notes)
 
 ## Requirements and usage
@@ -26,11 +26,15 @@ To use this app, you need [NPM and Node.js](https://docs.npmjs.com/downloading-a
 ### Usage
 
 1. Clone this repository: `git clone https://github.com/Igor-Lacko/media-player`.
-2. In it's root folder, run `bash scripts/install-packages.sh` and then `bash scripts/build.sh` to package the application.
-3. Run the app either using the alias you just configured, or manually through the `media-app` executable in the `src/electron/out/media-app.../` folder.
+2. In it's root folder, run `bash scripts/install-packages.sh` and then `bash scripts/build.sh` to build the application.
+3. Run the app either using `media-app` (or whatever name you gave the symlink), or manually through the `media-app` executable in the `src/electron/out/media-app.../` folder.
 4. Alternatively, don't run the build script at all and run the app in dev mode using `npm run dev` (which will not use the same DB, if you have already ran it packaged) in the root folder of the repository.
 
 _NOTE: If you are running on Ubuntu 24.04+ and you get the SUID error from electron, you may need to set `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` for electron (https://github.com/electron/electron/issues/42510#issuecomment-2171583086). Alternatively you can run electron without the chromium sandbox with `npm run dev:no-sandbox`. This error was observed in dev mode, unsure whether it appears when the app is packaged as well._
+
+### Updating
+
+The app provides backup loading/storing in settings. To update, just backup to a JSON file, reclone the repo/rebuild the app and then load it.
 
 ## Features
 
