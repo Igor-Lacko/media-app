@@ -50,36 +50,21 @@ fi
 
 EXE="$OUT_DIR/media-app"
 
-# Ask to add an alias
-echo "Do you want to create an alias for the executable? (y/n)"
-read -r create_alias
-if [[ "$create_alias" == "y" || "$create_alias" == "Y" ]]; then
-	# Alias name
-	echo "Enter the alias name (default: media-app):"
-	read -r alias_name
-	if [ -z "$alias_name" ]; then
-		alias_name="media-app"
+# Ask to add an symlink
+echo "Do you want to create a symlink in /usr/bin for the executable? (y/n)"
+read -r create_symlink
+if [[ "$create_symlink" == "y" || "$create_symlink" == "Y" ]]; then
+	# Symlink name
+	echo "Enter the symlink name (default: media-app):"
+	read -r symlink_name
+	if [ -z "$symlink_name" ]; then
+		symlink_name="media-app"
 	fi
 
-	# Config file
-	echo "Enter your shell configuration file (e.g., bashrc, zshrc), default: bashrc:"
-	echo "Note: this will search for the file in your home directory."
-	read -r shell_config
-	if [ -z "$shell_config" ]; then
-		shell_config="bashrc"
-	fi
-
-	# Check if the file exists
-	if [ ! -f "$HOME/.$shell_config" ]; then
-		echo "Shell configuration file .$shell_config not found, skipping alias creation..."
-		echo "Note: You can manually add the alias to your shell configuration file. Just add the following line:"
-		echo "alias $alias_name=\"$EXE\""
-	else
-		echo "alias $alias_name=\"$EXE\"" >> "$HOME/.$shell_config"
-		echo "Alias $alias_name created. Please run 'source $HOME/.$shell_config' to apply the changes (or open a new terminal)."
-	fi
+	sudo ln -s "$EXE" "/usr/bin/$symlink_name"
+	echo "Symlink created. You can run the application using $symlink_name"
 else
-	echo "Skipping alias creation. You can run the application directly using:"
+	echo "Skipping symlink creation. You can run the application directly using:"
 	echo "$EXE"
 fi
 
